@@ -1,0 +1,3 @@
+#!/bin/bash
+
+clickable run "MIMIC_SRC=\${SRC_DIR}/extras/mimic; MIMIC_LIBS=\${MIMIC_SRC}/_build/.libs; aarch64-linux-gnu-gcc -O2 -I\${MIMIC_SRC}/include -I\${MIMIC_SRC}/_build/include -I\${MIMIC_SRC}/lang -I\${MIMIC_SRC}/lang/cmu_grapheme_lang -I\${MIMIC_SRC}/src/hts/hts_engine_API/include -o \${INSTALL_DIR}/lib/mimic_hts_es \${SRC_DIR}/vendor/mimic_hts/mimic_hts_es.c \${SRC_DIR}/vendor/mimic_hts/es_hts_g2p.c -Wl,--start-group \${MIMIC_LIBS}/libttsmimic_lang_cmu_grapheme_lang.a \${MIMIC_LIBS}/libttsmimic_lang_cmu_grapheme_lex.a \${MIMIC_LIBS}/libttsmimic_lang_cmu_us_slt_hts.a \${MIMIC_LIBS}/libttsmimic_lang_cmulex.a \${MIMIC_LIBS}/libttsmimic_lang_usenglish.a \${MIMIC_LIBS}/libttsmimic.a -Wl,--end-group -lm -lpthread"

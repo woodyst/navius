@@ -1,0 +1,17 @@
+[Unit]
+Description=Navius GPS satellite bridge
+Documentation=https://github.com/woodyst/navius
+After=ubuntu-location-service.service network.target
+Wants=ubuntu-location-service.service
+
+[Service]
+Type=simple
+ExecStart=/usr/local/lib/navius/navius-sat-bridge-hal
+Restart=on-failure
+RestartSec=10
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=navius-sat-bridge
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,17 @@
+{
+    "name": "navius.woodyst",
+    "description": "GPS Navigator for Ubuntu Touch",
+    "architecture": "$ENV{ARCH}",
+    "title": "Navius GPS",
+    "hooks": {
+        "navius": {
+            "apparmor":    "navius.apparmor",
+            "desktop":     "navius.desktop",
+            "content-hub": "navius.content-hub",
+            "urls":        "navius.url-dispatcher"
+        }
+    },
+    "version": "1.0.1",
+    "maintainer": "Edi <woodyst@gmail.com>",
+    "framework" : "$ENV{CLICK_FRAMEWORK}"
+}

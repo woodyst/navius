@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=Navius GPS
+Exec=navius %U
+Icon=assets/logo.svg
+Terminal=false
+Type=Application
+X-Lomiri-Touch=true

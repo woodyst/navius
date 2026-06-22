@@ -1,0 +1,38 @@
+clickable_minimum_required: 8.7.0
+builder: rust
+kill: navius
+install_root_data:
+- manifest.json
+- navius.apparmor
+- navius.desktop
+- navius.content-hub
+- navius.url-dispatcher
+- assets
+- lib
+dependencies_target:
+- libespeak-ng1
+- libsonic0
+- libtool
+- libpopt-dev
+image_setup:
+  run:
+  - apt-get install -y --no-install-recommends gettext
+postbuild: |
+  cp /usr/lib/aarch64-linux-gnu/libespeak-ng.so.1 ${INSTALL_DIR}/lib/libespeak-ng.so.1
+  cp /usr/lib/aarch64-linux-gnu/libsonic.so.0     ${INSTALL_DIR}/lib/libsonic.so.0
+  aarch64-linux-gnu-gcc -shared -fPIC -o ${INSTALL_DIR}/lib/libpcaudio.so.0 ${SRC_DIR}/src/libpcaudio_stub.c
+  cp -r /usr/lib/aarch64-linux-gnu/espeak-ng-data/. ${INSTALL_DIR}/lib/espeak-ng-data/
+  cd ${SRC_DIR}/vendor/picotts && make ARCH_TRIPLET=aarch64-linux-gnu LANG_DIR=/unused -j${NUM_PROCS}
+  mkdir -p ${INSTALL_DIR}/lib/picotts-lang
+  cp ${SRC_DIR}/vendor/picotts/pico2wave ${INSTALL_DIR}/lib/pico2wave
+  cp -a ${SRC_DIR}/vendor/picotts/lang/. ${INSTALL_DIR}/lib/picotts-lang/
+  cp /usr/lib/aarch64-linux-gnu/libpopt.so.0* ${INSTALL_DIR}/lib/
+  if [ ! -f ${SRC_DIR}/vendor/piper_aarch64/piper ]; then mkdir -p ${SRC_DIR}/vendor/piper_aarch64 && cd /tmp && curl -L -o piper_aarch64.tar.gz "https://github.com/rhasspy/piper/releases/download/2023.11.14-2/piper_linux_aarch64.tar.gz" && tar xzf piper_aarch64.tar.gz && cp -r piper/. ${SRC_DIR}/vendor/piper_aarch64/ && rm -rf /tmp/piper_aarch64.tar.gz /tmp/piper; fi
+  cp ${SRC_DIR}/vendor/piper_aarch64/piper ${INSTALL_DIR}/lib/piper
+  chmod +x ${INSTALL_DIR}/lib/piper
+  cp ${SRC_DIR}/vendor/piper_aarch64/lib*.so* ${INSTALL_DIR}/lib/ 2>/dev/null || true
+  aarch64-linux-gnu-gcc -shared -fPIC -o ${INSTALL_DIR}/lib/libpiper_limit.so ${SRC_DIR}/src/libpiper_limit.c -ldl
+  MIMIC_SRC=${SRC_DIR}/extras/mimic; MIMIC_LIBS=${MIMIC_SRC}/_build/.libs; aarch64-linux-gnu-gcc -O2 -I${MIMIC_SRC}/include -I${MIMIC_SRC}/_build/include -I${MIMIC_SRC}/lang -I${MIMIC_SRC}/lang/cmu_grapheme_lang -I${MIMIC_SRC}/src/hts/hts_engine_API/include -o ${INSTALL_DIR}/lib/mimic_hts_es ${SRC_DIR}/vendor/mimic_hts/mimic_hts_es.c ${SRC_DIR}/vendor/mimic_hts/es_hts_g2p.c -Wl,--start-group ${MIMIC_LIBS}/libttsmimic_lang_cmu_grapheme_lang.a ${MIMIC_LIBS}/libttsmimic_lang_cmu_grapheme_lex.a ${MIMIC_LIBS}/libttsmimic_lang_cmu_us_slt_hts.a ${MIMIC_LIBS}/libttsmimic_lang_cmulex.a ${MIMIC_LIBS}/libttsmimic_lang_usenglish.a ${MIMIC_LIBS}/libttsmimic.a -Wl,--end-group -lm -lpthread
+  mkdir -p ${INSTALL_DIR}/lib/mimic-data
+  cp ${SRC_DIR}/vendor/mimic_hts_voice/cstr_upc_upm_spanish_hts.htsvoice ${INSTALL_DIR}/lib/mimic-data/
+  for po in ${SRC_DIR}/po/*.po; do lang=$(basename $po .po); mkdir -p ${INSTALL_DIR}/share/locale/${lang}/LC_MESSAGES; msgfmt -o ${INSTALL_DIR}/share/locale/${lang}/LC_MESSAGES/navius.woodyst.mo $po; done
