@@ -733,6 +733,19 @@ function fetchPoisAlongRoute(curLat, curLon, shape, radiusM, type, navSpeedKmh, 
 // waypoints: [{lat, lon}, ...]  (primer elemento = origen)
 // opts: {no_tolls, no_ferry, no_dirt}
 // callback(error, routes[])  — routes[0] es la principal
+function _valhallaLang() {
+    var map = {
+        "bg":"bg-BG","ca":"ca-ES","cs":"cs-CZ","da":"da-DK","de":"de-DE",
+        "el":"el-GR","en":"en-US","es":"es-ES","et":"et-EE","fi":"fi-FI",
+        "fr":"fr-FR","hi":"hi-IN","hu":"hu-HU","it":"it-IT","ja":"ja-JP",
+        "nb":"nb-NO","nl":"nl-NL","pl":"pl-PL","pt":"pt-PT","ro":"ro-RO",
+        "ru":"ru-RU","sk":"sk-SK","sl":"sl-SI","sv":"sv-SE","tr":"tr-TR",
+        "uk":"uk-UA","vi":"vi-VN","zh":"zh-CN"
+    }
+    var lang = Qt.locale().name.split("_")[0]
+    return map[lang] || "en-US"
+}
+
 function route(waypoints, opts, callback) {
     var locs = []
     for (var i = 0; i < waypoints.length; i++) {
@@ -763,7 +776,7 @@ function route(waypoints, opts, callback) {
         costing: costingType,
         costing_options: costingOpts,
         alternates: 2,
-        directions_options: {units: "kilometers", language: "es-ES"},
+        directions_options: {units: "kilometers", language: _valhallaLang()},
         date_time: dtObj
     })
 
