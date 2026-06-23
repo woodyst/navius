@@ -215,14 +215,14 @@ Item {
                 // Icono
                 Label {
                     anchors.horizontalCenter: parent.horizontalCenter
-                    text: overlay.steps[overlay._step].icon
+                    text: overlay.steps.length > overlay._step ? overlay.steps[overlay._step].icon : ""
                     font.pixelSize: ts(5)
                 }
 
                 // Título
                 Label {
                     width: parent.width
-                    text: overlay.steps[overlay._step].title
+                    text: overlay.steps.length > overlay._step ? overlay.steps[overlay._step].title : ""
                     color: "white"
                     font.pixelSize: ts(2.4)
                     font.bold: true
@@ -241,7 +241,7 @@ Item {
                 // Cuerpo
                 Label {
                     width: parent.width
-                    text: overlay.steps[overlay._step].body
+                    text: overlay.steps.length > overlay._step ? overlay.steps[overlay._step].body : ""
                     color: "#CFD8DC"
                     font.pixelSize: ts(1.65)
                     wrapMode: Text.WordWrap
