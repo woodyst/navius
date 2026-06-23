@@ -14,6 +14,9 @@ dependencies_target:
 - libsonic0
 - libtool
 - libpopt-dev
+- libgettextpo-dev
+env_vars:
+  GETTEXT_SYSTEM: "1"
 image_setup:
   run:
   - apt-get install -y --no-install-recommends gettext
@@ -35,4 +38,4 @@ postbuild: |
   MIMIC_SRC=${SRC_DIR}/extras/mimic; MIMIC_LIBS=${MIMIC_SRC}/_build/.libs; aarch64-linux-gnu-gcc -O2 -I${MIMIC_SRC}/include -I${MIMIC_SRC}/_build/include -I${MIMIC_SRC}/lang -I${MIMIC_SRC}/lang/cmu_grapheme_lang -I${MIMIC_SRC}/src/hts/hts_engine_API/include -o ${INSTALL_DIR}/lib/mimic_hts_es ${SRC_DIR}/vendor/mimic_hts/mimic_hts_es.c ${SRC_DIR}/vendor/mimic_hts/es_hts_g2p.c -Wl,--start-group ${MIMIC_LIBS}/libttsmimic_lang_cmu_grapheme_lang.a ${MIMIC_LIBS}/libttsmimic_lang_cmu_grapheme_lex.a ${MIMIC_LIBS}/libttsmimic_lang_cmu_us_slt_hts.a ${MIMIC_LIBS}/libttsmimic_lang_cmulex.a ${MIMIC_LIBS}/libttsmimic_lang_usenglish.a ${MIMIC_LIBS}/libttsmimic.a -Wl,--end-group -lm -lpthread
   mkdir -p ${INSTALL_DIR}/lib/mimic-data
   cp ${SRC_DIR}/vendor/mimic_hts_voice/cstr_upc_upm_spanish_hts.htsvoice ${INSTALL_DIR}/lib/mimic-data/
-  for po in ${SRC_DIR}/po/*.po; do lang=$(basename $po .po); mkdir -p ${INSTALL_DIR}/share/locale/${lang}/LC_MESSAGES; msgfmt -o ${INSTALL_DIR}/share/locale/${lang}/LC_MESSAGES/navius.woodyst.mo $po; done
+  mkdir -p ${SRC_DIR}/po/mo; for po in ${SRC_DIR}/po/*.po; do lang=$(basename $po .po); mo=${SRC_DIR}/po/mo/${lang}.mo; if [ ! -f $mo ] || [ $po -nt $mo ]; then msgfmt -o $mo $po; fi; mkdir -p ${INSTALL_DIR}/share/locale/${lang}/LC_MESSAGES; cp $mo ${INSTALL_DIR}/share/locale/${lang}/LC_MESSAGES/navius.woodyst.mo; done
