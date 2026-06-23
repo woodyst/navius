@@ -570,6 +570,7 @@ ApplicationWindow {
     }
 
     // ── Estado de navegación ───────────────────────────────────────────────
+    property bool _checkVoiceAfterTour: false
     property bool _navActive:  false   // navegación paso a paso activa
     property bool _navPaused:  false   // pausa temporal de la operativa de navegación
     property var  _navRoutes:  []      // alternativas de ruta
@@ -2276,6 +2277,7 @@ ApplicationWindow {
                     mainWhatsNewSt.lastSeenVersion !== whatsNewDialog.currentVersion)
                 whatsNewDialog.show()
             tourOverlay.checkShowAtStartup()
+            root._checkVoiceAfterTour = tourOverlay.visible
             if (!tourOverlay.visible) {
                 var _tipLang = (appSettings.ttsLang && appSettings.ttsLang !== "system")
                     ? appSettings.ttsLang : Qt.locale().name.split("_")[0]
@@ -7928,6 +7930,15 @@ ApplicationWindow {
         anchors.fill: parent
         z: 310
         onVoicesRequested: ttsVoicesPanel.open()
+        onTourClosed: {
+            if (root._checkVoiceAfterTour) {
+                root._checkVoiceAfterTour = false
+                var lang = (appSettings.ttsLang && appSettings.ttsLang !== "system")
+                    ? appSettings.ttsLang : Qt.locale().name.split("_")[0]
+                if (!navTts.installed_piper_voices(lang))
+                    Qt.callLater(function() { tourOverlay.showVoiceTip() })
+            }
+        }
     }
 
     AlertasOverlay {
