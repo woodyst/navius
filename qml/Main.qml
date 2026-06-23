@@ -6089,14 +6089,14 @@ ApplicationWindow {
             spacing: units.gu(0.5)
             Text {
                 width: parent.width
-                text: root._adPanelBb ? (root._adPanelBb.titulo || "") : ""
+                text: root._adLocalized(root._adPanelBb, "titulo")
                 font.bold: true; font.pixelSize: units.gu(2.1)
                 color: "#111"; elide: Text.ElideRight
             }
             Text {
                 width: parent.width
                 text: root._adPanelBb
-                      ? (root._adPanelBb.subtitulo
+                      ? (_adLocalized(root._adPanelBb, "subtitulo")
                          || (root._adPanelBb.url
                              ? root._adPanelBb.url.replace(/^https?:\/\//, "")
                              : ""))
@@ -8293,6 +8293,16 @@ ApplicationWindow {
     property int _preCacheSweepI:    0
     property int _preCacheSweepStep: 1
     property int _preCachePhase:     0   // 0 = wide (z11, buffer 5km+)  1 = detail (z15)
+
+    // Devuelve el texto localizado de un billboard/anuncio.
+    // Si el anunciante no proporcionó traducción para el locale actual, usa el campo base.
+    function _adLocalized(bb, field) {
+        if (!bb) return ""
+        var lang = Qt.locale().name.substring(0, 2)
+        if (bb.traducciones && bb.traducciones[lang] && bb.traducciones[lang][field])
+            return bb.traducciones[lang][field]
+        return bb[field] || ""
+    }
 
     function _preCacheProgress() {
         var shape = _preCacheRouteDat ? _preCacheRouteDat.shape : null
