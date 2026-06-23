@@ -3249,7 +3249,7 @@ Rectangle {
 
                     // ── Botones ────────────────────────────────────────────
                     Rectangle {
-                        visible: panel.cfg && panel.cfg.prefLevel >= 1
+                        visible: panel.cfg && panel.cfg.prefLevel >= 0
                         width: parent.width; height: units.gu(5); radius: units.gu(0.8); color: "#1565C3"
                         Label { anchors.centerIn: parent; text: i18n.tr("Gestionar voces TTS"); color: "white"; font.pixelSize: ts(1.9) }
                         MouseArea { anchors.fill: parent; onClicked: panel.voicesRequested() }
