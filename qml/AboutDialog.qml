@@ -49,6 +49,14 @@ Item {
                 size: ts(3.2)
             }
 
+            Label {
+                anchors.horizontalCenter: parent.horizontalCenter
+                text: "v" + ((typeof appVersion !== "undefined") ? appVersion : "?")
+                color: "#64B5F6"
+                font.pixelSize: ts(1.6)
+                font.bold: true
+            }
+
             Rectangle { width: parent.width; height: units.gu(0.05); color: "#1E3A5F" }
 
             // Servidor oficial

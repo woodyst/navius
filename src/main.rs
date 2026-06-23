@@ -88,6 +88,7 @@ fn main() {
     );
 
     let mut engine = QmlEngine::new();
+    engine.set_property("appVersion".into(), QString::from(env!("CARGO_PKG_VERSION")).into());
     // Add bundled QML plugin directory so `import MapboxMap 1.0` resolves.
     engine.add_import_path(format!("file://{}", lib_dir).into());
     // Explicitly add QRC QML directory so component types (CompassWidget etc.) are discoverable.

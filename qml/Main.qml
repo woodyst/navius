@@ -8266,7 +8266,7 @@ ApplicationWindow {
     // Shown when _dbgVisible; toggled via file command "dbg".
     property bool   _dbgVisible: false
     property string _lastCmdKey: ""
-    readonly property string _version: "1.0"
+    readonly property string _version: (typeof appVersion !== "undefined") ? appVersion : "?"
     property bool   _restoreVisible: false
 
     Timer { id: startupMsgTimer; interval: 5000; repeat: false; onTriggered: root._startupMsg = "" }
