@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: navius.woodyst\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-23 19:11+0200\n"
+"POT-Creation-Date: 2026-06-23 22:00+0200\n"
 "PO-Revision-Date: 2026-05-24 00:00+0000\n"
 "Last-Translator: Claude\n"
 "Language-Team: Русский\n"
@@ -25,8 +25,8 @@ msgstr "🔴 Трансляция"
 msgid "Generando enlace…"
 msgstr "Генерация ссылки…"
 
-#: qml/TripSharePanel.qml:53 qml/HelpPanel.qml:164 qml/Main.qml:6566
-#: qml/TourOverlay.qml:71
+#: qml/TripSharePanel.qml:53 qml/HelpPanel.qml:164 qml/Main.qml:6572
+#: qml/TourOverlay.qml:72
 msgid "Compartir viaje"
 msgstr "Поделиться поездкой"
 
@@ -66,8 +66,9 @@ msgstr "Создать ссылку"
 msgid "Detener"
 msgstr "Остановить"
 
-#: qml/TripSharePanel.qml:187 qml/Main.qml:7584 qml/Main.qml:8035
+#: qml/TripSharePanel.qml:187 qml/Main.qml:7590 qml/Main.qml:8042
 #: qml/LoginPanel.qml:145 qml/AboutDialog.qml:245 qml/ParkingDialog.qml:162
+#: qml/TourOverlay.qml:314
 #, fuzzy
 msgid "Cerrar"
 msgstr "Закрыть"
@@ -76,7 +77,7 @@ msgstr "Закрыть"
 msgid "Manual de usuario"
 msgstr "Руководство пользователя"
 
-#: qml/HelpPanel.qml:56 qml/TourOverlay.qml:31
+#: qml/HelpPanel.qml:56 qml/TourOverlay.qml:32
 #, fuzzy
 msgid "El mapa"
 msgstr "Стиль карты"
@@ -150,7 +151,7 @@ msgstr ""
 msgid "Buscar y planificar"
 msgstr "Поиск и планирование"
 
-#: qml/HelpPanel.qml:74 qml/TourOverlay.qml:36
+#: qml/HelpPanel.qml:74 qml/TourOverlay.qml:37
 msgid "Buscar un destino"
 msgstr "Поиск пункта назначения"
 
@@ -217,7 +218,7 @@ msgstr ""
 "Последние 50 пунктов назначения сохраняются в истории. Любое место можно "
 "добавить в избранное и дать ему собственное название."
 
-#: qml/HelpPanel.qml:88 qml/TourOverlay.qml:46
+#: qml/HelpPanel.qml:88 qml/TourOverlay.qml:47
 #, fuzzy
 msgid "TODOs por destino"
 msgstr "Этот пункт"
@@ -258,7 +259,7 @@ msgstr ""
 "TODO сохраняются по координатам и сохраняются между сессиями. При следующем "
 "планировании маршрута в то же место они появятся снова."
 
-#: qml/HelpPanel.qml:100 qml/TourOverlay.qml:51
+#: qml/HelpPanel.qml:100 qml/TourOverlay.qml:52
 #, fuzzy
 msgid "Hora de salida y planes guardados"
 msgstr "Сохранённые маршруты"
@@ -401,7 +402,7 @@ msgstr ""
 msgid "GPS y satélites"
 msgstr "GPS и спутники"
 
-#: qml/HelpPanel.qml:142 qml/TourOverlay.qml:91
+#: qml/HelpPanel.qml:142 qml/TourOverlay.qml:92
 #, fuzzy
 msgid "Vista de satélites"
 msgstr "GPS и спутники"
@@ -460,7 +461,7 @@ msgstr ""
 "устройства наблюдаются ошибочные значения, отключите для возврата к "
 "классическому вычислению."
 
-#: qml/HelpPanel.qml:154 qml/TourOverlay.qml:101
+#: qml/HelpPanel.qml:154 qml/TourOverlay.qml:102
 #, fuzzy
 msgid "Grabación de tracks"
 msgstr "Запись маршрутов"
@@ -634,8 +635,8 @@ msgstr ""
 "и поиска мест полностью офлайн. Navius автоматически обнаруживает его в "
 "Настройки → Сервер Valhalla → Обнаружить локальный сервер."
 
-#: qml/HelpPanel.qml:196 qml/Main.qml:6772 qml/PreferencesPanel.qml:115
-#: qml/TourOverlay.qml:111
+#: qml/HelpPanel.qml:196 qml/Main.qml:6778 qml/PreferencesPanel.qml:115
+#: qml/TourOverlay.qml:112
 msgid "Ajustes"
 msgstr "Настройки"
 
@@ -1062,7 +1063,7 @@ msgstr "Рядом со мной"
 msgid "Gasolina"
 msgstr "АЗС"
 
-#: qml/SearchPanel.qml:1801 qml/InstructionListPanel.qml:344 qml/Main.qml:6651
+#: qml/SearchPanel.qml:1801 qml/InstructionListPanel.qml:344 qml/Main.qml:6657
 msgid "Parking"
 msgstr "Парковка"
 
@@ -1102,7 +1103,7 @@ msgstr "Недавние пункты"
 msgid "Rutas disponibles"
 msgstr "Доступные маршруты"
 
-#: qml/SearchPanel.qml:2015 qml/RouteSelectPanel.qml:170 qml/Main.qml:8612
+#: qml/SearchPanel.qml:2015 qml/RouteSelectPanel.qml:170 qml/Main.qml:8629
 msgid "Ruta más rápida"
 msgstr "Быстрый маршрут"
 
@@ -1149,7 +1150,7 @@ msgstr "Задачи на этой остановке"
 msgid "Editar ruta"
 msgstr "Изменить маршрут"
 
-#: qml/VehicleSetupDialog.qml:82 qml/TourOverlay.qml:26
+#: qml/VehicleSetupDialog.qml:82 qml/TourOverlay.qml:27
 msgid "Bienvenido a Navius"
 msgstr "Добро пожаловать в Navius"
 
@@ -1178,7 +1179,7 @@ msgstr "Тип"
 msgid "Crear"
 msgstr "Создать"
 
-#: qml/SharedLocationDialog.qml:61 qml/Main.qml:9249
+#: qml/SharedLocationDialog.qml:61 qml/Main.qml:9266
 msgid "Ubicación compartida"
 msgstr "Общее местоположение"
 
@@ -1248,7 +1249,7 @@ msgstr "Ожидает сборки (clickable build)"
 msgid "Alta calidad (neuronal)"
 msgstr "Высокое качество (нейронное)"
 
-#: qml/MediaPanel.qml:222 qml/Main.qml:6757
+#: qml/MediaPanel.qml:222 qml/Main.qml:6763
 msgid "Música"
 msgstr ""
 
@@ -1320,11 +1321,11 @@ msgstr "Открыть ссылку"
 msgid "Ir a"
 msgstr "Перейти к"
 
-#: qml/MsgDetailPopup.qml:175 qml/Main.qml:7318 qml/MessagesPanel.qml:351
+#: qml/MsgDetailPopup.qml:175 qml/Main.qml:7324 qml/MessagesPanel.qml:351
 msgid "Añadir destino"
 msgstr "Добавить пункт"
 
-#: qml/MsgDetailPopup.qml:209 qml/TourOverlay.qml:299
+#: qml/MsgDetailPopup.qml:209 qml/TourOverlay.qml:316
 msgid "Anterior"
 msgstr "Назад"
 
@@ -1332,7 +1333,7 @@ msgstr "Назад"
 msgid "Leído"
 msgstr "Прочитано"
 
-#: qml/MsgDetailPopup.qml:237 qml/TourOverlay.qml:321
+#: qml/MsgDetailPopup.qml:237 qml/TourOverlay.qml:340
 msgid "Siguiente"
 msgstr "Далее"
 
@@ -1409,281 +1410,281 @@ msgstr ""
 msgid "Error del servidor (%1)"
 msgstr "Ошибка сети: "
 
-#: qml/Main.qml:4626
+#: qml/Main.qml:4632
 msgid "Rumbo"
 msgstr "Курс"
 
-#: qml/Main.qml:4644
+#: qml/Main.qml:4650
 msgid "km/h ◄"
 msgstr "км/ч ◄"
 
-#: qml/Main.qml:4644
+#: qml/Main.qml:4650
 msgid "km/h"
 msgstr "км/ч"
 
-#: qml/Main.qml:4683
+#: qml/Main.qml:4689
 msgid "Fallo GPS ON"
 msgstr "Сбой GPS ВКЛ"
 
-#: qml/Main.qml:4683 qml/Main.qml:6852
+#: qml/Main.qml:4689 qml/Main.qml:6858
 msgid "Fallo GPS"
 msgstr "Сбой GPS"
 
-#: qml/Main.qml:4710
+#: qml/Main.qml:4716
 msgid "Rev."
 msgstr "Реверс"
 
-#: qml/Main.qml:4799
+#: qml/Main.qml:4805
 msgid "Ctrl ON"
 msgstr "Упр. ВКЛ"
 
-#: qml/Main.qml:4799
+#: qml/Main.qml:4805
 msgid "Ctrl"
 msgstr "Упр."
 
-#: qml/Main.qml:4847
+#: qml/Main.qml:4853
 #, fuzzy
 msgid "Con ruta"
 msgstr "По маршруту"
 
-#: qml/Main.qml:4886
+#: qml/Main.qml:4892
 msgid "Hdg blend"
 msgstr ""
 
-#: qml/Main.qml:4897
+#: qml/Main.qml:4903
 #, fuzzy
 msgid "Sin ruta"
 msgstr "По маршруту"
 
-#: qml/Main.qml:4911
+#: qml/Main.qml:4917
 msgid "Hdg accel"
 msgstr ""
 
-#: qml/Main.qml:4927
+#: qml/Main.qml:4933
 msgid "Pos sin nav"
 msgstr ""
 
-#: qml/Main.qml:5037
+#: qml/Main.qml:5043
 msgid "Seguir ruta"
 msgstr "Следовать по маршруту"
 
-#: qml/Main.qml:5064
+#: qml/Main.qml:5070
 msgid "SIMULACIÓN GPS"
 msgstr "СИМУЛЯЦИЯ GPS"
 
-#: qml/Main.qml:5093
+#: qml/Main.qml:5099
 msgid "OSM Scout Server  ·  límites de velocidad por tramo"
 msgstr "OSM Scout Server  ·  ограничения скорости по участкам"
 
-#: qml/Main.qml:5716 qml/Main.qml:5738
+#: qml/Main.qml:5722 qml/Main.qml:5744
 msgid "Alerta"
 msgstr "Оповещение"
 
-#: qml/Main.qml:5766 qml/PreferencesPanel.qml:24 qml/PreferencesPanel.qml:321
+#: qml/Main.qml:5772 qml/PreferencesPanel.qml:24 qml/PreferencesPanel.qml:321
 msgid "Auto"
 msgstr "Авто"
 
-#: qml/Main.qml:5857
+#: qml/Main.qml:5863
 msgid "¿Has llegado a tu destino?"
 msgstr ""
 
-#: qml/Main.qml:6422
+#: qml/Main.qml:6428
 msgid "Silenciado"
 msgstr "Без звука"
 
-#: qml/Main.qml:6423
+#: qml/Main.qml:6429
 msgid "Indicaciones y alertas por voz"
 msgstr "Указания и оповещения голосом"
 
-#: qml/Main.qml:6424
+#: qml/Main.qml:6430
 msgid "Indicaciones voz, alertas pitido"
 msgstr "Указания голосом, сигнал для оповещений"
 
-#: qml/Main.qml:6425
+#: qml/Main.qml:6431
 msgid "Solo indicaciones por voz"
 msgstr "Только указания голосом"
 
-#: qml/Main.qml:6426
+#: qml/Main.qml:6432
 msgid "Indicaciones pitido, alertas voz"
 msgstr "Указания сигналом, оповещения голосом"
 
-#: qml/Main.qml:6427
+#: qml/Main.qml:6433
 msgid "Solo pitidos"
 msgstr "Только сигналы"
 
-#: qml/Main.qml:6428
+#: qml/Main.qml:6434
 msgid "Solo indicaciones (pitido)"
 msgstr "Только указания (сигнал)"
 
-#: qml/Main.qml:6429
+#: qml/Main.qml:6435
 msgid "Solo alertas por voz"
 msgstr "Только оповещения голосом"
 
-#: qml/Main.qml:6430
+#: qml/Main.qml:6436
 msgid "Solo alertas (pitido)"
 msgstr "Только оповещения (сигнал)"
 
-#: qml/Main.qml:6529 qml/LoginPanel.qml:104
+#: qml/Main.qml:6535 qml/LoginPanel.qml:104
 msgid "Mi cuenta"
 msgstr "Мой аккаунт"
 
-#: qml/Main.qml:6529
+#: qml/Main.qml:6535
 msgid "Login"
 msgstr "Войти"
 
-#: qml/Main.qml:6546
+#: qml/Main.qml:6552
 msgid "Donar"
 msgstr ""
 
-#: qml/Main.qml:6566
+#: qml/Main.qml:6572
 #, fuzzy
 msgid "Compartiendo"
 msgstr "Трансляция"
 
-#: qml/Main.qml:6591
+#: qml/Main.qml:6597
 msgid "Prev. Ruta"
 msgstr "Предпросмотр"
 
-#: qml/Main.qml:6606
+#: qml/Main.qml:6612
 msgid "Tareas"
 msgstr "Задачи"
 
-#: qml/Main.qml:6623 qml/MessagesPanel.qml:106
+#: qml/Main.qml:6629 qml/MessagesPanel.qml:106
 msgid "Mensajes"
 msgstr "Сообщения"
 
-#: qml/Main.qml:6678
+#: qml/Main.qml:6684
 msgid "Borrar aparcamiento"
 msgstr "Удалить парковку"
 
-#: qml/Main.qml:6706
+#: qml/Main.qml:6712
 msgid "Ver vehículo"
 msgstr "К автомобилю"
 
-#: qml/Main.qml:6739 qml/ParkingDialog.qml:61
+#: qml/Main.qml:6745 qml/ParkingDialog.qml:61
 msgid "Ir al aparcamiento"
 msgstr "К парковке"
 
-#: qml/Main.qml:6789
+#: qml/Main.qml:6795
 msgid "Bloq. Mapa"
 msgstr "Блок. карты"
 
-#: qml/Main.qml:6806 qml/PreferencesPanel.qml:3599
+#: qml/Main.qml:6812 qml/PreferencesPanel.qml:3599
 msgid "Debug"
 msgstr "Debug"
 
-#: qml/Main.qml:6821
+#: qml/Main.qml:6827
 msgid "Sim GPS"
 msgstr "Sim GPS"
 
-#: qml/Main.qml:6852
+#: qml/Main.qml:6858
 msgid "GPS on"
 msgstr "GPS вкл"
 
-#: qml/Main.qml:6867
+#: qml/Main.qml:6873
 msgid "Reanudar"
 msgstr "Возобновить"
 
-#: qml/Main.qml:6867
+#: qml/Main.qml:6873
 msgid "Pausar sim"
 msgstr "Пауза sim"
 
-#: qml/Main.qml:6883 qml/PreferencesPanel.qml:2241
+#: qml/Main.qml:6889 qml/PreferencesPanel.qml:2241
 msgid "Suavizado GPS"
 msgstr "Сглаживание GPS"
 
-#: qml/Main.qml:6900
+#: qml/Main.qml:6906
 msgid "Bisector"
 msgstr ""
 
-#: qml/Main.qml:6917
+#: qml/Main.qml:6923
 msgid "POIs debug"
 msgstr "POIs debug"
 
-#: qml/Main.qml:7130
+#: qml/Main.qml:7136
 msgid "INICIO"
 msgstr "НАЧАЛО"
 
-#: qml/Main.qml:7167
+#: qml/Main.qml:7173
 msgid "FIN"
 msgstr "КОНЕЦ"
 
-#: qml/Main.qml:7298
+#: qml/Main.qml:7304
 msgid "Inicio sim"
 msgstr "Начало симуляции"
 
-#: qml/Main.qml:7648
+#: qml/Main.qml:7654
 msgid "Satélites"
 msgstr "Спутники"
 
-#: qml/Main.qml:8006
+#: qml/Main.qml:8013
 msgid "Límite comunitario"
 msgstr "Общественный лимит"
 
-#: qml/Main.qml:8013
+#: qml/Main.qml:8020
 msgid "Eliminar este límite"
 msgstr "Удалить этот лимит"
 
-#: qml/Main.qml:8080
+#: qml/Main.qml:8087
 msgid "Límite de velocidad aquí"
 msgstr "Ограничение скорости здесь"
 
-#: qml/Main.qml:8195
+#: qml/Main.qml:8202
 msgid "Tienes cambios locales no sincronizados. ¿Cuál configuración usar?"
 msgstr ""
 "У вас есть несинхронизированные локальные изменения. Какую конфигурацию "
 "использовать?"
 
-#: qml/Main.qml:8577
+#: qml/Main.qml:8594
 msgid "Tienes un mensaje nuevo"
 msgstr "У вас новое сообщение"
 
-#: qml/Main.qml:8578
+#: qml/Main.qml:8595
 msgid "Tienes %1 mensajes nuevos"
 msgstr "У вас %1 новых сообщений"
 
-#: qml/Main.qml:8616
+#: qml/Main.qml:8633
 msgid "Ahorra"
 msgstr "Экономия"
 
-#: qml/Main.qml:8626
+#: qml/Main.qml:8643
 msgid "Revisar"
 msgstr "Проверить"
 
-#: qml/Main.qml:8635
+#: qml/Main.qml:8652
 msgid "Ignorar"
 msgstr "Игнорировать"
 
-#: qml/Main.qml:8691
+#: qml/Main.qml:8708
 msgid "Pre-procesando motor TTS"
 msgstr "Предварительная обработка движка TTS"
 
-#: qml/Main.qml:8693
+#: qml/Main.qml:8710
 msgid "Cargando mapa…"
 msgstr "Загрузка карты…"
 
-#: qml/Main.qml:9436
+#: qml/Main.qml:9453
 msgid "¿Has llegado a"
 msgstr ""
 
-#: qml/Main.qml:9437
+#: qml/Main.qml:9454
 #, fuzzy
 msgid "el destino"
 msgstr "Этот пункт"
 
-#: qml/Main.qml:9446
+#: qml/Main.qml:9463
 msgid "Sí, he llegado"
 msgstr ""
 
-#: qml/Main.qml:9457
+#: qml/Main.qml:9474
 msgid "Todavía no"
 msgstr ""
 
-#: qml/Main.qml:9489
+#: qml/Main.qml:9506
 msgid "Tareas pendientes"
 msgstr "Ожидающие задачи"
 
-#: qml/Main.qml:9498
+#: qml/Main.qml:9515
 msgid "Abrir"
 msgstr "Открыть"
 
@@ -2558,7 +2559,7 @@ msgstr "Удалить всё"
 msgid "Borrado"
 msgstr "Удалено"
 
-#: qml/TourOverlay.qml:27
+#: qml/TourOverlay.qml:28
 msgid ""
 "Navius es un navegador GPS para Ubuntu Touch. Combina mapas vectoriales "
 "offline, navegación turn-by-turn con voz, planificación avanzada de rutas y "
@@ -2574,7 +2575,7 @@ msgstr ""
 "Этот помощник познакомит вас со всеми функциями приложения. Вернуться к туру "
 "можно в любой момент через Настройки → Справка."
 
-#: qml/TourOverlay.qml:32
+#: qml/TourOverlay.qml:33
 msgid ""
 "El mapa es vectorial (MapLibre GL) — se ve nítido a cualquier zoom y "
 "funciona sin conexión una vez descargados los tiles.\n"
@@ -2595,7 +2596,7 @@ msgstr ""
 "• Кнопка 3D/2D переключает между плоским видом и перспективой вождения\n"
 "• В ночном режиме карта автоматически переключается на тёмную палитру"
 
-#: qml/TourOverlay.qml:37
+#: qml/TourOverlay.qml:38
 msgid ""
 "Toca el botón «Iniciar navegación» en la parte superior para abrir el panel "
 "de planificación.\n"
@@ -2619,11 +2620,11 @@ msgstr ""
 "остановками)\n"
 "• История и избранное отображаются автоматически"
 
-#: qml/TourOverlay.qml:41
+#: qml/TourOverlay.qml:42
 msgid "Planificación de ruta"
 msgstr "Планирование маршрута"
 
-#: qml/TourOverlay.qml:42
+#: qml/TourOverlay.qml:43
 msgid ""
 "Con el panel abierto puedes configurar todos los detalles de tu viaje:\n"
 "\n"
@@ -2644,7 +2645,7 @@ msgstr ""
 "• Найдите ближайшие POI: АЗС (с ценой топлива), парковки, рестораны, отели…\n"
 "• Нажмите РАССЧИТАТЬ МАРШРУТ для просмотра вариантов"
 
-#: qml/TourOverlay.qml:47
+#: qml/TourOverlay.qml:48
 msgid ""
 "Puedes añadir una lista de tareas pendientes a cada destino del viaje.\n"
 "\n"
@@ -2666,7 +2667,7 @@ msgstr ""
 "TODO сохраняются между сессиями и отображаются при следующем посещении того "
 "же места."
 
-#: qml/TourOverlay.qml:52
+#: qml/TourOverlay.qml:53
 msgid ""
 "Activa «Hora de salida» para planificar un viaje futuro. Selecciona el día y "
 "la hora de partida — la ruta se calculará usando el tráfico previsto para "
@@ -2686,11 +2687,11 @@ msgstr ""
 "• Отображаются в разделе «Сохранённые планы» в верхней части панели\n"
 "• Нажмите на план, чтобы загрузить его, или на значок корзины, чтобы удалить"
 
-#: qml/TourOverlay.qml:56
+#: qml/TourOverlay.qml:57
 msgid "Selección de ruta y alternativas"
 msgstr "Выбор маршрута и альтернативы"
 
-#: qml/TourOverlay.qml:57
+#: qml/TourOverlay.qml:58
 msgid ""
 "Navius solicita hasta 3 alternativas de ruta a Valhalla. Tras calcular, "
 "aparece el panel de selección:\n"
@@ -2708,11 +2709,11 @@ msgstr ""
 "• Нажмите на вариант для просмотра; подтвердите для начала навигации\n"
 "• Также можно посмотреть полный список инструкций перед отправлением"
 
-#: qml/TourOverlay.qml:61
+#: qml/TourOverlay.qml:62
 msgid "Navegación turn-by-turn"
 msgstr "Пошаговая навигация"
 
-#: qml/TourOverlay.qml:62
+#: qml/TourOverlay.qml:63
 msgid ""
 "Durante la navegación, la barra superior muestra:\n"
 "\n"
@@ -2735,11 +2736,11 @@ msgstr ""
 "\n"
 "Инструкции объявляются голосом заблаговременно, чтобы успеть среагировать."
 
-#: qml/TourOverlay.qml:66
+#: qml/TourOverlay.qml:67
 msgid "Alertas comunitarias"
 msgstr "Общественные оповещения"
 
-#: qml/TourOverlay.qml:67
+#: qml/TourOverlay.qml:68
 msgid ""
 "Otros conductores de Navius reportan incidencias en tiempo real que aparecen "
 "en tu mapa.\n"
@@ -2763,7 +2764,7 @@ msgstr ""
 "\n"
 "Требуется активная учётная запись Navius."
 
-#: qml/TourOverlay.qml:72
+#: qml/TourOverlay.qml:73
 msgid ""
 "Comparte tu posición y ruta en tiempo real con cualquier persona, sin que "
 "necesite tener Navius instalado.\n"
@@ -2787,11 +2788,11 @@ msgstr ""
 "\n"
 "Требуется активная учётная запись Navius."
 
-#: qml/TourOverlay.qml:76
+#: qml/TourOverlay.qml:77
 msgid "Instrucciones de voz (TTS)"
 msgstr "Голосовые инструкции (TTS)"
 
-#: qml/TourOverlay.qml:77
+#: qml/TourOverlay.qml:78
 msgid ""
 "La voz usa el motor seleccionado en Ajustes → Voz:\n"
 "\n"
@@ -2812,11 +2813,11 @@ msgstr ""
 "Piper предварительно генерирует WAV-файлы следующих инструкций в фоне, чтобы "
 "голос звучал без заметной задержки."
 
-#: qml/TourOverlay.qml:81
+#: qml/TourOverlay.qml:82
 msgid "Reproductor de música"
 msgstr "Музыкальный проигрыватель"
 
-#: qml/TourOverlay.qml:82
+#: qml/TourOverlay.qml:83
 msgid ""
 "Navius incluye un reproductor de música integrado. Importa pistas vía "
 "Content Hub — Menú ≡ → Música → Añadir música.\n"
@@ -2836,11 +2837,11 @@ msgstr ""
 "• Музыка автоматически затихает, когда навигатор говорит (ducking),\n"
 "  и восстанавливается через 600 мс"
 
-#: qml/TourOverlay.qml:86
+#: qml/TourOverlay.qml:87
 msgid "Velocímetro y límites de velocidad"
 msgstr "Спидометр и ограничения скорости"
 
-#: qml/TourOverlay.qml:87
+#: qml/TourOverlay.qml:88
 msgid ""
 "El velocímetro circular muestra tu velocidad en tiempo real.\n"
 "\n"
@@ -2855,7 +2856,7 @@ msgstr ""
 "• При превышении лимита индикатор меняет цвет (настраивается в Настройках)\n"
 "• Ограничения берутся из данных OSM по стандарту Legal Default Speeds"
 
-#: qml/TourOverlay.qml:92
+#: qml/TourOverlay.qml:93
 msgid ""
 "La vista de satélites muestra en tiempo real:\n"
 "\n"
@@ -2877,11 +2878,11 @@ msgstr ""
 "Полезно для диагностики проблем приёма GPS или сравнения сигнала в разных "
 "местах."
 
-#: qml/TourOverlay.qml:96
+#: qml/TourOverlay.qml:97
 msgid "Mensajes del servidor"
 msgstr "Сообщения сервера"
 
-#: qml/TourOverlay.qml:97
+#: qml/TourOverlay.qml:98
 msgid ""
 "El servidor de Navius puede enviarte mensajes: avisos, novedades o "
 "notificaciones.\n"
@@ -2903,7 +2904,7 @@ msgstr ""
 "\n"
 "Требуется активная учётная запись Navius."
 
-#: qml/TourOverlay.qml:102
+#: qml/TourOverlay.qml:103
 msgid ""
 "Navius puede grabar tu trayecto GPS en tiempo real.\n"
 "\n"
@@ -2922,11 +2923,11 @@ msgstr ""
 "• Симуляция воспроизводит трек, как если бы это была реальная поездка:\n"
 "  все функции навигации работают по записанному треку"
 
-#: qml/TourOverlay.qml:106
+#: qml/TourOverlay.qml:107
 msgid "Servidor oficial Valhalla"
 msgstr "Официальный сервер Valhalla"
 
-#: qml/TourOverlay.qml:107
+#: qml/TourOverlay.qml:108
 msgid ""
 "Navius incluye el servidor valhalla.egpsistemas.com configurado por "
 "defecto.\n"
@@ -2958,7 +2959,7 @@ msgstr ""
 "🗺 Офлайн-карты: установите OSM Scout Server на Ubuntu Touch для расчёта "
 "маршрутов и поиска мест без интернета, прямо на устройстве."
 
-#: qml/TourOverlay.qml:112
+#: qml/TourOverlay.qml:113
 msgid ""
 "El panel de Ajustes organiza la configuración en secciones:\n"
 "\n"
@@ -2983,11 +2984,11 @@ msgstr ""
 "Настройки синхронизируются автоматически при наличии активной учётной записи "
 "Navius."
 
-#: qml/TourOverlay.qml:116
+#: qml/TourOverlay.qml:117
 msgid "¡Listo para navegar!"
 msgstr "Готово к навигации!"
 
-#: qml/TourOverlay.qml:117
+#: qml/TourOverlay.qml:118
 msgid ""
 "Ya conoces Navius. Aquí un resumen rápido:\n"
 "\n"
@@ -3016,20 +3017,40 @@ msgstr ""
 "Вернуться к туру можно в любой момент через\n"
 "Настройки → Справка → Открыть помощник."
 
-#: qml/TourOverlay.qml:251
+#: qml/TourOverlay.qml:137
+msgid "Descarga una voz Piper"
+msgstr ""
+
+#: qml/TourOverlay.qml:138
+msgid ""
+"Navius usa el motor Piper para voz de alta calidad.\n"
+"\n"
+"No hay ninguna voz Piper instalada para tu idioma. Sin ella, las "
+"instrucciones de navegación usarán PicoTTS o espeak-ng, que suenan menos "
+"naturales.\n"
+"\n"
+"Pulsa «Gestionar voces» para descargar una voz Piper."
+msgstr ""
+
+#: qml/TourOverlay.qml:267
 #, fuzzy
 msgid "No mostrar al inicio"
 msgstr "Не показывать при запуске"
 
-#: qml/TourOverlay.qml:298
+#: qml/TourOverlay.qml:315
 msgid "Saltar tour"
 msgstr "Пропустить тур"
 
-#: qml/TourOverlay.qml:299
+#: qml/TourOverlay.qml:316
 msgid "Atrás"
 msgstr "Назад"
 
-#: qml/TourOverlay.qml:321
+#: qml/TourOverlay.qml:339
+#, fuzzy
+msgid "Gestionar voces"
+msgstr "Управление голосами TTS"
+
+#: qml/TourOverlay.qml:340
 #, fuzzy
 msgid "¡Comenzar!"
 msgstr "Начать!"
