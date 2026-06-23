@@ -2276,6 +2276,12 @@ ApplicationWindow {
                     mainWhatsNewSt.lastSeenVersion !== whatsNewDialog.currentVersion)
                 whatsNewDialog.show()
             tourOverlay.checkShowAtStartup()
+            if (!tourOverlay.visible) {
+                var _tipLang = (appSettings.ttsLang && appSettings.ttsLang !== "system")
+                    ? appSettings.ttsLang : Qt.locale().name.split("_")[0]
+                if (!navTts.installed_piper_voices(_tipLang))
+                    Qt.callLater(function() { tourOverlay.showVoiceTip() })
+            }
         })
         appSettings.autoZoom = false   // inhibit during map init
         satModel.set_traces_enabled(appSettings.tracesEnabled)
@@ -7930,6 +7936,7 @@ ApplicationWindow {
         textScale: appSettings.textScale
         anchors.fill: parent
         z: 310
+        onVoicesRequested: ttsVoicesPanel.open()
     }
 
     AlertasOverlay {

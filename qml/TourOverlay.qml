@@ -11,6 +11,7 @@ Item {
     z: 210
 
     signal tourClosed()
+    signal voicesRequested()
 
     Settings {
         id: tourSettings
@@ -118,16 +119,31 @@ Item {
         }
     ] }
 
-    property int _step: 0
+    property int  _step: 0
+    property bool _voiceTipMode: false
 
     function show() {
+        _voiceTipMode = false
         steps = _buildSteps()
+        _step = 0
+        overlay.visible = true
+    }
+
+    function showVoiceTip() {
+        if (overlay.visible) return
+        _voiceTipMode = true
+        steps = [{
+            icon: "🔊",
+            title: i18n.tr("Descarga una voz Piper"),
+            body: i18n.tr("Navius usa el motor Piper para voz de alta calidad.\n\nNo hay ninguna voz Piper instalada para tu idioma. Sin ella, las instrucciones de navegación usarán PicoTTS o espeak-ng, que suenan menos naturales.\n\nPulsa «Gestionar voces» para descargar una voz Piper.")
+        }]
         _step = 0
         overlay.visible = true
     }
 
     function dismiss() {
         overlay.visible = false
+        _voiceTipMode = false
         overlay.tourClosed()
     }
 
@@ -284,7 +300,7 @@ Item {
             }
             spacing: units.gu(1.5)
 
-            // Botón izquierdo: "Saltar tour" (paso 0) o "Anterior/Atrás"
+            // Botón izquierdo: "Saltar tour" / "Anterior" / "Cerrar" (tip)
             Rectangle {
                 width: (parent.width - units.gu(1.5)) / 2
                 height: units.gu(5.5)
@@ -295,21 +311,23 @@ Item {
 
                 Label {
                     anchors.centerIn: parent
-                    text: overlay._step === 0 ? i18n.tr("Saltar tour")
-                          : (overlay._step === overlay.steps.length - 1 ? i18n.tr("Atrás") : i18n.tr("Anterior"))
+                    text: overlay._voiceTipMode ? i18n.tr("Cerrar")
+                          : (overlay._step === 0 ? i18n.tr("Saltar tour")
+                             : (overlay._step === overlay.steps.length - 1 ? i18n.tr("Atrás") : i18n.tr("Anterior")))
                     color: "#90A4AE"
                     font.pixelSize: ts(1.8)
                 }
                 MouseArea {
                     id: prevMa; anchors.fill: parent
                     onClicked: {
+                        if (overlay._voiceTipMode) { overlay.dismiss(); return }
                         if (overlay._step === 0) overlay.dismiss()
                         else { overlay._step--; stepFlick.contentY = 0 }
                     }
                 }
             }
 
-            // Botón derecho: "Siguiente" o "¡Comenzar!"
+            // Botón derecho: "Siguiente" / "¡Comenzar!" / "Gestionar voces" (tip)
             Rectangle {
                 width: (parent.width - units.gu(1.5)) / 2
                 height: units.gu(5.5)
@@ -318,7 +336,8 @@ Item {
 
                 Label {
                     anchors.centerIn: parent
-                    text: overlay._step === overlay.steps.length - 1 ? i18n.tr("¡Comenzar!") : i18n.tr("Siguiente")
+                    text: overlay._voiceTipMode ? i18n.tr("Gestionar voces")
+                          : (overlay._step === overlay.steps.length - 1 ? i18n.tr("¡Comenzar!") : i18n.tr("Siguiente"))
                     color: "white"
                     font.pixelSize: ts(1.8)
                     font.bold: true
@@ -326,6 +345,11 @@ Item {
                 MouseArea {
                     id: nextMa; anchors.fill: parent
                     onClicked: {
+                        if (overlay._voiceTipMode) {
+                            overlay.dismiss()
+                            overlay.voicesRequested()
+                            return
+                        }
                         if (overlay._step < overlay.steps.length - 1) {
                             overlay._step++; stepFlick.contentY = 0
                         } else {
