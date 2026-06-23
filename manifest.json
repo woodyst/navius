@@ -11,7 +11,7 @@
             "urls":        "navius.url-dispatcher"
         }
     },
-    "version": "1.0.2",
+    "version": "1.0.3",
     "maintainer": "Edi <woodyst@gmail.com>",
     "framework" : "$ENV{CLICK_FRAMEWORK}"
 }
