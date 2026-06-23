@@ -2370,25 +2370,16 @@ ApplicationWindow {
                 root._osmScoutActive = found
                 satModel.log_to_file("OSM Scout detect result: " + (found ? "ACTIVO" : "no disponible"))
                 if (found) {
-                    // Ya tenemos la URL correcta; desbloquear (dispara petición pendiente si la hay)
                     NavSearch.setRouteBlocked(false)
                     searchPanel.setRouteBlocked(false)
                     root._startupMsg = "OSM Scout · rutas y mapas offline"
                     startupMsgTimer.restart()
                 } else {
-                    var explicitOsmScout = appSettings.valhallaUrl.indexOf("127.0.0.1") !== -1
-                                       || appSettings.valhallaUrl.indexOf("localhost")  !== -1
-                    if (explicitOsmScout) {
-                        satModel.log_to_file("OSM Scout: no disponible — mostrando diálogo")
-                        osmScoutDialog.visible = true
-                        osmScoutPollTimer.restart()
-                        // Rutas siguen bloqueadas hasta que el usuario pulse o se detecte OSM Scout
-                    } else {
-                        satModel.log_to_file("OSM Scout: no disponible — fallback silencioso a " + appSettings.valhallaUrl)
-                        _setEffectiveUrl(appSettings.valhallaUrl)
-                        NavSearch.setRouteBlocked(false)
-                        searchPanel.setRouteBlocked(false)
-                    }
+                    // No está instalado o no arrancó — fallback silencioso
+                    satModel.log_to_file("OSM Scout: no disponible — fallback a " + appSettings.valhallaUrl)
+                    _setEffectiveUrl(appSettings.valhallaUrl)
+                    NavSearch.setRouteBlocked(false)
+                    searchPanel.setRouteBlocked(false)
                 }
             })
         } else {

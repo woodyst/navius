@@ -47,22 +47,23 @@ function setFallbackUrl(url)     { _fallbackUrl = (url && url.length > 4) ? url 
 function valhallaHost()          { return VALHALLA.replace(/^https?:\/\//, "").replace(/\/.*$/, "") }
 
 function detectOsmScout(cb) {
-    var _called = false
+    // Fase 1: intento rápido — ya está corriendo
     _detectOsmScoutTry(function(found) {
-        if (_called) return
-        _called = true
-        cb(found)
-    }, 3, 0)
+        if (found) { cb(true); return }
+        // Fase 2: intento largo — DBus lo arranca (hasta 30 s para cargar mapas)
+        _fileDump("OSM Scout: no estaba corriendo — esperando activación DBus (30s)…")
+        _logMsg("OSM Scout: activando…")
+        _detectOsmScoutTry(cb, 1, 99, 30000)
+    }, 2, 0, 2000)
 }
 
-function _detectOsmScoutTry(cb, left, attempt) {
+function _detectOsmScoutTry(cb, left, attempt, timeout) {
     var xhr = new XMLHttpRequest()
     var _done = false
     var tag = "OSM Scout (intento " + (attempt + 1) + ")"
-    _fileDump(tag + ": GET 127.0.0.1:8553/v1/activate")
-    // /v1/activate es el endpoint de wake-up de OSM Scout Server ≥2.0
+    _fileDump(tag + ": GET 127.0.0.1:8553/v1/activate timeout=" + timeout)
     xhr.open("GET", "http://127.0.0.1:8553/v1/activate")
-    xhr.timeout = 2000
+    xhr.timeout = timeout
     xhr.onreadystatechange = function() {
         if (xhr.readyState !== 4 || _done) return
         _done = true
@@ -72,7 +73,7 @@ function _detectOsmScoutTry(cb, left, attempt) {
             cb(true)
         } else if (left > 1) {
             _fileDump(tag + ": status=0, reintentando…")
-            if (_defer) _defer(function() { _detectOsmScoutTry(cb, left - 1, attempt + 1) }, 1000)
+            if (_defer) _defer(function() { _detectOsmScoutTry(cb, left - 1, attempt + 1, timeout) }, 500)
         } else {
             _fileDump(tag + ": status=0, sin más intentos")
             _logMsg("OSM Scout: no disponible")
@@ -83,10 +84,10 @@ function _detectOsmScoutTry(cb, left, attempt) {
         if (_done) return; _done = true
         if (left > 1) {
             _fileDump(tag + ": timeout, reintentando…")
-            if (_defer) _defer(function() { _detectOsmScoutTry(cb, left - 1, attempt + 1) }, 1000)
+            if (_defer) _defer(function() { _detectOsmScoutTry(cb, left - 1, attempt + 1, timeout) }, 500)
         } else {
             _fileDump(tag + ": timeout final")
-            _logMsg("OSM Scout: timeout (no disponible)")
+            _logMsg("OSM Scout: no disponible")
             cb(false)
         }
     }
@@ -94,10 +95,10 @@ function _detectOsmScoutTry(cb, left, attempt) {
         if (_done) return; _done = true
         if (left > 1) {
             _fileDump(tag + ": onerror, reintentando…")
-            if (_defer) _defer(function() { _detectOsmScoutTry(cb, left - 1, attempt + 1) }, 1000)
+            if (_defer) _defer(function() { _detectOsmScoutTry(cb, left - 1, attempt + 1, timeout) }, 500)
         } else {
-            _fileDump(tag + ": onerror final (connection refused?)")
-            _logMsg("OSM Scout: error de red (no disponible)")
+            _fileDump(tag + ": onerror final")
+            _logMsg("OSM Scout: no disponible")
             cb(false)
         }
     }
