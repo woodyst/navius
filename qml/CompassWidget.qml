@@ -3,8 +3,8 @@ import Lomiri.Components 1.3
 
 Item {
     id: compassWidget
-    width:  units.gu(11)
-    height: units.gu(11)
+    width:  units.gu(9)
+    height: units.gu(9)
 
     property real   bearing:     0
     property bool   nightMode:   false
@@ -97,7 +97,7 @@ Item {
     // ── Botón interior: modo actual ───────────────────────────────────────
     Rectangle {
         anchors.centerIn: parent
-        width: units.gu(7); height: units.gu(7); radius: width / 2
+        width: units.gu(6); height: units.gu(6); radius: width / 2
         color: "transparent"
 
         Column {

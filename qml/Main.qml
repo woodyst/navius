@@ -5306,7 +5306,7 @@ ApplicationWindow {
         id: compassWidget
         z: 4
         visible: !satPanel.visible && !prefsPanel.visible
-        anchors { right: parent.right; rightMargin: root._scrubOff
+        anchors { right: parent.right; rightMargin: units.gu(2.5) + root._scrubOff
                   bottom: mapBottomAnchor.bottom; bottomMargin: units.gu(0.5) }
         bearing:     mapView.bearing
         nightMode:   mapView._nightMode
