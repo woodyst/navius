@@ -5469,77 +5469,6 @@ ApplicationWindow {
         }
     }
 
-    // ── Botón REC ─────────────────────────────────────────────────────────
-    Rectangle {
-        id: recBtn
-        width: mapBtnGroup._sz; height: mapBtnGroup._sz; radius: width / 2
-        color: "#B3455A64"
-        border.color: navTracker.recording ? "#EF5350" : "#90A4AE"
-        border.width: units.gu(0.2)
-
-        Column {
-            anchors.centerIn: parent; spacing: units.gu(0.4)
-
-            Rectangle {
-                anchors.horizontalCenter: parent.horizontalCenter
-                property real recFontGu: root._isLandscape ? 1.2 : 1.6
-                width:  units.gu(recFontGu * 2); height: width; radius: width / 2
-                color: "#FF0000"
-                SequentialAnimation on opacity {
-                    running: navTracker.recording
-                    loops: Animation.Infinite
-                    NumberAnimation { to: 0.4; duration: 600 }
-                    NumberAnimation { to: 1.0; duration: 600 }
-                }
-                opacity: 1.0
-            }
-
-            BtnLabel {
-                anchors.horizontalCenter: parent.horizontalCenter
-                text: "REC"
-                fontSize: units.gu(root._isLandscape ? 1.3 : 1.6); bold: true
-                mainColor: navTracker.recording ? "#EF5350" : "white"
-            }
-        }
-
-        MouseArea {
-            anchors.fill: parent
-            onClicked: appSettings.gpsTracking = !appSettings.gpsTracking
-        }
-    }
-
-    // ── Botón sonido dentro del grupo (solo landscape) ───────────────────
-    Rectangle {
-        id: soundBtnInGroup
-        visible: root._isLandscape
-        width: mapBtnGroup._sz; height: mapBtnGroup._sz; radius: width / 2
-        color: "#B3455A64"
-        border.color: root._soundCap === "silencio" ? "#90A4AE" : "#29B6F6"
-        border.width: units.gu(0.2)
-        Label {
-            anchors.centerIn: parent
-            text: root._soundCap === "todo"    ? "🔊" :
-                  root._soundCap === "alertas" ? "🔔" :
-                  root._soundCap === "pitidos" ? "🔈" : "🔇"
-            font.pixelSize: units.gu(2.8 * appSettings.textScale)
-        }
-        MouseArea {
-            anchors.fill: parent
-            onClicked: {
-                if (root._soundCap === "todo") {
-                    root._soundCap = "alertas"; navTts.alert_beep()
-                } else if (root._soundCap === "alertas") {
-                    navTts.stop_tts(); root._soundCap = "pitidos"; navTts.alert_beep()
-                } else if (root._soundCap === "pitidos") {
-                    navTts.stop_tts(); root._soundCap = "silencio"
-                } else {
-                    navTts.stop_tts(); root._soundCap = "todo"; navTts.beep()
-                }
-                soundModeTooltip.show()
-            }
-        }
-    }
-
     // ── Botón pausa/reanudar navegación (último en el grupo) ─────────────
     Rectangle {
         id: navPauseBtn
@@ -5743,7 +5672,7 @@ ApplicationWindow {
     // ── Auto-zoom button (encima del botón 3D, mismo estilo) ─────────────
     Rectangle {
         id: autoZoomBtn
-        visible: !root._menuOpen && !prefsPanel.visible && !searchPanel.visible && !satPanel.visible && !routeSelectPanel.visible
+        visible: !appSettings.autoZoom && !root._menuOpen && !prefsPanel.visible && !searchPanel.visible && !satPanel.visible && !routeSelectPanel.visible
         property color inactiveColor: "#90A4AE"
         anchors { right: parent.right; rightMargin: units.gu(2.5) + root._scrubOff
                   bottom: tdBtn.top; bottomMargin: units.gu(0.5) }
@@ -6353,47 +6282,6 @@ ApplicationWindow {
     }
 
     // ── Botón sonido (solo portrait, debajo del menú) ────────────────────
-    Rectangle {
-        id: soundBtn
-        visible: !root._isLandscape && !root._menuOpen && !prefsPanel.visible && !searchPanel.visible && !satPanel.visible && !routeSelectPanel.visible
-        property string _mode: root._soundCap
-        anchors {
-            right:       parent.right
-            rightMargin: units.gu(2.5) + root._scrubOff
-            top:         menuBtn.bottom
-            topMargin:   units.gu(0.5)
-        }
-        width: units.gu(9); height: units.gu(9); radius: width / 2
-        color: "#B3455A64"
-        border.color: _mode === "silencio" ? "#90A4AE" : "#29B6F6"
-        border.width: units.gu(0.2)
-        z: 15
-
-        Label {
-            anchors.centerIn: parent
-            text: soundBtn._mode === "todo"    ? "🔊" :
-                  soundBtn._mode === "alertas" ? "🔔" :
-                  soundBtn._mode === "pitidos" ? "🔈" : "🔇"
-            font.pixelSize: units.gu(4.2 * appSettings.textScale)
-        }
-
-        MouseArea {
-            anchors.fill: parent
-            onClicked: {
-                if (root._soundCap === "todo") {
-                    root._soundCap = "alertas"; navTts.alert_beep()
-                } else if (root._soundCap === "alertas") {
-                    navTts.stop_tts(); root._soundCap = "pitidos"; navTts.alert_beep()
-                } else if (root._soundCap === "pitidos") {
-                    navTts.stop_tts(); root._soundCap = "silencio"
-                } else {
-                    navTts.stop_tts(); root._soundCap = "todo"; navTts.beep()
-                }
-                soundModeTooltip.show()
-            }
-        }
-    }
-
     // ── Tooltip modo sonido (aparece 2s junto al botón al cambiar modo) ───────
     Rectangle {
         id: soundModeTooltip
@@ -6514,6 +6402,41 @@ ApplicationWindow {
         spacing: units.gu(0.5)
         width: parent.width
 
+        // Sonido (primera opción)
+        Rectangle {
+            width: root._menuItemW; height: root._menuItemH
+            radius: height / 2
+            color: "#CC12122A"
+            border.color: root._soundCap === "silencio" ? "#90A4AE" : "#29B6F6"
+            border.width: units.gu(0.2)
+            Row {
+                anchors.centerIn: parent; spacing: units.gu(1.2)
+                Label { text: root._soundCap === "todo"    ? "🔊" :
+                              root._soundCap === "alertas" ? "🔔" :
+                              root._soundCap === "pitidos" ? "🔈" : "🔇"
+                        font.pixelSize: root._menuItemH * 0.55; anchors.verticalCenter: parent.verticalCenter }
+                Label { text: root._soundCap === "todo"    ? i18n.tr("Voz + alertas") :
+                              root._soundCap === "alertas" ? i18n.tr("Solo alertas") :
+                              root._soundCap === "pitidos" ? i18n.tr("Solo pitidos") : i18n.tr("Silencio")
+                        color: root._soundCap === "silencio" ? "#90A4AE" : "#29B6F6"
+                        font.pixelSize: root._menuItemH * 0.40; anchors.verticalCenter: parent.verticalCenter }
+            }
+            MouseArea {
+                anchors.fill: parent
+                onClicked: {
+                    if (root._soundCap === "todo") {
+                        root._soundCap = "alertas"; navTts.alert_beep()
+                    } else if (root._soundCap === "alertas") {
+                        navTts.stop_tts(); root._soundCap = "pitidos"; navTts.alert_beep()
+                    } else if (root._soundCap === "pitidos") {
+                        navTts.stop_tts(); root._soundCap = "silencio"
+                    } else {
+                        navTts.stop_tts(); root._soundCap = "todo"; navTts.beep()
+                    }
+                }
+            }
+        }
+
         // Cuenta
         Rectangle {
             width: root._menuItemW; height: root._menuItemH
@@ -6530,24 +6453,6 @@ ApplicationWindow {
                         font.pixelSize: root._menuItemH * 0.40; anchors.verticalCenter: parent.verticalCenter }
             }
             MouseArea { anchors.fill: parent; onClicked: { root._menuOpen = false; loginPanel.open() } }
-        }
-
-        // Donar
-        Rectangle {
-            width: root._menuItemW; height: root._menuItemH
-            radius: height / 2
-            color: "#CC12122A"
-            border.color: "#F6C915"; border.width: units.gu(0.2)
-            Row {
-                anchors.centerIn: parent; spacing: units.gu(1.2)
-                Label { text: "♥"; color: "#F6C915"; font.pixelSize: root._menuItemH * 0.55
-                        anchors.verticalCenter: parent.verticalCenter }
-                Label { text: i18n.tr("Donar"); color: "#F6C915"
-                        font.pixelSize: root._menuItemH * 0.40
-                        anchors.verticalCenter: parent.verticalCenter }
-            }
-            MouseArea { anchors.fill: parent
-                onClicked: { root._menuOpen = false; Qt.openUrlExternally("https://liberapay.com/Navius-GPS/donate") } }
         }
 
         // Compartir viaje
@@ -6772,6 +6677,24 @@ ApplicationWindow {
                         anchors.verticalCenter: parent.verticalCenter }
             }
             MouseArea { anchors.fill: parent; onClicked: { root._menuOpen = false; prefsPanel.visible = true } }
+        }
+
+        // Donar
+        Rectangle {
+            width: root._menuItemW; height: root._menuItemH
+            radius: height / 2
+            color: "#CC12122A"
+            border.color: "#F6C915"; border.width: units.gu(0.2)
+            Row {
+                anchors.centerIn: parent; spacing: units.gu(1.2)
+                Label { text: "♥"; color: "#F6C915"; font.pixelSize: root._menuItemH * 0.55
+                        anchors.verticalCenter: parent.verticalCenter }
+                Label { text: i18n.tr("Donar"); color: "#F6C915"
+                        font.pixelSize: root._menuItemH * 0.40
+                        anchors.verticalCenter: parent.verticalCenter }
+            }
+            MouseArea { anchors.fill: parent
+                onClicked: { root._menuOpen = false; Qt.openUrlExternally("https://liberapay.com/Navius-GPS/donate") } }
         }
 
         // Bloqueo de mapa
