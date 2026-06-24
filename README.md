@@ -4,7 +4,7 @@ GPS navigator for Ubuntu Touch. Rust + QML, packaged as Click.
 
 [Web](https://www.egpsistemas.com/site/navius) · [GitHub](https://github.com/woodyst/navius) · [Donate](https://liberapay.com/Navius-GPS/) · [Versión en español](README.es.md)
 
-**Community** · [Telegram — GUI & Design](https://t.me/+zjjkxqdlAfphOGJk) · [Telegram — Bugs & Issues](https://t.me/+69rlmf-nlEU4NmM0)
+**Community** · [Telegram — GUI & Design](https://t.me/navius_gui_and_design) · [Telegram — Bugs & Issues](https://t.me/navius_bugs_and_issues)
 
 [Another GPS navigator?](docs/philosophy.en.md) · [User manual](docs/user.en.md) · [Developer docs](docs/developer.en.md)
 
