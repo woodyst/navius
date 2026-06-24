@@ -363,6 +363,16 @@ ApplicationWindow {
     // Ancho de ítems del menú (landscape: 1 columna scrollable)
     readonly property real _menuItemW: root._isLandscape ? units.gu(27) : units.gu(28)
 
+    // Tema de botones overlay según fondo del mapa
+    // Modos oscuros: "dark" (noche) y "fiord". Resto son fondos claros.
+    readonly property bool _mapIsLight: {
+        var m = mapView._forcedStyle !== "" ? mapView._forcedStyle : appSettings.mapStyleMode
+        if (m === "fiord") return false
+        return !mapView._nightMode
+    }
+    readonly property color _mapBtnBorder: _mapIsLight ? "#CC666666" : "#99FFFFFF"
+    readonly property color _mapBtnFg:     _mapIsLight ? "#DD333333" : "#FFFFFFFF"
+
     function _pushStatus(text, color) {
         var clr = color || "#EF9A9A"
         if (_statusCurrent && _statusCurrent.text === text) return
@@ -5254,22 +5264,22 @@ ApplicationWindow {
         Rectangle {
             anchors.fill: parent; radius: width / 2
             color: "transparent"
-            border.color: "#99FFFFFF"; border.width: units.gu(0.15)
+            border.color: root._mapBtnBorder; border.width: units.gu(0.15)
         }
         Rectangle {
             anchors.centerIn: parent
             width: units.gu(1); height: units.gu(1)
-            radius: width / 2; color: "white"
+            radius: width / 2; color: root._mapBtnFg
         }
         Rectangle {
             anchors.centerIn: parent
             width: parent.width * 0.55; height: units.gu(0.15)
-            color: "white"
+            color: root._mapBtnFg
         }
         Rectangle {
             anchors.centerIn: parent
             width: units.gu(0.15); height: parent.height * 0.55
-            color: "white"
+            color: root._mapBtnFg
         }
 
         MouseArea {
@@ -5304,6 +5314,7 @@ ApplicationWindow {
         hasArrow:    root._hasArrow
         dispHeadRad: root._dispHeadRad
         is3d:        (root._navActive ? appSettings.navMapMode : appSettings.mapMode) === "3d"
+        fgColor:     root._mapBtnFg
         onCycleRequested: {
             var curBearing = appSettings.bearingMode
             var curMode    = root._navActive ? appSettings.navMapMode : appSettings.mapMode
@@ -5368,7 +5379,7 @@ ApplicationWindow {
         id: mapStyleBtn
         width: mapBtnGroup._sz; height: mapBtnGroup._sz; radius: width / 2
         color: "transparent"
-        border.color: _modes[_idx] === "auto3d" ? "#29B6F6" : "#99FFFFFF"
+        border.color: _modes[_idx] === "auto3d" ? "#29B6F6" : root._mapBtnBorder
         border.width: units.gu(0.15)
 
         readonly property var _styleMeta: ({
@@ -5420,6 +5431,7 @@ ApplicationWindow {
                 anchors.horizontalCenter: parent.horizontalCenter
                 text: (mapStyleBtn._styleMeta[mapStyleBtn._modes[mapStyleBtn._idx]] || {}).label || ""
                 fontSize: units.gu(1.3); bold: true
+                mainColor: root._mapBtnFg
             }
         }
 
@@ -5454,7 +5466,7 @@ ApplicationWindow {
         Label {
             anchors.centerIn: parent
             text: root._navPaused ? "▶" : "⏸"
-            color: "white"
+            color: root._mapBtnFg
             font.pixelSize: units.gu(3.2 * appSettings.textScale)
         }
 
@@ -5649,7 +5661,7 @@ ApplicationWindow {
                   bottom: compassWidget.top; bottomMargin: units.gu(0.5) }
         width: units.gu(9); height: units.gu(9); radius: width / 2
         color: "transparent"
-        border.color: "#99FFFFFF"
+        border.color: root._mapBtnBorder
         border.width: units.gu(0.15)
         z: 10
 
@@ -5658,14 +5670,14 @@ ApplicationWindow {
             Label {
                 anchors.horizontalCenter: parent.horizontalCenter
                 text: "⊙"
-                color: "white"
+                color: root._mapBtnFg
                 font.pixelSize: units.gu(3.2 * appSettings.textScale)
             }
             BtnLabel {
                 anchors.horizontalCenter: parent.horizontalCenter
                 text: i18n.tr("Auto")
                 fontSize: units.gu(1.5); bold: false
-                mainColor: "white"
+                mainColor: root._mapBtnFg
             }
         }
         MouseArea {
@@ -6193,7 +6205,7 @@ ApplicationWindow {
                   top: parent.top; topMargin: root._navBarScreenHeight + root._alertBannerHeight + units.gu(1.5) }
         width: units.gu(9); height: units.gu(9); radius: width / 2
         color: "transparent"
-        border.color: "#99FFFFFF"
+        border.color: root._mapBtnBorder
         border.width: units.gu(0.15)
         z: 20
 
@@ -6201,6 +6213,7 @@ ApplicationWindow {
             anchors.centerIn: parent
             text: root._menuOpen ? "✕" : "≡"
             fontSize: units.gu(3.2)
+            mainColor: root._mapBtnFg
         }
         MouseArea {
             anchors.fill: parent
@@ -6322,7 +6335,7 @@ ApplicationWindow {
         }
         width: units.gu(9); height: units.gu(9); radius: width / 2
         color: "transparent"
-        border.color: "#99FFFFFF"
+        border.color: root._mapBtnBorder
         border.width: units.gu(0.15); z: 15
 
         Column {
@@ -6330,7 +6343,7 @@ ApplicationWindow {
             Label {
                 anchors.horizontalCenter: parent.horizontalCenter
                 text: "⟳"
-                color: "white"
+                color: root._mapBtnFg
                 font.pixelSize: units.gu(3.0 * appSettings.textScale)
                 RotationAnimation on rotation {
                     running: gpsSearchIndicator.visible
@@ -6341,6 +6354,7 @@ ApplicationWindow {
                 anchors.horizontalCenter: parent.horizontalCenter
                 text: "GPS"
                 fontSize: units.gu(1.5)
+                mainColor: root._mapBtnFg
             }
         }
     }

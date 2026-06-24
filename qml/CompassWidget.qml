@@ -12,6 +12,7 @@ Item {
     property bool   hasArrow:    false
     property real   dispHeadRad: 0
     property bool   is3d:        false     // mapMode es "3d"
+    property color  fgColor:     "white"   // color texto/borde según tema del mapa
 
     // bearingMode + is3d → compassMode para display
     readonly property string compassMode:
@@ -24,7 +25,7 @@ Item {
     Rectangle {
         anchors.fill: parent; radius: width / 2
         color: "transparent"
-        border.color: "#99FFFFFF"; border.width: 1
+        border.color: compassWidget.fgColor; border.width: 1
     }
 
     // ── Aguja (roja=N, gris=S) — rota con el mapa ────────────────────────
@@ -108,14 +109,17 @@ Item {
             Label {
                 anchors.horizontalCenter: parent.horizontalCenter
                 text: compassWidget.compassMode === "north" ? "N" : "↑"
-                color: "white"
+                color: compassWidget.fgColor
                 font.pixelSize: units.gu(2.6)
                 font.bold: true
             }
             Label {
                 anchors.horizontalCenter: parent.horizontalCenter
                 text: compassWidget.compassMode === "heading3d" ? "3D" : "2D"
-                color: compassWidget.compassMode === "heading3d" ? "#29B6F6" : "#80FFFFFF"
+                color: compassWidget.compassMode === "heading3d"
+                       ? "#29B6F6"
+                       : Qt.rgba(compassWidget.fgColor.r, compassWidget.fgColor.g,
+                                 compassWidget.fgColor.b, 0.5)
                 font.pixelSize: units.gu(1.4)
             }
         }
