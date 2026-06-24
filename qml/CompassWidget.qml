@@ -12,7 +12,8 @@ Item {
     property bool   hasArrow:    false
     property real   dispHeadRad: 0
     property bool   is3d:        false     // mapMode es "3d"
-    property color  fgColor:     "white"   // color texto/borde según tema del mapa
+    property color  fgColor:      "white"   // color texto según tema del mapa
+    property color  borderColor:  "white"   // color contorno círculo (= _mapBtnBorder)
 
     // bearingMode + is3d → compassMode para display
     readonly property string compassMode:
@@ -25,7 +26,7 @@ Item {
     Rectangle {
         anchors.fill: parent; radius: width / 2
         color: "transparent"
-        border.color: compassWidget.fgColor; border.width: 1
+        border.color: compassWidget.borderColor; border.width: 1
     }
 
     // ── Aguja (roja=N, gris=S) — rota con el mapa ────────────────────────
