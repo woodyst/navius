@@ -5379,7 +5379,7 @@ ApplicationWindow {
         id: mapStyleBtn
         width: mapBtnGroup._sz; height: mapBtnGroup._sz; radius: width / 2
         color: "transparent"
-        border.color: _modes[_idx] === "auto3d" ? "#29B6F6" : root._mapBtnBorder
+        border.color: root._mapBtnBorder
         border.width: units.gu(0.15)
 
         readonly property var _styleMeta: ({

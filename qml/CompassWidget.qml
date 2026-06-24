@@ -113,10 +113,7 @@ Item {
             Label {
                 anchors.horizontalCenter: parent.horizontalCenter
                 text: compassWidget.compassMode === "heading3d" ? "3D" : "2D"
-                color: compassWidget.compassMode === "heading3d"
-                       ? "#29B6F6"
-                       : Qt.rgba(compassWidget.fgColor.r, compassWidget.fgColor.g,
-                                 compassWidget.fgColor.b, 0.5)
+                color: compassWidget.fgColor
                 font.pixelSize: units.gu(1.4)
             }
         }
