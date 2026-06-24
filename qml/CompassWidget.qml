@@ -23,8 +23,8 @@ Item {
     // ── Fondo ─────────────────────────────────────────────────────────────
     Rectangle {
         anchors.fill: parent; radius: width / 2
-        color: "#AA1A2535"
-        border.color: "#26FFFFFF"; border.width: 1
+        color: "transparent"
+        border.color: "#99FFFFFF"; border.width: 1
     }
 
     // ── Aguja (roja=N, gris=S) — rota con el mapa ────────────────────────

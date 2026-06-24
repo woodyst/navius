@@ -5163,7 +5163,7 @@ ApplicationWindow {
         }
         width: units.gu(3)
 
-        Rectangle { anchors.fill: parent; radius: width / 2; color: "#B3455A64" }
+        Rectangle { anchors.fill: parent; radius: width / 2; color: "transparent"; border.color: "#60FFFFFF"; border.width: units.gu(0.1) }
 
         Rectangle {
             id: ssTrack
@@ -5243,8 +5243,8 @@ ApplicationWindow {
 
         Rectangle {
             anchors.fill: parent; radius: width / 2
-            color: "#B3455A64"
-            border.color: "white"; border.width: units.gu(0.2)
+            color: "transparent"
+            border.color: "#99FFFFFF"; border.width: units.gu(0.15)
         }
         Rectangle {
             anchors.centerIn: parent
@@ -5357,9 +5357,9 @@ ApplicationWindow {
     Rectangle {
         id: mapStyleBtn
         width: mapBtnGroup._sz; height: mapBtnGroup._sz; radius: width / 2
-        color: "#B3455A64"
-        border.color: _modes[_idx] === "auto3d" ? "#29B6F6" : "#90A4AE"
-        border.width: units.gu(0.2)
+        color: "transparent"
+        border.color: _modes[_idx] === "auto3d" ? "#29B6F6" : "#99FFFFFF"
+        border.width: units.gu(0.15)
 
         readonly property var _styleMeta: ({
             "auto3d":    { icon: "🏢", label: "Mapa 3D"  },
@@ -5437,9 +5437,9 @@ ApplicationWindow {
         visible: root._navActive && !root._driveCtrlActive
                  && !prefsPanel.visible && !searchPanel.visible && !routeViewPanel.visible
         width: mapBtnGroup._sz; height: mapBtnGroup._sz; radius: width / 2
-        color: root._navPaused ? "#B34CAF50" : "#B3455A64"
+        color: "transparent"
         border.color: root._navPaused ? "#4CAF50" : "#29B6F6"
-        border.width: units.gu(0.2)
+        border.width: units.gu(0.15)
 
         Label {
             anchors.centerIn: parent
@@ -5520,7 +5520,7 @@ ApplicationWindow {
                   bottom: alertasBtnPortrait.top; bottomMargin: units.gu(1) }
         width: units.gu(3)
 
-        Rectangle { anchors.fill: parent; radius: width / 2; color: "#B3455A64" }
+        Rectangle { anchors.fill: parent; radius: width / 2; color: "transparent"; border.color: "#60FFFFFF"; border.width: units.gu(0.1) }
 
         // Track
         Rectangle {
@@ -5594,8 +5594,8 @@ ApplicationWindow {
         anchors { right: parent.right; rightMargin: units.gu(2.5) + root._scrubOff
                   bottom: autoZoomBtn.top; bottomMargin: units.gu(0.5) }
         width: units.gu(9); height: units.gu(9); radius: width / 2
-        color: "#B3455A64"
-        border.color: "#FF6F00"; border.width: units.gu(0.2)
+        color: "transparent"
+        border.color: "#FF6F00"; border.width: units.gu(0.15)
         opacity: mainAuthSettings.token !== "" ? 1.0 : 0.45
         z: 10
         Column {
@@ -5616,8 +5616,8 @@ ApplicationWindow {
         anchors { right: compassWidget.left; rightMargin: units.gu(0.5)
                   verticalCenter: compassWidget.verticalCenter }
         width: units.gu(9); height: units.gu(9); radius: width / 2
-        color: "#B3455A64"
-        border.color: "#FF6F00"; border.width: units.gu(0.2)
+        color: "transparent"
+        border.color: "#FF6F00"; border.width: units.gu(0.15)
         opacity: mainAuthSettings.token !== "" ? 1.0 : 0.45
         z: 10
         Column {
@@ -5635,27 +5635,27 @@ ApplicationWindow {
     Rectangle {
         id: autoZoomBtn
         visible: !appSettings.autoZoom && !root._menuOpen && !prefsPanel.visible && !searchPanel.visible && !satPanel.visible && !routeSelectPanel.visible
-        property color inactiveColor: "#90A4AE"
         anchors { right: parent.right; rightMargin: units.gu(2.5) + root._scrubOff
                   bottom: compassWidget.top; bottomMargin: units.gu(0.5) }
         width: units.gu(9); height: units.gu(9); radius: width / 2
-        color: "#B3455A64"
-        border.color: appSettings.autoZoom ? "#29B6F6" : inactiveColor
-        border.width: units.gu(0.2)
+        color: "transparent"
+        border.color: "#99FFFFFF"
+        border.width: units.gu(0.15)
         z: 10
 
         Column {
             anchors.centerIn: parent; spacing: units.gu(0.1)
             Label {
                 anchors.horizontalCenter: parent.horizontalCenter
-                text: "🔍"
-                font.pixelSize: units.gu(2.8 * appSettings.textScale)
+                text: "⊙"
+                color: "white"
+                font.pixelSize: units.gu(3.2 * appSettings.textScale)
             }
             BtnLabel {
                 anchors.horizontalCenter: parent.horizontalCenter
                 text: i18n.tr("Auto")
-                fontSize: units.gu(1.5); bold: appSettings.autoZoom
-                mainColor: appSettings.autoZoom ? "#29B6F6" : "white"
+                fontSize: units.gu(1.5); bold: false
+                mainColor: "white"
             }
         }
         MouseArea {
@@ -6182,9 +6182,9 @@ ApplicationWindow {
         anchors { right: parent.right; rightMargin: units.gu(2.5) + root._scrubOff
                   top: parent.top; topMargin: root._navBarScreenHeight + root._alertBannerHeight + units.gu(1.5) }
         width: units.gu(9); height: units.gu(9); radius: width / 2
-        color: "#B3455A64"
-        border.color: "#90A4AE"
-        border.width: units.gu(0.2)
+        color: "transparent"
+        border.color: "#99FFFFFF"
+        border.width: units.gu(0.15)
         z: 20
 
         BtnLabel {
@@ -6311,9 +6311,9 @@ ApplicationWindow {
             topMargin:       root._navBarScreenHeight + root._alertBannerHeight + units.gu(1.5)
         }
         width: units.gu(9); height: units.gu(9); radius: width / 2
-        color: "#B3455A64"
-        border.color: "#90A4AE"
-        border.width: units.gu(0.2); z: 15
+        color: "transparent"
+        border.color: "#99FFFFFF"
+        border.width: units.gu(0.15); z: 15
 
         Column {
             anchors.centerIn: parent; spacing: units.gu(0.1)
