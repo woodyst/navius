@@ -26,7 +26,7 @@ Item {
     Rectangle {
         anchors.fill: parent; radius: width / 2
         color: "transparent"
-        border.color: compassWidget.borderColor; border.width: 1
+        border.color: compassWidget.borderColor; border.width: units.gu(0.15)
     }
 
     // ── Aguja (roja=N, gris=S) — rota con el mapa ────────────────────────
