@@ -3,24 +3,33 @@ import Lomiri.Components 1.3
 
 Item {
     id: compassWidget
-    width:  units.gu(14)
-    height: units.gu(14)
+    width:  units.gu(11)
+    height: units.gu(11)
 
     property real   bearing:     0
     property bool   nightMode:   false
-    property string bearingMode: "north"
+    property string bearingMode: "north"   // "north" | "heading"
     property bool   hasArrow:    false
     property real   dispHeadRad: 0
+    property bool   is3d:        false     // mapMode es "3d"
 
-    signal northUpRequested()
-    signal headingUpRequested()
+    // bearingMode + is3d → compassMode para display
+    readonly property string compassMode:
+        bearingMode === "north"   ? "north" :
+        is3d                      ? "heading3d" : "heading"
 
-    // ── Background circle ─────────────────────────────────────────────────
-    Rectangle { anchors.fill: parent; radius: width / 2; color: "#B3455A64" }
+    signal cycleRequested()
 
-    // ── Compass ring ──────────────────────────────────────────────────────
+    // ── Fondo ─────────────────────────────────────────────────────────────
+    Rectangle {
+        anchors.fill: parent; radius: width / 2
+        color: "#AA1A2535"
+        border.color: "rgba(255,255,255,0.15)"; border.width: 1
+    }
+
+    // ── Aguja (roja=N, gris=S) — rota con el mapa ────────────────────────
     Canvas {
-        id: compassCanvas
+        id: needleCanvas
         anchors.fill: parent
         rotation: -compassWidget.bearing
 
@@ -31,73 +40,40 @@ Item {
         onPaint: {
             var ctx = getContext("2d")
             ctx.clearRect(0, 0, width, height)
-            var cx = width / 2, cy = height / 2
-            var R  = width / 2
+            var cx = width / 2, cy = height / 2, R = width / 2
+            var nw    = R * 0.09   // ancho aguja
+            var inner = R * 0.30   // hueco botón interior
+            var outer = R * 0.86   // borde exterior
 
-            var colN    = "#EF5350"
-            var colCard = "rgba(255,255,255,0.90)"
-            var colDim  = nightMode ? "rgba(255,255,255,0.35)" : "rgba(69,90,100,0.35)"
-
-            // Inner button border circle (drawn first so labels appear on top)
+            // Mitad N (roja)
             ctx.beginPath()
-            ctx.arc(cx, cy, R * 0.50, 0, 2 * Math.PI)
-            ctx.strokeStyle = colCard
-            ctx.lineWidth   = 1.5
-            ctx.stroke()
+            ctx.moveTo(cx - nw, cy - inner)
+            ctx.lineTo(cx,      cy - outer)
+            ctx.lineTo(cx + nw, cy - inner)
+            ctx.closePath()
+            ctx.fillStyle = "#EF5350"
+            ctx.shadowColor = "rgba(0,0,0,0.5)"; ctx.shadowBlur = 2
+            ctx.fill()
 
-            // Thin outer ring
+            // Mitad S (blanco tenue)
             ctx.beginPath()
-            ctx.arc(cx, cy, R * 0.94, 0, 2 * Math.PI)
-            ctx.strokeStyle = colDim
-            ctx.lineWidth   = 1
-            ctx.stroke()
+            ctx.moveTo(cx - nw, cy + inner)
+            ctx.lineTo(cx,      cy + outer)
+            ctx.lineTo(cx + nw, cy + inner)
+            ctx.closePath()
+            ctx.fillStyle = nightMode ? "rgba(255,255,255,0.30)" : "rgba(255,255,255,0.45)"
+            ctx.shadowColor = "transparent"; ctx.shadowBlur = 0
+            ctx.fill()
 
-            // Intermediate ticks (NE, SE, SO, NO)
-            var halfs = [-3*Math.PI/4, -Math.PI/4, Math.PI/4, 3*Math.PI/4]
-            for (var j = 0; j < halfs.length; j++) {
-                var ah = halfs[j]
-                ctx.beginPath()
-                ctx.moveTo(cx + R*0.86*Math.cos(ah), cy + R*0.86*Math.sin(ah))
-                ctx.lineTo(cx + R*0.94*Math.cos(ah), cy + R*0.94*Math.sin(ah))
-                ctx.strokeStyle = colDim
-                ctx.lineWidth   = 1.0
-                ctx.stroke()
-            }
-
-            // Cardinal ticks and labels
-            var cards = [
-                {a: -Math.PI/2, lbl: "N", col: colN,    lw: 2.5, fs: R*0.22},
-                {a:  0,         lbl: "E", col: colCard,  lw: 1.5, fs: R*0.18},
-                {a:  Math.PI/2, lbl: "S", col: colCard,  lw: 1.5, fs: R*0.18},
-                {a:  Math.PI,   lbl: "O", col: colCard,  lw: 1.5, fs: R*0.18}
-            ]
-            for (var i = 0; i < cards.length; i++) {
-                var c = cards[i]
-                var cosA = Math.cos(c.a), sinA = Math.sin(c.a)
-                ctx.beginPath()
-                ctx.moveTo(cx + R*0.78*cosA, cy + R*0.78*sinA)
-                ctx.lineTo(cx + R*0.94*cosA, cy + R*0.94*sinA)
-                ctx.strokeStyle = c.col
-                ctx.lineWidth   = c.lw
-                ctx.stroke()
-                ctx.fillStyle    = c.col
-                ctx.font         = "bold " + Math.round(c.fs) + "px sans-serif"
-                ctx.textAlign    = "center"
-                ctx.textBaseline = "middle"
-                ctx.shadowColor   = "rgba(0,0,0,0.75)"
-                ctx.shadowBlur    = 3
-                ctx.shadowOffsetX = 1
-                ctx.shadowOffsetY = 1
-                ctx.fillText(c.lbl, cx + R*0.64*cosA, cy + R*0.64*sinA)
-                ctx.shadowColor   = "transparent"
-                ctx.shadowBlur    = 0
-                ctx.shadowOffsetX = 0
-                ctx.shadowOffsetY = 0
-            }
+            // Punto central
+            ctx.beginPath()
+            ctx.arc(cx, cy, nw * 1.1, 0, 2 * Math.PI)
+            ctx.fillStyle = "rgba(255,255,255,0.85)"
+            ctx.fill()
         }
     }
 
-    // ── Vehicle heading arrow (rotates to show travel direction) ─────────
+    // ── Flecha heading del vehículo (verde) ──────────────────────────────
     Canvas {
         id: headingArrow
         anchors.fill: parent
@@ -110,45 +86,44 @@ Item {
             ctx.clearRect(0, 0, width, height)
             var cx = width / 2, cy = height / 2, R = width / 2
             ctx.beginPath()
-            ctx.moveTo(cx, cy - R * 0.95)
-            ctx.lineTo(cx - R * 0.065, cy - R * 0.78)
-            ctx.lineTo(cx + R * 0.065, cy - R * 0.78)
+            ctx.moveTo(cx,             cy - R * 0.94)
+            ctx.lineTo(cx - R * 0.06,  cy - R * 0.76)
+            ctx.lineTo(cx + R * 0.06,  cy - R * 0.76)
             ctx.closePath()
             ctx.fillStyle = "#4CAF50"
-            ctx.shadowColor = "rgba(0,0,0,0.7)"
-            ctx.shadowBlur  = 3
+            ctx.shadowColor = "rgba(0,0,0,0.7)"; ctx.shadowBlur = 3
             ctx.fill()
         }
     }
 
-    // ── Inner button ──────────────────────────────────────────────────────
+    // ── Botón interior: modo actual ───────────────────────────────────────
     Rectangle {
         anchors.centerIn: parent
-        width: units.gu(9); height: units.gu(9); radius: width / 2
+        width: units.gu(7); height: units.gu(7); radius: width / 2
         color: "transparent"
 
         Column {
-            anchors.centerIn: parent; spacing: units.gu(0.1)
-            BtnLabel {
+            anchors.centerIn: parent; spacing: 0
+
+            Label {
                 anchors.horizontalCenter: parent.horizontalCenter
-                text: compassWidget.bearingMode === "heading" ? "↑" : "N"
-                fontSize: units.gu(3.0); bold: true
+                text: compassWidget.compassMode === "north" ? "N" : "↑"
+                color: "white"
+                font.pixelSize: units.gu(2.6)
+                font.bold: true
             }
-            BtnLabel {
+            Label {
                 anchors.horizontalCenter: parent.horizontalCenter
-                text: compassWidget.bearingMode === "heading" ? i18n.tr("Giro") : "↑"
-                fontSize: units.gu(1.6)
+                text: compassWidget.compassMode === "heading3d" ? "3D" : "2D"
+                color: compassWidget.compassMode === "heading3d" ? "#29B6F6"
+                                                                 : "rgba(255,255,255,0.50)"
+                font.pixelSize: units.gu(1.4)
             }
         }
 
         MouseArea {
             anchors.fill: parent
-            onClicked: {
-                if (compassWidget.bearingMode === "heading")
-                    compassWidget.northUpRequested()
-                else
-                    compassWidget.headingUpRequested()
-            }
+            onClicked: compassWidget.cycleRequested()
         }
     }
 }

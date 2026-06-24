@@ -5281,10 +5281,10 @@ ApplicationWindow {
         }
     }
 
-    // ── Compass widget: brújula animada + botón N/Giro ────────────────────────
+    // ── Compass widget: brújula minimalista + ciclo N+2D / Giro+3D / Giro+2D ──
     CompassWidget {
         id: compassWidget
-        z: 4                        // sobre billboards (z:3)
+        z: 4
         visible: !satPanel.visible && !prefsPanel.visible
         anchors { right: parent.right; rightMargin: root._scrubOff
                   bottom: mapBottomAnchor.bottom; bottomMargin: units.gu(0.5) }
@@ -5293,48 +5293,33 @@ ApplicationWindow {
         bearingMode: appSettings.bearingMode
         hasArrow:    root._hasArrow
         dispHeadRad: root._dispHeadRad
-        onNorthUpRequested: {
-            appSettings.bearingMode = "north"
-            mapView.animateBearing(0)
-        }
-        onHeadingUpRequested: {
-            appSettings.bearingMode = "heading"
-            mapView.followMode = true
-            mapView.animateBearing(root._hasArrow ? root._dispHeadRad * 180 / Math.PI : 0)
-        }
-    }
+        is3d:        (root._navActive ? appSettings.navMapMode : appSettings.mapMode) === "3d"
+        onCycleRequested: {
+            var curBearing = appSettings.bearingMode
+            var curMode    = root._navActive ? appSettings.navMapMode : appSettings.mapMode
+            var newMapMode, newBearing
 
-    // ── 2D/3D toggle (derecha, encima de la brújula) ──────────────────────
-    Rectangle {
-        id: tdBtn
-        visible: !root._menuOpen && !satPanel.visible && !routeSelectPanel.visible
-        property color inactiveColor: "#90A4AE"
-        anchors { right: parent.right; rightMargin: units.gu(2.5) + root._scrubOff
-                  bottom: compassWidget.top; bottomMargin: units.gu(0.5) }
-        width: units.gu(9); height: units.gu(9); radius: width / 2
-        color: "#B3455A64"
-        property string _curMode: root._navActive ? appSettings.navMapMode : appSettings.mapMode
-        border.color: inactiveColor
-        border.width: units.gu(0.2)
-
-        Column {
-            anchors.centerIn: parent; spacing: units.gu(0.1)
-            BtnLabel {
-                anchors.horizontalCenter: parent.horizontalCenter
-                text: tdBtn._curMode === "3d" ? "3D" : "2D"
-                fontSize: units.gu(2.8); bold: true
+            if (curBearing === "north") {
+                // N+2D → Giro+3D
+                newBearing = "heading"; newMapMode = "3d"
+            } else if (curMode === "3d") {
+                // Giro+3D → Giro+2D
+                newBearing = "heading"; newMapMode = "2d"
+            } else {
+                // Giro+2D → N+2D
+                newBearing = "north"; newMapMode = "2d"
             }
-        }
 
-        MouseArea {
-            anchors.fill: parent
-            onClicked: {
-                var newMode = parent._curMode === "3d" ? "2d" : "3d"
-                if (root._navActive)
-                    appSettings.navMapMode = newMode
-                else
-                    appSettings.mapMode = newMode
-                root._applyMapMode(newMode)
+            appSettings.bearingMode = newBearing
+            if (root._navActive) appSettings.navMapMode = newMapMode
+            else                 appSettings.mapMode    = newMapMode
+            root._applyMapMode(newMapMode)
+
+            if (newBearing === "heading") {
+                mapView.followMode = true
+                mapView.animateBearing(root._hasArrow ? root._dispHeadRad * 180 / Math.PI : 0)
+            } else {
+                mapView.animateBearing(0)
             }
         }
     }
@@ -5675,7 +5660,7 @@ ApplicationWindow {
         visible: !appSettings.autoZoom && !root._menuOpen && !prefsPanel.visible && !searchPanel.visible && !satPanel.visible && !routeSelectPanel.visible
         property color inactiveColor: "#90A4AE"
         anchors { right: parent.right; rightMargin: units.gu(2.5) + root._scrubOff
-                  bottom: tdBtn.top; bottomMargin: units.gu(0.5) }
+                  bottom: compassWidget.top; bottomMargin: units.gu(0.5) }
         width: units.gu(9); height: units.gu(9); radius: width / 2
         color: "#B3455A64"
         border.color: appSettings.autoZoom ? "#29B6F6" : inactiveColor
