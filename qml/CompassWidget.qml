@@ -115,7 +115,7 @@ Item {
                 anchors.horizontalCenter: parent.horizontalCenter
                 text: compassWidget.compassMode === "heading3d" ? "3D" : "2D"
                 color: compassWidget.fgColor
-                font.pixelSize: units.gu(1.4)
+                font.pixelSize: units.gu(1.3)
             }
         }
 

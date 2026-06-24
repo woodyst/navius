@@ -5431,7 +5431,7 @@ ApplicationWindow {
             BtnLabel {
                 anchors.horizontalCenter: parent.horizontalCenter
                 text: (mapStyleBtn._styleMeta[mapStyleBtn._modes[mapStyleBtn._idx]] || {}).label || ""
-                fontSize: units.gu(1.3); bold: true
+                fontSize: units.gu(1.3); bold: false
                 mainColor: root._uiFg
             }
         }
