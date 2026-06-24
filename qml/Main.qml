@@ -3299,6 +3299,7 @@ ApplicationWindow {
         // ── Auto-zoom by speed ─────────────────────────────────────────────
         property bool _zoomAuto:        false  // true while auto-zoom animates
         property real _zoomAutoTarget:  appSettings.lastZoom  // last zoom level we set programmatically
+        property bool _mapInitialized:  false  // guard: evita desactivar autoZoom en el zoom inicial al arrancar
 
         property string _autoZoomLog: ""
 
@@ -3309,6 +3310,9 @@ ApplicationWindow {
             // Use a 0-ms timer to let metersPerPixel settle first.
             zoomRecenter.restart()
             radarViewportTimer.restart()
+            // Zoom manual (pinch): desactivar autoZoom para que aparezca el botón
+            if (_mapInitialized && !_zoomAuto && appSettings.autoZoom)
+                appSettings.autoZoom = false
         }
 
         Timer {
@@ -3401,6 +3405,11 @@ ApplicationWindow {
             }
         }
 
+        Timer {
+            id: _mapInitTimer; interval: 800; repeat: false
+            onTriggered: mapView._mapInitialized = true
+        }
+
         Component.onCompleted: {
             console.log("TRACE [" + Date.now() + "]: mapView.onCompleted START")
             _tileBusy = true
@@ -3415,6 +3424,7 @@ ApplicationWindow {
                 center = QtPositioning.coordinate(gpsSource.defaultLat, gpsSource.defaultLon)
                 _gpsUpdating = false
             }
+            _mapInitTimer.start()
             console.log("TRACE [" + Date.now() + "]: mapView.onCompleted END")
         }
 
