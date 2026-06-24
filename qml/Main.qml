@@ -5353,29 +5353,28 @@ ApplicationWindow {
             }
         }
 
-    // ── Botón de modo de mapa ─────────────────────────────────────────────
+    // ── Botón de modo de mapa (incluye Mapa 3D/2D fusionado) ─────────────
     Rectangle {
         id: mapStyleBtn
         width: mapBtnGroup._sz; height: mapBtnGroup._sz; radius: width / 2
         color: "#B3455A64"
-        property color _col: "#90A4AE"
-        border.color: _col; border.width: units.gu(0.2)
+        border.color: _modes[_idx] === "auto3d" ? "#29B6F6" : "#90A4AE"
+        border.width: units.gu(0.2)
 
-        // Metadatos por nombre de estilo
         readonly property var _styleMeta: ({
-            "auto":      { icon: "🗺", label: "Mapa"     },
-            "satellite": { icon: "🛰", label: "Satélite" },
-            "positron":  { icon: "☀", label: "Claro"    },
-            "bright":    { icon: "🌐", label: "Vivo"     },
-            "fiord":     { icon: "🌊", label: "Fiord"    },
-            "dark":      { icon: "🌙", label: "Noche"    }
+            "auto3d":    { icon: "🏢", label: "Mapa 3D"  },
+            "auto":      { icon: "🗺", label: "Mapa"      },
+            "satellite": { icon: "🛰", label: "Satélite"  },
+            "positron":  { icon: "☀", label: "Claro"      },
+            "bright":    { icon: "🌐", label: "Vivo"       },
+            "fiord":     { icon: "🌊", label: "Fiord"      },
+            "dark":      { icon: "🌙", label: "Noche"      }
         })
 
-        // Externos fijos; navius = auto + satellite + estilos del servidor
         property var _modes: {
-            if (!mapView._navius) return ["auto", "satellite", "positron", "bright"]
+            if (!mapView._navius) return ["auto3d", "auto", "satellite", "positron", "bright"]
             var extra = JSON.parse(appSettings.mapNaviusStyles)
-            return ["auto", "satellite"].concat(extra)
+            return ["auto3d", "auto", "satellite"].concat(extra)
         }
 
         property int _idx: 0
@@ -5391,7 +5390,12 @@ ApplicationWindow {
 
         Component.onCompleted: {
             var m = appSettings.mapStyleMode
-            for (var i = 0; i < _modes.length; i++) if (_modes[i] === m) { _idx = i; return }
+            var want3d = appSettings.show3dBuildings
+            for (var i = 0; i < _modes.length; i++) {
+                var n = _modes[i]
+                if (n === "auto3d" && m === "auto" && want3d) { _idx = i; return }
+                if (n !== "auto3d" && n === m)                { _idx = i; return }
+            }
             _idx = 0
         }
 
@@ -5414,42 +5418,15 @@ ApplicationWindow {
             onClicked: {
                 var next = (parent._idx + 1) % parent._modes.length
                 parent._idx = next
-                var name = parent._modes[next]
-                mapView._forcedStyle = name
+                var name     = parent._modes[next]
+                var baseName = (name === "auto3d") ? "auto" : name
+                var want3d   = (name === "auto3d")
+                mapView._forcedStyle = baseName
                 mapView.styleUrl = parent._urlFor(name)
-            }
-        }
-    }
-
-    // ── Botón edificios 3D ────────────────────────────────────────────────
-    Rectangle {
-        id: buildings3dBtn
-        visible: appSettings.mapStyleMode === "auto" && !mapView._nightMode && mapView._has3dBuildings
-        width: mapBtnGroup._sz; height: mapBtnGroup._sz
-        radius: width / 2
-        color: "#B3455A64"
-        property bool _on: appSettings.show3dBuildings
-        property color _col: _on ? "#29B6F6" : "#90A4AE"
-        border.color: _col; border.width: units.gu(0.2)
-
-        Column {
-            anchors.centerIn: parent; spacing: units.gu(0.1)
-            Label {
-                anchors.horizontalCenter: parent.horizontalCenter
-                text: "🏢"; font.pixelSize: units.gu(2.4 * appSettings.textScale)
-            }
-            BtnLabel {
-                anchors.horizontalCenter: parent.horizontalCenter
-                text: buildings3dBtn._on ? "3D" : "2D"
-                fontSize: units.gu(1.6); bold: true
-            }
-        }
-
-        MouseArea {
-            anchors.fill: parent
-            onClicked: {
-                appSettings.show3dBuildings = !appSettings.show3dBuildings
-                mapView.apply3dBuildings()
+                if (appSettings.show3dBuildings !== want3d) {
+                    appSettings.show3dBuildings = want3d
+                    mapView.apply3dBuildings()
+                }
             }
         }
     }
