@@ -5617,7 +5617,7 @@ ApplicationWindow {
                   bottom: autoZoomBtn.top; bottomMargin: units.gu(0.5) }
         width: units.gu(9); height: units.gu(9); radius: width / 2
         color: "transparent"
-        border.color: "#FF6F00"; border.width: units.gu(0.15)
+        border.color: root._mapBtnBorder; border.width: units.gu(0.15)
         opacity: mainAuthSettings.token !== "" ? 1.0 : 0.45
         z: 10
         Column {
@@ -5625,7 +5625,7 @@ ApplicationWindow {
             Label { anchors.horizontalCenter: parent.horizontalCenter
                     text: "⚠️"; font.pixelSize: units.gu(4.2 * appSettings.textScale) }
             BtnLabel { anchors.horizontalCenter: parent.horizontalCenter
-                       text: i18n.tr("Alerta"); fontSize: units.gu(2.05); bold: false; mainColor: "white" }
+                       text: i18n.tr("Alerta"); fontSize: units.gu(2.05); bold: false; mainColor: root._mapBtnFg }
         }
         MouseArea { anchors.fill: parent
             onClicked: mainAuthSettings.token !== "" ? alertasOverlay.open() : loginPanel.open() }
@@ -5639,7 +5639,7 @@ ApplicationWindow {
                   verticalCenter: compassWidget.verticalCenter }
         width: units.gu(9); height: units.gu(9); radius: width / 2
         color: "transparent"
-        border.color: "#FF6F00"; border.width: units.gu(0.15)
+        border.color: root._mapBtnBorder; border.width: units.gu(0.15)
         opacity: mainAuthSettings.token !== "" ? 1.0 : 0.45
         z: 10
         Column {
@@ -5647,7 +5647,7 @@ ApplicationWindow {
             Label { anchors.horizontalCenter: parent.horizontalCenter
                     text: "⚠️"; font.pixelSize: units.gu(4.2 * appSettings.textScale) }
             BtnLabel { anchors.horizontalCenter: parent.horizontalCenter
-                       text: i18n.tr("Alerta"); fontSize: units.gu(2.05); bold: false; mainColor: "white" }
+                       text: i18n.tr("Alerta"); fontSize: units.gu(2.05); bold: false; mainColor: root._mapBtnFg }
         }
         MouseArea { anchors.fill: parent
             onClicked: mainAuthSettings.token !== "" ? alertasOverlay.open() : loginPanel.open() }

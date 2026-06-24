@@ -53,7 +53,6 @@ Item {
             ctx.lineTo(cx + nw, cy - inner)
             ctx.closePath()
             ctx.fillStyle = "#EF5350"
-            ctx.shadowColor = "rgba(0,0,0,0.5)"; ctx.shadowBlur = 2
             ctx.fill()
 
             // Mitad S (blanco tenue)
@@ -63,7 +62,6 @@ Item {
             ctx.lineTo(cx + nw, cy + inner)
             ctx.closePath()
             ctx.fillStyle = nightMode ? "rgba(255,255,255,0.30)" : "rgba(255,255,255,0.45)"
-            ctx.shadowColor = "transparent"; ctx.shadowBlur = 0
             ctx.fill()
 
             // Punto central
@@ -92,7 +90,6 @@ Item {
             ctx.lineTo(cx + R * 0.06,  cy - R * 0.76)
             ctx.closePath()
             ctx.fillStyle = "#4CAF50"
-            ctx.shadowColor = "rgba(0,0,0,0.7)"; ctx.shadowBlur = 3
             ctx.fill()
         }
     }
