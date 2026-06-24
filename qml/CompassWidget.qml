@@ -24,7 +24,7 @@ Item {
     Rectangle {
         anchors.fill: parent; radius: width / 2
         color: "#AA1A2535"
-        border.color: "rgba(255,255,255,0.15)"; border.width: 1
+        border.color: "#26FFFFFF"; border.width: 1
     }
 
     // ── Aguja (roja=N, gris=S) — rota con el mapa ────────────────────────
@@ -115,8 +115,7 @@ Item {
             Label {
                 anchors.horizontalCenter: parent.horizontalCenter
                 text: compassWidget.compassMode === "heading3d" ? "3D" : "2D"
-                color: compassWidget.compassMode === "heading3d" ? "#29B6F6"
-                                                                 : "rgba(255,255,255,0.50)"
+                color: compassWidget.compassMode === "heading3d" ? "#29B6F6" : "#80FFFFFF"
                 font.pixelSize: units.gu(1.4)
             }
         }
