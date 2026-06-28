@@ -249,7 +249,7 @@ ApplicationWindow {
         property int    gpsFailTicks:      3       // ticks isReal=true con señal perdida
         property int    mapCacheMaxMb:    500      // tamaño máximo caché de tiles (MB)
         property string mapOnlineSource:   "mapbox" // "mapbox" | "osmscout"  fuente cuando hay internet
-        property string mapOfflineMode:    "cache"  // "cache" | "osmscout"   cuando sin internet
+        property string mapOfflineMode:    "osmscout"  // "cache" | "osmscout"   cuando sin internet
         property string mapTileServer:     "navius"   // "external" | "navius"
         property string mapNaviusDayStyle: "liberty"  // "liberty" | "positron" | "bright" | "fiord"
         property string mapNaviusStyles:   '["positron","bright","fiord","dark"]' // estilos extra del servidor navius (además de auto y satélite)
@@ -333,8 +333,9 @@ ApplicationWindow {
     property bool   ttsSpeaking:     false
     onTtsSpeakingChanged: mediaPanel.duck(ttsSpeaking)
 
-    property bool   _osmScoutActive: false  // true si OSM Scout Server detectado al arrancar
-    property bool   _mapOffline:     false  // true cuando sin internet (detectado por OfflineBanner)
+    property bool   _osmScoutActive:   false  // true si OSM Scout Server detectado al arrancar
+    property bool   _mapOffline:       false  // true cuando sin internet (detectado por OfflineBanner)
+    property bool   _tileServerFailed: false  // true cuando servidor tiles no responde → usando OSM Scout
     property bool   _rerouteBeepedOffline: false  // ya avisamos de sin internet; no repetir hasta restaurar
     property bool   _settingsSyncBlocked: true    // true durante arranque y apply; false en uso normal
     property string _shareToken:   ""             // token del share activo (vacío = no compartiendo)
@@ -364,14 +365,19 @@ ApplicationWindow {
     readonly property real _menuItemW: root._isLandscape ? units.gu(27) : units.gu(28)
 
     // ── Variables de tema global para overlays sobre el mapa ─────────────
-    // Modos oscuros: "dark" (noche) y "fiord". Resto son fondos claros.
+    // Modos oscuros: "dark" (noche), "fiord", "satellite". Resto son fondos claros.
     readonly property bool _mapIsLight: {
         var m = mapView._forcedStyle !== "" ? mapView._forcedStyle : appSettings.mapStyleMode
-        if (m === "fiord") return false
-        return !mapView._nightMode
+        if (m === "fiord" || m === "dark" || m === "satellite") return false
+        if (m !== "auto") return true  // positron, bright → siempre claro
+        if (mapView._nightMode) return false
+        // auto+día: depende del estilo día navius (fiord es oscuro)
+        if (mapView._navius && appSettings.mapNaviusDayStyle === "fiord") return false
+        return true
     }
     readonly property color _uiBorder: _mapIsLight ? "#CC666666" : "#99FFFFFF"  // contornos/bordes
     readonly property color _uiFg:     _mapIsLight ? "#DD333333" : "#FFFFFFFF"  // texto e iconos
+    readonly property color _uiBtnBg:  _mapIsLight ? "#4DFFFFFF" : "#4D12122A" // fondo botones menú 30% alfa
 
     function _pushStatus(text, color) {
         var clr = color || "#EF9A9A"
@@ -676,6 +682,7 @@ ApplicationWindow {
 
     // Modo landscape: divide pantalla en panel izquierdo 1/3 (instrucciones+botones) + mapa 2/3
     readonly property bool _isLandscape: width > height
+    readonly property bool _searchingGps: !appSettings.simMode && !appSettings.manualPosActive && !satModel.pos_has_fix
     // Altura que NavBar ocupa en la parte superior del MAPA (0 en landscape)
     readonly property real _navBarScreenHeight: _isLandscape ? 0 : (navBar.height + adPanel.height)
     // Altura adicional de banners de alerta (radar/tramo/comunitario) — solo para menuBtn/soundBtn
@@ -1433,7 +1440,8 @@ ApplicationWindow {
                 try {
                     var d = JSON.parse(xhr.responseText)
                     root._shareToken        = d.token
-                    tripSharePanel.shareUrl = d.url
+                    var _shareLang = Qt.locale().name.split("_")[0]
+                    tripSharePanel.shareUrl = d.url + "?lang=" + _shareLang
                     tripSharePanel.active   = true
                     tripSharePanel.errorMsg = ""
                     root._shareCreating     = false
@@ -1565,8 +1573,8 @@ ApplicationWindow {
         root._ttsPregenKeys = {}
     }
 
-    function _startRoundPregen(lang) {
-        navTts.pregenerate_round_dists(lang)
+    function _startRoundPregen(lang, imperial) {
+        navTts.pregenerate_round_dists(lang, imperial === true)
         root._ttsPregenBusy = true
         ttsPregenPollTimer.start()
     }
@@ -1697,7 +1705,7 @@ ApplicationWindow {
             } catch(_e) {}
         }
         var _lang = root._ttsEffectiveLang()
-        root._startRoundPregen(_lang)
+        root._startRoundPregen(_lang, navBar.imperial)
         root._pregenerateUpcoming(0)
         // Frase de inicio + primera instrucción si el navBar no la va a anunciar pronto
         if (root._effInstrSound === "tts") {
@@ -1716,7 +1724,7 @@ ApplicationWindow {
                     root._ttsPregenKeys = _tmp
                 }
             }
-            navTts.play_start_route(_firstDistMRaw, _firstKey, _firstText, _lang)
+            navTts.play_start_route(_firstDistMRaw, _firstKey, _firstText, _lang, navBar.imperial)
         }
         var routes = root._navRoutes.length > 0 ? root._navRoutes : [routeData]
         root.drawRoute(routes, root._navRoutes.length > 0 ? root._navSelIdx : 0)
@@ -3054,12 +3062,16 @@ ApplicationWindow {
             if (!root._osmScoutActive) return false
             // Fuente online configurada como OSM Scout → siempre
             if (appSettings.mapOnlineSource === "osmscout") return true
-            // Sin internet + fallback OSM Scout configurado → cambiar a OSM Scout
+            // Sin internet: prioridad según mapOfflineMode
+            //   "osmscout" → cambio inmediato a OSM Scout
+            //   "cache"    → caché primero; OSM Scout solo si caché también falla (_tileServerFailed)
             if (root._mapOffline && appSettings.mapOfflineMode === "osmscout") return true
+            // Servidor de tiles no disponible (o caché fallida en modo "cache") → fallback automático
+            if (root._tileServerFailed) return true
             return false
         }
         readonly property string _navMaps: "https://navius-maps.egpsistemas.com/styles"
-        readonly property bool   _navius:  !_usingOsmScoutMaps && appSettings.mapTileServer === "navius"
+        readonly property bool   _navius:  !_usingOsmScoutMaps && (!root._tileServerFailed || root._mapOffline) && appSettings.mapTileServer === "navius"
         // Solo liberty (navius o externo auto) tiene capa building-3d
         readonly property bool   _has3dBuildings: {
             var s = _forcedStyle || appSettings.mapStyleMode
@@ -3096,6 +3108,12 @@ ApplicationWindow {
 
         onDayUrlChanged:  if (_layersInit) Qt.callLater(applyLightMode)
         onNightUrlChanged: if (_layersInit) Qt.callLater(applyLightMode)
+
+        onErrorChanged: {
+            satModel.log_to_file("MapboxMap.error: " + error)
+            if (!error || error.length === 0 || root._tileServerFailed) return
+            if (!tileErrorDebounceTimer.running) tileErrorDebounceTimer.start()
+        }
 
         styleUrl:   dayUrl
         center:     QtPositioning.coordinate(appSettings.lastLat, appSettings.lastLon)
@@ -3259,10 +3277,10 @@ ApplicationWindow {
             if (mode === "bright")    { if (styleUrl !== brightUrl)    styleUrl = brightUrl;    return }
             if (mode === "fiord")     { if (styleUrl !== fiordUrl)     styleUrl = fiordUrl;     return }
             if (mode === "dark")      { if (styleUrl !== darkUrl)      styleUrl = darkUrl;      return }
-            // noche explícita → dark; auto-noche (sol) → fiord; día → dayUrl
+            // noche explícita → fiord; auto-noche (sol) → fiord; día → dayUrl
             if (appSettings.lightMode === "night") {
                 _autoNight = true
-                if (styleUrl !== darkUrl) styleUrl = darkUrl
+                if (styleUrl !== nightUrl) styleUrl = nightUrl
                 return
             }
             var night
@@ -3321,7 +3339,10 @@ ApplicationWindow {
             zoomRecenter.restart()
             radarViewportTimer.restart()
             // Zoom manual (pinch): desactivar autoZoom para que aparezca el botón
-            if (_mapInitialized && !_zoomAuto && appSettings.autoZoom)
+            // Ignorar si la animación automática está activa (_zoomAnimating) o si el timer
+            // de gracia aún no ha expirado (_zoomAuto). Ambas guards son necesarias porque
+            // _zoomAuto expira antes de que termine la animación (1500 ms < 1800 ms de zoomAnim).
+            if (_mapInitialized && !_zoomAuto && !_zoomAnimating && appSettings.autoZoom)
                 appSettings.autoZoom = false
         }
 
@@ -3376,7 +3397,7 @@ ApplicationWindow {
 
         Timer {
             id: zoomAutoResetTimer
-            interval: 1500; repeat: false
+            interval: 2200; repeat: false  // > zoomAnim.duration (1800 ms)
             onTriggered: mapView._zoomAuto = false
         }
 
@@ -5254,7 +5275,7 @@ ApplicationWindow {
 
     // ── Re-center crosshair (bottom-center del mapa) ─────────────────────
     Item {
-        visible: !mapView.followMode
+        visible: !mapView.followMode && !root._menuOpen
         anchors { bottom: mapBottomAnchor.bottom; bottomMargin: units.gu(9) }
         x: root._isLandscape
            ? landscapePanel.width + (parent.width - landscapePanel.width) / 2 - width / 2
@@ -5305,7 +5326,7 @@ ApplicationWindow {
     CompassWidget {
         id: compassWidget
         z: 4
-        visible: !satPanel.visible && !prefsPanel.visible
+        visible: !root._menuOpen && !satPanel.visible && !prefsPanel.visible
         anchors { right: parent.right; rightMargin: units.gu(2.5) + root._scrubOff
                   bottom: mapBottomAnchor.bottom; bottomMargin: units.gu(0.5) }
         bearing:     mapView.bearing
@@ -5461,7 +5482,7 @@ ApplicationWindow {
                  && !prefsPanel.visible && !searchPanel.visible && !routeViewPanel.visible
         width: mapBtnGroup._sz; height: mapBtnGroup._sz; radius: width / 2
         color: "transparent"
-        border.color: root._navPaused ? "#4CAF50" : "#29B6F6"
+        border.color: root._uiBorder
         border.width: units.gu(0.15)
 
         Label {
@@ -5715,6 +5736,7 @@ ApplicationWindow {
         gpsHeadRad:        root._dispHeadRad
         gpsSpeedKmh:       activeModel.pos_speed_kmh
         hasFix:            activeModel.pos_has_fix
+        searchingGps:      root._searchingGps
         // En landscape: panel izquierdo 1/3. En portrait: barra superior completa.
         // La altura en landscape la fija NavBar.qml (height: parent.height).
         anchors {
@@ -5767,7 +5789,7 @@ ApplicationWindow {
             if (appSettings.simMode && !isFinal) root.simPaused = true
             // En replay: auto-aceptar si no se responde en 8 s. En conducción real, espera.
             if (root._trackReplayActive) legArrivalReplayTimer.restart()
-            if (root._effInstrSound === "tts")       { navTts.beep(); navTts.say(i18n.tr("¿Has llegado a tu destino?")) }
+            if (root._effInstrSound === "tts")       { navTts.beep(); navTts.say(navTts.leg_arrived_text_qt(root._ttsEffectiveLang())) }
             else if (root._effInstrSound === "beep") navTts.beep()
         }
         onAnnounce: function(distM, text, text2, instrId, annType) {
@@ -5789,7 +5811,7 @@ ApplicationWindow {
                     }
                 }
                 navTts.beep()
-                navTts.play_round_then_instr(distM, key1, text, key2, text2, lang)
+                navTts.play_round_then_instr(distM, key1, text, key2, text2, lang, navBar.imperial)
                 root._pregenerateUpcoming(navBar._step)
             } else if (root._effInstrSound === "beep") {
                 navTts.beep()
@@ -5814,7 +5836,7 @@ ApplicationWindow {
                     + " dist=" + navBar.distFromRoute.toFixed(1) + "m\n"
                 root._flushTrace()
             }
-            if (root._effInstrSound === "tts")       { navTts.beep(); navTts.say("Has llegado a tu destino") }
+            if (root._effInstrSound === "tts")       { navTts.beep(); navTts.say(navTts.arrived_text_qt(root._ttsEffectiveLang())) }
             else if (root._effInstrSound === "beep") navTts.beep()
             // Ofrecer guardar aparcamiento si el vehículo activo no es peatón
             var _avArr = vehicleManager.activeVehicle()
@@ -6251,9 +6273,10 @@ ApplicationWindow {
         z: 15
         Column {
             anchors.centerIn: parent; spacing: 0
+            visible: navBar.hasFix && !root._searchingGps
             Label {
                 anchors.horizontalCenter: parent.horizontalCenter
-                text: navBar.hasFix ? NavSearch.formatSpeed(navBar.gpsSpeedKmh, navBar.imperial).toString() : "–"
+                text: NavSearch.formatSpeed(navBar.gpsSpeedKmh, navBar.imperial).toString()
                 color: navBar._speedOver && navBar._effVerified ? "#E53935"
                      : navBar._speedOver                        ? "#FF6F00" : "white"
                 font.pixelSize: units.gu(3.5); font.bold: true; lineHeight: 0.9
@@ -6262,6 +6285,24 @@ ApplicationWindow {
                 anchors.horizontalCenter: parent.horizontalCenter
                 text: NavSearch.speedUnit(navBar.imperial)
                 color: "white"; opacity: 0.75
+                font.pixelSize: units.gu(1.6 * appSettings.textScale); font.bold: true
+            }
+        }
+        Column {
+            anchors.centerIn: parent; spacing: units.gu(0.1)
+            visible: root._searchingGps
+            Label {
+                anchors.horizontalCenter: parent.horizontalCenter
+                text: "⟳"; color: "white"
+                font.pixelSize: units.gu(2.8)
+                RotationAnimation on rotation {
+                    running: root._searchingGps
+                    loops: Animation.Infinite; from: 0; to: 360; duration: 2000
+                }
+            }
+            Label {
+                anchors.horizontalCenter: parent.horizontalCenter
+                text: "GPS"; color: "white"; opacity: 0.75
                 font.pixelSize: units.gu(1.6 * appSettings.textScale); font.bold: true
             }
         }
@@ -6317,49 +6358,6 @@ ApplicationWindow {
         function show() { opacity = 1.0; _soundTtTimer.restart() }
     }
 
-    // ── Indicador buscando GPS (izquierda, misma altura que botón menú) ──────
-    Rectangle {
-        id: gpsSearchIndicator
-        visible: !appSettings.simMode && !appSettings.manualPosActive
-              && !satModel.pos_has_fix
-              && !prefsPanel.visible && !searchPanel.visible && !satPanel.visible && !routeSelectPanel.visible
-        anchors {
-            // En landscape: centrado en la zona del mapa (derecha del panel izquierdo)
-            // En portrait: centrado en toda la pantalla
-            left:            root._isLandscape ? landscapePanel.right : undefined
-            leftMargin:      root._isLandscape
-                             ? Math.round((parent.width - landscapePanel.width - units.gu(9)) / 2)
-                             : 0
-            horizontalCenter: root._isLandscape ? undefined : parent.horizontalCenter
-            top:             parent.top
-            topMargin:       root._navBarScreenHeight + root._alertBannerHeight + units.gu(1.5)
-        }
-        width: units.gu(9); height: units.gu(9); radius: width / 2
-        color: "transparent"
-        border.color: root._uiBorder
-        border.width: units.gu(0.15); z: 15
-
-        Column {
-            anchors.centerIn: parent; spacing: units.gu(0.1)
-            Label {
-                anchors.horizontalCenter: parent.horizontalCenter
-                text: "⟳"
-                color: root._uiFg
-                font.pixelSize: units.gu(3.0 * appSettings.textScale)
-                RotationAnimation on rotation {
-                    running: gpsSearchIndicator.visible
-                    loops: Animation.Infinite; from: 0; to: 360; duration: 2000
-                }
-            }
-            BtnLabel {
-                anchors.horizontalCenter: parent.horizontalCenter
-                text: "GPS"
-                fontSize: units.gu(1.5)
-                mainColor: root._uiFg
-            }
-        }
-    }
-
     // Overlay transparente para cerrar el menú al tocar fuera
     MouseArea {
         visible: root._menuOpen && !satPanel.visible
@@ -6392,10 +6390,10 @@ ApplicationWindow {
         // Sonido (primera opción)
         Rectangle {
             width: root._menuItemW; height: root._menuItemH
-            radius: height / 2
-            color: "#CC12122A"
-            border.color: root._soundCap === "silencio" ? "#90A4AE" : "#29B6F6"
-            border.width: units.gu(0.2)
+            radius: units.gu(1)
+            color: root._uiBtnBg
+            border.color: root._uiBorder
+            border.width: units.gu(0.15)
             Row {
                 anchors.centerIn: parent; spacing: units.gu(1.2)
                 Label { text: root._soundCap === "todo"    ? "🔊" :
@@ -6405,7 +6403,7 @@ ApplicationWindow {
                 Label { text: root._soundCap === "todo"    ? i18n.tr("Voz + alertas") :
                               root._soundCap === "alertas" ? i18n.tr("Solo alertas") :
                               root._soundCap === "pitidos" ? i18n.tr("Solo pitidos") : i18n.tr("Silencio")
-                        color: root._soundCap === "silencio" ? "#90A4AE" : "#29B6F6"
+                        color: root._uiFg
                         font.pixelSize: root._menuItemH * 0.40; anchors.verticalCenter: parent.verticalCenter }
             }
             MouseArea {
@@ -6424,38 +6422,20 @@ ApplicationWindow {
             }
         }
 
-        // Cuenta
-        Rectangle {
-            width: root._menuItemW; height: root._menuItemH
-            radius: height / 2
-            color: "#CC12122A"
-            border.color: mainAuthSettings.token !== "" ? "#66BB6A" : "#FF6F00"
-            border.width: units.gu(0.2)
-            Row {
-                anchors.centerIn: parent; spacing: units.gu(1.2)
-                Label { text: mainAuthSettings.token !== "" ? "✅" : "👤"
-                        font.pixelSize: root._menuItemH * 0.55; anchors.verticalCenter: parent.verticalCenter }
-                Label { text: mainAuthSettings.token !== "" ? i18n.tr("Mi cuenta") : i18n.tr("Login")
-                        color: mainAuthSettings.token !== "" ? "#66BB6A" : "#FF6F00"
-                        font.pixelSize: root._menuItemH * 0.40; anchors.verticalCenter: parent.verticalCenter }
-            }
-            MouseArea { anchors.fill: parent; onClicked: { root._menuOpen = false; loginPanel.open() } }
-        }
-
         // Compartir viaje
         Rectangle {
             width: root._menuItemW; height: root._menuItemH
-            radius: height / 2
-            color: "#CC12122A"
-            border.color: root._shareToken !== "" ? "#FF5252" : "#FF9800"
-            border.width: units.gu(0.2)
+            radius: units.gu(1)
+            color: root._uiBtnBg
+            border.color: root._shareToken !== "" ? "#FF5252" : root._uiBorder
+            border.width: units.gu(0.15)
             Row {
                 anchors.centerIn: parent; spacing: units.gu(1.2)
                 Label { text: root._shareToken !== "" ? "🔴" : "📡"
                         font.pixelSize: root._menuItemH * 0.50
                         anchors.verticalCenter: parent.verticalCenter }
                 Label { text: root._shareToken !== "" ? i18n.tr("Compartiendo") : i18n.tr("Compartir viaje")
-                        color: root._shareToken !== "" ? "#FF5252" : "#FF9800"
+                        color: root._shareToken !== "" ? "#FF5252" : root._uiFg
                         font.pixelSize: root._menuItemH * 0.375
                         anchors.verticalCenter: parent.verticalCenter }
             }
@@ -6473,13 +6453,13 @@ ApplicationWindow {
         Rectangle {
             visible: root._navActive && !routeViewPanel.visible
             width: root._menuItemW; height: root._menuItemH
-            radius: height / 2
-            color: "#CC12122A"; border.color: "#4CAF50"; border.width: units.gu(0.2)
+            radius: units.gu(1)
+            color: root._uiBtnBg; border.color: root._uiBorder; border.width: units.gu(0.15)
             Row {
                 anchors.centerIn: parent; spacing: units.gu(1.2)
-                Label { text: "⊞"; color: "#4CAF50"; font.pixelSize: root._menuItemH * 0.55
+                Label { text: "⊞"; color: root._uiFg; font.pixelSize: root._menuItemH * 0.55
                         anchors.verticalCenter: parent.verticalCenter }
-                Label { text: i18n.tr("Prev. Ruta"); color: "#4CAF50"; font.pixelSize: root._menuItemH * 0.40
+                Label { text: i18n.tr("Prev. Ruta"); color: root._uiFg; font.pixelSize: root._menuItemH * 0.40
                         anchors.verticalCenter: parent.verticalCenter }
             }
             MouseArea { anchors.fill: parent; onClicked: { root._menuOpen = false; routeViewPanel.open() } }
@@ -6488,13 +6468,13 @@ ApplicationWindow {
         // Lista de tareas
         Rectangle {
             width: root._menuItemW; height: root._menuItemH
-            radius: height / 2
-            color: "#CC12122A"; border.color: "#26C6DA"; border.width: units.gu(0.2)
+            radius: units.gu(1)
+            color: root._uiBtnBg; border.color: root._uiBorder; border.width: units.gu(0.15)
             Row {
                 anchors.centerIn: parent; spacing: units.gu(1.2)
                 Label { text: "📋"; font.pixelSize: root._menuItemH * 0.45
                         anchors.verticalCenter: parent.verticalCenter }
-                Label { text: i18n.tr("Tareas"); color: "#26C6DA"
+                Label { text: i18n.tr("Tareas"); color: root._uiFg
                         font.pixelSize: root._menuItemH * 0.375
                         anchors.verticalCenter: parent.verticalCenter }
             }
@@ -6502,44 +6482,16 @@ ApplicationWindow {
                 onClicked: { root._menuOpen = false; stopTodoPanel.openAtWaypoint(-1) } }
         }
 
-        // Mensajes
-        Rectangle {
-            width: root._menuItemW; height: root._menuItemH
-            radius: height / 2
-            color: "#CC12122A"; border.color: "#7E57C2"; border.width: units.gu(0.2)
-            Row {
-                anchors.centerIn: parent; spacing: units.gu(1.2)
-                Label { text: "✉"; color: "#7E57C2"; font.pixelSize: root._menuItemH * 0.55
-                        anchors.verticalCenter: parent.verticalCenter }
-                Label { text: i18n.tr("Mensajes"); color: "#7E57C2"
-                        font.pixelSize: root._menuItemH * 0.40
-                        anchors.verticalCenter: parent.verticalCenter }
-                Rectangle {
-                    visible: root._msgUnread > 0
-                    anchors.verticalCenter: parent.verticalCenter
-                    width: Math.max(units.gu(2.8), msgBadgeLbl.width + units.gu(1.2))
-                    height: units.gu(2.8); radius: height / 2; color: "#FF5722"
-                    Label {
-                        id: msgBadgeLbl; anchors.centerIn: parent
-                        text: root._msgUnread
-                        color: "white"; font.pixelSize: units.gu(1.3 * appSettings.textScale); font.bold: true
-                    }
-                }
-            }
-            MouseArea { anchors.fill: parent
-                onClicked: { root._menuOpen = false; messagesPanel.open(-1) } }
-        }
-
         // Guardar aparcamiento
         Rectangle {
             width: root._menuItemW; height: root._menuItemH
-            radius: height / 2
-            color: "#CC12122A"
-            border.color: "#FF9800"; border.width: units.gu(0.2)
+            radius: units.gu(1)
+            color: root._uiBtnBg
+            border.color: root._uiBorder; border.width: units.gu(0.15)
             Row {
                 anchors.centerIn: parent; spacing: units.gu(1.2)
                 Label { text: "🅿"; font.pixelSize: root._menuItemH * 0.45; anchors.verticalCenter: parent.verticalCenter }
-                Label { text: i18n.tr("Parking"); color: "#FF9800"
+                Label { text: i18n.tr("Parking"); color: root._uiFg
                         font.pixelSize: root._menuItemH * 0.40; anchors.verticalCenter: parent.verticalCenter }
             }
             MouseArea {
@@ -6560,13 +6512,13 @@ ApplicationWindow {
         Rectangle {
             visible: { var av = vehicleManager.activeVehicle(); return av && av.hasPark && av.costing !== "pedestrian" }
             width: root._menuItemW; height: root._menuItemH
-            radius: height / 2
-            color: "#CC12122A"
-            border.color: "#FF5252"; border.width: units.gu(0.2)
+            radius: units.gu(1)
+            color: root._uiBtnBg
+            border.color: root._uiBorder; border.width: units.gu(0.15)
             Row {
                 anchors.centerIn: parent; spacing: units.gu(1.2)
                 Label { text: "🗑"; font.pixelSize: root._menuItemH * 0.45; anchors.verticalCenter: parent.verticalCenter }
-                Label { text: i18n.tr("Borrar aparcamiento"); color: "#FF5252"
+                Label { text: i18n.tr("Borrar aparcamiento"); color: root._uiFg
                         font.pixelSize: root._menuItemH * 0.325; anchors.verticalCenter: parent.verticalCenter }
             }
             MouseArea {
@@ -6588,13 +6540,13 @@ ApplicationWindow {
         Rectangle {
             visible: { var av = vehicleManager.activeVehicle(); return av && av.hasPark && av.costing !== "pedestrian" }
             width: root._menuItemW; height: root._menuItemH
-            radius: height / 2
-            color: "#CC12122A"
-            border.color: "#29B6F6"; border.width: units.gu(0.2)
+            radius: units.gu(1)
+            color: root._uiBtnBg
+            border.color: root._uiBorder; border.width: units.gu(0.15)
             Row {
                 anchors.centerIn: parent; spacing: units.gu(1.2)
                 Label { text: "📍"; font.pixelSize: root._menuItemH * 0.45; anchors.verticalCenter: parent.verticalCenter }
-                Label { text: i18n.tr("Ver vehículo"); color: "#29B6F6"
+                Label { text: i18n.tr("Ver vehículo"); color: root._uiFg
                         font.pixelSize: root._menuItemH * 0.325; anchors.verticalCenter: parent.verticalCenter }
             }
             MouseArea {
@@ -6621,13 +6573,13 @@ ApplicationWindow {
                 } catch(e) { return false }
             }
             width: root._menuItemW; height: root._menuItemH
-            radius: height / 2
-            color: "#CC12122A"
-            border.color: "#4CAF50"; border.width: units.gu(0.2)
+            radius: units.gu(1)
+            color: root._uiBtnBg
+            border.color: root._uiBorder; border.width: units.gu(0.15)
             Row {
                 anchors.centerIn: parent; spacing: units.gu(1.2)
                 Label { text: "🧭"; font.pixelSize: root._menuItemH * 0.45; anchors.verticalCenter: parent.verticalCenter }
-                Label { text: i18n.tr("Ir al aparcamiento"); color: "#4CAF50"
+                Label { text: i18n.tr("Ir al aparcamiento"); color: root._uiFg
                         font.pixelSize: root._menuItemH * 0.325; anchors.verticalCenter: parent.verticalCenter }
             }
             MouseArea {
@@ -6639,13 +6591,13 @@ ApplicationWindow {
         // Música
         Rectangle {
             width: root._menuItemW; height: root._menuItemH
-            radius: height / 2
-            color: "#CC12122A"; border.color: "#1E88E5"; border.width: units.gu(0.2)
+            radius: units.gu(1)
+            color: root._uiBtnBg; border.color: root._uiBorder; border.width: units.gu(0.15)
             Row {
                 anchors.centerIn: parent; spacing: units.gu(1.2)
                 Label { text: "🎵"; font.pixelSize: root._menuItemH * 0.50
                         anchors.verticalCenter: parent.verticalCenter }
-                Label { text: i18n.tr("Música"); color: "#1E88E5"
+                Label { text: i18n.tr("Música"); color: root._uiFg
                         font.pixelSize: root._menuItemH * 0.40; anchors.verticalCenter: parent.verticalCenter }
             }
             MouseArea { anchors.fill: parent; onClicked: { root._menuOpen = false; mediaPanel.visible = true } }
@@ -6654,49 +6606,77 @@ ApplicationWindow {
         // Ajustes
         Rectangle {
             width: root._menuItemW; height: root._menuItemH
-            radius: height / 2
-            color: "#CC12122A"; border.color: "#29B6F6"; border.width: units.gu(0.2)
+            radius: units.gu(1)
+            color: root._uiBtnBg; border.color: root._uiBorder; border.width: units.gu(0.15)
             Row {
                 anchors.centerIn: parent; spacing: units.gu(1.2)
-                Label { text: "⚙"; color: "#29B6F6"; font.pixelSize: root._menuItemH * 0.55
+                Label { text: "⚙"; color: root._uiFg; font.pixelSize: root._menuItemH * 0.55
                         anchors.verticalCenter: parent.verticalCenter }
-                Label { text: i18n.tr("Ajustes"); color: "#29B6F6"; font.pixelSize: root._menuItemH * 0.40
+                Label { text: i18n.tr("Ajustes"); color: root._uiFg; font.pixelSize: root._menuItemH * 0.40
                         anchors.verticalCenter: parent.verticalCenter }
             }
             MouseArea { anchors.fill: parent; onClicked: { root._menuOpen = false; prefsPanel.visible = true } }
         }
 
-        // Donar
+        // Cuenta
         Rectangle {
             width: root._menuItemW; height: root._menuItemH
-            radius: height / 2
-            color: "#CC12122A"
-            border.color: "#F6C915"; border.width: units.gu(0.2)
+            radius: units.gu(1)
+            color: root._uiBtnBg
+            border.color: mainAuthSettings.token !== "" ? "#66BB6A" : root._uiBorder
+            border.width: units.gu(0.15)
             Row {
                 anchors.centerIn: parent; spacing: units.gu(1.2)
-                Label { text: "♥"; color: "#F6C915"; font.pixelSize: root._menuItemH * 0.55
+                Label { text: mainAuthSettings.token !== "" ? "✅" : "👤"
+                        font.pixelSize: root._menuItemH * 0.55; anchors.verticalCenter: parent.verticalCenter }
+                Label { text: mainAuthSettings.token !== "" ? i18n.tr("Mi cuenta") : i18n.tr("Login")
+                        color: root._uiFg
+                        font.pixelSize: root._menuItemH * 0.40; anchors.verticalCenter: parent.verticalCenter }
+            }
+            MouseArea { anchors.fill: parent; onClicked: { root._menuOpen = false; loginPanel.open() } }
+        }
+
+        // Mensajes
+        Rectangle {
+            width: root._menuItemW; height: root._menuItemH
+            radius: units.gu(1)
+            color: root._uiBtnBg; border.color: root._uiBorder; border.width: units.gu(0.15)
+            Row {
+                anchors.centerIn: parent; spacing: units.gu(1.2)
+                Label { text: "✉"; color: root._uiFg; font.pixelSize: root._menuItemH * 0.55
                         anchors.verticalCenter: parent.verticalCenter }
-                Label { text: i18n.tr("Donar"); color: "#F6C915"
+                Label { text: i18n.tr("Mensajes"); color: root._uiFg
                         font.pixelSize: root._menuItemH * 0.40
                         anchors.verticalCenter: parent.verticalCenter }
+                Rectangle {
+                    visible: root._msgUnread > 0
+                    anchors.verticalCenter: parent.verticalCenter
+                    width: Math.max(units.gu(2.8), msgBadgeLbl.width + units.gu(1.2))
+                    height: units.gu(2.8); radius: units.gu(1); color: "#FF5722"
+                    Label {
+                        id: msgBadgeLbl; anchors.centerIn: parent
+                        text: root._msgUnread
+                        color: "white"; font.pixelSize: units.gu(1.3 * appSettings.textScale); font.bold: true
+                    }
+                }
             }
             MouseArea { anchors.fill: parent
-                onClicked: { root._menuOpen = false; Qt.openUrlExternally("https://liberapay.com/Navius-GPS/donate") } }
+                onClicked: { root._menuOpen = false; messagesPanel.open(-1) } }
         }
 
         // Bloqueo de mapa
         Rectangle {
             width: root._menuItemW; height: root._menuItemH
-            radius: height / 2
-            color: root._mapLocked ? "#CC1A1200" : "#CC12122A"
-            border.color: root._mapLocked ? "#FF9800" : "#546E7A"; border.width: units.gu(0.2)
+            radius: units.gu(1)
+            color: root._uiBtnBg
+            border.color: root._mapLocked ? "#FF9800" : root._uiBorder; border.width: units.gu(0.15)
             Row {
                 anchors.centerIn: parent; spacing: units.gu(1.2)
                 Label { text: root._mapLocked ? "🔒" : "🔓"
                         font.pixelSize: root._menuItemH * 0.475
                         anchors.verticalCenter: parent.verticalCenter }
                 Label { text: i18n.tr("Bloq. Mapa")
-                        color: root._mapLocked ? "#FF9800" : "#546E7A"
+                        color: root._mapLocked ? "#FF9800" : root._uiFg
                         font.pixelSize: root._menuItemH * 0.375
                         anchors.verticalCenter: parent.verticalCenter }
             }
@@ -6707,13 +6687,13 @@ ApplicationWindow {
         Rectangle {
             visible: appSettings.prefLevel >= 2
             width: root._menuItemW; height: root._menuItemH
-            radius: height / 2
-            color: "#CC12122A"
-            border.color: appSettings.debugMode ? "#FFD700" : "#546E7A"; border.width: units.gu(0.2)
+            radius: units.gu(1)
+            color: root._uiBtnBg
+            border.color: appSettings.debugMode ? "#FFD700" : root._uiBorder; border.width: units.gu(0.15)
             Label {
                 anchors.centerIn: parent
                 text: "⬡ " + i18n.tr("Debug")
-                color: appSettings.debugMode ? "#FFD700" : "#546E7A"; font.pixelSize: root._menuItemH * 0.375
+                color: appSettings.debugMode ? "#FFD700" : root._uiFg; font.pixelSize: root._menuItemH * 0.375
             }
             MouseArea { anchors.fill: parent; onClicked: appSettings.debugMode = !appSettings.debugMode }
         }
@@ -6722,13 +6702,13 @@ ApplicationWindow {
         Rectangle {
             visible: appSettings.debugMode
             width: root._menuItemW; height: root._menuItemH
-            radius: height / 2
-            color: "#CC12122A"
-            border.color: appSettings.simMode ? "#CE93D8" : "#546E7A"; border.width: units.gu(0.2)
+            radius: units.gu(1)
+            color: root._uiBtnBg
+            border.color: appSettings.simMode ? "#CE93D8" : root._uiBorder; border.width: units.gu(0.15)
             Label {
                 anchors.centerIn: parent
                 text: "⏵ " + i18n.tr("Sim GPS")
-                color: appSettings.simMode ? "#CE93D8" : "#546E7A"; font.pixelSize: root._menuItemH * 0.375
+                color: appSettings.simMode ? "#CE93D8" : root._uiFg; font.pixelSize: root._menuItemH * 0.375
             }
             MouseArea {
                 anchors.fill: parent
@@ -6753,13 +6733,13 @@ ApplicationWindow {
         Rectangle {
             visible: appSettings.debugMode && appSettings.simMode
             width: root._menuItemW; height: root._menuItemH
-            radius: height / 2
-            color: "#CC12122A"
-            border.color: root.simSignalLost ? "#FF5252" : "#546E7A"; border.width: units.gu(0.2)
+            radius: units.gu(1)
+            color: root._uiBtnBg
+            border.color: root.simSignalLost ? "#FF5252" : root._uiBorder; border.width: units.gu(0.15)
             Label {
                 anchors.centerIn: parent
                 text: root.simSignalLost ? "⊗ " + i18n.tr("GPS on") : "⊗ " + i18n.tr("Fallo GPS")
-                color: root.simSignalLost ? "#FF5252" : "#546E7A"; font.pixelSize: root._menuItemH * 0.375
+                color: root.simSignalLost ? "#FF5252" : root._uiFg; font.pixelSize: root._menuItemH * 0.375
             }
             MouseArea { anchors.fill: parent; onClicked: root.simSignalLost = !root.simSignalLost }
         }
@@ -6768,13 +6748,13 @@ ApplicationWindow {
         Rectangle {
             visible: appSettings.debugMode && appSettings.simMode
             width: root._menuItemW; height: root._menuItemH
-            radius: height / 2
-            color: root.simPaused ? "#CC3A2A00" : "#CC12122A"
-            border.color: root.simPaused ? "#FFB300" : "#546E7A"; border.width: units.gu(0.2)
+            radius: units.gu(1)
+            color: root._uiBtnBg
+            border.color: root.simPaused ? "#29B6F6" : root._uiBorder; border.width: units.gu(0.15)
             Label {
                 anchors.centerIn: parent
                 text: root.simPaused ? "▶ " + i18n.tr("Reanudar") : "⏸ " + i18n.tr("Pausar sim")
-                color: root.simPaused ? "#FFB300" : "#546E7A"; font.pixelSize: root._menuItemH * 0.375
+                color: root.simPaused ? "#29B6F6" : root._uiFg; font.pixelSize: root._menuItemH * 0.375
                 font.bold: root.simPaused
             }
             MouseArea { anchors.fill: parent; onClicked: root.simPaused = !root.simPaused }
@@ -6784,13 +6764,13 @@ ApplicationWindow {
         Rectangle {
             visible: appSettings.debugMode
             width: root._menuItemW; height: root._menuItemH
-            radius: height / 2; color: "#CC12122A"
-            border.color: appSettings.showGpsSmoothDebug ? "#29B6F6" : "#546E7A"
-            border.width: units.gu(0.2)
+            radius: units.gu(1); color: root._uiBtnBg
+            border.color: appSettings.showGpsSmoothDebug ? "#29B6F6" : root._uiBorder
+            border.width: units.gu(0.15)
             Label {
                 anchors.centerIn: parent
                 text: "🔧 " + i18n.tr("Suavizado GPS")
-                color: appSettings.showGpsSmoothDebug ? "#29B6F6" : "#546E7A"
+                color: appSettings.showGpsSmoothDebug ? "#29B6F6" : root._uiFg
                 font.pixelSize: root._menuItemH * 0.375
                 font.bold: appSettings.showGpsSmoothDebug
             }
@@ -6801,13 +6781,13 @@ ApplicationWindow {
         Rectangle {
             visible: appSettings.debugMode && appSettings.simMode
             width: root._menuItemW; height: root._menuItemH
-            radius: height / 2; color: "#CC12122A"
-            border.color: appSettings.showBisectorDebug ? "#29B6F6" : "#546E7A"
-            border.width: units.gu(0.2)
+            radius: units.gu(1); color: root._uiBtnBg
+            border.color: appSettings.showBisectorDebug ? "#29B6F6" : root._uiBorder
+            border.width: units.gu(0.15)
             Label {
                 anchors.centerIn: parent
                 text: "📐 " + i18n.tr("Bisector")
-                color: appSettings.showBisectorDebug ? "#29B6F6" : "#546E7A"
+                color: appSettings.showBisectorDebug ? "#29B6F6" : root._uiFg
                 font.pixelSize: root._menuItemH * 0.375
                 font.bold: appSettings.showBisectorDebug
             }
@@ -6818,13 +6798,13 @@ ApplicationWindow {
         Rectangle {
             visible: appSettings.debugMode
             width: root._menuItemW; height: root._menuItemH
-            radius: height / 2
-            color: root._dbgPoi ? "#CC1A3A1A" : "#CC12122A"
-            border.color: root._dbgPoi ? "#00E676" : "#546E7A"; border.width: units.gu(0.2)
+            radius: units.gu(1)
+            color: root._uiBtnBg
+            border.color: root._dbgPoi ? "#00E676" : root._uiBorder; border.width: units.gu(0.15)
             Label {
                 anchors.centerIn: parent
                 text: "⊙ " + i18n.tr("POIs debug")
-                color: root._dbgPoi ? "#00E676" : "#546E7A"; font.pixelSize: root._menuItemH * 0.375
+                color: root._dbgPoi ? "#00E676" : root._uiFg; font.pixelSize: root._menuItemH * 0.375
                 font.bold: root._dbgPoi
             }
             MouseArea {
@@ -6842,6 +6822,24 @@ ApplicationWindow {
             }
         }
 
+
+        // Donar
+        Rectangle {
+            width: root._menuItemW; height: root._menuItemH
+            radius: units.gu(1)
+            color: root._uiBtnBg
+            border.color: root._uiBorder; border.width: units.gu(0.15)
+            Row {
+                anchors.centerIn: parent; spacing: units.gu(1.2)
+                Label { text: "♥"; color: root._uiFg; font.pixelSize: root._menuItemH * 0.55
+                        anchors.verticalCenter: parent.verticalCenter }
+                Label { text: i18n.tr("Donar"); color: root._uiFg
+                        font.pixelSize: root._menuItemH * 0.40
+                        anchors.verticalCenter: parent.verticalCenter }
+            }
+            MouseArea { anchors.fill: parent
+                onClicked: { root._menuOpen = false; Qt.openUrlExternally("https://liberapay.com/Navius-GPS/donate") } }
+        }
 
     }  // fin menuColumn
 
@@ -6895,6 +6893,12 @@ ApplicationWindow {
         onGoogleMapsRequested: {
             Qt.inputMethod.hide()
             googleMapsPanel.visible = true
+        }
+        onServerFallbackNeeded: function(service, message, retryFn) {
+            Qt.inputMethod.hide()
+            serverFallbackDialog._retryFn = retryFn
+            serverFallbackDialog.showOsmScout = (service === "Valhalla")
+            serverFallbackDialog.open(service, message)
         }
     }
 
@@ -7651,7 +7655,7 @@ ApplicationWindow {
         onClearLiveCacheRequested: {
             navTts.clear_all_tts_cache()
             root._ttsPregenKeys = {}
-            root._startRoundPregen(root._ttsEffectiveLang())
+            root._startRoundPregen(root._ttsEffectiveLang(), navBar.imperial)
         }
         onOsmScoutDetectRequested: {
             NavSearch.detectOsmScout(function(found) {
@@ -7682,7 +7686,7 @@ ApplicationWindow {
             navTts.say_with_lang(lang, text)
             // El motor cambió: caché antigua no sirve
             root._ttsClearCache()
-            root._startRoundPregen(lang)
+            root._startRoundPregen(lang, navBar.imperial)
             if (root._navActive) root._pregenerateUpcoming(navBar._step)
         }
         onLangChanged: function(lang) {
@@ -7707,7 +7711,7 @@ ApplicationWindow {
             navTts.say_with_lang(effective, phrases[effective] || phrases["es"])
             // Invalidar caché (idioma y motor pueden haber cambiado)
             root._ttsClearCache()
-            root._startRoundPregen(effective)
+            root._startRoundPregen(effective, navBar.imperial)
             if (root._navActive) root._pregenerateUpcoming(navBar._step)
         }
         onMapCacheClearRequested: {
@@ -8336,6 +8340,63 @@ ApplicationWindow {
         }
     }
 
+    // Ping proactivo cada 60s al servidor de tiles (por si onErrorChanged no dispara)
+    Timer {
+        id: tileServerPingTimer
+        interval: 60000; repeat: true; running: true
+        onTriggered: {
+            satModel.log_to_file("tileServerPingTimer: failed=" + root._tileServerFailed + " offline=" + root._mapOffline + " navius=" + mapView._navius)
+            if (root._tileServerFailed || root._mapOffline || !mapView._navius) return
+            var lat = mapView._lastLat || appSettings.lastLat
+            var lon = mapView._lastLon || appSettings.lastLon
+            NavSearch.pingTileServer("https://navius-maps.egpsistemas.com/tiles/planet/", lat, lon, function(alive) {
+                satModel.log_to_file("tileServerPing: " + (alive ? "OK" : "FALLO"))
+                if (!alive && !tileErrorDebounceTimer.running) tileErrorDebounceTimer.start()
+            })
+        }
+    }
+
+    // Debounce errores de tiles: espera 5s y confirma con ping antes de cambiar a OSM Scout
+    Timer {
+        id: tileErrorDebounceTimer
+        interval: 5000; repeat: false
+        onTriggered: {
+            if (root._tileServerFailed) return
+            var lat = mapView._lastLat || appSettings.lastLat
+            var lon = mapView._lastLon || appSettings.lastLon
+            NavSearch.pingTileServer("https://navius-maps.egpsistemas.com/tiles/planet/", lat, lon, function(alive) {
+                if (alive) return
+                root._tileServerFailed = true
+                navTts.alert_beep()
+                if (root._osmScoutActive) {
+                    root._startupMsg = i18n.tr("Mapas: servidor no disponible · usando OSM Scout")
+                } else {
+                    root._startupMsg = i18n.tr("Mapas: servidor no disponible · usando servidor público")
+                }
+                startupMsgTimer.restart()
+                tileRecoveryTimer.start()
+            })
+        }
+    }
+
+    // Cada 5 min comprueba si el servidor de tiles original volvió
+    Timer {
+        id: tileRecoveryTimer
+        interval: 300000; repeat: true
+        onTriggered: {
+            var lat = mapView._lastLat || appSettings.lastLat
+            var lon = mapView._lastLon || appSettings.lastLon
+            NavSearch.pingTileServer("https://navius-maps.egpsistemas.com/tiles/planet/", lat, lon, function(alive) {
+                if (!alive) return
+                tileRecoveryTimer.stop()
+                root._tileServerFailed = false
+                navTts.alert_beep()
+                root._startupMsg = i18n.tr("Servidor de mapas recuperado · restaurando")
+                startupMsgTimer.restart()
+            })
+        }
+    }
+
 
     // ── Conectividad ─────────────────────────────────────────────────────
     OfflineBanner {
@@ -8344,7 +8405,43 @@ ApplicationWindow {
         osmScoutMaps: mapView._usingOsmScoutMaps
         onIsOfflineChanged: {
             root._mapOffline = isOffline
-            if (!isOffline) root._rerouteBeepedOffline = false
+            if (isOffline) {
+                if (appSettings.mapOfflineMode === "osmscout") {
+                    if (root._osmScoutActive) {
+                        navTts.alert_beep()
+                        root._startupMsg = i18n.tr("Sin internet · usando OSM Scout Server")
+                        startupMsgTimer.restart()
+                    } else {
+                        // Ping rápido por si OSM Scout está corriendo pero no se detectó en arranque
+                        NavSearch.pingOsmScout(function(found) {
+                            if (!found) return
+                            root._osmScoutActive = true
+                            navTts.alert_beep()
+                            root._startupMsg = i18n.tr("Sin internet · usando OSM Scout Server")
+                            startupMsgTimer.restart()
+                        })
+                    }
+                }
+            } else {
+                root._rerouteBeepedOffline = false
+                if (root._tileServerFailed) {
+                    // Ping inmediato al recuperar internet para ver si el servidor volvió
+                    var lat = mapView._lastLat || appSettings.lastLat
+                    var lon = mapView._lastLon || appSettings.lastLon
+                    NavSearch.pingTileServer("https://navius-maps.egpsistemas.com/tiles/planet/", lat, lon, function(alive) {
+                        if (!alive) return
+                        tileRecoveryTimer.stop()
+                        root._tileServerFailed = false
+                        navTts.alert_beep()
+                        root._startupMsg = i18n.tr("Conexión restaurada · volviendo a mapas online")
+                        startupMsgTimer.restart()
+                    })
+                } else if (mapView._usingOsmScoutMaps && appSettings.mapOnlineSource !== "osmscout") {
+                    navTts.alert_beep()
+                    root._startupMsg = i18n.tr("Conexión restaurada · volviendo a mapas online")
+                    startupMsgTimer.restart()
+                }
+            }
         }
     }
 
@@ -8619,13 +8716,13 @@ ApplicationWindow {
             anchors.centerIn: parent
             text: root._ttsPregenBusy   ? (i18n.tr("Pre-procesando motor TTS") + " " + root._ttsPregenProgress)
                 : root._statusCurrent   ? root._statusCurrent.text
-                : mapView._tileBusy     ? i18n.tr("Cargando mapa…")
                 : root._startupMsg      ? root._startupMsg
+                : mapView._tileBusy     ? i18n.tr("Cargando mapa…")
                 :                         ("v" + root._version)
             color: root._ttsPregenBusy  ? "#FFA000"
                  : root._statusCurrent  ? root._statusCurrent.color
-                 : mapView._tileBusy    ? "#80CBC4"
                  : root._startupMsg     ? (root._osmScoutActive ? "#66BB6A" : "#B0BEC5")
+                 : mapView._tileBusy    ? "#80CBC4"
                  :                        "#90A4AE"
             font.pixelSize: units.gu(1.6 * appSettings.textScale)
         }
@@ -9227,6 +9324,37 @@ ApplicationWindow {
             }
             transfer.finalize()
         }
+    }
+
+    ServerFallbackDialog {
+        id: serverFallbackDialog
+        anchors.fill: parent
+        z: 25
+        onUseOsmScout: {
+            _detecting = true
+            NavSearch.pingOsmScout(function(alive) {
+                if (alive) {
+                    _detecting = false
+                    root._osmScoutActive = true
+                    _setEffectiveUrl("http://127.0.0.1:8553/v2")
+                    serverFallbackDialog.visible = false
+                    serverFallbackDialog.retryRequested()
+                } else {
+                    NavSearch.detectOsmScout(function(found) {
+                        _detecting = false
+                        if (found) {
+                            root._osmScoutActive = true
+                            _setEffectiveUrl("http://127.0.0.1:8553/v2")
+                            serverFallbackDialog.visible = false
+                            serverFallbackDialog.retryRequested()
+                        } else {
+                            _osmNotFound = true
+                        }
+                    })
+                }
+            })
+        }
+        onCancelled: serverFallbackDialog.visible = false
     }
 
     OsmScoutDialog {

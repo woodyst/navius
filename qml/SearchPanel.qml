@@ -44,6 +44,7 @@ Rectangle {
     signal navigationStarted(var routeData)
     signal previewRequested(var routes, int selIdx)
     signal googleMapsRequested()
+    signal serverFallbackNeeded(string service, string message, var retryFn)
 
     onVisibleChanged: {
         if (visible) { _st = "idle" }
@@ -72,7 +73,7 @@ Rectangle {
     property var dests:     _dests
     property var routeOpts: ({"no_tolls": _noTolls, "no_ferry": _noFerry, "no_dirt": _noDirt, "no_highway": _noHighway})
     property bool _logVisible:    false  // bool explícito para evitar problemas con var.length en bindings
-    property bool _logCollapsed: false
+    property bool _logCollapsed: true
 
     property var _history:   []
     property var _favorites: []
@@ -302,7 +303,7 @@ Rectangle {
     function _resetLog() {
         _logLines      = []
         _logVisible    = false
-        _logCollapsed  = false
+        _logCollapsed  = true
     }
 
     function _saveWaypoints() {
@@ -338,7 +339,16 @@ Rectangle {
         NavSearch.geocode(q, panel.gpsLat, panel.gpsLon, function(err, res) {
             _searching = false
             if (err) {
-                _searchErr = i18n.tr("Error de red: ") + err
+                var isConnErr = err.indexOf("Timeout") >= 0 || err.indexOf("HTTP 0") >= 0
+                             || err.indexOf("HTTP 5") >= 0 || err.indexOf("sin respuesta") >= 0
+                if (isConnErr) {
+                    panel.serverFallbackNeeded("Photon",
+                        i18n.tr("El servidor de búsqueda no ha respondido."),
+                        function() { _doSearch(q) })
+                } else {
+                    _searchErr = i18n.tr("Error de red: ") + err
+                }
+                return
             } else if (!res || res.length === 0) {
                 _searchErr = i18n.tr("Sin resultados para «") + q + "»"
             } else {
@@ -364,9 +374,19 @@ Rectangle {
         _addLog((def ? def.icon + " " + def.label : type) + " · " + modeLabel + " · " + r + " m")
         var cb = function(err, res) {
             _searching = false
-            if (err)                          { _searchErr = i18n.tr("Error: ") + err; _addLog("✗ " + err) }
-            else if (!res || res.length === 0) { _searchErr = i18n.tr("Sin resultados cerca"); _addLog("Sin resultados") }
-            else                               { _results = res; _addLog("✓ " + res.length + " resultado(s)") }
+            if (err) {
+                _addLog("✗ " + err)
+                var isConnErr = err.indexOf("Timeout") >= 0 || err.indexOf("HTTP 0") >= 0
+                             || err.indexOf("HTTP 5") >= 0 || err.indexOf("sin respuesta") >= 0
+                if (isConnErr) {
+                    panel.serverFallbackNeeded("Overpass",
+                        i18n.tr("El servidor de puntos de interés no ha respondido."),
+                        function() { _searchPoi(type) })
+                } else {
+                    _searchErr = i18n.tr("Error: ") + err
+                }
+            } else if (!res || res.length === 0) { _searchErr = i18n.tr("Sin resultados cerca"); _addLog("Sin resultados") }
+            else                                  { _results = res; _addLog("✓ " + res.length + " resultado(s)") }
             if (type === "fuel") _mineturDate = NavSearch.mineturCacheDate()
         }
         var spd = panel.navSpeedKmh
@@ -640,8 +660,17 @@ Rectangle {
                     date_time: _depDateTimeObj()}
         NavSearch.route(wps, opts, function(err, routes) {
             if (err || !routes || routes.length === 0) {
-                _st       = "idle"
-                errLabel.text = err || i18n.tr("No se encontró ruta")
+                _st = "idle"
+                var isConnErr = err && (err.indexOf("Timeout") >= 0 || err.indexOf("HTTP 0") >= 0
+                                        || err.indexOf("HTTP 5") >= 0 || err.indexOf("sin respuesta") >= 0
+                                        || err.indexOf("Servidor:") >= 0)
+                if (isConnErr) {
+                    panel.serverFallbackNeeded("Valhalla",
+                        i18n.tr("El servidor de rutas no ha respondido."),
+                        function() { _calcRoute(autoStart) })
+                } else {
+                    errLabel.text = err || i18n.tr("No se encontró ruta")
+                }
                 return
             }
             _routes   = routes

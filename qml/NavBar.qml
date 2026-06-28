@@ -17,6 +17,7 @@ Rectangle {
     property real gpsSpeedKmh:  0      // velocidad actual
     property real posAccuracy:  -1    // precisión GPS en metros
     property bool hasFix:       false  // true cuando hay fix GPS válido
+    property bool searchingGps: false  // true cuando no hay fix de satélites reales
     property bool navActive:    true   // false = modo mapa (muestra "Iniciar navegación")
 
     signal stopNavigation()
@@ -590,9 +591,9 @@ Rectangle {
             }
         }
 
-        // ── ya: a 8 s de maniobra, mínimo 15 m, siempre ───────────────────
+        // ── ya: a 15 s de maniobra, mínimo 15 m, siempre ──────────────────
         // text2 se reproduce justo tras la maniobra (paso de la indicación)
-        if (!_yaDone && timeToMnv <= 8 && distM >= 15) {
+        if (!_yaDone && timeToMnv <= 15 && distM >= 15) {
             bar.announce(0, _annText1, _annText2, dispIdx, "ya")
             _yaDone   = true
             _lastYaMs = now
@@ -720,9 +721,10 @@ Rectangle {
 
                 Column {
                     anchors.centerIn: parent; spacing: 0
+                    visible: bar.hasFix && !bar.searchingGps
                     Label {
                         anchors.horizontalCenter: parent.horizontalCenter
-                        text: bar.hasFix ? NavSearch.formatSpeed(bar.gpsSpeedKmh, bar.imperial).toString() : "–"
+                        text: NavSearch.formatSpeed(bar.gpsSpeedKmh, bar.imperial).toString()
                         color: bar._speedOver && bar._effVerified ? "#E53935"
                              : bar._speedOver                      ? "#FF6F00"
                              : "white"
@@ -737,9 +739,27 @@ Rectangle {
                     }
                     Label {
                         anchors.horizontalCenter: parent.horizontalCenter
-                        visible: bar.hasFix && bar.posAccuracy >= 0
+                        visible: bar.posAccuracy >= 0
                         text: "±" + bar.posAccuracy.toFixed(0) + " m"
                         color: "white"; opacity: 0.75; font.pixelSize: ts(1.75)
+                    }
+                }
+                Column {
+                    anchors.centerIn: parent; spacing: units.gu(0.1)
+                    visible: bar.searchingGps
+                    Label {
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        text: "⟳"; color: "white"
+                        font.pixelSize: units.gu(3.5)
+                        RotationAnimation on rotation {
+                            running: bar.searchingGps
+                            loops: Animation.Infinite; from: 0; to: 360; duration: 2000
+                        }
+                    }
+                    Label {
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        text: "GPS"; color: "white"; opacity: 0.75
+                        font.pixelSize: ts(2.0); font.bold: true
                     }
                 }
             }

@@ -118,14 +118,15 @@ Both transformations are applied in the normalisation function before synthesis,
 
 The `root._trackReplayRaw` flag separates both paths in the `_wasTrackReplay` block of `_startNavigation`. The `trackSimRequested(id, name, raw)` signal carries the `raw` flag from the button.
 
-### `nav_music.rs`
+### `nav_music_server.rs`
 
-Local music library for the app sandbox. Manages the track directory and Content Hub imports. Exposes four public functions accessible from QML via `nav_http.rs`:
+`QObject` that starts a local HTTP server on `127.0.0.1:0` (random port) to serve files from `~/Music` to the QML player.
 
-- `music_dir()` — returns (and creates if absent) `$XDG_DATA_HOME/navius.woodyst/Music/`. **Critical note**: on Ubuntu Touch `XDG_DATA_HOME=/home/phablet/.local/share` (without the package name), so `navius.woodyst` must be appended explicitly; otherwise it would point to `~/.local/share/Music/`, which AppArmor denies.
-- `list_tracks()` — returns JSON `[{"name":..,"path":..}]`. Uses `read_dir` + `file_type()` (lstat, without following symlinks) so that symlinks to `~/Music` are listed without requiring the `music_files_read` policy group.
-- `import_tracks(urls)` — receives newline-separated URLs from Content Hub. If a URL comes from `HubIncoming` (temporary) → **copies** to the sandbox. If it is an external file (e.g. `~/Music`) → creates a **symlink** in the sandbox pointing to the original; creating a symlink does not require reading the target, so AppArmor does not deny it. Returns the number of tracks imported.
-- `remove_track(name)` — `fs::remove_file`; for a symlink this removes only the link, leaving the original in `~/Music` untouched.
+**Reason:** `media-hub` (Ubuntu Touch audio daemon) uses `context.profile_name()` in short form (`navius.woodyst-navius`) for the AppArmor query. That profile does not exist in the kernel → access to `~/Music` denied. The HTTP server acts as intermediary: it serves files directly to the `Audio` QML component without going through media-hub.
+
+- `get_music_port()` — starts the server if not already running; returns the assigned port as `int`. Supports `Range` requests (required by QtMultimedia's `Audio`).
+- The server runs in a dedicated thread (Tokio runtime).
+- Accessible from QML via `navHttp.getMusicPort()` (called in `Component.onCompleted`).
 
 ### `qrc.rs`
 
@@ -329,12 +330,10 @@ In multi-stop routes, the global shape concatenates all legs. Without a boundary
 
 Search and routing engine. Main functions:
 
-- `geocode(query, lat, lon, cb)`: geocoding via Photon (`navius-maps.egpsistemas.com/photon`, self-hosted worldwide index)
+- `geocode(query, lat, lon, cb)`: geocoding with Photon/Komoot
 - `route(waypoints, opts, cb)`: route calculation with Valhalla; includes `date_time` for predicted traffic
 - `trace_attributes(shape, cb)`: gets speed limits per route segment
 - `detectOsmScout(cb)`: detects whether a local OSM Scout server is present
-- `fetchPoisAlongRoute(category, cb)`: queries Overpass for POIs along the route; server selected by route centre position (`navius-maps.egpsistemas.com/overpass/` for Spain, public pool for the rest of the world); retries with next server on empty results
-- `probeOverpassServers()`: called at startup — probes candidate servers and builds `_overpassActivePool`
 
 The `route()` function sends `date_time: {type: 0, value: "current"}` (immediate route) or `{type: 1, value: "YYYY-MM-DDTHH:MM"}` (scheduled route).
 
@@ -474,15 +473,12 @@ The panel does not close when tapping outside. The only exit point is the "Close
 
 ### `MediaPanel.qml`
 
-Integrated music playback panel. Music enters the sandbox via **Content Hub**; playback uses `file://` from the app's own directory (`~/.local/share/navius.woodyst/Music/`), which media-hub permits through its allowlist.
+Integrated music playback panel. Accesses `~/Music` through the local HTTP server (`nav_music_server.rs`) to bypass the media-hub AppArmor restriction.
 
-- `property var navHttpObj` — reference to the Rust `NavHttp` object; exposes `music_dir`, `music_list`, `music_import`, `music_remove`.
-- `ListModel { id: musicModel }` with fields `name` and `path`. Populated by `reloadLibrary()` by parsing the JSON from `navHttpObj.music_list()`. Refreshed automatically whenever the panel becomes visible.
-- `ContentPeerPicker { contentType: ContentType.Music; handler: ContentHandler.Source }` — opens the file manager in Content Hub mode. `peer.selectionType = ContentTransfer.Multiple` allows selecting multiple tracks at once.
-- `Connections { target: root.activeTransfer; onStateChanged }` — when the transfer reaches `Charged`, iterates `activeTransfer.items`, calls `navHttpObj.music_import(urls)`, then `activeTransfer.finalize()`.
-- `Audio` component (QtMultimedia 5.6): `player.source = "file://" + path`.
-- TTS ducking: `duck(bool)` adjusts volume via PulseAudio (`ttsObj.set_music_volume`), 600 ms delay on restore.
-- Expandable help section with the `find ~/Music … -exec ln -s {} musicdir/ \;` command for manually creating symlinks from a terminal without duplicating files.
+- `FolderListModel` with folder navigation; audio extension filter (`mp3 ogg flac m4a opus wav aac oga wma`)
+- `Audio` component (QtMultimedia 5.6) consuming URLs `http://127.0.0.1:<port>/…`
+- `duck(bool)` property: lowers volume to 15% during TTS and restores it 600 ms later (`duckRestoreTimer`)
+- History of the last visited folder (persisted in `appSettings`)
 
 ### `MediaWidget.qml`
 
@@ -655,7 +651,7 @@ The `postbuild` step automatically bundles:
 
 Navius uses [lomiri-location-service](https://gitlab.com/ubports/development/core/lomiri-location-service) (LLS) as the GPS backend via D-Bus.
 
-A patched package (`3.4.1+navius6`) is distributed that fixes multiple issues with HALIUM_10 and Waydroid.
+A patched package (`3.4.1+navius5`) is distributed that fixes multiple issues with HALIUM_10 and Waydroid.
 
 ### Positioning stack
 
@@ -1211,7 +1207,7 @@ In `SearchPanel.qml`, the log area shows network requests and routing errors. Ac
 
 ## LLS patches
 
-The package `lomiri-location-service 3.4.1+navius6` includes the following patches:
+The package `lomiri-location-service 3.4.1+navius5` includes the following patches:
 
 ### navius1 — Waydroid SIGSEGV + EDEADLK
 
@@ -1233,22 +1229,6 @@ Thread watchdog (5 s tick, 10 s threshold): detects frozen GPS, re-registers cal
 
 `LLS_DEBUG` constant and `LLS_TRACE()` macro moved to a single shared header.
 
-### navius6 — GPS indicator fix + HAL deadlock hardening
-
-`engine.cpp`: `is_any_active = last_provider_result` → `|=` — with two providers only the last one's result was used, so the GPS indicator never appeared if only the first provider was active. `android_hardware_abstraction_layer.cpp`: `start_positioning()` uses `try_to_lock` to avoid blocking the D-Bus thread; phase 4 of `register_callbacks()` runs without lock to prevent re-entry deadlock; null guard in `stop_positioning()`.
-
-### Upstream contributions (UBports)
-
-Five merge requests have been submitted to [lomiri-location-service upstream](https://gitlab.com/ubports/development/core/lomiri-location-service). Fork: [gitlab.com/woodyst1/lomiri-location-service](https://gitlab.com/woodyst1/lomiri-location-service).
-
-| MR | Description | Status |
-|---|---|---|
-| [!57](https://gitlab.com/ubports/development/core/lomiri-location-service/-/merge_requests/57) | `engine`: fix `is_any_active \|=` | ✅ Approved |
-| [!58](https://gitlab.com/ubports/development/core/lomiri-location-service/-/merge_requests/58) | `gps`: race/EDEADLK/D-Bus hang/watchdog | In review |
-| [!59](https://gitlab.com/ubports/development/core/lomiri-location-service/-/merge_requests/59) | `data`: trust-stored `.path` unit | In review |
-| [!60](https://gitlab.com/ubports/development/core/lomiri-location-service/-/merge_requests/60) | `data`: `Restart=always` + clean `After=` | In review |
-| [!61](https://gitlab.com/ubports/development/core/lomiri-location-service/-/merge_requests/61) | `service`: `GetVisibleSpaceVehicles` D-Bus method | In review |
-
 ### LLS package build
 
 ```bash
@@ -1268,63 +1248,55 @@ bash debs/update-phablet.sh
 
 ### Architecture
 
-The player uses `Audio` (QtMultimedia 5.6) with the `ubuntu-media-hub` backend. Tracks are stored in the app sandbox and played back with `file://`.
+The player uses `Audio` (QtMultimedia 5.6) going to the `ubuntu-media-hub` backend. Tracks come from `FolderListModel` over `~/Music`.
 
-**`nav_music.rs`** — Rust library: manages the sandbox directory, imports via Content Hub, creates symlinks.  
-**`MediaPanel.qml`** — full panel (list + controls + volume slider + ducking + symlink help).  
-**`MediaWidget.qml`** — compact bar over the map (visible while a track is loaded).
+**MediaPanel.qml** — full panel (list + controls + volume slider + ducking).  
+**MediaWidget.qml** — compact bar over the map (visible while a track is loaded).  
+**nav_music_server.rs** — local HTTP server in Rust.
 
-### Why media-hub cannot read `~/Music` directly
+### media-hub bug and HTTP solution
 
-`authenticate_open_uri_request` in media-hub 4.7 has a **hardcoded allowlist by package name**. It only permits `file://` access to:
+media-hub rejects `file://` URIs for third-party apps with:
 
-- The app's own directory (`~/.local/share/<pkg>/`, `~/.cache/<pkg>/`)
-- The package `music.ubports` (official music app) → can read `~/Music` and `~/Videos`
-- System paths (`/android/system/media/audio/ui/`)
+```
+InsufficientAppArmorPermissions: Client is not allowed to access: file:///home/phablet/Music/...
+```
 
-Any other third-party app (including `navius.woodyst`) receives `"Client is not allowed to access"` when attempting `file:///home/phablet/Music/…`. **This is not an AppArmor bug** — kernel permissions are correct. The allowlist is hardcoded in media-hub's source and can only be bypassed by being `music.ubports` or running unconfined.
+**Diagnosed cause:** The `authenticate_open_uri_request` function in media-hub uses `context.profile_name()` which returns the short form of the APP_ID (`navius.woodyst-navius`, without version) as the profile name for the `aa_query_file_path()` call. That profile does not exist in the kernel (the real profile is `navius.woodyst_navius_1.0.0`), so the call returns `ret=-1` and media-hub treats it as a denial.
 
-### Solution: Content Hub + sandbox
+Verification:
 
-Music reaches Navius exclusively through **Content Hub** (`Lomiri.Content`). The flow is:
+```python
+import ctypes
+aa = ctypes.CDLL("libapparmor.so.1")
+# ...
+# navius.woodyst-navius     → ret=-1, allowed=0  (profile not found)
+# navius.woodyst_navius_1.0.0 → ret=0, allowed=1  (correct, permissions OK)
+```
 
-1. `ContentPeerPicker` (ContentType.Music) → the user selects files in the file manager.
-2. Content Hub copies files to `~/.cache/navius.woodyst/HubIncoming/` (temporary).
-3. `Connections { target: activeTransfer; onStateChanged }` detects the `Charged` state.
-4. `import_tracks(urls)` in Rust:
-   - If the URL is from `HubIncoming` → **copies** to `~/.local/share/navius.woodyst/Music/`.
-   - If the URL is an external file (e.g. `~/Music/`) → creates a **symlink** in the sandbox pointing to the original. Creating a symlink does not require reading the source file (only writes to the destination directory), so AppArmor does not deny it even without `music_files_read` in the profile.
-5. `activeTransfer.finalize()` cleans up `HubIncoming`.
-6. `reloadLibrary()` refreshes the track list.
+AppArmor permissions are correct (the compiled profile contains `owner @{HOME}/Music/** rwkl`); it is a media-hub bug in building the profile name for the AA query.
 
-Playback uses `player.source = "file://" + path`. media-hub accepts this `file://` because the path starts with `~/.local/share/navius.woodyst/`, which is in its allowlist for the app's own sandbox.
+**Solution:** `nav_music_server.rs` starts an HTTP server on `127.0.0.1:0` (OS-assigned port) that serves files from `~/Music`. `MediaPanel.qml` converts `file:///home/phablet/Music/path` → `http://127.0.0.1:PORT/home/phablet/Music/path`. For HTTP URIs, media-hub only checks network access (policy_group `networking`), which navius already has.
 
-### Symlinks to `~/Music` — why it works
-
-media-hub-server runs with the AppArmor profile `owner @{HOME}/[^.]*/** rk`, which allows it to follow symlinks and read the real file in `~/Music`. Furthermore, media-hub **does not canonicalize the path** (it does not call `realpath`) before checking the allowlist, so a symlink at `~/.local/share/navius.woodyst/Music/song.mp3` passes the prefix check.
-
-Navius lists symlinks with `file_type()` (lstat, without following the link), so it does not need to read the real file — that is delegated to media-hub at playback time.
-
-**Users can create symlinks manually** from a Terminal or SSH to link their entire `~/Music` without duplicating storage. The player screen includes an expandable help section with the exact command.
-
-### Note on `XDG_DATA_HOME` in Ubuntu Touch
-
-The Navius process receives `XDG_DATA_HOME=/home/phablet/.local/share` (without the package name). `music_dir()` must append `navius.woodyst` explicitly: `$XDG_DATA_HOME/navius.woodyst/Music/`. Without this, `create_dir_all` would attempt to create `~/.local/share/Music/`, which AppArmor denies, and the import would fail silently.
+The server implements:
+- Range requests (`206 Partial Content`) so GStreamer can seek without reloading the full file.
+- Correct Content-Type by extension (mp3 / ogg / flac / m4a / wav / opus / aac / wma).
+- Path traversal protection with `canonicalize()` + prefix check `/home/phablet/Music/`.
 
 ### Why MPRIS2 is not viable (AppArmor)
 
-Controlling an external player via MPRIS2/D-Bus requires sending messages to `org.mpris.MediaPlayer2.*`. The navius AppArmor profile has a catch-all `deny dbus (send)`, and the UBports kernel has active D-Bus mediation. There is no policy_group in `apparmor-easyprof-ubuntu` that allows MPRIS2 to third-party apps.
+Controlling an external player (music.ubports, etc.) via MPRIS2/D-Bus requires sending messages to `org.mpris.MediaPlayer2.*`. The navius AppArmor profile has a catch-all `deny dbus (send)`, and the UBports kernel has active D-Bus mediation (`/sys/kernel/security/apparmor/features/dbus`). There is no policy_group in `apparmor-easyprof-ubuntu` that allows MPRIS2 to third-party apps.
 
 ### TTS ducking
 
-`Main.qml` detects `navTts.is_speaking()` every 100 ms and calls `mediaPanel.duck(true/false)`. MediaPanel adjusts volume via PulseAudio (`ttsObj.set_music_volume`) to the configured `duckVolume` (default 70%) and restores it 600 ms after TTS ends.
+When TTS speaks, `Main.qml` detects `navTts.is_speaking()` every 100 ms and calls `mediaPanel.duck(true/false)`. MediaPanel lowers volume to 15% during speech and restores it 600 ms after it ends (timer `duckRestoreTimer`).
 
 ### Lomiri/QML compatibility
 
+- `FolderListModel.get(index)` does not exist in UBports Qt 5.12 → use `Repeater` + `itemAt(idx)`.
 - `Slider` in Lomiri.Components uses `minimumValue`/`maximumValue`, not `from`/`to`.
 - `Slider.onMoved` not available in QtQuick.Controls 2.2 → use `onValueChanged`.
 - Properties with underscore prefix (`_foo`) do not generate `onFooChanged` handler → avoid for properties with inline handlers.
-- `Connections` uses old syntax `onSignal: { ... }` (not `function onSignal()`, Qt 5.15+).
 
 ## Advertisement system (billboards)
 

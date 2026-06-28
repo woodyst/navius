@@ -120,6 +120,25 @@ function pingOsmScout(cb) {
     xhr.send()
 }
 
+function pingTileServer(tileBaseUrl, lat, lon, cb) {
+    var z = 10
+    var x = Math.floor((lon + 180) / 360 * (1 << z))
+    var latRad = lat * Math.PI / 180
+    var y = Math.floor((1 - Math.log(Math.tan(latRad) + 1 / Math.cos(latRad)) / Math.PI) / 2 * (1 << z))
+    var xhr = new XMLHttpRequest()
+    xhr.open("GET", tileBaseUrl + z + "/" + x + "/" + y)
+    xhr.timeout = 8000
+    var _done = false
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState !== 4 || _done) return
+        _done = true
+        cb(xhr.status >= 200 && xhr.status < 400)
+    }
+    xhr.ontimeout = function() { if (!_done) { _done = true; cb(false) } }
+    xhr.onerror   = function() { if (!_done) { _done = true; cb(false) } }
+    xhr.send()
+}
+
 function _logMsg(msg)            { if (_log)     _log(msg) }
 function _fileDump(msg)          { if (_fileLog) _fileLog(msg) }
 
@@ -393,25 +412,41 @@ function _photonLang() {
     return "default"
 }
 
+var PHOTON_FALLBACK = "https://photon.komoot.io"
+
 // Busca lugares con Photon. aroundLat/Lon: centro para biasing (0,0 para ignorar).
 // callback(error, resultArray)  — results son GeoJSON Features
 function geocode(query, aroundLat, aroundLon, callback) {
-    var url = PHOTON + "/api/?q=" + encodeURIComponent(query) + "&limit=6&lang=" + _photonLang()
+    var qs = "/api/?q=" + encodeURIComponent(query) + "&limit=6&lang=" + _photonLang()
     if (aroundLat !== 0 || aroundLon !== 0)
-        url += "&lat=" + aroundLat + "&lon=" + aroundLon
+        qs += "&lat=" + aroundLat + "&lon=" + aroundLon
+    var url = PHOTON + qs
     _logMsg("Geocoding: «" + query + "»")
     _fileDump("=== GEOCODE: " + query
               + " | gps=" + aroundLat.toFixed(5) + "," + aroundLon.toFixed(5)
               + " | url=" + url)
-    _xhr("GET", url, null, function(err, text) {
-        if (err) { callback(err, []); return }
+    function _parse(text, cb) {
         try {
             var fc = JSON.parse(text)
             var results = fc.features || []
             _logMsg("Resultados: " + results.length + " lugar(es)")
-            callback(null, results)
-        } catch(e) { _logMsg("✗ Parse error: " + e); callback("Parse error", []) }
-    })
+            cb(null, results)
+        } catch(e) { _logMsg("✗ Parse error: " + e); cb("Parse error", []) }
+    }
+    _xhr("GET", url, null, function(err, text) {
+        if (!err) { _parse(text, callback); return }
+        // Fallback a photon.komoot.io (soporta de/en/fr/it, no es → lang=en)
+        var fbLang = (["de","en","fr","it"].indexOf(_photonLang()) >= 0) ? _photonLang() : "en"
+        var fbUrl = PHOTON_FALLBACK + "/api/?q=" + encodeURIComponent(query) + "&limit=6&lang=" + fbLang
+        if (aroundLat !== 0 || aroundLon !== 0)
+            fbUrl += "&lat=" + aroundLat + "&lon=" + aroundLon
+        _fileDump("GEOCODE fallback: " + fbUrl)
+        _logMsg("Photon: servidor propio no disponible · usando komoot…")
+        _xhr("GET", fbUrl, null, function(errFb, textFb) {
+            if (errFb) { callback(errFb, []); return }
+            _parse(textFb, callback)
+        }, 6000)
+    }, 6000)
 }
 
 // Construye texto de display para un resultado Photon (GeoJSON Feature)
@@ -445,15 +480,12 @@ function photonSubtitle(f) {
 // ── POI (Puntos de Interés) via Overpass API ─────────────────────────────────
 var OVERPASS          = "https://z.overpass-api.de/api/interpreter"  // legacy
 var OVERPASS_FALLBACK = "https://z.overpass-api.de/api/interpreter"
-var OVERPASS_NAVIUS       = "https://navius-maps.egpsistemas.com/overpass/api/interpreter"
-var OVERPASS_NAVIUS_WORLD = "https://navius-maps.egpsistemas.com/overpass-world/api/interpreter"
+var OVERPASS_NAVIUS   = "https://navius-maps.egpsistemas.com/overpass/api/interpreter"
 var _overpassNaviusEnabled = true
 
-// Lista de servidores Overpass — propios primero (planet y españa), luego públicos.
-// Excluir overpass-api.de (rate limit estricto en queries reales aunque pase el probe).
+// Lista de servidores públicos Overpass — excluir overpass-api.de (rate limit estricto
+// en queries reales aunque pase el probe con node(1))
 var OVERPASS_CANDIDATES = [
-    "https://navius-maps.egpsistemas.com/overpass-world/api/interpreter",
-    "https://navius-maps.egpsistemas.com/overpass/api/interpreter",
     "https://z.overpass-api.de/api/interpreter",
     "https://overpass.osm.ch/api/interpreter",
     "https://maps.mail.ru/osm/tools/overpass/api/interpreter",
@@ -503,9 +535,9 @@ function probeOverpassServers() {
     }
 }
 
-// Elige servidor: siempre navius mundial primero; fallback pool público
+// Elige servidor según posición: navius para España, aleatorio del pool para el resto
 function _overpassForPos(lat, lon) {
-    if (_overpassNaviusEnabled) return OVERPASS_NAVIUS_WORLD
+    if (_overpassNaviusEnabled && _inSpain(lat, lon)) return OVERPASS_NAVIUS
     var idx = Math.floor(Math.random() * _overpassActivePool.length)
     return _overpassActivePool[idx]
 }

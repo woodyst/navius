@@ -2,13 +2,12 @@
 
 GPS navigator for Ubuntu Touch. Rust + QML, packaged as Click.
 
-[Web](https://www.egpsistemas.com/site/navius) · [GitHub](https://github.com/woodyst/navius) · [Donate](https://liberapay.com/Navius-GPS/) · [Versión en español](README.es.md)
+[Web](https://www.egpsistemas.com/site/navius) · [GitHub](https://github.com/woodyst/navius) · [Donate](https://liberapay.com/Navius-GPS/)
 
 **Community** · [Telegram — GUI & Design](https://t.me/navius_gui_and_design) · [Telegram — Bugs & Issues](https://t.me/navius_bugs_and_issues)
 
-[Another GPS navigator?](docs/philosophy.en.md) · [User manual](docs/user.en.md) · [Developer docs](docs/developer.en.md)
-
-[¿Otro navegador GPS?](docs/philosophy.es.md) · [Manual español](docs/user.es.md) · [Docs desarrollador](docs/developer.es.md)
+[User manual](docs/user.en.md) · [Developer docs](docs/developer.en.md)
+[User manual Spanish](docs/user.es.md) · [Developer docs Spanish](docs/developer.es.md)
 
 ---
 
@@ -122,9 +121,9 @@ The `postbuild` hook in `clickable.yaml` automatically bundles:
 
 ## GPS and lomiri-location-service
 
-Navius uses [lomiri-location-service](https://gitlab.com/ubports/development/core/lomiri-location-service) (LLS) as the GPS backend via D-Bus. A patched package (`3.4.1+navius6`) is distributed that fixes multiple stability issues with the GPS HAL on HALIUM_10, especially when Waydroid runs concurrently.
+Navius uses [lomiri-location-service](https://gitlab.com/ubports/development/core/lomiri-location-service) (LLS) as the GPS backend via D-Bus. A patched package (`3.4.1+navius5`) is distributed that fixes multiple stability issues with the GPS HAL on HALIUM_10, especially when Waydroid runs concurrently.
 
-### LLS patches (navius1–navius6)
+### LLS patches (navius1–navius5)
 
 **navius1** — Waydroid SIGSEGV + EDEADLK  
 Waydroid overwrites LLS GPS callbacks while LLS is dispatching them → SIGSEGV. Fixed with `std::shared_mutex` (callbacks under shared lock; `register_callbacks()` under exclusive lock). Split into three phases of `register_callbacks()` to avoid EDEADLK from HAL re-entry during `u_hardware_gps_new()`.
@@ -140,21 +139,6 @@ Thread watchdog (5 s tick, 10 s threshold): detects frozen GPS, re-registers cal
 
 **navius5** — Centralised `lls_trace.h`  
 `LLS_DEBUG` constant and `LLS_TRACE()` macro moved to a single shared header (`include/location_service/com/lomiri/location/lls_trace.h`).
-
-**navius6** — GPS indicator fix + HAL deadlock hardening  
-`engine.cpp`: `is_any_active = last_provider_result` → `|=` — with two providers only the last one's result determined the indicator, so GPS never showed as active if only the first provider was running. `android_hardware_abstraction_layer.cpp`: `start_positioning()` uses `try_to_lock` to avoid blocking the D-Bus thread; phase 4 of `register_callbacks()` runs without lock to prevent re-entry deadlock; null guard in `stop_positioning()`.
-
-### Upstream contributions (UBports)
-
-Five merge requests have been submitted to the [upstream repository](https://gitlab.com/ubports/development/core/lomiri-location-service) to benefit all Ubuntu Touch users. Fork: [gitlab.com/woodyst1/lomiri-location-service](https://gitlab.com/woodyst1/lomiri-location-service).
-
-| MR | Description | Status |
-|---|---|---|
-| [!57](https://gitlab.com/ubports/development/core/lomiri-location-service/-/merge_requests/57) | `engine`: fix `is_any_active \|=` | ✅ Approved |
-| [!58](https://gitlab.com/ubports/development/core/lomiri-location-service/-/merge_requests/58) | `gps`: race/EDEADLK/D-Bus hang/watchdog | In review |
-| [!59](https://gitlab.com/ubports/development/core/lomiri-location-service/-/merge_requests/59) | `data`: trust-stored `.path` unit | In review |
-| [!60](https://gitlab.com/ubports/development/core/lomiri-location-service/-/merge_requests/60) | `data`: `Restart=always` + clean `After=` | In review |
-| [!61](https://gitlab.com/ubports/development/core/lomiri-location-service/-/merge_requests/61) | `service`: `GetVisibleSpaceVehicles` D-Bus method | In review |
 
 ### Fixes in navius (this repo)
 
@@ -210,31 +194,6 @@ Predicted traffic uses synthetic profiles by tile level:
 Peak hours: Mon–Fri 7–9h and 17–19h (parabolic fade).
 
 Route requests always include `date_time` so Valhalla applies the speed profile for the current time or the scheduled departure time.
-
----
-
-## POI search (Overpass API)
-
-Nearby points of interest (fuel, parking, restaurants, hotels, speed cameras…) are fetched via the [Overpass API](https://wiki.openstreetmap.org/wiki/Overpass_API) using a pool of public servers with automatic fallback.
-
-### Server selection
-
-At startup, Navius probes a list of candidate servers and builds an active pool from those that respond correctly. When a query is needed, the server is chosen based on the **geographic centre of the route** (not the device position), so that searches in Germany or Japan use a geographically appropriate server even if the device is located in Spain.
-
-- **Own server — Spain** (`navius-maps.egpsistemas.com/overpass/`): used for queries in Spain. Self-hosted Overpass instance covering the Iberian Peninsula.
-- **Own server — worldwide** (`navius-maps.egpsistemas.com/overpass-world/`): used for all other regions. Self-hosted Overpass instance with full planet data.
-- **Public pool**: 9 fallback servers worldwide (`z.overpass-api.de`, `overpass.nchc.org.tw`, `overpass.openstreetmap.fr`, and others).
-- **Retry on empty results**: if a server returns 0 elements, the query is retried with the next candidate (up to 2 retries).
-
----
-
-## Geocoding
-
-Address and place search uses [Photon](https://github.com/komoot/photon), an open-source geocoder based on OpenStreetMap data.
-
-Default server: `https://navius-maps.egpsistemas.com/photon` (self-hosted, worldwide index)
-
-Results use the local OSM name of each place. The query language is set automatically from the system locale (supported: `de`, `en`, `fr`; other locales fall back to local names).
 
 ---
 
@@ -359,7 +318,7 @@ The instruction and network request log can be viewed inside the app by enabling
 
 ## License
 
-Copyright (C) 2026 Eduardo García-Mádico Portabella
+Copyright (C) 2026 Edi
 
 This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3 as published by the Free Software Foundation.
 

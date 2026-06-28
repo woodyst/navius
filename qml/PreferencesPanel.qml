@@ -102,17 +102,39 @@ Rectangle {
     signal aboutRequested()
     signal tourRequested()
 
+    QtObject {
+        id: pal
+        readonly property bool isDark: !panel.cfg || panel.cfg.lightMode !== "day"
+
+        readonly property color bgPanel:    isDark ? "#0D0D1A" : "#F5F5F5"
+        readonly property color bgCard:     isDark ? "#1C1C2E" : "#FFFFFF"
+        readonly property color bgHeader:   isDark ? "#1E1E30" : "#E8E8E8"
+        readonly property color fgPrimary:  isDark ? "#FFFFFF"  : "#111111"
+        readonly property color fgSecondary:isDark ? "#90A4AE" : "#757575"
+        readonly property color bgInput:    isDark ? "#252540" : "#EEEEEE"
+        readonly property color bgInputAlt: isDark ? pal.bgInput : "#E0E0E0"
+        readonly property color bgBtn:      isDark ? "#37474F" : "#BDBDBD"
+        readonly property color highlight:  isDark ? "#252540" : "#E3F2FD"
+        readonly property color divider:    isDark ? pal.bgInput : "#DDDDDD"
+        readonly property color fgData:     isDark ? "#ECEFF1" : "#212121"
+        readonly property color fgDataSub:  isDark ? "#B0BEC5" : "#616161"
+        readonly property color accent:     "#29B6F6"
+        readonly property color bgSelBlue:  isDark ? "#1E3A5F" : "#BBDEFB"
+        readonly property color bgSelGreen: isDark ? "#1A3A1A" : "#C8E6C9"
+    }
+
+
     // ── Background ────────────────────────────────────────────────────────
-    Rectangle { anchors.fill: parent; color: "#0D0D1A" }
+    Rectangle { anchors.fill: parent; color: pal.bgPanel }
 
     Rectangle {
         id: header
         anchors { top: parent.top; left: parent.left; right: parent.right }
-        height: units.gu(6); color: "#1C1C2E"
+        height: units.gu(6); color: pal.bgCard
 
         Label {
             anchors.centerIn: parent
-            text: i18n.tr("Ajustes"); color: "white"
+            text: i18n.tr("Ajustes"); color: pal.fgPrimary
             fontSize: "large"; font.bold: true
         }
 
@@ -120,8 +142,8 @@ Rectangle {
             anchors { right: parent.right; verticalCenter: parent.verticalCenter
                       rightMargin: units.gu(2) }
             width: units.gu(4); height: units.gu(4)
-            radius: width / 2; color: "#2A2A3E"
-            Label { anchors.centerIn: parent; text: "✕"; color: "#90A4AE"; font.pixelSize: ts(1.8) }
+            radius: width / 2; color: pal.bgInputAlt
+            Label { anchors.centerIn: parent; text: "✕"; color: pal.fgSecondary; font.pixelSize: ts(1.8) }
             MouseArea { anchors.fill: parent; onClicked: panel.closed() }
         }
     }
@@ -156,8 +178,8 @@ Rectangle {
             radius: units.gu(1); border.width: 1
             property bool _confirm: false
             property bool _done:    false
-            color:        _confirm ? "#1A1200" : "#1A1A2E"
-            border.color: _confirm ? "#F9A825" : (_done ? "#2E7D32" : "#37474F")
+            color:        _confirm ? "#1A1200" : pal.bgCard
+            border.color: _confirm ? "#F9A825" : (_done ? "#2E7D32" : pal.divider)
             Behavior on color        { ColorAnimation { duration: 120 } }
             Behavior on border.color { ColorAnimation { duration: 120 } }
             Timer { id: resetConfirmTimer; interval: 3000; onTriggered: parent._confirm = false }
@@ -168,7 +190,7 @@ Rectangle {
                 Label {
                     anchors.verticalCenter: parent.verticalCenter
                     text: parent.parent._done ? "✓" : (parent.parent._confirm ? "⚠" : "↺")
-                    color: parent.parent._done ? "#66BB6A" : (parent.parent._confirm ? "#F9A825" : "#90A4AE")
+                    color: parent.parent._done ? "#66BB6A" : (parent.parent._confirm ? "#F9A825" : pal.fgSecondary)
                     font.pixelSize: ts(2.2)
                 }
                 Label {
@@ -176,7 +198,7 @@ Rectangle {
                     text: parent.parent._done    ? i18n.tr("Restaurado")
                         : parent.parent._confirm ? i18n.tr("Toca de nuevo para confirmar")
                         :                          i18n.tr("Restaurar valores por defecto")
-                    color: parent.parent._done ? "#66BB6A" : (parent.parent._confirm ? "#F9A825" : "#90A4AE")
+                    color: parent.parent._done ? "#66BB6A" : (parent.parent._confirm ? "#F9A825" : pal.fgSecondary)
                     font.pixelSize: ts(1.75)
                 }
             }
@@ -242,34 +264,20 @@ Rectangle {
 
         // ── Nivel de opciones ────────────────────────────────────────────
         Rectangle {
-            width: parent.width; height: units.gu(5.5)
-            color: "#1C1C2E"; radius: units.gu(1)
-            Row {
-                anchors { fill: parent; margins: units.gu(0.8) }
-                spacing: units.gu(0.8)
-                Repeater {
-                    model: [
-                        { level: 0, label: i18n.tr("Mínimo")   },
-                        { level: 1, label: i18n.tr("Medio")    },
-                        { level: 2, label: i18n.tr("Avanzado") }
-                    ]
-                    Rectangle {
-                        property bool sel: panel.cfg && panel.cfg.prefLevel === modelData.level
-                        width: (parent.width - 2 * units.gu(0.8)) / 3
-                        height: parent.height; radius: units.gu(0.6)
-                        color:        sel ? "#1E3A5F" : "#2A2A3E"
-                        border.color: sel ? "#29B6F6" : "transparent"; border.width: units.gu(0.15)
-                        Label {
-                            anchors.centerIn: parent
-                            text: modelData.label
-                            color: sel ? "#29B6F6" : "#78909C"
-                            font.pixelSize: ts(1.7); font.bold: sel
-                        }
-                        MouseArea {
-                            anchors.fill: parent
-                            onClicked: if (panel.cfg) panel.cfg.prefLevel = modelData.level
-                        }
-                    }
+            width: parent.width
+            height: prefLevelCol.implicitHeight + units.gu(4)
+            color: pal.bgCard; radius: 0
+            Column {
+                id: prefLevelCol
+                anchors { fill: parent; margins: units.gu(2) }
+                spacing: units.gu(1)
+                Label { text: i18n.tr("Nivel de opciones"); color: pal.fgPrimary; font.pixelSize: ts(1.8) }
+                OptionSelector {
+                    width: parent.width
+                    model: [i18n.tr("Mínimo"), i18n.tr("Medio"), i18n.tr("Avanzado")]
+                    selectedIndex: panel.cfg ? panel.cfg.prefLevel : 0
+                    containerHeight: units.gu(4.5) * 3
+                    onSelectedIndexChanged: if (panel.cfg) panel.cfg.prefLevel = selectedIndex
                 }
             }
         }
@@ -279,17 +287,18 @@ Rectangle {
         // ════════════════════════════════════════════════════════════════
         Rectangle {
             visible: quickCol.hasContent
-            width: parent.width; height: units.gu(5.5)
-            color: "#252535"; radius: units.gu(1)
+            width: parent.width; height: units.gu(6)
+            color: pal.bgHeader; radius: units.gu(1)
             Label {
                 anchors { left: parent.left; verticalCenter: parent.verticalCenter; leftMargin: units.gu(2) }
                 text: i18n.tr("Ajustes rápidos")
                 color: "#29B6F6"; font.pixelSize: ts(2.0); font.bold: true
             }
-            Label {
-                anchors { right: parent.right; verticalCenter: parent.verticalCenter; rightMargin: units.gu(2) }
-                text: secSettings.quick ? "▲" : "▼"
-                color: "#29B6F6"; font.pixelSize: ts(1.6)
+            Icon {
+                anchors { right: parent.right; rightMargin: units.gu(2); verticalCenter: parent.verticalCenter }
+                width: units.gu(2.5); height: units.gu(2.5)
+                name: secSettings.quick ? "go-up" : "go-down"
+                color: "#29B6F6"
             }
             MouseArea { anchors.fill: parent; onClicked: secSettings.quick = !secSettings.quick }
         }
@@ -299,53 +308,34 @@ Rectangle {
             property int  _sectionMinLevel: 0
             property bool hasContent: panel.cfg ? panel.cfg.prefLevel >= _sectionMinLevel : false
             visible: secSettings.quick && hasContent
-            width: parent.width; spacing: units.gu(1.5)
+            width: parent.width; spacing: 0
 
             // ── Modo de luz ──────────────────────────────────────────────
             Rectangle {
-                width: parent.width; height: units.gu(14)
-                color: "#1C1C2E"; radius: units.gu(1)
+                width: parent.width
+                height: lightModeCol.implicitHeight + units.gu(4)
+                color: pal.bgCard; radius: 0
 
                 Column {
+                    id: lightModeCol
                     anchors { fill: parent; margins: units.gu(2) }
                     spacing: units.gu(1.5)
 
-                    Label { text: i18n.tr("Modo de luz"); color: "#90A4AE"; font.pixelSize: ts(1.8) }
+                    Label { text: i18n.tr("Modo de luz"); color: pal.fgSecondary; font.pixelSize: ts(1.8) }
 
-                    Row {
-                        spacing: units.gu(1.5)
-                        Repeater {
-                            model: [
-                                { key: "day",   icon: "☀", label: i18n.tr("Día") },
-                                { key: "night", icon: "☽", label: i18n.tr("Noche") },
-                                { key: "auto",  icon: "⊙", label: i18n.tr("Auto") + " ↺" }
-                            ]
-                            delegate: Rectangle {
-                                width: (parent.parent.width - units.gu(3)) / 3
-                                height: units.gu(7)
-                                radius: units.gu(0.8)
-                                color:  panel.cfg && panel.cfg.lightMode === modelData.key ? "#1E3A5F" : "#2A2A3E"
-                                border.color: panel.cfg && panel.cfg.lightMode === modelData.key ? "#29B6F6" : "transparent"
-                                border.width: units.gu(0.2)
-                                Column {
-                                    anchors.centerIn: parent; spacing: units.gu(0.3)
-                                    Label {
-                                        anchors.horizontalCenter: parent.horizontalCenter
-                                        text: modelData.icon; color: "#29B6F6"; font.pixelSize: ts(2.2)
-                                    }
-                                    Label {
-                                        anchors.horizontalCenter: parent.horizontalCenter
-                                        text: modelData.label; color: "#90A4AE"; font.pixelSize: ts(1.8)
-                                    }
-                                }
-                                MouseArea {
-                                    anchors.fill: parent
-                                    onClicked: {
-                                        if (panel.cfg) panel.cfg.lightMode = modelData.key
-                                        panel.lightModeApplied()
-                                    }
-                                }
-                            }
+                    OptionSelector {
+                        width: parent.width
+                        property var _keys: ["day", "night", "auto"]
+                        model: ["☀ " + i18n.tr("Día"), "☽ " + i18n.tr("Noche"), "⊙ " + i18n.tr("Auto") + " ↺"]
+                        selectedIndex: {
+                            if (!panel.cfg) return 2
+                            return _keys.indexOf(panel.cfg.lightMode) >= 0 ? _keys.indexOf(panel.cfg.lightMode) : 2
+                        }
+                        containerHeight: units.gu(4.5) * 3
+                        onSelectedIndexChanged: {
+                            if (!panel.cfg) return
+                            panel.cfg.lightMode = _keys[selectedIndex]
+                            panel.lightModeApplied()
                         }
                     }
                 }
@@ -355,7 +345,7 @@ Rectangle {
             Rectangle {
                 width: parent.width
                 height: styleCol.implicitHeight + units.gu(4)
-                color: "#1C1C2E"; radius: units.gu(1)
+                color: pal.bgCard; radius: 0
 
                 Column {
                     id: styleCol
@@ -363,40 +353,26 @@ Rectangle {
                               margins: units.gu(2); topMargin: units.gu(2) }
                     spacing: units.gu(1)
 
-                    Label { text: i18n.tr("Estilo de mapa"); color: "#90A4AE"; font.pixelSize: ts(1.8) }
+                    Label { text: i18n.tr("Estilo de mapa"); color: pal.fgSecondary; font.pixelSize: ts(1.8) }
 
-                    Flow {
+                    OptionSelector {
                         width: parent.width
-                        spacing: units.gu(1)
-                        Repeater {
-                            model: panel._mapStyleModes
-                            delegate: Rectangle {
-                                width:  units.gu(10)
-                                height: units.gu(7)
-                                radius: units.gu(0.8)
-                                color:  panel.cfg && panel.cfg.mapStyleMode === modelData.key ? "#1E3A5F" : "#2A2A3E"
-                                border.color: panel.cfg && panel.cfg.mapStyleMode === modelData.key ? "#29B6F6" : "transparent"
-                                border.width: units.gu(0.2)
-                                Column {
-                                    anchors.centerIn: parent; spacing: units.gu(0.3)
-                                    Label {
-                                        anchors.horizontalCenter: parent.horizontalCenter
-                                        text: modelData.icon; font.pixelSize: ts(2.2)
-                                    }
-                                    Label {
-                                        anchors.horizontalCenter: parent.horizontalCenter
-                                        text: modelData.label + (modelData.key === "auto" ? " ↺" : "")
-                                        color: "#90A4AE"; font.pixelSize: ts(1.6)
-                                    }
-                                }
-                                MouseArea {
-                                    anchors.fill: parent
-                                    onClicked: {
-                                        if (panel.cfg) panel.cfg.mapStyleMode = modelData.key
-                                        panel.lightModeApplied()
-                                    }
-                                }
-                            }
+                        property var _modes: panel._mapStyleModes
+                        model: {
+                            var labels = []
+                            for (var i = 0; i < _modes.length; i++)
+                                labels.push(_modes[i].icon + " " + _modes[i].label + (_modes[i].key === "auto" ? " ↺" : ""))
+                            return labels
+                        }
+                        selectedIndex: {
+                            if (!panel.cfg) return 0
+                            for (var i = 0; i < _modes.length; i++)
+                                if (_modes[i].key === panel.cfg.mapStyleMode) return i
+                            return 0
+                        }
+                        containerHeight: units.gu(4.5) * 8
+                        onSelectedIndexChanged: {
+                            if (panel.cfg) panel.cfg.mapStyleMode = _modes[selectedIndex].key
                         }
                     }
                 }
@@ -406,7 +382,7 @@ Rectangle {
             Rectangle {
                 id: vehiclesSection
                 width: parent.width
-                color: "#1C1C2E"; radius: units.gu(1)
+                color: pal.bgCard; radius: 0
                 height: vehCol.implicitHeight + units.gu(4)
 
                 property bool _addMode: false
@@ -435,7 +411,7 @@ Rectangle {
                         Rectangle {
                             id: addVehBtn
                             width: units.gu(11); height: units.gu(5); radius: height / 2
-                            color: vehiclesSection._addMode ? "#1A3A1A" : "#1E2A3A"
+                            color: vehiclesSection._addMode ? pal.bgSelGreen : pal.bgInput
                             border.color: "#4CAF50"; border.width: 1
                             anchors.verticalCenter: parent.verticalCenter
                             Label {
@@ -459,8 +435,8 @@ Rectangle {
                             id: vehDelegate
                             width: parent.width; height: units.gu(6.5)
                             radius: units.gu(0.7)
-                            color: modelData.id === panel.cfg.activeVehicleId ? "#1B2B3A" : "#14141F"
-                            border.color: modelData.id === panel.cfg.activeVehicleId ? "#29B6F6" : "#37474F"
+                            color: modelData.id === panel.cfg.activeVehicleId ? pal.bgSelBlue : pal.bgCard
+                            border.color: modelData.id === panel.cfg.activeVehicleId ? "#29B6F6" : pal.divider
                             border.width: modelData.id === panel.cfg.activeVehicleId ? 2 : 1
                             property bool _askDel: false
 
@@ -482,14 +458,14 @@ Rectangle {
                                     anchors.verticalCenter: parent.verticalCenter
                                     width: parent.width - units.gu(1.2) - units.gu(1) - delVehBtn.width - units.gu(1)
                                     Label {
-                                        text: modelData.alias; color: "#ECEFF1"
+                                        text: modelData.alias; color: pal.fgData
                                         font.pixelSize: ts(2.1)
                                         wrapMode: Text.NoWrap; elide: Text.ElideRight; width: parent.width
                                     }
                                     Label {
                                         text: panel.vehicleMgr.costingLabel(modelData.costing)
                                               + (modelData.hasPark && modelData.costing !== "pedestrian" ? "  🅿" : "")
-                                        color: "#B0BEC5"; font.pixelSize: ts(2.1)
+                                        color: pal.fgDataSub; font.pixelSize: ts(2.1)
                                         wrapMode: Text.NoWrap; elide: Text.ElideRight; width: parent.width
                                     }
                                 }
@@ -536,10 +512,10 @@ Rectangle {
                                         Rectangle {
                                             width: (parent.width - units.gu(0.5)) / 2; height: parent.height
                                             radius: height / 2
-                                            color: "#1E2A3A"; border.color: "#90A4AE"; border.width: 1
+                                            color: pal.bgInput; border.color: pal.fgSecondary; border.width: 1
                                             Label {
                                                 anchors.centerIn: parent; text: i18n.tr("No")
-                                                color: "#90A4AE"; font.pixelSize: ts(1.7)
+                                                color: pal.fgSecondary; font.pixelSize: ts(1.7)
                                             }
                                             MouseArea {
                                                 anchors.fill: parent
@@ -561,11 +537,11 @@ Rectangle {
                         visible: vehiclesSection._addMode
                         width: parent.width; spacing: units.gu(1)
 
-                        Label { text: i18n.tr("Nombre"); color: "#90A4AE"; font.pixelSize: ts(1.7) }
+                        Label { text: i18n.tr("Nombre"); color: pal.fgSecondary; font.pixelSize: ts(1.7) }
                         Rectangle {
                             width: parent.width; height: units.gu(5)
-                            color: "#252540"; radius: units.gu(0.7)
-                            border.color: newVehName.activeFocus ? "#29B6F6" : "#37474F"; border.width: 1
+                            color: pal.bgInput; radius: units.gu(0.7)
+                            border.color: newVehName.activeFocus ? "#29B6F6" : pal.divider; border.width: 1
                             TextInput {
                                 id: newVehName
                                 anchors {
@@ -573,12 +549,12 @@ Rectangle {
                                     verticalCenter: parent.verticalCenter
                                     leftMargin: units.gu(1.2); rightMargin: units.gu(1.2)
                                 }
-                                text: "Mi vehículo"; color: "#ECEFF1"; font.pixelSize: ts(2.0)
+                                text: "Mi vehículo"; color: pal.fgData; font.pixelSize: ts(2.0)
                                 selectionColor: "#29B6F6"
                                 onActiveFocusChanged: if (activeFocus) panel._kbdFocusItem = this
                             }
                         }
-                        Label { text: i18n.tr("Tipo"); color: "#90A4AE"; font.pixelSize: ts(1.7) }
+                        Label { text: i18n.tr("Tipo"); color: pal.fgSecondary; font.pixelSize: ts(1.7) }
                         Flow {
                             width: parent.width; spacing: units.gu(0.6)
                             Repeater {
@@ -586,11 +562,11 @@ Rectangle {
                                 Rectangle {
                                     width: (vehCol.width - 2 * units.gu(0.6)) / 3
                                     height: units.gu(5); radius: height / 2
-                                    color:  vehiclesSection._newTypeIdx === index ? "#29B6F6" : "#1E2A3A"
+                                    color:  vehiclesSection._newTypeIdx === index ? "#29B6F6" : pal.bgInput
                                     border.color: "#29B6F6"; border.width: 1
                                     Label {
                                         anchors.centerIn: parent; text: modelData.label
-                                        color: vehiclesSection._newTypeIdx === index ? "#0A0A1A" : "#90A4AE"
+                                        color: vehiclesSection._newTypeIdx === index ? "#0A0A1A" : pal.fgSecondary
                                         font.pixelSize: ts(1.8)
                                         font.bold: vehiclesSection._newTypeIdx === index
                                     }
@@ -631,17 +607,18 @@ Rectangle {
         // ════════════════════════════════════════════════════════════════
         Rectangle {
             visible: generalCol.hasContent
-            width: parent.width; height: units.gu(5.5)
-            color: "#252535"; radius: units.gu(1)
+            width: parent.width; height: units.gu(6)
+            color: pal.bgHeader; radius: units.gu(1)
             Label {
                 anchors { left: parent.left; verticalCenter: parent.verticalCenter; leftMargin: units.gu(2) }
                 text: i18n.tr("General")
                 color: "#29B6F6"; font.pixelSize: ts(2.0); font.bold: true
             }
-            Label {
-                anchors { right: parent.right; verticalCenter: parent.verticalCenter; rightMargin: units.gu(2) }
-                text: secSettings.general ? "▲" : "▼"
-                color: "#29B6F6"; font.pixelSize: ts(1.6)
+            Icon {
+                anchors { right: parent.right; rightMargin: units.gu(2); verticalCenter: parent.verticalCenter }
+                width: units.gu(2.5); height: units.gu(2.5)
+                name: secSettings.general ? "go-up" : "go-down"
+                color: "#29B6F6"
             }
             MouseArea { anchors.fill: parent; onClicked: secSettings.general = !secSettings.general }
         }
@@ -651,69 +628,35 @@ Rectangle {
             property int  _sectionMinLevel: 0
             property bool hasContent: panel.cfg ? panel.cfg.prefLevel >= _sectionMinLevel : false
             visible: secSettings.general && hasContent
-            width: parent.width; spacing: units.gu(1.5)
+            width: parent.width; spacing: 0
 
             // ── Tamaño de texto ──────────────────────────────────────────
             Rectangle {
                 width: parent.width; height: tsCol.implicitHeight + units.gu(4)
-                color: "#1C1C2E"; radius: units.gu(1)
+                color: pal.bgCard; radius: 0
                 Column {
                     id: tsCol
                     anchors { left: parent.left; right: parent.right; top: parent.top; margins: units.gu(2) }
-                    spacing: units.gu(0.8)
-                    Row {
-                        width: parent.width
-                        Label { text: i18n.tr("Tamaño de texto"); color: "white"; font.pixelSize: ts(1.8); anchors.verticalCenter: parent.verticalCenter }
-                        Item { width: parent.width - textSizeLbl.width - units.gu(16); height: 1 }
+                    spacing: units.gu(1)
+                    Item {
+                        width: parent.width; height: units.gu(3)
                         Label {
-                            id: textSizeLbl
-                            textFormat: Text.RichText
-                            text: panel.cfg ? ("<b>" + Math.round(panel.cfg.textScale * 100) + "%</b> <font color='#546E7A'>↺ 100%</font>") : "100%"
+                            anchors { left: parent.left; verticalCenter: parent.verticalCenter }
+                            text: i18n.tr("Tamaño de texto"); color: pal.fgPrimary; font.pixelSize: ts(1.8)
+                        }
+                        Label {
+                            anchors { right: parent.right; verticalCenter: parent.verticalCenter }
+                            text: panel.cfg ? (Math.round(panel.cfg.textScale * 100) + " %  ↺ 100 %") : "100 %"
                             color: "#29B6F6"; font.pixelSize: ts(1.7)
-                            anchors.verticalCenter: parent.verticalCenter
                         }
                     }
-                    Item {
-                        id: tsCtrl
-                        width: parent.width; height: units.gu(4)
-                        property int _dir: 0
-                        Timer { interval: 200; repeat: true; running: tsCtrl._dir !== 0
-                            onTriggered: if (panel.cfg) panel.cfg.textScale = Math.max(0.7, Math.min(1.5, Math.round((panel.cfg.textScale + 0.05 * tsCtrl._dir) / 0.05) * 0.05))
-                        }
-                        Rectangle {
-                            id: tsMinusBtn
-                            anchors { left: parent.left; verticalCenter: parent.verticalCenter }
-                            width: units.gu(5); height: units.gu(4); radius: units.gu(0.6)
-                            color: tsMinus.pressed ? "#1E3A5F" : "#2A2A3E"; border.color: "#37474F"; border.width: 1
-                            Label { anchors.centerIn: parent; text: "−"; color: "#29B6F6"; font.pixelSize: ts(2.5); font.bold: true }
-                            MouseArea {
-                                id: tsMinus; anchors.fill: parent
-                                onClicked: if (panel.cfg) panel.cfg.textScale = Math.max(0.7, Math.min(1.5, Math.round((panel.cfg.textScale - 0.05) / 0.05) * 0.05))
-                                onPressAndHold: tsCtrl._dir = -1
-                                onReleased: tsCtrl._dir = 0
-                            }
-                        }
-                        Rectangle {
-                            anchors { left: tsMinusBtn.right; right: tsPlusBtn.left; verticalCenter: parent.verticalCenter; margins: units.gu(1) }
-                            height: units.gu(0.5); radius: height / 2; color: "#37474F"
-                            Rectangle {
-                                width: panel.cfg ? (panel.cfg.textScale - 0.7) / 0.8 * parent.width : 0
-                                height: parent.height; radius: parent.radius; color: "#29B6F6"
-                            }
-                        }
-                        Rectangle {
-                            id: tsPlusBtn
-                            anchors { right: parent.right; verticalCenter: parent.verticalCenter }
-                            width: units.gu(5); height: units.gu(4); radius: units.gu(0.6)
-                            color: tsPlus.pressed ? "#1E3A5F" : "#2A2A3E"; border.color: "#37474F"; border.width: 1
-                            Label { anchors.centerIn: parent; text: "+"; color: "#29B6F6"; font.pixelSize: ts(2.5); font.bold: true }
-                            MouseArea {
-                                id: tsPlus; anchors.fill: parent
-                                onClicked: if (panel.cfg) panel.cfg.textScale = Math.max(0.7, Math.min(1.5, Math.round((panel.cfg.textScale + 0.05) / 0.05) * 0.05))
-                                onPressAndHold: tsCtrl._dir = 1
-                                onReleased: tsCtrl._dir = 0
-                            }
-                        }
+                    Slider {
+                        theme.name: pal.isDark ? "Ubuntu.Components.Themes.SuruDark"
+                                               : "Ubuntu.Components.Themes.Ambiance"
+                        width: parent.width
+                        minimumValue: 0.70; maximumValue: 1.50; stepSize: 0.05; live: true
+                        value: panel.cfg ? panel.cfg.textScale : 1.0
+                        onValueChanged: if (panel.cfg) panel.cfg.textScale = Math.round(value / 0.05) * 0.05
                     }
                 }
             }
@@ -722,70 +665,45 @@ Rectangle {
             Rectangle {
                 width: parent.width
                 height: medCol.implicitHeight + units.gu(4)
-                color: "#1C1C2E"; radius: units.gu(1)
+                color: pal.bgCard; radius: 0
                 Column {
                     id: medCol
                     anchors { left: parent.left; right: parent.right; top: parent.top; margins: units.gu(2) }
                     spacing: units.gu(0.8)
-                    Label { text: i18n.tr("Sistema de medidas"); color: "white"; font.pixelSize: ts(1.8) }
-                    Row {
-                        spacing: units.gu(1)
-                        Repeater {
-                            model: [["metric", "km / m"], ["imperial", "mi / ft"]]
-                            Rectangle {
-                                property bool sel: panel.cfg && panel.cfg.measureSystem === modelData[0]
-                                width: ts(8); height: ts(4); radius: units.gu(0.6)
-                                color:        sel ? "#1E3A5F" : "#2A2A3E"
-                                border.color: sel ? "#29B6F6" : "transparent"; border.width: units.gu(0.15)
-                                Label {
-                                    anchors.centerIn: parent
-                                    text: modelData[1] + (modelData[0] === "metric" ? " ↺" : "")
-                                    color: sel ? "#29B6F6" : "#78909C"
-                                    font.pixelSize: ts(1.7); font.bold: sel
-                                }
-                                MouseArea {
-                                    anchors.fill: parent
-                                    onClicked: { if (panel.cfg) panel.cfg.measureSystem = modelData[0] }
-                                }
-                            }
+                    Label { text: i18n.tr("Sistema de medidas"); color: pal.fgPrimary; font.pixelSize: ts(1.8) }
+                    OptionSelector {
+                        width: parent.width
+                        model: [i18n.tr("Métrico") + "  (km, m) ↺", i18n.tr("Imperial") + "  (mi, ft)"]
+                        selectedIndex: panel.cfg && panel.cfg.measureSystem === "imperial" ? 1 : 0
+                        containerHeight: units.gu(4.5) * 2
+                        onSelectedIndexChanged: {
+                            if (panel.cfg) panel.cfg.measureSystem = selectedIndex === 0 ? "metric" : "imperial"
                         }
                     }
                 }
             }
 
             // ── Mostrar novedades al inicio ──────────────────────────────
-            Rectangle {
-                width: parent.width; height: units.gu(6)
-                color: "#1C1C2E"; radius: units.gu(1)
-
-                Row {
-                    anchors { fill: parent; margins: units.gu(2) }
-                    spacing: units.gu(1.5)
-
-                    Column {
-                        anchors.verticalCenter: parent.verticalCenter
-                        width: parent.width - toggleNovedades.width - units.gu(1.5)
-                        Label { text: i18n.tr("Mostrar novedades al inicio"); color: "white"; font.pixelSize: ts(1.8) }
-                        Label { text: i18n.tr("Pantalla de cambios en cada deploy") + "  · ↺ act."; color: "#90A4AE"; font.pixelSize: ts(1.8) }
-                    }
-
-                    Rectangle {
-                        id: toggleNovedades
-                        anchors.verticalCenter: parent.verticalCenter
-                        width: units.gu(5.5); height: units.gu(3); radius: height / 2
-                        color: panel.cfg && panel.cfg.showChangesAtStartup ? "#29B6F6" : "#37474F"
-                        Behavior on color { ColorAnimation { duration: 120 } }
-                        Rectangle {
-                            width: units.gu(2.4); height: units.gu(2.4); radius: width / 2; color: "white"
-                            anchors.verticalCenter: parent.verticalCenter
-                            x: panel.cfg && panel.cfg.showChangesAtStartup
-                               ? parent.width - width - units.gu(0.3) : units.gu(0.3)
-                            Behavior on x { NumberAnimation { duration: 120 } }
-                        }
-                        MouseArea {
-                            anchors.fill: parent
-                            onClicked: if (panel.cfg) panel.cfg.showChangesAtStartup = !panel.cfg.showChangesAtStartup
-                        }
+            ListItem {
+                width: parent.width
+                divider.colorFrom: pal.divider; divider.colorTo: pal.divider
+                color: pal.bgCard
+                highlightColor: pal.highlight
+                height: liShowChangesLayout.height + units.gu(1)
+                ListItemLayout {
+                    id: liShowChangesLayout
+                    title.text: i18n.tr("Mostrar novedades al inicio")
+                    title.color: pal.fgPrimary
+                    title.font.pixelSize: ts(1.8)
+                    subtitle.text: i18n.tr("Pantalla de cambios en cada deploy") + "  · ↺ act."
+                    subtitle.color: pal.fgSecondary
+                    subtitle.font.pixelSize: ts(1.5)
+                    subtitle.wrapMode: Text.WordWrap
+                    Switch {
+                        id: swShowChangesAtStartup
+                        SlotsLayout.position: SlotsLayout.Trailing
+                        checked: panel.cfg ? panel.cfg.showChangesAtStartup : false
+                        onCheckedChanged: if (panel.cfg) panel.cfg.showChangesAtStartup = checked
                     }
                 }
             }
@@ -796,17 +714,18 @@ Rectangle {
         // ════════════════════════════════════════════════════════════════
         Rectangle {
             visible: srvColContent.hasContent
-            width: parent.width; height: units.gu(5.5)
-            color: "#252535"; radius: units.gu(1)
+            width: parent.width; height: units.gu(6)
+            color: pal.bgHeader; radius: units.gu(1)
             Label {
                 anchors { left: parent.left; verticalCenter: parent.verticalCenter; leftMargin: units.gu(2) }
                 text: i18n.tr("Servidor de rutas")
                 color: "#29B6F6"; font.pixelSize: ts(2.0); font.bold: true
             }
-            Label {
-                anchors { right: parent.right; verticalCenter: parent.verticalCenter; rightMargin: units.gu(2) }
-                text: secSettings.servidor ? "▲" : "▼"
-                color: "#29B6F6"; font.pixelSize: ts(1.6)
+            Icon {
+                anchors { right: parent.right; rightMargin: units.gu(2); verticalCenter: parent.verticalCenter }
+                width: units.gu(2.5); height: units.gu(2.5)
+                name: secSettings.servidor ? "go-up" : "go-down"
+                color: "#29B6F6"
             }
             MouseArea { anchors.fill: parent; onClicked: secSettings.servidor = !secSettings.servidor }
         }
@@ -816,12 +735,12 @@ Rectangle {
             property int  _sectionMinLevel: 0
             property bool hasContent: panel.cfg ? panel.cfg.prefLevel >= _sectionMinLevel : false
             visible: secSettings.servidor && hasContent
-            width: parent.width; spacing: units.gu(1.5)
+            width: parent.width; spacing: 0
 
             Rectangle {
                 id: vhSection
                 width: parent.width
-                color: "#1C1C2E"; radius: units.gu(1)
+                color: pal.bgCard; radius: 0
                 height: vhCol.implicitHeight + units.gu(4)
 
                 property var _custom: {
@@ -842,43 +761,36 @@ Rectangle {
                     y: units.gu(2)
                     spacing: units.gu(1.2)
 
-                    Label { text: i18n.tr("Servidor de rutas"); color: "#90A4AE"; font.pixelSize: ts(1.8) }
+                    Label { text: i18n.tr("Servidor de rutas"); color: pal.fgSecondary; font.pixelSize: ts(1.8) }
 
                     // Toggle: preferir OSM Scout
-                    Row {
-                        width: parent.width; spacing: units.gu(1.5)
-                        Column {
-                            anchors.verticalCenter: parent.verticalCenter
-                            width: parent.width - units.gu(7)
-                            Label { text: i18n.tr("Preferir OSM Scout Server si disponible"); color: "white"; font.pixelSize: ts(1.8); wrapMode: Text.WordWrap; width: parent.width }
-                            Label { text: i18n.tr("Enrutamiento offline · se detecta al arrancar") + "  · ↺ act."; color: "#90A4AE"; font.pixelSize: ts(1.6); wrapMode: Text.WordWrap; width: parent.width }
+                    Item {
+                        width: parent.width; height: osmScoutToggleCol.implicitHeight
+                        Switch {
+                            id: swPreferOsmScout
+                            anchors { right: parent.right; verticalCenter: parent.verticalCenter }
+                            checked: panel.cfg ? panel.cfg.preferOsmScout : false
+                            onCheckedChanged: if (panel.cfg) panel.cfg.preferOsmScout = checked
                         }
-                        Rectangle {
-                            anchors.verticalCenter: parent.verticalCenter
-                            width: units.gu(5.5); height: units.gu(3); radius: height / 2
-                            color: panel.cfg && panel.cfg.preferOsmScout ? "#1565C0" : "#37474F"
-                            Behavior on color { ColorAnimation { duration: 120 } }
-                            Rectangle {
-                                width: units.gu(2.4); height: units.gu(2.4); radius: width / 2; color: "white"
-                                anchors.verticalCenter: parent.verticalCenter
-                                x: panel.cfg && panel.cfg.preferOsmScout ? parent.width - width - units.gu(0.3) : units.gu(0.3)
-                                Behavior on x { NumberAnimation { duration: 150 } }
-                            }
-                            MouseArea { anchors.fill: parent; onClicked: if (panel.cfg) panel.cfg.preferOsmScout = !panel.cfg.preferOsmScout }
+                        Column {
+                            id: osmScoutToggleCol
+                            anchors { left: parent.left; right: swPreferOsmScout.left; rightMargin: units.gu(1); verticalCenter: parent.verticalCenter }
+                            Label { text: i18n.tr("Preferir OSM Scout Server si disponible"); color: pal.fgPrimary; font.pixelSize: ts(1.8); wrapMode: Text.WordWrap; width: parent.width }
+                            Label { text: i18n.tr("Enrutamiento offline · se detecta al arrancar") + "  · ↺ act."; color: pal.fgSecondary; font.pixelSize: ts(1.6); wrapMode: Text.WordWrap; width: parent.width }
                         }
                     }
 
                     // OSM Scout Server (dispositivo)
                     Rectangle {
                         width: parent.width; height: units.gu(5.5); radius: units.gu(0.8)
-                        color: panel.cfg && panel.cfg.valhallaUrl === "http://127.0.0.1:8553/v2" ? "#1A3A6A" : "#2A2A3E"
+                        color: panel.cfg && panel.cfg.valhallaUrl === "http://127.0.0.1:8553/v2" ? pal.bgSelBlue : pal.bgInput
                         Row {
                             anchors { fill: parent; leftMargin: units.gu(1.5); rightMargin: units.gu(1.5) }
                             spacing: units.gu(1)
                             Column {
                                 anchors.verticalCenter: parent.verticalCenter
                                 width: parent.width - units.gu(10)
-                                Label { text: "OSM Scout Server (dispositivo)"; color: "white"; font.pixelSize: ts(1.8); font.bold: true }
+                                Label { text: "OSM Scout Server (dispositivo)"; color: pal.fgPrimary; font.pixelSize: ts(1.8); font.bold: true }
                                 Label {
                                     text: panel.osmScoutActive ? "✓ activo · puerto 8553 · offline" : "✗ no detectado · puerto 8553"
                                     color: panel.osmScoutActive ? "#66BB6A" : "#EF5350"
@@ -901,13 +813,13 @@ Rectangle {
                     // valhalla.egpsistemas.com (servidor principal)
                     Rectangle {
                         width: parent.width; height: units.gu(5.5); radius: units.gu(0.8)
-                        color: panel.cfg && panel.cfg.valhallaUrl === "https://valhalla.egpsistemas.com" ? "#1A3A6A" : "#2A2A3E"
+                        color: panel.cfg && panel.cfg.valhallaUrl === "https://valhalla.egpsistemas.com" ? pal.bgSelBlue : pal.bgInput
                         Row {
                             anchors { fill: parent; leftMargin: units.gu(1.5); rightMargin: units.gu(1.5) }
                             Column {
                                 anchors.verticalCenter: parent.verticalCenter; width: parent.width
-                                Label { text: i18n.tr("Servidor Navius"); color: "white"; font.pixelSize: ts(1.8); font.bold: true }
-                                Label { text: "https://valhalla.egpsistemas.com · servidor propio"; color: "#90A4AE"; font.pixelSize: ts(1.5) }
+                                Label { text: i18n.tr("Servidor Navius"); color: pal.fgPrimary; font.pixelSize: ts(1.8); font.bold: true }
+                                Label { text: "https://valhalla.egpsistemas.com · servidor propio"; color: pal.fgSecondary; font.pixelSize: ts(1.5) }
                             }
                         }
                         MouseArea { anchors.fill: parent; onClicked: vhSection._setUrl("https://valhalla.egpsistemas.com") }
@@ -916,13 +828,13 @@ Rectangle {
                     // OpenStreetMap.de
                     Rectangle {
                         width: parent.width; height: units.gu(5.5); radius: units.gu(0.8)
-                        color: panel.cfg && panel.cfg.valhallaUrl === "https://valhalla1.openstreetmap.de" ? "#1A3A6A" : "#2A2A3E"
+                        color: panel.cfg && panel.cfg.valhallaUrl === "https://valhalla1.openstreetmap.de" ? pal.bgSelBlue : pal.bgInput
                         Row {
                             anchors { fill: parent; leftMargin: units.gu(1.5); rightMargin: units.gu(1.5) }
                             Column {
                                 anchors.verticalCenter: parent.verticalCenter; width: parent.width
-                                Label { text: "OpenStreetMap.de"; color: "white"; font.pixelSize: ts(1.8); font.bold: true }
-                                Label { text: "https://valhalla1.openstreetmap.de · gratuito online"; color: "#90A4AE"; font.pixelSize: ts(1.5) }
+                                Label { text: "OpenStreetMap.de"; color: pal.fgPrimary; font.pixelSize: ts(1.8); font.bold: true }
+                                Label { text: "https://valhalla1.openstreetmap.de · gratuito online"; color: pal.fgSecondary; font.pixelSize: ts(1.5) }
                             }
                         }
                         MouseArea { anchors.fill: parent; onClicked: vhSection._setUrl("https://valhalla1.openstreetmap.de") }
@@ -933,19 +845,19 @@ Rectangle {
                         model: vhSection._custom
                         Rectangle {
                             width: vhCol.width; height: units.gu(5.5); radius: units.gu(0.8)
-                            color: panel.cfg && panel.cfg.valhallaUrl === modelData.url ? "#1A3A6A" : "#2A2A3E"
+                            color: panel.cfg && panel.cfg.valhallaUrl === modelData.url ? pal.bgSelBlue : pal.bgInput
                             Row {
                                 anchors { fill: parent; leftMargin: units.gu(1.5); rightMargin: units.gu(1.5) }
                                 spacing: units.gu(1)
                                 Column {
                                     anchors.verticalCenter: parent.verticalCenter
                                     width: parent.width - units.gu(5)
-                                    Label { text: modelData.label; color: "white"; font.pixelSize: ts(1.8); font.bold: true; elide: Text.ElideRight; width: parent.width }
-                                    Label { text: modelData.url;   color: "#90A4AE"; font.pixelSize: ts(1.5); elide: Text.ElideRight; width: parent.width }
+                                    Label { text: modelData.label; color: pal.fgPrimary; font.pixelSize: ts(1.8); font.bold: true; elide: Text.ElideRight; width: parent.width }
+                                    Label { text: modelData.url;   color: pal.fgSecondary; font.pixelSize: ts(1.5); elide: Text.ElideRight; width: parent.width }
                                 }
                                 Rectangle {
                                     anchors.verticalCenter: parent.verticalCenter
-                                    width: units.gu(3.5); height: units.gu(3.5); radius: width / 2; color: "#37474F"
+                                    width: units.gu(3.5); height: units.gu(3.5); radius: width / 2; color: pal.bgBtn
                                     Label { anchors.centerIn: parent; text: "✕"; color: "#EF5350"; font.pixelSize: ts(1.8) }
                                     MouseArea {
                                         anchors.fill: parent
@@ -970,7 +882,7 @@ Rectangle {
                     // Botón añadir servidor
                     Rectangle {
                         visible: !vhSection._showForm
-                        width: parent.width; height: units.gu(4.5); radius: units.gu(0.8); color: "#2A2A3E"
+                        width: parent.width; height: units.gu(4.5); radius: units.gu(0.8); color: pal.bgInputAlt
                         Label { anchors.centerIn: parent; text: "+ " + i18n.tr("Añadir servidor"); color: "#29B6F6"; font.pixelSize: ts(1.8) }
                         MouseArea { anchors.fill: parent; onClicked: vhSection._showForm = true }
                     }
@@ -981,31 +893,31 @@ Rectangle {
                         width: parent.width; spacing: units.gu(1)
 
                         Rectangle {
-                            width: parent.width; height: units.gu(5); radius: units.gu(0.8); color: "#2A2A3E"
+                            width: parent.width; height: units.gu(5); radius: units.gu(0.8); color: pal.bgInputAlt
                             Label {
                                 anchors { left: parent.left; right: parent.right; verticalCenter: parent.verticalCenter; margins: units.gu(1.5) }
-                                text: i18n.tr("Nombre (ej. Mi servidor)"); color: "#90A4AE"; font.pixelSize: ts(1.8)
+                                text: i18n.tr("Nombre (ej. Mi servidor)"); color: pal.fgSecondary; font.pixelSize: ts(1.8)
                                 visible: vhLabelIn.text.length === 0
                             }
                             TextInput {
                                 id: vhLabelIn
                                 anchors { left: parent.left; right: parent.right; verticalCenter: parent.verticalCenter; margins: units.gu(1.5) }
-                                color: "white"; font.pixelSize: ts(1.8); selectionColor: "#29B6F6"
+                                color: pal.fgPrimary; font.pixelSize: ts(1.8); selectionColor: "#29B6F6"
                                 onActiveFocusChanged: if (activeFocus) panel._kbdFocusItem = this
                             }
                         }
 
                         Rectangle {
-                            width: parent.width; height: units.gu(5); radius: units.gu(0.8); color: "#2A2A3E"
+                            width: parent.width; height: units.gu(5); radius: units.gu(0.8); color: pal.bgInputAlt
                             Label {
                                 anchors { left: parent.left; right: parent.right; verticalCenter: parent.verticalCenter; margins: units.gu(1.5) }
-                                text: "https://mi-valhalla.local"; color: "#90A4AE"; font.pixelSize: ts(1.8)
+                                text: "https://mi-valhalla.local"; color: pal.fgSecondary; font.pixelSize: ts(1.8)
                                 visible: vhUrlIn.text.length === 0
                             }
                             TextInput {
                                 id: vhUrlIn
                                 anchors { left: parent.left; right: parent.right; verticalCenter: parent.verticalCenter; margins: units.gu(1.5) }
-                                color: "white"; font.pixelSize: ts(1.8); selectionColor: "#29B6F6"
+                                color: pal.fgPrimary; font.pixelSize: ts(1.8); selectionColor: "#29B6F6"
                                 inputMethodHints: Qt.ImhUrlCharactersOnly | Qt.ImhNoAutoUppercase
                                 onActiveFocusChanged: if (activeFocus) panel._kbdFocusItem = this
                             }
@@ -1015,8 +927,8 @@ Rectangle {
                             width: parent.width; spacing: units.gu(1)
                             Rectangle {
                                 width: (parent.width - units.gu(1)) / 2; height: units.gu(4.5)
-                                color: "#37474F"; radius: units.gu(0.8)
-                                Label { anchors.centerIn: parent; text: i18n.tr("Cancelar"); color: "#90A4AE"; font.pixelSize: ts(1.8) }
+                                color: pal.bgBtn; radius: units.gu(0.8)
+                                Label { anchors.centerIn: parent; text: i18n.tr("Cancelar"); color: pal.fgSecondary; font.pixelSize: ts(1.8) }
                                 MouseArea {
                                     anchors.fill: parent
                                     onClicked: { vhSection._showForm = false; vhLabelIn.text = ""; vhUrlIn.text = "" }
@@ -1051,7 +963,7 @@ Rectangle {
             Rectangle {
                 visible: panel.cfg && panel.cfg.prefLevel >= 1
                 width: parent.width
-                color: "#1C1C2E"; radius: units.gu(1)
+                color: pal.bgCard; radius: 0
                 height: mapTilesCol.implicitHeight + units.gu(4)
 
                 Column {
@@ -1061,7 +973,7 @@ Rectangle {
                     spacing: units.gu(1.5)
 
                     // ── Mapa online ───────────────────────────────────────
-                    Label { text: i18n.tr("Mapa online"); color: "#90A4AE"; font.pixelSize: ts(1.8) }
+                    Label { text: i18n.tr("Mapa online"); color: pal.fgSecondary; font.pixelSize: ts(1.8) }
 
                     Row {
                         width: parent.width; spacing: units.gu(1)
@@ -1071,12 +983,12 @@ Rectangle {
                             property bool _sel: parent._src === "mapbox"
                             width: (parent.width - units.gu(1)) / 2; height: units.gu(4.5)
                             radius: units.gu(0.8)
-                            color: _sel ? "#1E3A5F" : "#2A2A3E"
-                            border.color: _sel ? "#29B6F6" : "#37474F"; border.width: units.gu(0.15)
+                            color: _sel ? pal.bgSelBlue : pal.bgInput
+                            border.color: _sel ? "#29B6F6" : pal.divider; border.width: units.gu(0.15)
                             Label {
                                 anchors.centerIn: parent
                                 text: "Mapbox ↺"
-                                color: parent._sel ? "#29B6F6" : "white"
+                                color: parent._sel ? "#29B6F6" : pal.fgPrimary
                                 font.pixelSize: ts(1.7); font.bold: parent._sel
                             }
                             MouseArea {
@@ -1087,21 +999,19 @@ Rectangle {
 
                         Rectangle {
                             property bool _sel: parent._src === "osmscout"
-                            property bool _avail: panel.osmScoutActive
                             width: (parent.width - units.gu(1)) / 2; height: units.gu(4.5)
                             radius: units.gu(0.8)
-                            color: _sel ? "#1A3A1A" : "#2A2A3E"
-                            border.color: _sel ? "#66BB6A" : "#37474F"; border.width: units.gu(0.15)
-                            opacity: _avail ? 1.0 : 0.45
+                            color: _sel ? pal.bgSelGreen : pal.bgInput
+                            border.color: _sel ? "#66BB6A" : pal.divider; border.width: units.gu(0.15)
+                            opacity: panel.osmScoutActive ? 1.0 : 0.6
                             Label {
                                 anchors.centerIn: parent
                                 text: "OSM Scout"
-                                color: parent._sel ? "#66BB6A" : "white"
+                                color: parent._sel ? "#66BB6A" : pal.fgPrimary
                                 font.pixelSize: ts(1.7); font.bold: parent._sel
                             }
                             MouseArea {
                                 anchors.fill: parent
-                                enabled: parent._avail
                                 onClicked: if (panel.cfg) panel.cfg.mapOnlineSource = "osmscout"
                             }
                         }
@@ -1110,7 +1020,7 @@ Rectangle {
                     // ── Servidor de tiles ─────────────────────────────────
                     Label {
                         text: i18n.tr("Servidor de tiles")
-                        color: "#90A4AE"; font.pixelSize: ts(1.8)
+                        color: pal.fgSecondary; font.pixelSize: ts(1.8)
                         visible: panel.cfg && panel.cfg.mapOnlineSource === "mapbox"
                     }
 
@@ -1123,14 +1033,14 @@ Rectangle {
                             property bool _sel: parent._srv === "navius"
                             width: (parent.width - units.gu(1)) / 2; height: units.gu(4.5)
                             radius: units.gu(0.8)
-                            color: _sel ? "#1A3A2A" : "#2A2A3E"
-                            border.color: _sel ? "#66BB6A" : "#37474F"; border.width: units.gu(0.15)
+                            color: _sel ? pal.bgSelGreen : pal.bgInput
+                            border.color: _sel ? "#66BB6A" : pal.divider; border.width: units.gu(0.15)
                             Column {
                                 anchors.centerIn: parent; spacing: units.gu(0.2)
                                 Label {
                                     anchors.horizontalCenter: parent.horizontalCenter
                                     text: "Navius ↺"
-                                    color: parent.parent._sel ? "#66BB6A" : "white"
+                                    color: parent.parent._sel ? "#66BB6A" : pal.fgPrimary
                                     font.pixelSize: ts(1.7); font.bold: parent.parent._sel
                                 }
                                 Label {
@@ -1149,14 +1059,14 @@ Rectangle {
                             property bool _sel: parent._srv === "external"
                             width: (parent.width - units.gu(1)) / 2; height: units.gu(4.5)
                             radius: units.gu(0.8)
-                            color: _sel ? "#1E3A5F" : "#2A2A3E"
-                            border.color: _sel ? "#29B6F6" : "#37474F"; border.width: units.gu(0.15)
+                            color: _sel ? pal.bgSelBlue : pal.bgInput
+                            border.color: _sel ? "#29B6F6" : pal.divider; border.width: units.gu(0.15)
                             Column {
                                 anchors.centerIn: parent; spacing: units.gu(0.2)
                                 Label {
                                     anchors.horizontalCenter: parent.horizontalCenter
                                     text: i18n.tr("Externo")
-                                    color: parent.parent._sel ? "#29B6F6" : "white"
+                                    color: parent.parent._sel ? "#29B6F6" : pal.fgPrimary
                                     font.pixelSize: ts(1.7); font.bold: parent.parent._sel
                                 }
                                 Label {
@@ -1175,61 +1085,32 @@ Rectangle {
                     // ── Estilo día (solo servidor Navius) ─────────────────
                     Label {
                         text: i18n.tr("Tema de día")
-                        color: "#90A4AE"; font.pixelSize: ts(1.8)
+                        color: pal.fgSecondary; font.pixelSize: ts(1.8)
                         visible: panel.cfg && panel.cfg.mapOnlineSource === "mapbox"
                                            && panel.cfg.mapTileServer === "navius"
                     }
 
-                    Flickable {
+                    OptionSelector {
                         visible: panel.cfg && panel.cfg.mapOnlineSource === "mapbox"
                                            && panel.cfg.mapTileServer === "navius"
-                        width: parent.width; height: units.gu(4.5)
-                        contentWidth: mapStyleRow.implicitWidth
-                        flickableDirection: Flickable.HorizontalFlick; clip: true
-
-                        Row {
-                            id: mapStyleRow
-                            spacing: units.gu(0.8)
-                            property var _styles: [
-                                { id: "liberty",  label: "Liberty",  desc: "día"    },
-                                { id: "positron", label: "Positron", desc: "claro"  },
-                                { id: "bright",   label: "Bright",   desc: "vivo"   },
-                                { id: "fiord",    label: "Fiord",    desc: "azul"   }
-                            ]
-                            Repeater {
-                                model: parent._styles
-                                delegate: Rectangle {
-                                    property bool _sel: panel.cfg && panel.cfg.mapNaviusDayStyle === modelData.id
-                                    height: units.gu(4.5); width: units.gu(9); radius: height / 2
-                                    color: _sel ? "#1A3A2A" : "#2A2A3E"
-                                    border.color: _sel ? "#66BB6A" : "#37474F"; border.width: units.gu(0.15)
-                                    Column {
-                                        anchors.centerIn: parent; spacing: units.gu(0.1)
-                                        Label {
-                                            anchors.horizontalCenter: parent.horizontalCenter
-                                            text: modelData.label
-                                            color: parent.parent._sel ? "#66BB6A" : "white"
-                                            font.pixelSize: ts(1.6); font.bold: parent.parent._sel
-                                        }
-                                        Label {
-                                            anchors.horizontalCenter: parent.horizontalCenter
-                                            text: modelData.desc
-                                            color: "#607D8B"; font.pixelSize: ts(1.3)
-                                        }
-                                    }
-                                    MouseArea {
-                                        anchors.fill: parent
-                                        onClicked: if (panel.cfg) panel.cfg.mapNaviusDayStyle = modelData.id
-                                    }
-                                }
-                            }
+                        width: parent.width
+                        property var _keys: ["liberty", "positron", "bright", "fiord"]
+                        model: ["Liberty", "Positron", "Bright", "Fiord"]
+                        selectedIndex: {
+                            if (!panel.cfg) return 0
+                            var idx = _keys.indexOf(panel.cfg.mapNaviusDayStyle)
+                            return idx >= 0 ? idx : 0
+                        }
+                        containerHeight: units.gu(4.5) * 4
+                        onSelectedIndexChanged: {
+                            if (panel.cfg) panel.cfg.mapNaviusDayStyle = _keys[selectedIndex]
                         }
                     }
 
                     // ── Servidor de POIs y radares (Overpass) ────────────
                     Label {
                         text: i18n.tr("Servidor de POIs y radares")
-                        color: "#90A4AE"; font.pixelSize: ts(1.8)
+                        color: pal.fgSecondary; font.pixelSize: ts(1.8)
                         visible: panel.cfg && panel.cfg.mapOnlineSource === "mapbox"
                     }
 
@@ -1242,14 +1123,14 @@ Rectangle {
                             property bool _sel: parent._srv === "navius"
                             width: (parent.width - units.gu(1)) / 2; height: units.gu(4.5)
                             radius: units.gu(0.8)
-                            color: _sel ? "#1A3A2A" : "#2A2A3E"
-                            border.color: _sel ? "#66BB6A" : "#37474F"; border.width: units.gu(0.15)
+                            color: _sel ? pal.bgSelGreen : pal.bgInput
+                            border.color: _sel ? "#66BB6A" : pal.divider; border.width: units.gu(0.15)
                             Column {
                                 anchors.centerIn: parent; spacing: units.gu(0.2)
                                 Label {
                                     anchors.horizontalCenter: parent.horizontalCenter
                                     text: "Navius"
-                                    color: parent.parent._sel ? "#66BB6A" : "white"
+                                    color: parent.parent._sel ? "#66BB6A" : pal.fgPrimary
                                     font.pixelSize: ts(1.7); font.bold: parent.parent._sel
                                 }
                                 Label {
@@ -1268,14 +1149,14 @@ Rectangle {
                             property bool _sel: parent._srv === "external"
                             width: (parent.width - units.gu(1)) / 2; height: units.gu(4.5)
                             radius: units.gu(0.8)
-                            color: _sel ? "#1E3A5F" : "#2A2A3E"
-                            border.color: _sel ? "#29B6F6" : "#37474F"; border.width: units.gu(0.15)
+                            color: _sel ? pal.bgSelBlue : pal.bgInput
+                            border.color: _sel ? "#29B6F6" : pal.divider; border.width: units.gu(0.15)
                             Column {
                                 anchors.centerIn: parent; spacing: units.gu(0.2)
                                 Label {
                                     anchors.horizontalCenter: parent.horizontalCenter
                                     text: i18n.tr("Externo") + " ↺"
-                                    color: parent.parent._sel ? "#29B6F6" : "white"
+                                    color: parent.parent._sel ? "#29B6F6" : pal.fgPrimary
                                     font.pixelSize: ts(1.7); font.bold: parent.parent._sel
                                 }
                                 Label {
@@ -1294,7 +1175,7 @@ Rectangle {
                     // ── Sin internet ──────────────────────────────────────
                     Label {
                         text: i18n.tr("Sin internet")
-                        color: "#90A4AE"; font.pixelSize: ts(1.8)
+                        color: pal.fgSecondary; font.pixelSize: ts(1.8)
                         // solo relevante cuando online source es Mapbox
                         visible: panel.cfg && panel.cfg.mapOnlineSource === "mapbox"
                     }
@@ -1308,12 +1189,12 @@ Rectangle {
                             property bool _sel: parent._mode === "cache"
                             width: (parent.width - units.gu(1)) / 2; height: units.gu(4.5)
                             radius: units.gu(0.8)
-                            color: _sel ? "#1E3A5F" : "#2A2A3E"
-                            border.color: _sel ? "#29B6F6" : "#37474F"; border.width: units.gu(0.15)
+                            color: _sel ? pal.bgSelBlue : pal.bgInput
+                            border.color: _sel ? "#29B6F6" : pal.divider; border.width: units.gu(0.15)
                             Label {
                                 anchors.centerIn: parent
                                 text: i18n.tr("Caché") + " ↺"
-                                color: parent._sel ? "#29B6F6" : "white"
+                                color: parent._sel ? "#29B6F6" : pal.fgPrimary
                                 font.pixelSize: ts(1.7); font.bold: parent._sel
                             }
                             MouseArea {
@@ -1324,21 +1205,19 @@ Rectangle {
 
                         Rectangle {
                             property bool _sel: parent._mode === "osmscout"
-                            property bool _avail: panel.osmScoutActive
                             width: (parent.width - units.gu(1)) / 2; height: units.gu(4.5)
                             radius: units.gu(0.8)
-                            color: _sel ? "#1A3A1A" : "#2A2A3E"
-                            border.color: _sel ? "#66BB6A" : "#37474F"; border.width: units.gu(0.15)
-                            opacity: _avail ? 1.0 : 0.45
+                            color: _sel ? pal.bgSelGreen : pal.bgInput
+                            border.color: _sel ? "#66BB6A" : pal.divider; border.width: units.gu(0.15)
+                            opacity: panel.osmScoutActive ? 1.0 : 0.6
                             Label {
                                 anchors.centerIn: parent
                                 text: "OSM Scout"
-                                color: parent._sel ? "#66BB6A" : "white"
+                                color: parent._sel ? "#66BB6A" : pal.fgPrimary
                                 font.pixelSize: ts(1.7); font.bold: parent._sel
                             }
                             MouseArea {
                                 anchors.fill: parent
-                                enabled: parent._avail
                                 onClicked: if (panel.cfg) panel.cfg.mapOfflineMode = "osmscout"
                             }
                         }
@@ -1352,42 +1231,28 @@ Rectangle {
 
                         Label {
                             text: i18n.tr("Espacio máximo en disco")
-                            color: "white"; font.pixelSize: ts(1.8)
+                            color: pal.fgPrimary; font.pixelSize: ts(1.8)
                         }
 
-                        Flickable {
-                            width: parent.width; height: units.gu(4)
-                            contentWidth: cacheMbRow.implicitWidth
-                            flickableDirection: Flickable.HorizontalFlick; clip: true
-                            Row {
-                                id: cacheMbRow
-                                spacing: units.gu(0.8)
-                                Repeater {
-                                    model: [100, 250, 500, 1000, 2000]
-                                    delegate: Rectangle {
-                                        property bool _sel: panel.cfg && panel.cfg.mapCacheMaxMb === modelData
-                                        height: units.gu(4); width: modelData === 500 ? units.gu(9.5) : units.gu(7.5); radius: height / 2
-                                        color: _sel ? "#1E3A5F" : "#2A2A3E"
-                                        border.color: _sel ? "#29B6F6" : "#37474F"; border.width: units.gu(0.15)
-                                        Label {
-                                            anchors.centerIn: parent
-                                            text: (modelData >= 1000 ? (modelData / 1000) + " GB" : modelData + " MB") + (modelData === 500 ? " ↺" : "")
-                                            color: _sel ? "#29B6F6" : "#90A4AE"
-                                            font.pixelSize: ts(1.6); font.bold: _sel
-                                        }
-                                        MouseArea {
-                                            anchors.fill: parent
-                                            onClicked: if (panel.cfg) panel.cfg.mapCacheMaxMb = modelData
-                                        }
-                                    }
-                                }
+                        OptionSelector {
+                            width: parent.width
+                            property var _vals: [100, 250, 500, 1000, 2000]
+                            model: ["100 MB", "250 MB", "500 MB ↺", "1 GB", "2 GB"]
+                            selectedIndex: {
+                                if (!panel.cfg) return 2
+                                var idx = _vals.indexOf(panel.cfg.mapCacheMaxMb)
+                                return idx >= 0 ? idx : 2
+                            }
+                            containerHeight: units.gu(4.5) * 5
+                            onSelectedIndexChanged: {
+                                if (panel.cfg) panel.cfg.mapCacheMaxMb = _vals[selectedIndex]
                             }
                         }
 
                         Rectangle {
                             id: mapCacheBtn
                             width: parent.width; height: units.gu(4.5); radius: units.gu(0.8)
-                            color: _confirm ? "#4A1010" : "#2A2A3E"
+                            color: _confirm ? "#4A1010" : pal.bgInput
                             property bool _confirm: false
                             property bool _done: false
                             Timer { interval: 4000; running: parent._confirm && !parent._done; onTriggered: parent._confirm = false }
@@ -1415,7 +1280,7 @@ Rectangle {
                         Rectangle {
                             id: gmapsCacheBtn
                             width: parent.width; height: units.gu(4.5); radius: units.gu(0.8)
-                            color: _confirm ? "#4A1010" : "#2A2A3E"
+                            color: _confirm ? "#4A1010" : pal.bgInput
                             property bool _confirm: false
                             property bool _done: false
                             Timer { interval: 4000; running: parent._confirm && !parent._done; onTriggered: parent._confirm = false }
@@ -1449,17 +1314,18 @@ Rectangle {
         // ════════════════════════════════════════════════════════════════
         Rectangle {
             visible: navCol.hasContent
-            width: parent.width; height: units.gu(5.5)
-            color: "#252535"; radius: units.gu(1)
+            width: parent.width; height: units.gu(6)
+            color: pal.bgHeader; radius: units.gu(1)
             Label {
                 anchors { left: parent.left; verticalCenter: parent.verticalCenter; leftMargin: units.gu(2) }
                 text: i18n.tr("Navegación")
                 color: "#29B6F6"; font.pixelSize: ts(2.0); font.bold: true
             }
-            Label {
-                anchors { right: parent.right; verticalCenter: parent.verticalCenter; rightMargin: units.gu(2) }
-                text: secSettings.nav ? "▲" : "▼"
-                color: "#29B6F6"; font.pixelSize: ts(1.6)
+            Icon {
+                anchors { right: parent.right; rightMargin: units.gu(2); verticalCenter: parent.verticalCenter }
+                width: units.gu(2.5); height: units.gu(2.5)
+                name: secSettings.nav ? "go-up" : "go-down"
+                color: "#29B6F6"
             }
             MouseArea { anchors.fill: parent; onClicked: secSettings.nav = !secSettings.nav }
         }
@@ -1469,47 +1335,33 @@ Rectangle {
             property int  _sectionMinLevel: 0
             property bool hasContent: panel.cfg ? panel.cfg.prefLevel >= _sectionMinLevel : false
             visible: secSettings.nav && hasContent
-            width: parent.width; spacing: units.gu(1.5)
+            width: parent.width; spacing: 0
 
             // ── Sonido de alertas ────────────────────────────────────────
             Rectangle {
-                width: parent.width; height: units.gu(11)
-                color: "#1C1C2E"; radius: units.gu(1)
+                width: parent.width
+                height: alertSoundCol.implicitHeight + units.gu(4)
+                color: pal.bgCard; radius: 0
                 Column {
+                    id: alertSoundCol
                     anchors { fill: parent; margins: units.gu(2) }
                     spacing: units.gu(1)
-                    Label { text: i18n.tr("Sonido de alertas"); color: "white"; font.pixelSize: ts(1.8) }
-                    Row {
-                        spacing: units.gu(1)
-                        Repeater {
-                            model: [
-                                { key: "tts",  label: i18n.tr("Voz")    },
-                                { key: "beep", label: i18n.tr("Pitido") },
-                                { key: "off",  label: i18n.tr("No")     }
-                            ]
-                            delegate: Rectangle {
-                                property string k: modelData.key
-                                width: (parent.parent.width - units.gu(2)) / 3
-                                height: units.gu(4.5); radius: units.gu(0.6)
-                                color:        panel.cfg && panel.cfg.alertSound === k ? "#1E3A5F" : "#2A2A3E"
-                                border.color: panel.cfg && panel.cfg.alertSound === k ? "#29B6F6" : "transparent"
-                                border.width: units.gu(0.15)
-                                Label {
-                                    anchors.centerIn: parent
-                                    text: modelData.label + (modelData.key === "tts" ? " ↺" : "")
-                                    color: panel.cfg && panel.cfg.alertSound === k ? "#29B6F6" : "#78909C"
-                                    font.pixelSize: ts(1.8)
-                                    font.bold: panel.cfg && panel.cfg.alertSound === k
-                                }
-                                MouseArea {
-                                    anchors.fill: parent
-                                    onClicked: {
-                                        if (!panel.cfg) return
-                                        panel.cfg.alertSound = k
-                                        if (k !== "off") panel.soundTest(k, "alertas")
-                                    }
-                                }
-                            }
+                    Label { text: i18n.tr("Sonido de alertas"); color: pal.fgPrimary; font.pixelSize: ts(1.8) }
+                    OptionSelector {
+                        width: parent.width
+                        property var _keys: ["tts", "beep", "off"]
+                        model: [i18n.tr("Voz") + " ↺", i18n.tr("Pitido"), i18n.tr("No")]
+                        selectedIndex: {
+                            if (!panel.cfg) return 0
+                            var k = panel.cfg.alertSound
+                            return k === "beep" ? 1 : (k === "off" ? 2 : 0)
+                        }
+                        containerHeight: units.gu(4.5) * 3
+                        onSelectedIndexChanged: {
+                            if (!panel.cfg) return
+                            var k = _keys[selectedIndex]
+                            panel.cfg.alertSound = k
+                            if (k !== "off") panel.soundTest(k, "alertas")
                         }
                     }
                 }
@@ -1517,141 +1369,106 @@ Rectangle {
 
             // ── Sonido de indicaciones ───────────────────────────────────
             Rectangle {
-                width: parent.width; height: units.gu(11)
-                color: "#1C1C2E"; radius: units.gu(1)
+                width: parent.width
+                height: instrSoundCol.implicitHeight + units.gu(4)
+                color: pal.bgCard; radius: 0
                 Column {
+                    id: instrSoundCol
                     anchors { fill: parent; margins: units.gu(2) }
                     spacing: units.gu(1)
-                    Label { text: i18n.tr("Sonido de indicaciones"); color: "white"; font.pixelSize: ts(1.8) }
-                    Row {
-                        spacing: units.gu(1)
-                        Repeater {
-                            model: [
-                                { key: "tts",  label: i18n.tr("Voz")    },
-                                { key: "beep", label: i18n.tr("Pitido") },
-                                { key: "off",  label: i18n.tr("No")     }
-                            ]
-                            delegate: Rectangle {
-                                property string k: modelData.key
-                                width: (parent.parent.width - units.gu(2)) / 3
-                                height: units.gu(4.5); radius: units.gu(0.6)
-                                color:        panel.cfg && panel.cfg.instrSound === k ? "#1E3A5F" : "#2A2A3E"
-                                border.color: panel.cfg && panel.cfg.instrSound === k ? "#29B6F6" : "transparent"
-                                border.width: units.gu(0.15)
-                                Label {
-                                    anchors.centerIn: parent
-                                    text: modelData.label + (modelData.key === "tts" ? " ↺" : "")
-                                    color: panel.cfg && panel.cfg.instrSound === k ? "#29B6F6" : "#78909C"
-                                    font.pixelSize: ts(1.8)
-                                    font.bold: panel.cfg && panel.cfg.instrSound === k
-                                }
-                                MouseArea {
-                                    anchors.fill: parent
-                                    onClicked: {
-                                        if (!panel.cfg) return
-                                        panel.cfg.instrSound = k
-                                        if (k !== "off") panel.soundTest(k, "indicaciones")
-                                    }
-                                }
-                            }
+                    Label { text: i18n.tr("Sonido de indicaciones"); color: pal.fgPrimary; font.pixelSize: ts(1.8) }
+                    OptionSelector {
+                        width: parent.width
+                        property var _keys: ["tts", "beep", "off"]
+                        model: [i18n.tr("Voz") + " ↺", i18n.tr("Pitido"), i18n.tr("No")]
+                        selectedIndex: {
+                            if (!panel.cfg) return 0
+                            var k = panel.cfg.instrSound
+                            return k === "beep" ? 1 : (k === "off" ? 2 : 0)
+                        }
+                        containerHeight: units.gu(4.5) * 3
+                        onSelectedIndexChanged: {
+                            if (!panel.cfg) return
+                            var k = _keys[selectedIndex]
+                            panel.cfg.instrSound = k
+                            if (k !== "off") panel.soundTest(k, "indicaciones")
                         }
                     }
                 }
             }
 
             // ── Radares fijos ────────────────────────────────────────────
-            Rectangle {
-                width: parent.width; height: units.gu(8)
-                color: "#1C1C2E"; radius: units.gu(1)
-                Row {
-                    anchors { fill: parent; margins: units.gu(2) }
-                    Column {
-                        anchors.verticalCenter: parent.verticalCenter
-                        width: parent.width - units.gu(7)
-                        Label { text: i18n.tr("Radares fijos"); color: "white"; font.pixelSize: ts(1.8) }
-                        Label {
-                            text: i18n.tr("Iconos y alertas de radares de velocidad fijos") + "  · ↺ act."
-                            color: "#90A4AE"; font.pixelSize: ts(1.8)
-                            wrapMode: Text.WordWrap; width: parent.width
-                        }
-                    }
-                    Item { width: units.gu(1); height: 1 }
-                    Rectangle {
-                        anchors.verticalCenter: parent.verticalCenter
-                        width: units.gu(5.5); height: units.gu(3); radius: height / 2
-                        color: panel.cfg && panel.cfg.showRadarFijos ? "#E53935" : "#37474F"
-                        Rectangle {
-                            width: units.gu(2.4); height: units.gu(2.4); radius: width / 2; color: "white"
-                            anchors.verticalCenter: parent.verticalCenter
-                            x: panel.cfg && panel.cfg.showRadarFijos ? parent.width - width - units.gu(0.3) : units.gu(0.3)
-                            Behavior on x { NumberAnimation { duration: 150 } }
-                        }
-                        MouseArea { anchors.fill: parent; onClicked: if (panel.cfg) panel.cfg.showRadarFijos = !panel.cfg.showRadarFijos }
+            ListItem {
+                width: parent.width
+                divider.colorFrom: pal.divider; divider.colorTo: pal.divider
+                color: pal.bgCard
+                highlightColor: pal.highlight
+                height: liRadarFijosLayout.height + units.gu(1)
+                ListItemLayout {
+                    id: liRadarFijosLayout
+                    title.text: i18n.tr("Radares fijos")
+                    title.color: pal.fgPrimary
+                    title.font.pixelSize: ts(1.8)
+                    subtitle.text: i18n.tr("Iconos y alertas de radares de velocidad fijos") + "  · ↺ act."
+                    subtitle.color: pal.fgSecondary
+                    subtitle.font.pixelSize: ts(1.5)
+                    subtitle.wrapMode: Text.WordWrap
+                    Switch {
+                        id: swShowRadarFijos
+                        SlotsLayout.position: SlotsLayout.Trailing
+                        checked: panel.cfg ? panel.cfg.showRadarFijos : false
+                        onCheckedChanged: if (panel.cfg) panel.cfg.showRadarFijos = checked
                     }
                 }
             }
 
             // ── Radares de tramo ─────────────────────────────────────────
-            Rectangle {
-                width: parent.width; height: units.gu(8)
-                color: "#1C1C2E"; radius: units.gu(1)
-                Row {
-                    anchors { fill: parent; margins: units.gu(2) }
-                    Column {
-                        anchors.verticalCenter: parent.verticalCenter
-                        width: parent.width - units.gu(7)
-                        Label { text: i18n.tr("Radares de tramo"); color: "white"; font.pixelSize: ts(1.8) }
-                        Label {
-                            text: i18n.tr("Zonas de control de velocidad media + barra de progreso") + "  · ↺ act."
-                            color: "#90A4AE"; font.pixelSize: ts(1.8)
-                            wrapMode: Text.WordWrap; width: parent.width
-                        }
-                    }
-                    Item { width: units.gu(1); height: 1 }
-                    Rectangle {
-                        anchors.verticalCenter: parent.verticalCenter
-                        width: units.gu(5.5); height: units.gu(3); radius: height / 2
-                        color: panel.cfg && panel.cfg.showRadarTramo ? "#FF6F00" : "#37474F"
-                        Rectangle {
-                            width: units.gu(2.4); height: units.gu(2.4); radius: width / 2; color: "white"
-                            anchors.verticalCenter: parent.verticalCenter
-                            x: panel.cfg && panel.cfg.showRadarTramo ? parent.width - width - units.gu(0.3) : units.gu(0.3)
-                            Behavior on x { NumberAnimation { duration: 150 } }
-                        }
-                        MouseArea { anchors.fill: parent; onClicked: if (panel.cfg) panel.cfg.showRadarTramo = !panel.cfg.showRadarTramo }
+            ListItem {
+                width: parent.width
+                divider.colorFrom: pal.divider; divider.colorTo: pal.divider
+                color: pal.bgCard
+                highlightColor: pal.highlight
+                height: liRadarTramoLayout.height + units.gu(1)
+                ListItemLayout {
+                    id: liRadarTramoLayout
+                    title.text: i18n.tr("Radares de tramo")
+                    title.color: pal.fgPrimary
+                    title.font.pixelSize: ts(1.8)
+                    subtitle.text: i18n.tr("Zonas de control de velocidad media + barra de progreso") + "  · ↺ act."
+                    subtitle.color: pal.fgSecondary
+                    subtitle.font.pixelSize: ts(1.5)
+                    subtitle.wrapMode: Text.WordWrap
+                    Switch {
+                        id: swShowRadarTramo
+                        SlotsLayout.position: SlotsLayout.Trailing
+                        checked: panel.cfg ? panel.cfg.showRadarTramo : false
+                        onCheckedChanged: if (panel.cfg) panel.cfg.showRadarTramo = checked
                     }
                 }
             }
 
             // ── Aviso de exceso de velocidad ─────────────────────────────
-            Rectangle {
+            ListItem {
                 visible: panel.cfg && panel.cfg.prefLevel >= 2
-                width: parent.width; height: units.gu(8)
-                color: "#1C1C2E"; radius: units.gu(1)
-                Row {
-                    anchors { fill: parent; margins: units.gu(2) }
-                    Column {
-                        anchors.verticalCenter: parent.verticalCenter
-                        width: parent.width - units.gu(7)
-                        Label { text: i18n.tr("Aviso de exceso de velocidad"); color: "white"; font.pixelSize: ts(1.8) }
-                        Label {
-                            text: i18n.tr("Parpadeo al superar el límite") + "  · ↺ act."
-                            color: "#90A4AE"; font.pixelSize: ts(1.8)
-                            wrapMode: Text.WordWrap; width: parent.width
-                        }
-                    }
-                    Item { width: units.gu(1); height: 1 }
-                    Rectangle {
-                        anchors.verticalCenter: parent.verticalCenter
-                        width: units.gu(5.5); height: units.gu(3); radius: height / 2
-                        color: panel.cfg && panel.cfg.speedAlertEnabled ? "#29B6F6" : "#37474F"
-                        Rectangle {
-                            width: units.gu(2.4); height: units.gu(2.4); radius: width / 2; color: "white"
-                            anchors.verticalCenter: parent.verticalCenter
-                            x: panel.cfg && panel.cfg.speedAlertEnabled ? parent.width - width - units.gu(0.3) : units.gu(0.3)
-                            Behavior on x { NumberAnimation { duration: 150 } }
-                        }
-                        MouseArea { anchors.fill: parent; onClicked: if (panel.cfg) panel.cfg.speedAlertEnabled = !panel.cfg.speedAlertEnabled }
+                width: parent.width
+                divider.colorFrom: pal.divider; divider.colorTo: pal.divider
+                color: pal.bgCard
+                highlightColor: pal.highlight
+                height: liSpeedAlertLayout.height + units.gu(1)
+                ListItemLayout {
+                    id: liSpeedAlertLayout
+                    title.text: i18n.tr("Aviso de exceso de velocidad")
+                    title.color: pal.fgPrimary
+                    title.font.pixelSize: ts(1.8)
+                    subtitle.text: i18n.tr("Parpadeo al superar el límite") + "  · ↺ act."
+                    subtitle.color: pal.fgSecondary
+                    subtitle.font.pixelSize: ts(1.5)
+                    subtitle.wrapMode: Text.WordWrap
+                    Switch {
+                        id: swSpeedAlertEnabled
+                        SlotsLayout.position: SlotsLayout.Trailing
+                        checked: panel.cfg ? panel.cfg.speedAlertEnabled : false
+                        onCheckedChanged: if (panel.cfg) panel.cfg.speedAlertEnabled = checked
                     }
                 }
             }
@@ -1661,92 +1478,50 @@ Rectangle {
                 visible: panel.cfg && panel.cfg.prefLevel >= 2
                 width: parent.width
                 height: marginSpeedCol.implicitHeight + units.gu(4)
-                color: "#1C1C2E"; radius: units.gu(1)
+                color: pal.bgCard; radius: 0
                 Column {
                     id: marginSpeedCol
                     anchors { left: parent.left; right: parent.right; top: parent.top; margins: units.gu(2) }
                     spacing: units.gu(1)
-                    Label { text: i18n.tr("Margen exceso de velocidad"); color: "white"; font.pixelSize: ts(1.8) }
-                    Grid {
-                        columns: 3; spacing: units.gu(1); width: parent.width
-                        Repeater {
-                            model: [1, 2, 5, 10, 15, 20]
-                            Rectangle {
-                                property int pct: modelData
-                                property bool sel: panel.cfg && panel.cfg.speedAlertEnabled && panel.cfg.speedAlertPct === pct
-                                width: (parent.width - 2 * units.gu(1)) / 3
-                                height: units.gu(4.5); radius: units.gu(0.6)
-                                color:        sel ? "#1E3A5F" : "#2A2A3E"
-                                border.color: sel ? "#29B6F6" : "transparent"
-                                border.width: units.gu(0.15)
-                                Label {
-                                    anchors.centerIn: parent
-                                    text: "+" + pct + "%" + (pct === 2 ? " ↺" : "")
-                                    color: sel ? "#29B6F6" : "#78909C"
-                                    font.pixelSize: ts(1.8); font.bold: sel
-                                }
-                                MouseArea {
-                                    anchors.fill: parent
-                                    onClicked: {
-                                        if (!panel.cfg) return
-                                        panel.cfg.speedAlertPct     = pct
-                                        panel.cfg.speedAlertEnabled = true
-                                    }
-                                }
-                            }
+                    Label { text: i18n.tr("Margen exceso de velocidad"); color: pal.fgPrimary; font.pixelSize: ts(1.8) }
+                    OptionSelector {
+                        width: parent.width
+                        property var _vals: [0, 1, 2, 5, 10, 15, 20]
+                        model: [i18n.tr("Sin margen"), "+1%", "+2% ↺", "+5%", "+10%", "+15%", "+20%"]
+                        selectedIndex: {
+                            if (!panel.cfg) return 2
+                            var idx = _vals.indexOf(panel.cfg.speedAlertPct)
+                            return idx >= 0 ? idx : 2
                         }
-                    }
-                    Rectangle {
-                        property bool sel: panel.cfg && panel.cfg.speedAlertEnabled && panel.cfg.speedAlertPct === 0
-                        width: parent.width; height: units.gu(4.5); radius: units.gu(0.6)
-                        color:        sel ? "#1E3A5F" : "#2A2A3E"
-                        border.color: sel ? "#29B6F6" : "transparent"
-                        border.width: units.gu(0.15)
-                        Label {
-                            anchors.centerIn: parent; text: i18n.tr("Sin Margen")
-                            color: parent.sel ? "#29B6F6" : "#78909C"
-                            font.pixelSize: ts(1.8); font.bold: parent.sel
-                        }
-                        MouseArea {
-                            anchors.fill: parent
-                            onClicked: {
-                                if (!panel.cfg) return
-                                panel.cfg.speedAlertPct     = 0
-                                panel.cfg.speedAlertEnabled = true
-                            }
+                        containerHeight: units.gu(4.5) * 7
+                        onSelectedIndexChanged: {
+                            if (panel.cfg) panel.cfg.speedAlertPct = _vals[selectedIndex]
                         }
                     }
                 }
             }
 
             // ── Zoom automático ──────────────────────────────────────────
-            Rectangle {
-                width: parent.width; height: units.gu(8)
-                color: "#1C1C2E"; radius: units.gu(1)
-                Row {
-                    anchors { fill: parent; margins: units.gu(2) }
-                    Column {
-                        anchors.verticalCenter: parent.verticalCenter
-                        width: parent.width - units.gu(7)
-                        Label { text: i18n.tr("Zoom automático"); color: "white"; font.pixelSize: ts(1.8) }
-                        Label {
-                            text: i18n.tr("Ajusta el zoom según la velocidad") + "  · ↺ act."
-                            color: "#90A4AE"; font.pixelSize: ts(1.8)
-                            wrapMode: Text.WordWrap; width: parent.width
-                        }
-                    }
-                    Item { width: units.gu(1); height: 1 }
-                    Rectangle {
-                        anchors.verticalCenter: parent.verticalCenter
-                        width: units.gu(5.5); height: units.gu(3); radius: height / 2
-                        color: panel.cfg && panel.cfg.autoZoom ? "#29B6F6" : "#37474F"
-                        Rectangle {
-                            width: units.gu(2.4); height: units.gu(2.4); radius: width / 2; color: "white"
-                            anchors.verticalCenter: parent.verticalCenter
-                            x: panel.cfg && panel.cfg.autoZoom ? parent.width - width - units.gu(0.3) : units.gu(0.3)
-                            Behavior on x { NumberAnimation { duration: 150 } }
-                        }
-                        MouseArea { anchors.fill: parent; onClicked: if (panel.cfg) panel.cfg.autoZoom = !panel.cfg.autoZoom }
+            ListItem {
+                width: parent.width
+                divider.colorFrom: pal.divider; divider.colorTo: pal.divider
+                color: pal.bgCard
+                highlightColor: pal.highlight
+                height: liAutoZoomLayout.height + units.gu(1)
+                ListItemLayout {
+                    id: liAutoZoomLayout
+                    title.text: i18n.tr("Zoom automático")
+                    title.color: pal.fgPrimary
+                    title.font.pixelSize: ts(1.8)
+                    subtitle.text: i18n.tr("Ajusta el zoom según la velocidad") + "  · ↺ act."
+                    subtitle.color: pal.fgSecondary
+                    subtitle.font.pixelSize: ts(1.5)
+                    subtitle.wrapMode: Text.WordWrap
+                    Switch {
+                        id: swAutoZoom
+                        SlotsLayout.position: SlotsLayout.Trailing
+                        checked: panel.cfg ? panel.cfg.autoZoom : false
+                        onCheckedChanged: if (panel.cfg) panel.cfg.autoZoom = checked
                     }
                 }
             }
@@ -1755,122 +1530,61 @@ Rectangle {
             Rectangle {
                 visible: panel.cfg && panel.cfg.prefLevel >= 1
                 width: parent.width; height: azCol.implicitHeight + units.gu(4)
-                color: "#1C1C2E"; radius: units.gu(1)
+                color: pal.bgCard; radius: 0
                 Column {
                     id: azCol
                     anchors { left: parent.left; right: parent.right; top: parent.top; margins: units.gu(2) }
                     spacing: units.gu(1)
-                    Row {
-                        width: parent.width
+                    Item {
+                        width: parent.width; height: units.gu(3)
                         Label {
-                            text: i18n.tr("Anticipación zoom automático")
-                            color: "white"; font.pixelSize: ts(1.8)
-                            width: parent.width - horizLabel.width
+                            anchors { left: parent.left; verticalCenter: parent.verticalCenter }
+                            text: i18n.tr("Anticipación zoom automático"); color: pal.fgPrimary; font.pixelSize: ts(1.8)
                         }
                         Label {
-                            id: horizLabel
-                            textFormat: Text.RichText
-                            text: panel.cfg ? ("<b>" + panel.cfg.autoZoomSecs + " s</b> <font color='#546E7A'>↺ 15 s</font>") : ""
-                            color: "#29B6F6"; font.pixelSize: ts(1.8)
+                            anchors { right: parent.right; verticalCenter: parent.verticalCenter }
+                            text: panel.cfg ? (panel.cfg.autoZoomSecs + " s  ↺ 15 s") : "15 s"
+                            color: "#29B6F6"; font.pixelSize: ts(1.7)
                         }
                     }
                     Label {
                         text: i18n.tr("Ajuste de zoom automático para que se vea al menos la distancia a recorrer en este tiempo")
-                        color: "#90A4AE"; font.pixelSize: ts(1.6)
+                        color: pal.fgSecondary; font.pixelSize: ts(1.6)
                         wrapMode: Text.WordWrap; width: parent.width
                     }
-                    Item {
-                        id: azCtrl
-                        width: parent.width; height: units.gu(4)
-                        property int _dir: 0; property int _step: 1
-                        Timer { interval: 180; repeat: true; running: azCtrl._dir !== 0
-                            onTriggered: if (panel.cfg) panel.cfg.autoZoomSecs = Math.max(5, Math.min(60, panel.cfg.autoZoomSecs + azCtrl._step * azCtrl._dir))
-                        }
-                        Rectangle {
-                            id: azM5Btn
-                            anchors { left: parent.left; verticalCenter: parent.verticalCenter }
-                            width: units.gu(5); height: units.gu(4); radius: units.gu(0.6)
-                            color: azM5.pressed ? "#1E3A5F" : "#2A2A3E"; border.color: "#37474F"; border.width: 1
-                            Label { anchors.centerIn: parent; text: "−5"; color: "#78909C"; font.pixelSize: ts(1.7); font.bold: true }
-                            MouseArea { id: azM5; anchors.fill: parent
-                                onClicked: if (panel.cfg) panel.cfg.autoZoomSecs = Math.max(5, panel.cfg.autoZoomSecs - 5)
-                                onPressAndHold: { azCtrl._step = 5; azCtrl._dir = -1 }
-                                onReleased: azCtrl._dir = 0 }
-                        }
-                        Rectangle {
-                            id: azM1Btn
-                            anchors { left: azM5Btn.right; leftMargin: units.gu(0.5); verticalCenter: parent.verticalCenter }
-                            width: units.gu(4.5); height: units.gu(4); radius: units.gu(0.6)
-                            color: azM1.pressed ? "#1E3A5F" : "#2A2A3E"; border.color: "#37474F"; border.width: 1
-                            Label { anchors.centerIn: parent; text: "−1"; color: "#29B6F6"; font.pixelSize: ts(1.7); font.bold: true }
-                            MouseArea { id: azM1; anchors.fill: parent
-                                onClicked: if (panel.cfg) panel.cfg.autoZoomSecs = Math.max(5, panel.cfg.autoZoomSecs - 1)
-                                onPressAndHold: { azCtrl._step = 1; azCtrl._dir = -1 }
-                                onReleased: azCtrl._dir = 0 }
-                        }
-                        Rectangle {
-                            anchors { left: azM1Btn.right; right: azP1Btn.left; verticalCenter: parent.verticalCenter; margins: units.gu(0.8) }
-                            height: units.gu(0.5); radius: height / 2; color: "#37474F"
-                            Rectangle {
-                                width: panel.cfg ? (panel.cfg.autoZoomSecs - 5) / 55 * parent.width : 0
-                                height: parent.height; radius: parent.radius; color: "#29B6F6"
-                            }
-                        }
-                        Rectangle {
-                            id: azP1Btn
-                            anchors { right: azP5Btn.left; rightMargin: units.gu(0.5); verticalCenter: parent.verticalCenter }
-                            width: units.gu(4.5); height: units.gu(4); radius: units.gu(0.6)
-                            color: azP1.pressed ? "#1E3A5F" : "#2A2A3E"; border.color: "#37474F"; border.width: 1
-                            Label { anchors.centerIn: parent; text: "+1"; color: "#29B6F6"; font.pixelSize: ts(1.7); font.bold: true }
-                            MouseArea { id: azP1; anchors.fill: parent
-                                onClicked: if (panel.cfg) panel.cfg.autoZoomSecs = Math.min(60, panel.cfg.autoZoomSecs + 1)
-                                onPressAndHold: { azCtrl._step = 1; azCtrl._dir = 1 }
-                                onReleased: azCtrl._dir = 0 }
-                        }
-                        Rectangle {
-                            id: azP5Btn
-                            anchors { right: parent.right; verticalCenter: parent.verticalCenter }
-                            width: units.gu(5); height: units.gu(4); radius: units.gu(0.6)
-                            color: azP5.pressed ? "#1E3A5F" : "#2A2A3E"; border.color: "#37474F"; border.width: 1
-                            Label { anchors.centerIn: parent; text: "+5"; color: "#78909C"; font.pixelSize: ts(1.7); font.bold: true }
-                            MouseArea { id: azP5; anchors.fill: parent
-                                onClicked: if (panel.cfg) panel.cfg.autoZoomSecs = Math.min(60, panel.cfg.autoZoomSecs + 5)
-                                onPressAndHold: { azCtrl._step = 5; azCtrl._dir = 1 }
-                                onReleased: azCtrl._dir = 0 }
-                        }
+                    Slider {
+                        theme.name: pal.isDark ? "Ubuntu.Components.Themes.SuruDark"
+                                               : "Ubuntu.Components.Themes.Ambiance"
+                        width: parent.width
+                        minimumValue: 5; maximumValue: 60; stepSize: 1; live: true
+                        value: panel.cfg ? panel.cfg.autoZoomSecs : 15
+                        onValueChanged: if (panel.cfg) panel.cfg.autoZoomSecs = Math.round(value)
                     }
                 }
             }
 
             // ── Ajustar movimiento a ruta ────────────────────────────────
-            Rectangle {
+            ListItem {
                 visible: panel.cfg && panel.cfg.prefLevel >= 1
-                width: parent.width; height: units.gu(8)
-                color: "#1C1C2E"; radius: units.gu(1)
-                Row {
-                    anchors { fill: parent; margins: units.gu(2) }
-                    Column {
-                        anchors.verticalCenter: parent.verticalCenter
-                        width: parent.width - units.gu(7)
-                        Label { text: i18n.tr("Ajustar movimiento a ruta"); color: "white"; font.pixelSize: ts(1.8) }
-                        Label {
-                            text: i18n.tr("Zoom según velocidades Valhalla de los tramos por delante") + "  · ↺ act."
-                            color: "#90A4AE"; font.pixelSize: ts(1.8)
-                            wrapMode: Text.WordWrap; width: parent.width
-                        }
-                    }
-                    Item { width: units.gu(1); height: 1 }
-                    Rectangle {
-                        anchors.verticalCenter: parent.verticalCenter
-                        width: units.gu(5.5); height: units.gu(3); radius: height / 2
-                        color: panel.cfg && panel.cfg.routeAdjustZoom ? "#29B6F6" : "#37474F"
-                        Rectangle {
-                            width: units.gu(2.4); height: units.gu(2.4); radius: width / 2; color: "white"
-                            anchors.verticalCenter: parent.verticalCenter
-                            x: panel.cfg && panel.cfg.routeAdjustZoom ? parent.width - width - units.gu(0.3) : units.gu(0.3)
-                            Behavior on x { NumberAnimation { duration: 150 } }
-                        }
-                        MouseArea { anchors.fill: parent; onClicked: if (panel.cfg) panel.cfg.routeAdjustZoom = !panel.cfg.routeAdjustZoom }
+                width: parent.width
+                divider.colorFrom: pal.divider; divider.colorTo: pal.divider
+                color: pal.bgCard
+                highlightColor: pal.highlight
+                height: liRouteAdjustLayout.height + units.gu(1)
+                ListItemLayout {
+                    id: liRouteAdjustLayout
+                    title.text: i18n.tr("Ajustar movimiento a ruta")
+                    title.color: pal.fgPrimary
+                    title.font.pixelSize: ts(1.8)
+                    subtitle.text: i18n.tr("Zoom según velocidades Valhalla de los tramos por delante") + "  · ↺ act."
+                    subtitle.color: pal.fgSecondary
+                    subtitle.font.pixelSize: ts(1.5)
+                    subtitle.wrapMode: Text.WordWrap
+                    Switch {
+                        id: swRouteAdjustZoom
+                        SlotsLayout.position: SlotsLayout.Trailing
+                        checked: panel.cfg ? panel.cfg.routeAdjustZoom : false
+                        onCheckedChanged: if (panel.cfg) panel.cfg.routeAdjustZoom = checked
                     }
                 }
             }
@@ -1878,90 +1592,36 @@ Rectangle {
             // ── Anticipación giro de ruta ────────────────────────────────
             Rectangle {
                 width: parent.width; height: raCol.implicitHeight + units.gu(4)
-                color: "#1C1C2E"; radius: units.gu(1)
+                color: pal.bgCard; radius: 0
                 visible: panel.cfg && panel.cfg.routeAdjustZoom && panel.cfg.prefLevel >= 2
                 Column {
                     id: raCol
                     anchors { left: parent.left; right: parent.right; top: parent.top; margins: units.gu(2) }
                     spacing: units.gu(1)
-                    Row {
-                        width: parent.width
+                    Item {
+                        width: parent.width; height: units.gu(3)
                         Label {
-                            text: i18n.tr("Anticipación giro de ruta")
-                            color: "white"; font.pixelSize: ts(1.8)
-                            width: parent.width - routeAheadLabel.width
+                            anchors { left: parent.left; verticalCenter: parent.verticalCenter }
+                            text: i18n.tr("Anticipación giro de ruta"); color: pal.fgPrimary; font.pixelSize: ts(1.8)
                         }
                         Label {
-                            id: routeAheadLabel
-                            textFormat: Text.RichText
-                            text: panel.cfg ? ("<b>" + panel.cfg.routeAheadSecs + " s</b> <font color='#546E7A'>↺ 10 s</font>") : ""
-                            color: "#29B6F6"; font.pixelSize: ts(1.8)
+                            anchors { right: parent.right; verticalCenter: parent.verticalCenter }
+                            text: panel.cfg ? (panel.cfg.routeAheadSecs + " s  ↺ 10 s") : "10 s"
+                            color: "#29B6F6"; font.pixelSize: ts(1.7)
                         }
                     }
                     Label {
                         text: i18n.tr("Segundos de ruta por delante para anticipar el giro del mapa")
-                        color: "#90A4AE"; font.pixelSize: ts(1.6)
+                        color: pal.fgSecondary; font.pixelSize: ts(1.6)
                         wrapMode: Text.WordWrap; width: parent.width
                     }
-                    Item {
-                        id: raCtrl
-                        width: parent.width; height: units.gu(4)
-                        property int _dir: 0; property int _step: 1
-                        Timer { interval: 180; repeat: true; running: raCtrl._dir !== 0
-                            onTriggered: if (panel.cfg) panel.cfg.routeAheadSecs = Math.max(1, Math.min(45, panel.cfg.routeAheadSecs + raCtrl._step * raCtrl._dir))
-                        }
-                        Rectangle {
-                            id: raM5Btn
-                            anchors { left: parent.left; verticalCenter: parent.verticalCenter }
-                            width: units.gu(5); height: units.gu(4); radius: units.gu(0.6)
-                            color: raM5.pressed ? "#1E3A5F" : "#2A2A3E"; border.color: "#37474F"; border.width: 1
-                            Label { anchors.centerIn: parent; text: "−5"; color: "#78909C"; font.pixelSize: ts(1.7); font.bold: true }
-                            MouseArea { id: raM5; anchors.fill: parent
-                                onClicked: if (panel.cfg) panel.cfg.routeAheadSecs = Math.max(1, panel.cfg.routeAheadSecs - 5)
-                                onPressAndHold: { raCtrl._step = 5; raCtrl._dir = -1 }
-                                onReleased: raCtrl._dir = 0 }
-                        }
-                        Rectangle {
-                            id: raM1Btn
-                            anchors { left: raM5Btn.right; leftMargin: units.gu(0.5); verticalCenter: parent.verticalCenter }
-                            width: units.gu(4.5); height: units.gu(4); radius: units.gu(0.6)
-                            color: raM1.pressed ? "#1E3A5F" : "#2A2A3E"; border.color: "#37474F"; border.width: 1
-                            Label { anchors.centerIn: parent; text: "−1"; color: "#29B6F6"; font.pixelSize: ts(1.7); font.bold: true }
-                            MouseArea { id: raM1; anchors.fill: parent
-                                onClicked: if (panel.cfg) panel.cfg.routeAheadSecs = Math.max(1, panel.cfg.routeAheadSecs - 1)
-                                onPressAndHold: { raCtrl._step = 1; raCtrl._dir = -1 }
-                                onReleased: raCtrl._dir = 0 }
-                        }
-                        Rectangle {
-                            anchors { left: raM1Btn.right; right: raP1Btn.left; verticalCenter: parent.verticalCenter; margins: units.gu(0.8) }
-                            height: units.gu(0.5); radius: height / 2; color: "#37474F"
-                            Rectangle {
-                                width: panel.cfg ? (panel.cfg.routeAheadSecs - 1) / 44 * parent.width : 0
-                                height: parent.height; radius: parent.radius; color: "#29B6F6"
-                            }
-                        }
-                        Rectangle {
-                            id: raP1Btn
-                            anchors { right: raP5Btn.left; rightMargin: units.gu(0.5); verticalCenter: parent.verticalCenter }
-                            width: units.gu(4.5); height: units.gu(4); radius: units.gu(0.6)
-                            color: raP1.pressed ? "#1E3A5F" : "#2A2A3E"; border.color: "#37474F"; border.width: 1
-                            Label { anchors.centerIn: parent; text: "+1"; color: "#29B6F6"; font.pixelSize: ts(1.7); font.bold: true }
-                            MouseArea { id: raP1; anchors.fill: parent
-                                onClicked: if (panel.cfg) panel.cfg.routeAheadSecs = Math.min(45, panel.cfg.routeAheadSecs + 1)
-                                onPressAndHold: { raCtrl._step = 1; raCtrl._dir = 1 }
-                                onReleased: raCtrl._dir = 0 }
-                        }
-                        Rectangle {
-                            id: raP5Btn
-                            anchors { right: parent.right; verticalCenter: parent.verticalCenter }
-                            width: units.gu(5); height: units.gu(4); radius: units.gu(0.6)
-                            color: raP5.pressed ? "#1E3A5F" : "#2A2A3E"; border.color: "#37474F"; border.width: 1
-                            Label { anchors.centerIn: parent; text: "+5"; color: "#78909C"; font.pixelSize: ts(1.7); font.bold: true }
-                            MouseArea { id: raP5; anchors.fill: parent
-                                onClicked: if (panel.cfg) panel.cfg.routeAheadSecs = Math.min(45, panel.cfg.routeAheadSecs + 5)
-                                onPressAndHold: { raCtrl._step = 5; raCtrl._dir = 1 }
-                                onReleased: raCtrl._dir = 0 }
-                        }
+                    Slider {
+                        theme.name: pal.isDark ? "Ubuntu.Components.Themes.SuruDark"
+                                               : "Ubuntu.Components.Themes.Ambiance"
+                        width: parent.width
+                        minimumValue: 1; maximumValue: 45; stepSize: 1; live: true
+                        value: panel.cfg ? panel.cfg.routeAheadSecs : 10
+                        onValueChanged: if (panel.cfg) panel.cfg.routeAheadSecs = Math.round(value)
                     }
                 }
             }
@@ -1970,122 +1630,61 @@ Rectangle {
             Rectangle {
                 visible: panel.cfg && panel.cfg.prefLevel >= 2
                 width: parent.width; height: mtCol.implicitHeight + units.gu(4)
-                color: "#1C1C2E"; radius: units.gu(1)
+                color: pal.bgCard; radius: 0
                 Column {
                     id: mtCol
                     anchors { left: parent.left; right: parent.right; top: parent.top; margins: units.gu(2) }
                     spacing: units.gu(1)
-                    Row {
-                        width: parent.width
+                    Item {
+                        width: parent.width; height: units.gu(3)
                         Label {
-                            text: i18n.tr("Ángulo máximo de giro predictivo")
-                            color: "white"; font.pixelSize: ts(1.8)
-                            width: parent.width - maxTurnLabel.width
+                            anchors { left: parent.left; verticalCenter: parent.verticalCenter }
+                            text: i18n.tr("Ángulo máximo de giro predictivo"); color: pal.fgPrimary; font.pixelSize: ts(1.8)
                         }
                         Label {
-                            id: maxTurnLabel
-                            textFormat: Text.RichText
-                            text: panel.cfg ? ("<b>" + panel.cfg.maxPredictiveTurnDeg + "°</b> <font color='#546E7A'>↺ 30°</font>") : ""
-                            color: "#29B6F6"; font.pixelSize: ts(1.8)
+                            anchors { right: parent.right; verticalCenter: parent.verticalCenter }
+                            text: panel.cfg ? (panel.cfg.maxPredictiveTurnDeg + "°  ↺ 30°") : "30°"
+                            color: "#29B6F6"; font.pixelSize: ts(1.7)
                         }
                     }
                     Label {
                         text: i18n.tr("Máximo desvío angular del mapa respecto al heading real en modo giro")
-                        color: "#90A4AE"; font.pixelSize: ts(1.6)
+                        color: pal.fgSecondary; font.pixelSize: ts(1.6)
                         wrapMode: Text.WordWrap; width: parent.width
                     }
-                    Item {
-                        id: mtCtrl
-                        width: parent.width; height: units.gu(4)
-                        property int _dir: 0; property int _step: 5
-                        Timer { interval: 180; repeat: true; running: mtCtrl._dir !== 0
-                            onTriggered: if (panel.cfg) panel.cfg.maxPredictiveTurnDeg = Math.max(0, Math.min(90, panel.cfg.maxPredictiveTurnDeg + mtCtrl._step * mtCtrl._dir))
-                        }
-                        Rectangle {
-                            id: mtM5Btn
-                            anchors { left: parent.left; verticalCenter: parent.verticalCenter }
-                            width: units.gu(5); height: units.gu(4); radius: units.gu(0.6)
-                            color: mtM5.pressed ? "#1E3A5F" : "#2A2A3E"; border.color: "#37474F"; border.width: 1
-                            Label { anchors.centerIn: parent; text: "−5"; color: "#78909C"; font.pixelSize: ts(1.7); font.bold: true }
-                            MouseArea { id: mtM5; anchors.fill: parent
-                                onClicked: if (panel.cfg) panel.cfg.maxPredictiveTurnDeg = Math.max(0, panel.cfg.maxPredictiveTurnDeg - 5)
-                                onPressAndHold: { mtCtrl._step = 5; mtCtrl._dir = -1 }
-                                onReleased: mtCtrl._dir = 0 }
-                        }
-                        Rectangle {
-                            id: mtM1Btn
-                            anchors { left: mtM5Btn.right; leftMargin: units.gu(0.5); verticalCenter: parent.verticalCenter }
-                            width: units.gu(4.5); height: units.gu(4); radius: units.gu(0.6)
-                            color: mtM1.pressed ? "#1E3A5F" : "#2A2A3E"; border.color: "#37474F"; border.width: 1
-                            Label { anchors.centerIn: parent; text: "−1"; color: "#29B6F6"; font.pixelSize: ts(1.7); font.bold: true }
-                            MouseArea { id: mtM1; anchors.fill: parent
-                                onClicked: if (panel.cfg) panel.cfg.maxPredictiveTurnDeg = Math.max(0, panel.cfg.maxPredictiveTurnDeg - 1)
-                                onPressAndHold: { mtCtrl._step = 1; mtCtrl._dir = -1 }
-                                onReleased: mtCtrl._dir = 0 }
-                        }
-                        Rectangle {
-                            anchors { left: mtM1Btn.right; right: mtP1Btn.left; verticalCenter: parent.verticalCenter; margins: units.gu(0.8) }
-                            height: units.gu(0.5); radius: height / 2; color: "#37474F"
-                            Rectangle {
-                                width: panel.cfg ? panel.cfg.maxPredictiveTurnDeg / 90 * parent.width : 0
-                                height: parent.height; radius: parent.radius; color: "#29B6F6"
-                            }
-                        }
-                        Rectangle {
-                            id: mtP1Btn
-                            anchors { right: mtP5Btn.left; rightMargin: units.gu(0.5); verticalCenter: parent.verticalCenter }
-                            width: units.gu(4.5); height: units.gu(4); radius: units.gu(0.6)
-                            color: mtP1.pressed ? "#1E3A5F" : "#2A2A3E"; border.color: "#37474F"; border.width: 1
-                            Label { anchors.centerIn: parent; text: "+1"; color: "#29B6F6"; font.pixelSize: ts(1.7); font.bold: true }
-                            MouseArea { id: mtP1; anchors.fill: parent
-                                onClicked: if (panel.cfg) panel.cfg.maxPredictiveTurnDeg = Math.min(90, panel.cfg.maxPredictiveTurnDeg + 1)
-                                onPressAndHold: { mtCtrl._step = 1; mtCtrl._dir = 1 }
-                                onReleased: mtCtrl._dir = 0 }
-                        }
-                        Rectangle {
-                            id: mtP5Btn
-                            anchors { right: parent.right; verticalCenter: parent.verticalCenter }
-                            width: units.gu(5); height: units.gu(4); radius: units.gu(0.6)
-                            color: mtP5.pressed ? "#1E3A5F" : "#2A2A3E"; border.color: "#37474F"; border.width: 1
-                            Label { anchors.centerIn: parent; text: "+5"; color: "#78909C"; font.pixelSize: ts(1.7); font.bold: true }
-                            MouseArea { id: mtP5; anchors.fill: parent
-                                onClicked: if (panel.cfg) panel.cfg.maxPredictiveTurnDeg = Math.min(90, panel.cfg.maxPredictiveTurnDeg + 5)
-                                onPressAndHold: { mtCtrl._step = 5; mtCtrl._dir = 1 }
-                                onReleased: mtCtrl._dir = 0 }
-                        }
+                    Slider {
+                        theme.name: pal.isDark ? "Ubuntu.Components.Themes.SuruDark"
+                                               : "Ubuntu.Components.Themes.Ambiance"
+                        width: parent.width
+                        minimumValue: 0; maximumValue: 90; stepSize: 1; live: true
+                        value: panel.cfg ? panel.cfg.maxPredictiveTurnDeg : 30
+                        onValueChanged: if (panel.cfg) panel.cfg.maxPredictiveTurnDeg = Math.round(value)
                     }
                 }
             }
 
             // ── Ajuste de posición a la ruta ─────────────────────────────
-            Rectangle {
+            ListItem {
                 visible: panel.cfg && panel.cfg.prefLevel >= 1
-                width: parent.width; height: units.gu(8)
-                color: "#1C1C2E"; radius: units.gu(1)
-                Row {
-                    anchors { fill: parent; margins: units.gu(2) }
-                    Column {
-                        anchors.verticalCenter: parent.verticalCenter
-                        width: parent.width - units.gu(7)
-                        Label { text: i18n.tr("Ajuste de posición a la ruta"); color: "white"; font.pixelSize: ts(1.8) }
-                        Label {
-                            text: i18n.tr("Centrar el vehículo sobre el shape de la ruta") + "  · ↺ act."
-                            color: "#90A4AE"; font.pixelSize: ts(1.6)
-                            wrapMode: Text.WordWrap; width: parent.width
-                        }
-                    }
-                    Item { width: units.gu(1); height: 1 }
-                    Rectangle {
-                        anchors.verticalCenter: parent.verticalCenter
-                        width: units.gu(5.5); height: units.gu(3); radius: height / 2
-                        color: panel.cfg && panel.cfg.snapToRouteEnabled ? "#29B6F6" : "#37474F"
-                        Rectangle {
-                            width: units.gu(2.4); height: units.gu(2.4); radius: width / 2; color: "white"
-                            anchors.verticalCenter: parent.verticalCenter
-                            x: panel.cfg && panel.cfg.snapToRouteEnabled ? parent.width - width - units.gu(0.3) : units.gu(0.3)
-                            Behavior on x { NumberAnimation { duration: 150 } }
-                        }
-                        MouseArea { anchors.fill: parent; onClicked: if (panel.cfg) panel.cfg.snapToRouteEnabled = !panel.cfg.snapToRouteEnabled }
+                width: parent.width
+                divider.colorFrom: pal.divider; divider.colorTo: pal.divider
+                color: pal.bgCard
+                highlightColor: pal.highlight
+                height: liSnapRouteLayout.height + units.gu(1)
+                ListItemLayout {
+                    id: liSnapRouteLayout
+                    title.text: i18n.tr("Ajuste de posición a la ruta")
+                    title.color: pal.fgPrimary
+                    title.font.pixelSize: ts(1.8)
+                    subtitle.text: i18n.tr("Centrar el vehículo sobre el shape de la ruta") + "  · ↺ act."
+                    subtitle.color: pal.fgSecondary
+                    subtitle.font.pixelSize: ts(1.5)
+                    subtitle.wrapMode: Text.WordWrap
+                    Switch {
+                        id: swSnapToRouteEnabled
+                        SlotsLayout.position: SlotsLayout.Trailing
+                        checked: panel.cfg ? panel.cfg.snapToRouteEnabled : false
+                        onCheckedChanged: if (panel.cfg) panel.cfg.snapToRouteEnabled = checked
                     }
                 }
             }
@@ -2093,68 +1692,36 @@ Rectangle {
             // ── Distancia máxima de ajuste ────────────────────────────────
             Rectangle {
                 width: parent.width; height: sdCol.implicitHeight + units.gu(4)
-                color: "#1C1C2E"; radius: units.gu(1)
+                color: pal.bgCard; radius: 0
                 visible: panel.cfg && panel.cfg.snapToRouteEnabled && panel.cfg.prefLevel >= 2
                 Column {
                     id: sdCol
                     anchors { left: parent.left; right: parent.right; top: parent.top; margins: units.gu(2) }
                     spacing: units.gu(1)
-                    Row {
-                        width: parent.width
+                    Item {
+                        width: parent.width; height: units.gu(3)
                         Label {
-                            text: i18n.tr("Distancia máxima de ajuste")
-                            color: "white"; font.pixelSize: ts(1.8)
-                            width: parent.width - snapDistLabel.width
+                            anchors { left: parent.left; verticalCenter: parent.verticalCenter }
+                            text: i18n.tr("Distancia máxima de ajuste"); color: pal.fgPrimary; font.pixelSize: ts(1.8)
                         }
                         Label {
-                            id: snapDistLabel
-                            textFormat: Text.RichText
-                            text: panel.cfg ? ("<b>" + panel.cfg.snapDistM + " m</b> <font color='#546E7A'>↺ 11 m</font>") : ""
-                            color: "#29B6F6"; font.pixelSize: ts(1.8)
+                            anchors { right: parent.right; verticalCenter: parent.verticalCenter }
+                            text: panel.cfg ? (panel.cfg.snapDistM + " m  ↺ 11 m") : "11 m"
+                            color: "#29B6F6"; font.pixelSize: ts(1.7)
                         }
                     }
                     Label {
                         text: i18n.tr("Ajustar posición visual si el GPS está a menos de esta distancia de la ruta")
-                        color: "#90A4AE"; font.pixelSize: ts(1.6)
+                        color: pal.fgSecondary; font.pixelSize: ts(1.6)
                         wrapMode: Text.WordWrap; width: parent.width
                     }
-                    Item {
-                        id: sdCtrl
-                        width: parent.width; height: units.gu(4)
-                        property int _dir: 0
-                        Timer { interval: 200; repeat: true; running: sdCtrl._dir !== 0
-                            onTriggered: if (panel.cfg) panel.cfg.snapDistM = Math.max(5, Math.min(15, panel.cfg.snapDistM + sdCtrl._dir))
-                        }
-                        Rectangle {
-                            id: sdMinusBtn
-                            anchors { left: parent.left; verticalCenter: parent.verticalCenter }
-                            width: units.gu(5); height: units.gu(4); radius: units.gu(0.6)
-                            color: sdMinus.pressed ? "#1E3A5F" : "#2A2A3E"; border.color: "#37474F"; border.width: 1
-                            Label { anchors.centerIn: parent; text: "−"; color: "#29B6F6"; font.pixelSize: ts(2.5); font.bold: true }
-                            MouseArea { id: sdMinus; anchors.fill: parent
-                                onClicked: if (panel.cfg) panel.cfg.snapDistM = Math.max(5, panel.cfg.snapDistM - 1)
-                                onPressAndHold: sdCtrl._dir = -1
-                                onReleased: sdCtrl._dir = 0 }
-                        }
-                        Rectangle {
-                            anchors { left: sdMinusBtn.right; right: sdPlusBtn.left; verticalCenter: parent.verticalCenter; margins: units.gu(1) }
-                            height: units.gu(0.5); radius: height / 2; color: "#37474F"
-                            Rectangle {
-                                width: panel.cfg ? (panel.cfg.snapDistM - 5) / 10 * parent.width : 0
-                                height: parent.height; radius: parent.radius; color: "#29B6F6"
-                            }
-                        }
-                        Rectangle {
-                            id: sdPlusBtn
-                            anchors { right: parent.right; verticalCenter: parent.verticalCenter }
-                            width: units.gu(5); height: units.gu(4); radius: units.gu(0.6)
-                            color: sdPlus.pressed ? "#1E3A5F" : "#2A2A3E"; border.color: "#37474F"; border.width: 1
-                            Label { anchors.centerIn: parent; text: "+"; color: "#29B6F6"; font.pixelSize: ts(2.5); font.bold: true }
-                            MouseArea { id: sdPlus; anchors.fill: parent
-                                onClicked: if (panel.cfg) panel.cfg.snapDistM = Math.min(15, panel.cfg.snapDistM + 1)
-                                onPressAndHold: sdCtrl._dir = 1
-                                onReleased: sdCtrl._dir = 0 }
-                        }
+                    Slider {
+                        theme.name: pal.isDark ? "Ubuntu.Components.Themes.SuruDark"
+                                               : "Ubuntu.Components.Themes.Ambiance"
+                        width: parent.width
+                        minimumValue: 5; maximumValue: 15; stepSize: 1; live: true
+                        value: panel.cfg ? panel.cfg.snapDistM : 11
+                        onValueChanged: if (panel.cfg) panel.cfg.snapDistM = Math.round(value)
                     }
                 }
             }
@@ -2163,100 +1730,61 @@ Rectangle {
             Rectangle {
                 visible: panel.cfg && panel.cfg.prefLevel >= 1
                 width: parent.width; height: orCol.implicitHeight + units.gu(4)
-                color: "#1C1C2E"; radius: units.gu(1)
+                color: pal.bgCard; radius: 0
                 Column {
                     id: orCol
                     anchors { left: parent.left; right: parent.right; top: parent.top; margins: units.gu(2) }
                     spacing: units.gu(1)
-                    Row {
-                        width: parent.width
+                    Item {
+                        width: parent.width; height: units.gu(3)
                         Label {
-                            text: i18n.tr("Desvío para recalcular ruta")
-                            color: "white"; font.pixelSize: ts(1.8)
-                            width: parent.width - offRouteDistLabel.width
+                            anchors { left: parent.left; verticalCenter: parent.verticalCenter }
+                            text: i18n.tr("Desvío para recalcular ruta"); color: pal.fgPrimary; font.pixelSize: ts(1.8)
                         }
                         Label {
-                            id: offRouteDistLabel
-                            textFormat: Text.RichText
-                            text: panel.cfg ? ("<b>" + panel.cfg.offRouteDistM + " m</b> <font color='#546E7A'>↺ 11 m</font>") : ""
-                            color: "#29B6F6"; font.pixelSize: ts(1.8)
+                            anchors { right: parent.right; verticalCenter: parent.verticalCenter }
+                            text: panel.cfg ? (panel.cfg.offRouteDistM + " m  ↺ 11 m") : "11 m"
+                            color: "#29B6F6"; font.pixelSize: ts(1.7)
                         }
                     }
                     Label {
                         text: i18n.tr("Distancia fuera de la ruta antes de recalcular")
-                        color: "#90A4AE"; font.pixelSize: ts(1.6)
+                        color: pal.fgSecondary; font.pixelSize: ts(1.6)
                         wrapMode: Text.WordWrap; width: parent.width
                     }
-                    Item {
-                        id: orCtrl
-                        width: parent.width; height: units.gu(4)
-                        property int _dir: 0
-                        Timer { interval: 200; repeat: true; running: orCtrl._dir !== 0
-                            onTriggered: if (panel.cfg) panel.cfg.offRouteDistM = Math.max(5, Math.min(15, panel.cfg.offRouteDistM + orCtrl._dir))
-                        }
-                        Rectangle {
-                            id: orMinusBtn
-                            anchors { left: parent.left; verticalCenter: parent.verticalCenter }
-                            width: units.gu(5); height: units.gu(4); radius: units.gu(0.6)
-                            color: orMinus.pressed ? "#1E3A5F" : "#2A2A3E"; border.color: "#37474F"; border.width: 1
-                            Label { anchors.centerIn: parent; text: "−"; color: "#29B6F6"; font.pixelSize: ts(2.5); font.bold: true }
-                            MouseArea { id: orMinus; anchors.fill: parent
-                                onClicked: if (panel.cfg) panel.cfg.offRouteDistM = Math.max(5, panel.cfg.offRouteDistM - 1)
-                                onPressAndHold: orCtrl._dir = -1
-                                onReleased: orCtrl._dir = 0 }
-                        }
-                        Rectangle {
-                            anchors { left: orMinusBtn.right; right: orPlusBtn.left; verticalCenter: parent.verticalCenter; margins: units.gu(1) }
-                            height: units.gu(0.5); radius: height / 2; color: "#37474F"
-                            Rectangle {
-                                width: panel.cfg ? (panel.cfg.offRouteDistM - 5) / 10 * parent.width : 0
-                                height: parent.height; radius: parent.radius; color: "#29B6F6"
-                            }
-                        }
-                        Rectangle {
-                            id: orPlusBtn
-                            anchors { right: parent.right; verticalCenter: parent.verticalCenter }
-                            width: units.gu(5); height: units.gu(4); radius: units.gu(0.6)
-                            color: orPlus.pressed ? "#1E3A5F" : "#2A2A3E"; border.color: "#37474F"; border.width: 1
-                            Label { anchors.centerIn: parent; text: "+"; color: "#29B6F6"; font.pixelSize: ts(2.5); font.bold: true }
-                            MouseArea { id: orPlus; anchors.fill: parent
-                                onClicked: if (panel.cfg) panel.cfg.offRouteDistM = Math.min(15, panel.cfg.offRouteDistM + 1)
-                                onPressAndHold: orCtrl._dir = 1
-                                onReleased: orCtrl._dir = 0 }
-                        }
+                    Slider {
+                        theme.name: pal.isDark ? "Ubuntu.Components.Themes.SuruDark"
+                                               : "Ubuntu.Components.Themes.Ambiance"
+                        width: parent.width
+                        minimumValue: 5; maximumValue: 15; stepSize: 1; live: true
+                        value: panel.cfg ? panel.cfg.offRouteDistM : 11
+                        onValueChanged: if (panel.cfg) panel.cfg.offRouteDistM = Math.round(value)
                     }
                 }
             }
 
             // ── Suavizado GPS ────────────────────────────────────────────
-            Rectangle {
+            ListItem {
                 visible: panel.cfg && panel.cfg.prefLevel >= 1
-                width: parent.width; height: units.gu(8)
-                color: "#1C1C2E"; radius: units.gu(1)
-                Row {
-                    anchors { fill: parent; margins: units.gu(2) }
-                    Column {
-                        anchors.verticalCenter: parent.verticalCenter
-                        width: parent.width - units.gu(7)
-                        Label { text: i18n.tr("Suavizado GPS"); color: "white"; font.pixelSize: ts(1.8) }
-                        Label {
-                            text: i18n.tr("Suavizar el movimiento del vehículo y el mapa entre ticks GPS") + "  · ↺ act."
-                            color: "#90A4AE"; font.pixelSize: ts(1.8)
-                            wrapMode: Text.WordWrap; width: parent.width
-                        }
-                    }
-                    Item { width: units.gu(1); height: 1 }
-                    Rectangle {
-                        anchors.verticalCenter: parent.verticalCenter
-                        width: units.gu(5.5); height: units.gu(3); radius: height / 2
-                        color: panel.cfg && panel.cfg.drEnabled ? "#29B6F6" : "#37474F"
-                        Rectangle {
-                            width: units.gu(2.4); height: units.gu(2.4); radius: width / 2; color: "white"
-                            anchors.verticalCenter: parent.verticalCenter
-                            x: panel.cfg && panel.cfg.drEnabled ? parent.width - width - units.gu(0.3) : units.gu(0.3)
-                            Behavior on x { NumberAnimation { duration: 150 } }
-                        }
-                        MouseArea { anchors.fill: parent; onClicked: if (panel.cfg) panel.cfg.drEnabled = !panel.cfg.drEnabled }
+                width: parent.width
+                divider.colorFrom: pal.divider; divider.colorTo: pal.divider
+                color: pal.bgCard
+                highlightColor: pal.highlight
+                height: liDrEnabledLayout.height + units.gu(1)
+                ListItemLayout {
+                    id: liDrEnabledLayout
+                    title.text: i18n.tr("Suavizado GPS")
+                    title.color: pal.fgPrimary
+                    title.font.pixelSize: ts(1.8)
+                    subtitle.text: i18n.tr("Suavizar el movimiento del vehículo y el mapa entre ticks GPS") + "  · ↺ act."
+                    subtitle.color: pal.fgSecondary
+                    subtitle.font.pixelSize: ts(1.5)
+                    subtitle.wrapMode: Text.WordWrap
+                    Switch {
+                        id: swDrEnabled
+                        SlotsLayout.position: SlotsLayout.Trailing
+                        checked: panel.cfg ? panel.cfg.drEnabled : false
+                        onCheckedChanged: if (panel.cfg) panel.cfg.drEnabled = checked
                     }
                 }
             }
@@ -2264,169 +1792,131 @@ Rectangle {
             // ── Frecuencia de suavizado ──────────────────────────────────
             Rectangle {
                 visible: panel.cfg && panel.cfg.drEnabled && panel.cfg.prefLevel >= 2
-                width: parent.width; height: units.gu(11)
-                color: "#1C1C2E"; radius: units.gu(1)
+                width: parent.width
+                height: drHzCol.implicitHeight + units.gu(4)
+                color: pal.bgCard; radius: 0
                 Column {
+                    id: drHzCol
                     anchors { fill: parent; margins: units.gu(2) }
                     spacing: units.gu(1)
-                    Label { text: i18n.tr("Frecuencia de suavizado"); color: "white"; font.pixelSize: ts(1.8) }
-                    Row {
-                        spacing: units.gu(1)
-                        Repeater {
-                            model: [10, 20, 30]
-                            Rectangle {
-                                property int hz: modelData
-                                width: units.gu(8); height: units.gu(4.5); radius: units.gu(0.6)
-                                color:        panel.cfg && panel.cfg.drHz === hz ? "#1E3A5F" : "#2A2A3E"
-                                border.color: panel.cfg && panel.cfg.drHz === hz ? "#29B6F6" : "transparent"
-                                border.width: units.gu(0.15)
-                                Label {
-                                    anchors.centerIn: parent
-                                    text: hz + " Hz" + (hz === 20 ? " ↺" : "")
-                                    color: panel.cfg && panel.cfg.drHz === hz ? "#29B6F6" : "#78909C"
-                                    font.pixelSize: ts(1.7)
-                                    font.bold: panel.cfg && panel.cfg.drHz === hz
-                                    elide: Text.ElideRight
-                                    width: parent.width - units.gu(0.4)
-                                    horizontalAlignment: Text.AlignHCenter
-                                }
-                                MouseArea { anchors.fill: parent; onClicked: if (panel.cfg) panel.cfg.drHz = hz }
-                            }
+                    Label { text: i18n.tr("Frecuencia de suavizado"); color: pal.fgPrimary; font.pixelSize: ts(1.8) }
+                    OptionSelector {
+                        width: parent.width
+                        property var _vals: [10, 20, 30]
+                        model: ["10 Hz", "20 Hz ↺", "30 Hz"]
+                        selectedIndex: {
+                            if (!panel.cfg) return 1
+                            var idx = _vals.indexOf(panel.cfg.drHz)
+                            return idx >= 0 ? idx : 1
+                        }
+                        containerHeight: units.gu(4.5) * 3
+                        onSelectedIndexChanged: {
+                            if (panel.cfg) panel.cfg.drHz = _vals[selectedIndex]
                         }
                     }
                 }
             }
 
             // ── Slider de zoom ───────────────────────────────────────────
-            Rectangle {
+            ListItem {
                 visible: panel.cfg && panel.cfg.prefLevel >= 1
-                width: parent.width; height: units.gu(8)
-                color: "#1C1C2E"; radius: units.gu(1)
-                Row {
-                    anchors { fill: parent; margins: units.gu(2) }
-                    Column {
-                        anchors.verticalCenter: parent.verticalCenter
-                        width: parent.width - units.gu(7)
-                        Label { text: i18n.tr("Slider de zoom"); color: "white"; font.pixelSize: ts(1.8) }
-                        Label {
-                            text: i18n.tr("Barra lateral para ajustar el zoom") + "  · ↺ act."
-                            color: "#90A4AE"; font.pixelSize: ts(1.8)
-                            wrapMode: Text.WordWrap; width: parent.width
-                        }
-                    }
-                    Item { width: units.gu(1); height: 1 }
-                    Rectangle {
-                        anchors.verticalCenter: parent.verticalCenter
-                        width: units.gu(5.5); height: units.gu(3); radius: height / 2
-                        color: panel.cfg && panel.cfg.showZoomSlider ? "#29B6F6" : "#37474F"
-                        Rectangle {
-                            width: units.gu(2.4); height: units.gu(2.4); radius: width / 2; color: "white"
-                            anchors.verticalCenter: parent.verticalCenter
-                            x: panel.cfg && panel.cfg.showZoomSlider ? parent.width - width - units.gu(0.3) : units.gu(0.3)
-                            Behavior on x { NumberAnimation { duration: 150 } }
-                        }
-                        MouseArea { anchors.fill: parent; onClicked: if (panel.cfg) panel.cfg.showZoomSlider = !panel.cfg.showZoomSlider }
+                width: parent.width
+                divider.colorFrom: pal.divider; divider.colorTo: pal.divider
+                color: pal.bgCard
+                highlightColor: pal.highlight
+                height: liZoomSliderLayout.height + units.gu(1)
+                ListItemLayout {
+                    id: liZoomSliderLayout
+                    title.text: i18n.tr("Slider de zoom")
+                    title.color: pal.fgPrimary
+                    title.font.pixelSize: ts(1.8)
+                    subtitle.text: i18n.tr("Barra lateral para ajustar el zoom") + "  · ↺ act."
+                    subtitle.color: pal.fgSecondary
+                    subtitle.font.pixelSize: ts(1.5)
+                    subtitle.wrapMode: Text.WordWrap
+                    Switch {
+                        id: swShowZoomSlider
+                        SlotsLayout.position: SlotsLayout.Trailing
+                        checked: panel.cfg ? panel.cfg.showZoomSlider : false
+                        onCheckedChanged: if (panel.cfg) panel.cfg.showZoomSlider = checked
                     }
                 }
             }
 
             // ── Inhibir suspensión durante navegación ────────────────────
-            Rectangle {
+            ListItem {
                 visible: panel.cfg && panel.cfg.prefLevel >= 2
-                width: parent.width; height: units.gu(10)
-                color: "#1C1C2E"; radius: units.gu(1)
-                Row {
-                    anchors { fill: parent; margins: units.gu(2) }
-                    Column {
-                        anchors.verticalCenter: parent.verticalCenter
-                        width: parent.width - units.gu(7)
-                        Label { text: i18n.tr("Inhibir suspensión durante la navegación"); color: "white"; font.pixelSize: ts(1.8); wrapMode: Text.WordWrap; width: parent.width }
-                        Label {
-                            text: i18n.tr("Mantiene la pantalla encendida mientras navegas") + "  · ↺ act."
-                            color: "#90A4AE"; font.pixelSize: ts(1.6)
-                            wrapMode: Text.WordWrap; width: parent.width
-                        }
-                    }
-                    Item { width: units.gu(1); height: 1 }
-                    Rectangle {
-                        anchors.verticalCenter: parent.verticalCenter
-                        width: units.gu(5.5); height: units.gu(3); radius: height / 2
-                        color: panel.cfg && panel.cfg.inhibitSuspend ? "#29B6F6" : "#37474F"
-                        Behavior on color { ColorAnimation { duration: 150 } }
-                        Rectangle {
-                            width: units.gu(2.4); height: units.gu(2.4); radius: width / 2; color: "white"
-                            anchors.verticalCenter: parent.verticalCenter
-                            x: panel.cfg && panel.cfg.inhibitSuspend ? parent.width - width - units.gu(0.3) : units.gu(0.3)
-                            Behavior on x { NumberAnimation { duration: 150 } }
-                        }
-                        MouseArea { anchors.fill: parent; onClicked: if (panel.cfg) panel.cfg.inhibitSuspend = !panel.cfg.inhibitSuspend }
+                width: parent.width
+                divider.colorFrom: pal.divider; divider.colorTo: pal.divider
+                color: pal.bgCard
+                highlightColor: pal.highlight
+                height: liInhibitSuspendLayout.height + units.gu(1)
+                ListItemLayout {
+                    id: liInhibitSuspendLayout
+                    title.text: i18n.tr("Inhibir suspensión durante la navegación")
+                    title.color: pal.fgPrimary
+                    title.font.pixelSize: ts(1.8)
+                    subtitle.text: i18n.tr("Mantiene la pantalla encendida mientras navegas") + "  · ↺ act."
+                    subtitle.color: pal.fgSecondary
+                    subtitle.font.pixelSize: ts(1.5)
+                    subtitle.wrapMode: Text.WordWrap
+                    Switch {
+                        id: swInhibitSuspend
+                        SlotsLayout.position: SlotsLayout.Trailing
+                        checked: panel.cfg ? panel.cfg.inhibitSuspend : false
+                        onCheckedChanged: if (panel.cfg) panel.cfg.inhibitSuspend = checked
                     }
                 }
             }
 
             // ── Mostrar velocidad máxima de la vía ───────────────────────
-            Rectangle {
+            ListItem {
                 visible: panel.cfg && panel.cfg.prefLevel >= 2
-                width: parent.width; height: units.gu(10)
-                color: "#1C1C2E"; radius: units.gu(1)
-                Row {
-                    anchors { fill: parent; margins: units.gu(2) }
-                    Column {
-                        anchors.verticalCenter: parent.verticalCenter
-                        width: parent.width - units.gu(7)
-                        Label { text: i18n.tr("Mostrar velocidad máxima de la vía"); color: "white"; font.pixelSize: ts(1.8); wrapMode: Text.WordWrap; width: parent.width }
-                        Label {
-                            text: i18n.tr("Fuente no fiable (OSM/Valhalla). Solo activa si hay radar comunitario") + "  · ↺ desact."
-                            color: "#90A4AE"; font.pixelSize: ts(1.6)
-                            wrapMode: Text.WordWrap; width: parent.width
-                        }
-                    }
-                    Item { width: units.gu(1); height: 1 }
-                    Rectangle {
-                        anchors.verticalCenter: parent.verticalCenter
-                        width: units.gu(5.5); height: units.gu(3); radius: height / 2
-                        color: panel.cfg && panel.cfg.showRoadSpeedLimit ? "#29B6F6" : "#37474F"
-                        Behavior on color { ColorAnimation { duration: 150 } }
-                        Rectangle {
-                            width: units.gu(2.4); height: units.gu(2.4); radius: width / 2; color: "white"
-                            anchors.verticalCenter: parent.verticalCenter
-                            x: panel.cfg && panel.cfg.showRoadSpeedLimit ? parent.width - width - units.gu(0.3) : units.gu(0.3)
-                            Behavior on x { NumberAnimation { duration: 150 } }
-                        }
-                        MouseArea { anchors.fill: parent; onClicked: if (panel.cfg) panel.cfg.showRoadSpeedLimit = !panel.cfg.showRoadSpeedLimit }
+                width: parent.width
+                divider.colorFrom: pal.divider; divider.colorTo: pal.divider
+                color: pal.bgCard
+                highlightColor: pal.highlight
+                height: liRoadSpeedLimitLayout.height + units.gu(1)
+                ListItemLayout {
+                    id: liRoadSpeedLimitLayout
+                    title.text: i18n.tr("Mostrar velocidad máxima de la vía")
+                    title.color: pal.fgPrimary
+                    title.font.pixelSize: ts(1.8)
+                    subtitle.text: i18n.tr("Fuente no fiable (OSM/Valhalla). Solo activa si hay radar comunitario") + "  · ↺ desact."
+                    subtitle.color: pal.fgSecondary
+                    subtitle.font.pixelSize: ts(1.5)
+                    subtitle.wrapMode: Text.WordWrap
+                    Switch {
+                        id: swShowRoadSpeedLimit
+                        SlotsLayout.position: SlotsLayout.Trailing
+                        checked: panel.cfg ? panel.cfg.showRoadSpeedLimit : false
+                        onCheckedChanged: if (panel.cfg) panel.cfg.showRoadSpeedLimit = checked
                     }
                 }
             }
 
             // ── Velocidad GPS hardware (Doppler) ─────────────────────────
-            Rectangle {
+            ListItem {
                 visible: panel.cfg && panel.cfg.prefLevel >= 1
-                width: parent.width; height: units.gu(10)
-                color: "#1C1C2E"; radius: units.gu(1)
-                Row {
-                    anchors { fill: parent; margins: units.gu(2) }
-                    Column {
-                        anchors.verticalCenter: parent.verticalCenter
-                        width: parent.width - units.gu(7)
-                        Label { text: i18n.tr("Velocidad GPS Doppler"); color: "white"; font.pixelSize: ts(1.8) }
-                        Label {
-                            text: i18n.tr("Usa la velocidad Doppler del chip GPS en vez de calcularla por diferencia de posiciones. Más precisa a baja velocidad y en aceleraciones. Desactiva si notas velocidades erráticas.") + "  · ↺ act."
-                            color: "#90A4AE"; font.pixelSize: ts(1.6)
-                            wrapMode: Text.WordWrap; width: parent.width
-                        }
-                    }
-                    Item { width: units.gu(1); height: 1 }
-                    Rectangle {
-                        anchors.verticalCenter: parent.verticalCenter
-                        width: units.gu(5.5); height: units.gu(3); radius: height / 2
-                        color: panel.cfg && panel.cfg.useHardwareSpeed ? "#29B6F6" : "#37474F"
-                        Rectangle {
-                            width: units.gu(2.4); height: units.gu(2.4); radius: width / 2; color: "white"
-                            anchors.verticalCenter: parent.verticalCenter
-                            x: panel.cfg && panel.cfg.useHardwareSpeed ? parent.width - width - units.gu(0.3) : units.gu(0.3)
-                            Behavior on x { NumberAnimation { duration: 150 } }
-                        }
-                        MouseArea { anchors.fill: parent; onClicked: if (panel.cfg) panel.cfg.useHardwareSpeed = !panel.cfg.useHardwareSpeed }
+                width: parent.width
+                divider.colorFrom: pal.divider; divider.colorTo: pal.divider
+                color: pal.bgCard
+                highlightColor: pal.highlight
+                height: liHwSpeedLayout.height + units.gu(1)
+                ListItemLayout {
+                    id: liHwSpeedLayout
+                    title.text: i18n.tr("Velocidad GPS Doppler")
+                    title.color: pal.fgPrimary
+                    title.font.pixelSize: ts(1.8)
+                    subtitle.text: i18n.tr("Usa la velocidad Doppler del chip GPS en vez de calcularla por diferencia de posiciones. Más precisa a baja velocidad y en aceleraciones. Desactiva si notas velocidades erráticas.") + "  · ↺ act."
+                    subtitle.color: pal.fgSecondary
+                    subtitle.font.pixelSize: ts(1.5)
+                    subtitle.wrapMode: Text.WordWrap
+                    Switch {
+                        id: swUseHardwareSpeed
+                        SlotsLayout.position: SlotsLayout.Trailing
+                        checked: panel.cfg ? panel.cfg.useHardwareSpeed : false
+                        onCheckedChanged: if (panel.cfg) panel.cfg.useHardwareSpeed = checked
                     }
                 }
             }
@@ -2438,17 +1928,18 @@ Rectangle {
         // ════════════════════════════════════════════════════════════════
         Rectangle {
             visible: grabacionCol.hasContent
-            width: parent.width; height: units.gu(5.5)
-            color: "#252535"; radius: units.gu(1)
+            width: parent.width; height: units.gu(6)
+            color: pal.bgHeader; radius: units.gu(1)
             Label {
                 anchors { left: parent.left; verticalCenter: parent.verticalCenter; leftMargin: units.gu(2) }
                 text: i18n.tr("Grabación de rutas")
                 color: "#29B6F6"; font.pixelSize: ts(2.0); font.bold: true
             }
-            Label {
-                anchors { right: parent.right; verticalCenter: parent.verticalCenter; rightMargin: units.gu(2) }
-                text: secSettings.grabacion ? "▲" : "▼"
-                color: "#29B6F6"; font.pixelSize: ts(1.6)
+            Icon {
+                anchors { right: parent.right; rightMargin: units.gu(2); verticalCenter: parent.verticalCenter }
+                width: units.gu(2.5); height: units.gu(2.5)
+                name: secSettings.grabacion ? "go-up" : "go-down"
+                color: "#29B6F6"
             }
             MouseArea { anchors.fill: parent; onClicked: secSettings.grabacion = !secSettings.grabacion }
         }
@@ -2458,13 +1949,13 @@ Rectangle {
             property int  _sectionMinLevel: 0
             property bool hasContent: panel.cfg ? panel.cfg.prefLevel >= _sectionMinLevel : false
             visible: secSettings.grabacion && hasContent
-            width: parent.width; spacing: units.gu(1.5)
+            width: parent.width; spacing: 0
 
         // ── Grabación GPS + Rutas grabadas ───────────────────────────
         Rectangle {
             id: tracksSection
             width: parent.width
-            color: "#1C1C2E"; radius: units.gu(1)
+            color: pal.bgCard; radius: 0
             height: tracksCol.implicitHeight + units.gu(4)
 
             property var    _tracks:    []
@@ -2517,37 +2008,26 @@ Rectangle {
                 spacing: units.gu(1)
 
                 // Toggle grabación
-                Row {
-                    width: parent.width
+                Item {
+                    width: parent.width; height: gpsTrackingCol.implicitHeight
+                    Switch {
+                        id: swGpsTracking
+                        anchors { right: parent.right; verticalCenter: parent.verticalCenter }
+                        checked: panel.cfg ? panel.cfg.gpsTracking : false
+                        onCheckedChanged: if (panel.cfg) panel.cfg.gpsTracking = checked
+                    }
                     Column {
-                        anchors.verticalCenter: parent.verticalCenter
-                        width: parent.width - units.gu(7)
-                        Label { text: i18n.tr("Grabación GPS"); color: "white"; font.pixelSize: ts(1.8) }
+                        id: gpsTrackingCol
+                        anchors { left: parent.left; right: swGpsTracking.left; rightMargin: units.gu(1); verticalCenter: parent.verticalCenter }
+                        Label { text: i18n.tr("Grabación GPS"); color: pal.fgPrimary; font.pixelSize: ts(1.8) }
                         Label {
                             text: panel.cfg && panel.cfg.gpsTracking
                                   ? (panel.trackerRef
                                      ? i18n.tr("Grabando") + " · " + panel.trackerRef.get_point_count() + " pts"
                                      : i18n.tr("Grabando…"))
                                   : i18n.tr("Graba posición y velocidad")
-                            color: panel.cfg && panel.cfg.gpsTracking ? "#EF5350" : "#546E7A"
+                            color: panel.cfg && panel.cfg.gpsTracking ? "#EF5350" : pal.bgBtn
                             font.pixelSize: ts(1.6); wrapMode: Text.WordWrap; width: parent.width
-                        }
-                    }
-                    Item { width: units.gu(1); height: 1 }
-                    Rectangle {
-                        anchors.verticalCenter: parent.verticalCenter
-                        width: units.gu(5.5); height: units.gu(3); radius: height / 2
-                        color: panel.cfg && panel.cfg.gpsTracking ? "#EF5350" : "#37474F"
-                        Behavior on color { ColorAnimation { duration: 150 } }
-                        Rectangle {
-                            width: units.gu(2.4); height: units.gu(2.4); radius: width / 2; color: "white"
-                            anchors.verticalCenter: parent.verticalCenter
-                            x: panel.cfg && panel.cfg.gpsTracking ? parent.width - width - units.gu(0.3) : units.gu(0.3)
-                            Behavior on x { NumberAnimation { duration: 150 } }
-                        }
-                        MouseArea {
-                            anchors.fill: parent
-                            onClicked: { if (panel.cfg) panel.cfg.gpsTracking = !panel.cfg.gpsTracking }
                         }
                     }
                 }
@@ -2556,7 +2036,7 @@ Rectangle {
                 Rectangle {
                     id: allTracksBtn
                     width: parent.width; height: units.gu(4.5); radius: units.gu(0.8)
-                    color: _confirm ? "#4A1010" : "#2A2A3E"
+                    color: _confirm ? "#4A1010" : pal.bgInput
                     property bool _confirm: false
                     property bool _done: false
                     Timer { interval: 4000; running: parent._confirm && !parent._done; onTriggered: parent._confirm = false }
@@ -2586,7 +2066,7 @@ Rectangle {
                 // Lista de rutas
                 Label {
                     visible: true
-                    text: i18n.tr("Rutas grabadas"); color: "white"; font.pixelSize: ts(1.8)
+                    text: i18n.tr("Rutas grabadas"); color: pal.fgPrimary; font.pixelSize: ts(1.8)
                 }
                 Label {
                     visible: tracksSection._gpxMsg !== ""
@@ -2598,7 +2078,7 @@ Rectangle {
                 Label {
                     visible: tracksSection._tracks.length === 0
                     text: i18n.tr("Ninguna ruta grabada aún")
-                    color: "#90A4AE"; font.pixelSize: ts(1.8)
+                    color: pal.fgSecondary; font.pixelSize: ts(1.8)
                 }
 
                 Repeater {
@@ -2612,7 +2092,7 @@ Rectangle {
                                 + (renameRow.visible ? renameRow.height + units.gu(0.8) : 0)
                                 + (addSimRow.visible ? addSimRow.height + units.gu(0.8) : 0)
                                 + units.gu(1.5)
-                        color: "#151525"; radius: units.gu(0.6)
+                        color: pal.bgCard; radius: units.gu(0.6)
                         border.color: "#22334455"; border.width: units.gu(0.1)
 
                         Column {
@@ -2621,40 +2101,40 @@ Rectangle {
                             spacing: units.gu(0.4)
                             Label {
                                 width: parent.width; text: td.name
-                                color: "white"; font.pixelSize: ts(1.7); font.bold: true
+                                color: pal.fgPrimary; font.pixelSize: ts(1.7); font.bold: true
                                 elide: Text.ElideRight
                             }
                             Label {
                                 text: td.date + "  ·  " + td.dur + "  ·  " + td.dist + "  ·  " + td.npts + " pts"
                                       + (td.has_route ? "  ·  con ruta" : "")
-                                color: "#B0BEC5"; font.pixelSize: ts(1.5)
+                                color: pal.fgDataSub; font.pixelSize: ts(1.5)
                                 wrapMode: Text.WordWrap; width: parent.width
                             }
                             Row {
                                 spacing: units.gu(0.6)
                                 Rectangle {
                                     width: units.gu(7.5); height: units.gu(4); radius: units.gu(0.5)
-                                    color: td.has_route ? "#1565C3" : "#37474F"
+                                    color: td.has_route ? "#1565C3" : pal.bgBtn
                                     Label {
                                         anchors.centerIn: parent
                                         text: i18n.tr("Simular")
-                                        color: td.has_route ? "white" : "#90A4AE"
+                                        color: td.has_route ? "white" : pal.fgSecondary
                                         font.pixelSize: ts(1.6)
                                     }
                                     MouseArea { anchors.fill: parent; onClicked: panel.trackSimRequested(td.id, td.name, false) }
                                 }
                                 Rectangle {
-                                    width: units.gu(9); height: units.gu(4); radius: units.gu(0.5); color: "#37474F"
-                                    Label { anchors.centerIn: parent; text: i18n.tr("GPS crudo"); color: "#FFB74D"; font.pixelSize: ts(1.5) }
+                                    width: units.gu(9); height: units.gu(4); radius: units.gu(0.5); color: pal.bgBtn
+                                    Label { anchors.centerIn: parent; text: i18n.tr("GPS crudo"); color: pal.isDark ? "#FFB74D" : "#E65100"; font.pixelSize: ts(1.5) }
                                     MouseArea { anchors.fill: parent; onClicked: panel.trackSimRequested(td.id, td.name, true) }
                                 }
                                 Rectangle {
-                                    width: units.gu(5.5); height: units.gu(4); radius: units.gu(0.5); color: "#2A2A3E"
+                                    width: units.gu(5.5); height: units.gu(4); radius: units.gu(0.5); color: pal.bgInputAlt
                                     Label { anchors.centerIn: parent; text: "GPX"; color: "#4CAF50"; font.pixelSize: ts(1.6); font.bold: true }
                                     MouseArea { anchors.fill: parent; onClicked: panel.trackGpxRequested(td.id) }
                                 }
                                 Rectangle {
-                                    width: units.gu(8); height: units.gu(4); radius: units.gu(0.5); color: "#2A2A3E"
+                                    width: units.gu(8); height: units.gu(4); radius: units.gu(0.5); color: pal.bgInputAlt
                                     Label { anchors.centerIn: parent; text: "+ Sim"; color: "#9C27B0"; font.pixelSize: ts(1.6) }
                                     MouseArea {
                                         anchors.fill: parent
@@ -2665,7 +2145,7 @@ Rectangle {
                                     }
                                 }
                                 Rectangle {
-                                    width: units.gu(5.5); height: units.gu(4); radius: units.gu(0.5); color: "#2A2A3E"
+                                    width: units.gu(5.5); height: units.gu(4); radius: units.gu(0.5); color: pal.bgInputAlt
                                     Label { anchors.centerIn: parent; text: "✎"; color: "#29B6F6"; font.pixelSize: ts(1.8) }
                                     MouseArea {
                                         anchors.fill: parent
@@ -2674,7 +2154,7 @@ Rectangle {
                                 }
                                 Rectangle {
                                     width: units.gu(4); height: units.gu(4); radius: units.gu(0.5)
-                                    color: tracksSection._deleteId === td.id ? "#4A1010" : "#2A2A3E"
+                                    color: tracksSection._deleteId === td.id ? "#4A1010" : pal.bgInput
                                     Behavior on color { ColorAnimation { duration: 150 } }
                                     Label { anchors.centerIn: parent; text: "✕"; color: "#EF5350"; font.pixelSize: ts(1.8) }
                                     MouseArea {
@@ -2695,8 +2175,8 @@ Rectangle {
                             Row {
                                 anchors.centerIn: parent; spacing: units.gu(1)
                                 Rectangle {
-                                    width: units.gu(12); height: units.gu(3.5); radius: units.gu(0.5); color: "#37474F"
-                                    Label { anchors.centerIn: parent; text: i18n.tr("Cancelar"); color: "white"; font.pixelSize: ts(1.7) }
+                                    width: units.gu(12); height: units.gu(3.5); radius: units.gu(0.5); color: pal.bgBtn
+                                    Label { anchors.centerIn: parent; text: i18n.tr("Cancelar"); color: pal.fgPrimary; font.pixelSize: ts(1.7) }
                                     MouseArea { anchors.fill: parent; onClicked: tracksSection._deleteId = "" }
                                 }
                                 Rectangle {
@@ -2718,7 +2198,7 @@ Rectangle {
                             visible: tracksSection._renameId === td.id
                             anchors { left: parent.left; right: parent.right; top: tdMain.bottom
                                       margins: units.gu(1); topMargin: units.gu(0.8) }
-                            height: units.gu(4.5); radius: units.gu(0.5); color: "#1C2030"
+                            height: units.gu(4.5); radius: units.gu(0.5); color: pal.bgCard
                             border.color: "#29B6F6"; border.width: units.gu(0.1)
                             Row {
                                 anchors { fill: parent; margins: units.gu(0.8) }
@@ -2727,7 +2207,7 @@ Rectangle {
                                     id: renameInput
                                     width: parent.width - units.gu(6)
                                     anchors.verticalCenter: parent.verticalCenter
-                                    color: "white"; font.pixelSize: ts(1.7)
+                                    color: pal.fgPrimary; font.pixelSize: ts(1.7)
                                     text: tracksSection._renameId === td.id ? td.name : ""
                                     selectionColor: "#29B6F6"
                                     onActiveFocusChanged: if (activeFocus) panel._kbdFocusItem = this
@@ -2762,7 +2242,7 @@ Rectangle {
                             anchors { left: parent.left; right: parent.right
                                       top: renameRow.visible ? renameRow.bottom : tdMain.bottom
                                       margins: units.gu(1); topMargin: units.gu(0.8) }
-                            height: units.gu(4.5); radius: units.gu(0.5); color: "#1C2030"
+                            height: units.gu(4.5); radius: units.gu(0.5); color: pal.bgCard
                             border.color: "#9C27B0"; border.width: units.gu(0.1)
                             Row {
                                 anchors { fill: parent; margins: units.gu(0.8) }
@@ -2771,7 +2251,7 @@ Rectangle {
                                     id: addSimInput
                                     width: parent.width - units.gu(6)
                                     anchors.verticalCenter: parent.verticalCenter
-                                    color: "white"; font.pixelSize: ts(1.7)
+                                    color: pal.fgPrimary; font.pixelSize: ts(1.7)
                                     text: tracksSection._addSimId === td.id ? td.name : ""
                                     selectionColor: "#9C27B0"
                                     onActiveFocusChanged: if (activeFocus) panel._kbdFocusItem = this
@@ -2802,17 +2282,18 @@ Rectangle {
         // ════════════════════════════════════════════════════════════════
         Rectangle {
             visible: vozCol.hasContent
-            width: parent.width; height: units.gu(5.5)
-            color: "#252535"; radius: units.gu(1)
+            width: parent.width; height: units.gu(6)
+            color: pal.bgHeader; radius: units.gu(1)
             Label {
                 anchors { left: parent.left; verticalCenter: parent.verticalCenter; leftMargin: units.gu(2) }
                 text: i18n.tr("Voz")
                 color: "#29B6F6"; font.pixelSize: ts(2.0); font.bold: true
             }
-            Label {
-                anchors { right: parent.right; verticalCenter: parent.verticalCenter; rightMargin: units.gu(2) }
-                text: secSettings.voz ? "▲" : "▼"
-                color: "#29B6F6"; font.pixelSize: ts(1.6)
+            Icon {
+                anchors { right: parent.right; rightMargin: units.gu(2); verticalCenter: parent.verticalCenter }
+                width: units.gu(2.5); height: units.gu(2.5)
+                name: secSettings.voz ? "go-up" : "go-down"
+                color: "#29B6F6"
             }
             MouseArea { anchors.fill: parent; onClicked: secSettings.voz = !secSettings.voz }
         }
@@ -2822,13 +2303,13 @@ Rectangle {
             property int  _sectionMinLevel: 0
             property bool hasContent: panel.cfg ? panel.cfg.prefLevel >= _sectionMinLevel : false
             visible: secSettings.voz && hasContent
-            width: parent.width; spacing: units.gu(1.5)
+            width: parent.width; spacing: 0
 
             // ── Idioma de voz + Motor TTS ────────────────────────────────
             Rectangle {
                 width: parent.width
                 height: ttsColumn.implicitHeight + units.gu(4)
-                color: "#1C1C2E"; radius: units.gu(1)
+                color: pal.bgCard; radius: 0
 
                 property var  _piperVoices:  []
                 property var  _picoVoices:   []
@@ -2891,53 +2372,25 @@ Rectangle {
                     spacing: units.gu(1)
 
                     // ── Idioma de voz ──────────────────────────────────────
-                    Label { text: i18n.tr("Idioma de voz"); color: "white"; font.pixelSize: ts(1.8) }
+                    Label { text: i18n.tr("Idioma de voz"); color: pal.fgPrimary; font.pixelSize: ts(1.8) }
 
-                    Grid {
-                        id: langGrid
-                        columns: 3; spacing: units.gu(0.8); width: parent.width
-                        Repeater {
-                            model: [
-                                { key: "system", label: i18n.tr("Sistema") },
-                                { key: "es",     label: "Español"   },
-                                { key: "en",     label: "English"   },
-                                { key: "fr",     label: "Français"  },
-                                { key: "de",     label: "Deutsch"   },
-                                { key: "pt",     label: "Português" },
-                                { key: "it",     label: "Italiano"  },
-                                { key: "ca",     label: "Català"    },
-                                { key: "eu",     label: "Euskera"   },
-                                { key: "ru",     label: "Русский"   },
-                                { key: "zh",     label: "中文"      },
-                                { key: "ar",     label: "العربية"   },
-                                { key: "fa",     label: "فارسی"     }
-                            ]
-                            delegate: Rectangle {
-                                property string k: modelData.key
-                                width: (langGrid.width - 2 * units.gu(0.8)) / 3
-                                height: units.gu(4.5); radius: units.gu(0.6)
-                                color:        panel.cfg && panel.cfg.ttsLang === k ? "#1E3A5F" : "#2A2A3E"
-                                border.color: panel.cfg && panel.cfg.ttsLang === k ? "#29B6F6" : "transparent"
-                                border.width: units.gu(0.15)
-                                Label {
-                                    anchors.centerIn: parent
-                                    text: modelData.label + (modelData.key === "system" ? " ↺" : "")
-                                    color: panel.cfg && panel.cfg.ttsLang === k ? "#29B6F6" : "#78909C"
-                                    font.pixelSize: ts(1.8)
-                                    font.bold: panel.cfg && panel.cfg.ttsLang === k
-                                    elide: Text.ElideRight
-                                    width: parent.width - units.gu(0.6)
-                                    horizontalAlignment: Text.AlignHCenter
-                                }
-                                MouseArea {
-                                    anchors.fill: parent
-                                    onClicked: {
-                                        if (!panel.cfg) return
-                                        panel.cfg.ttsLang = k
-                                        panel.langChanged(k)
-                                    }
-                                }
-                            }
+                    OptionSelector {
+                        width: parent.width
+                        property var _keys: ["system","es","en","fr","de","pt","it","ca","eu","ru","zh","ar","fa"]
+                        model: [i18n.tr("Sistema") + " ↺", "Español", "English", "Français", "Deutsch",
+                                "Português", "Italiano", "Català", "Euskera", "Русский", "中文", "العربية", "فارسی"]
+                        selectedIndex: {
+                            if (!panel.cfg) return 0
+                            var idx = _keys.indexOf(panel.cfg.ttsLang)
+                            return idx >= 0 ? idx : 0
+                        }
+                        containerHeight: units.gu(4.5) * 6
+                        onSelectedIndexChanged: {
+                            if (!panel.cfg) return
+                            var k = _keys[selectedIndex]
+                            if (panel.cfg.ttsLang === k) return
+                            panel.cfg.ttsLang = k
+                            panel.langChanged(k)
                         }
                     }
 
@@ -2951,11 +2404,11 @@ Rectangle {
                                  && _r && _r._piperVoices && _r._piperVoices.length > 1
                                  && (panel.cfg.ttsEngine === "auto" || panel.cfg.ttsEngine === "piper")
 
-                        Label { text: i18n.tr("Voz Piper"); color: "white"; font.pixelSize: ts(1.8) }
+                        Label { text: i18n.tr("Voz Piper"); color: pal.fgPrimary; font.pixelSize: ts(1.8) }
 
                         Rectangle {
                             width: parent.width; height: units.gu(5); radius: units.gu(0.6)
-                            color: "#1A2535"; border.color: "#29B6F6"; border.width: units.gu(0.12)
+                            color: pal.bgInput; border.color: "#29B6F6"; border.width: units.gu(0.12)
                             Row {
                                 anchors { left: parent.left; right: parent.right; verticalCenter: parent.verticalCenter
                                           leftMargin: units.gu(1.2); rightMargin: units.gu(1) }
@@ -2982,16 +2435,16 @@ Rectangle {
                                     property string vid: modelData
                                     property bool   sel: panel.cfg && panel.cfg.ttsVoice === vid
                                     width: parent.width; height: units.gu(4.5); radius: units.gu(0.5)
-                                    color:        sel ? "#1E3A5F" : "#151525"
+                                    color:        sel ? pal.bgSelBlue : pal.bgCard
                                     border.color: sel ? "#29B6F6" : "#22334455"; border.width: units.gu(0.1)
                                     Row {
                                         anchors { left: parent.left; verticalCenter: parent.verticalCenter; leftMargin: units.gu(1) }
                                         spacing: units.gu(0.6)
-                                        Label { text: sel ? "●" : "○"; color: sel ? "#29B6F6" : "#546E7A"
+                                        Label { text: sel ? "●" : "○"; color: sel ? "#29B6F6" : pal.bgBtn
                                                 font.pixelSize: ts(1.4); anchors.verticalCenter: parent.verticalCenter }
                                         Label {
                                             text: voiceSel._r ? voiceSel._r._voiceLabel(vid) : vid
-                                            color: sel ? "#29B6F6" : "#90A4AE"
+                                            color: sel ? "#29B6F6" : pal.fgSecondary
                                             font.pixelSize: ts(1.6); font.bold: sel
                                         }
                                     }
@@ -3019,11 +2472,11 @@ Rectangle {
                                  && _r && _r._picoVoices && _r._picoVoices.length > 0
                                  && panel.cfg.ttsEngine === "picotts"
 
-                        Label { text: i18n.tr("Voz PicoTTS"); color: "white"; font.pixelSize: ts(1.8) }
+                        Label { text: i18n.tr("Voz PicoTTS"); color: pal.fgPrimary; font.pixelSize: ts(1.8) }
 
                         Rectangle {
                             width: parent.width; height: units.gu(5); radius: units.gu(0.6)
-                            color: "#1A2535"; border.color: "#29B6F6"; border.width: units.gu(0.12)
+                            color: pal.bgInput; border.color: "#29B6F6"; border.width: units.gu(0.12)
                             Row {
                                 anchors { left: parent.left; right: parent.right; verticalCenter: parent.verticalCenter
                                           leftMargin: units.gu(1.2); rightMargin: units.gu(1) }
@@ -3051,16 +2504,16 @@ Rectangle {
                                     property string vid: modelData
                                     property bool   sel: panel.cfg && panel.cfg.ttsVoicePico === vid
                                     width: parent.width; height: units.gu(4.5); radius: units.gu(0.5)
-                                    color:        sel ? "#1E3A5F" : "#151525"
+                                    color:        sel ? pal.bgSelBlue : pal.bgCard
                                     border.color: sel ? "#29B6F6" : "#22334455"; border.width: units.gu(0.1)
                                     Row {
                                         anchors { left: parent.left; verticalCenter: parent.verticalCenter; leftMargin: units.gu(1) }
                                         spacing: units.gu(0.6)
-                                        Label { text: sel ? "●" : "○"; color: sel ? "#29B6F6" : "#546E7A"
+                                        Label { text: sel ? "●" : "○"; color: sel ? "#29B6F6" : pal.bgBtn
                                                 font.pixelSize: ts(1.4); anchors.verticalCenter: parent.verticalCenter }
                                         Label {
                                             text: picoVoiceSel._r ? picoVoiceSel._r._picoVoiceLabel(vid) : vid
-                                            color: sel ? "#29B6F6" : "#90A4AE"
+                                            color: sel ? "#29B6F6" : pal.fgSecondary
                                             font.pixelSize: ts(1.6); font.bold: sel
                                         }
                                     }
@@ -3088,11 +2541,11 @@ Rectangle {
                                  && _r && _r._espeakVoices && _r._espeakVoices.length > 0
                                  && panel.cfg.ttsEngine === "espeak"
 
-                        Label { text: i18n.tr("Voz espeak-ng"); color: "white"; font.pixelSize: ts(1.8) }
+                        Label { text: i18n.tr("Voz espeak-ng"); color: pal.fgPrimary; font.pixelSize: ts(1.8) }
 
                         Rectangle {
                             width: parent.width; height: units.gu(5); radius: units.gu(0.6)
-                            color: "#1A2535"; border.color: "#29B6F6"; border.width: units.gu(0.12)
+                            color: pal.bgInput; border.color: "#29B6F6"; border.width: units.gu(0.12)
                             Row {
                                 anchors { left: parent.left; right: parent.right; verticalCenter: parent.verticalCenter
                                           leftMargin: units.gu(1.2); rightMargin: units.gu(1) }
@@ -3120,16 +2573,16 @@ Rectangle {
                                     property string vid: modelData
                                     property bool   sel: panel.cfg && panel.cfg.ttsVoiceEspeak === vid
                                     width: parent.width; height: units.gu(4.5); radius: units.gu(0.5)
-                                    color:        sel ? "#1E3A5F" : "#151525"
+                                    color:        sel ? pal.bgSelBlue : pal.bgCard
                                     border.color: sel ? "#29B6F6" : "#22334455"; border.width: units.gu(0.1)
                                     Row {
                                         anchors { left: parent.left; verticalCenter: parent.verticalCenter; leftMargin: units.gu(1) }
                                         spacing: units.gu(0.6)
-                                        Label { text: sel ? "●" : "○"; color: sel ? "#29B6F6" : "#546E7A"
+                                        Label { text: sel ? "●" : "○"; color: sel ? "#29B6F6" : pal.bgBtn
                                                 font.pixelSize: ts(1.4); anchors.verticalCenter: parent.verticalCenter }
                                         Label {
                                             text: espeakVoiceSel._r ? espeakVoiceSel._r._espeakVoiceLabel(vid) : vid
-                                            color: sel ? "#29B6F6" : "#90A4AE"
+                                            color: sel ? "#29B6F6" : pal.fgSecondary
                                             font.pixelSize: ts(1.6); font.bold: sel
                                         }
                                     }
@@ -3172,7 +2625,7 @@ Rectangle {
                     // ── Motor TTS ──────────────────────────────────────────
                     Label {
                         visible: panel.cfg && panel.cfg.prefLevel >= 1
-                        text: i18n.tr("Motor TTS"); color: "white"; font.pixelSize: ts(1.8)
+                        text: i18n.tr("Motor TTS"); color: pal.fgPrimary; font.pixelSize: ts(1.8)
                     }
 
                     Column {
@@ -3191,7 +2644,7 @@ Rectangle {
                                     property bool   sel: panel.cfg && panel.cfg.ttsEngine === k
                                     width: (parent.width - 2 * units.gu(0.8)) / 3
                                     height: units.gu(4.5); radius: units.gu(0.6)
-                                    color:        sel ? "#1E3A5F" : "#2A2A3E"
+                                    color:        sel ? pal.bgSelBlue : pal.bgInput
                                     border.color: sel ? "#29B6F6" : "transparent"; border.width: units.gu(0.15)
                                     Label {
                                         anchors.centerIn: parent; text: modelData.label
@@ -3224,7 +2677,7 @@ Rectangle {
                                     property bool   sel: panel.cfg && panel.cfg.ttsEngine === k
                                     width: (parent.width - units.gu(0.8)) / 2
                                     height: units.gu(4.5); radius: units.gu(0.6)
-                                    color:        sel ? "#1E3A5F" : "#2A2A3E"
+                                    color:        sel ? pal.bgSelBlue : pal.bgInput
                                     border.color: sel ? "#29B6F6" : "transparent"; border.width: units.gu(0.15)
                                     Label {
                                         anchors.centerIn: parent; text: modelData.label
@@ -3259,7 +2712,7 @@ Rectangle {
                         visible: panel.cfg && panel.cfg.prefLevel >= 1
                         id: audioCacheBtn
                         width: parent.width; height: units.gu(5); radius: units.gu(0.8)
-                        color: _confirm ? "#4A3010" : "#37474F"
+                        color: _confirm ? "#4A3010" : pal.bgBtn
                         property bool _confirm: false
                         property bool _done: false
                         Timer { interval: 4000; running: parent._confirm && !parent._done; onTriggered: parent._confirm = false }
@@ -3272,7 +2725,7 @@ Rectangle {
                                  :                          i18n.tr("Limpiar caché audio en ruta")
                             color: audioCacheBtn._done    ? "#66BB6A"
                                  : audioCacheBtn._confirm ? "#FFCC02"
-                                 :                         "white"
+                                 :                         pal.fgPrimary
                             font.pixelSize: ts(1.9)
                         }
                         MouseArea {
@@ -3292,17 +2745,18 @@ Rectangle {
         // ════════════════════════════════════════════════════════════════
         Rectangle {
             visible: mediaColContent.hasContent
-            width: parent.width; height: units.gu(5.5)
-            color: "#252535"; radius: units.gu(1)
+            width: parent.width; height: units.gu(6)
+            color: pal.bgHeader; radius: units.gu(1)
             Label {
                 anchors { left: parent.left; verticalCenter: parent.verticalCenter; leftMargin: units.gu(2) }
                 text: i18n.tr("Media")
                 color: "#29B6F6"; font.pixelSize: ts(2.0); font.bold: true
             }
-            Label {
-                anchors { right: parent.right; verticalCenter: parent.verticalCenter; rightMargin: units.gu(2) }
-                text: secSettings.media ? "▲" : "▼"
-                color: "#29B6F6"; font.pixelSize: ts(1.6)
+            Icon {
+                anchors { right: parent.right; rightMargin: units.gu(2); verticalCenter: parent.verticalCenter }
+                width: units.gu(2.5); height: units.gu(2.5)
+                name: secSettings.media ? "go-up" : "go-down"
+                color: "#29B6F6"
             }
             MouseArea { anchors.fill: parent; onClicked: secSettings.media = !secSettings.media }
         }
@@ -3312,70 +2766,36 @@ Rectangle {
             property int  _sectionMinLevel: 1
             property bool hasContent: panel.cfg ? panel.cfg.prefLevel >= _sectionMinLevel : false
             visible: secSettings.media && hasContent
-            width: parent.width; spacing: units.gu(1.5)
+            width: parent.width; spacing: 0
 
             // ── Volumen durante locuciones ────────────────────────────────
             Rectangle {
                 visible: panel.cfg && panel.cfg.prefLevel >= 1
                 width: parent.width; height: dvCol.implicitHeight + units.gu(4)
-                color: "#1C1C2E"; radius: units.gu(1)
+                color: pal.bgCard; radius: 0
                 Column {
                     id: dvCol
                     anchors { left: parent.left; right: parent.right; top: parent.top; margins: units.gu(2) }
-                    spacing: units.gu(0.8)
-                    Row {
-                        width: parent.width
+                    spacing: units.gu(1)
+                    Item {
+                        width: parent.width; height: units.gu(3)
                         Label {
-                            text: i18n.tr("Volumen al hablar")
-                            color: "white"; font.pixelSize: ts(1.8)
-                            anchors.verticalCenter: parent.verticalCenter
+                            anchors { left: parent.left; verticalCenter: parent.verticalCenter }
+                            text: i18n.tr("Volumen al hablar"); color: pal.fgPrimary; font.pixelSize: ts(1.8)
                         }
-                        Item { width: parent.width - duckPctLbl.width - units.gu(16); height: 1 }
                         Label {
-                            id: duckPctLbl
-                            textFormat: Text.RichText
-                            text: panel.cfg ? ("<b>" + Math.round(panel.cfg.duckVolume * 100) + "%</b> <font color='#546E7A'>↺ 70%</font>") : "70%"
+                            anchors { right: parent.right; verticalCenter: parent.verticalCenter }
+                            text: panel.cfg ? (Math.round(panel.cfg.duckVolume * 100) + " %  ↺ 70 %") : "70 %"
                             color: "#29B6F6"; font.pixelSize: ts(1.7)
-                            anchors.verticalCenter: parent.verticalCenter
                         }
                     }
-                    Item {
-                        id: dvCtrl
-                        width: parent.width; height: units.gu(4)
-                        property int _dir: 0
-                        Timer { interval: 200; repeat: true; running: dvCtrl._dir !== 0
-                            onTriggered: if (panel.cfg) panel.cfg.duckVolume = Math.max(0.10, Math.min(1.00, Math.round((panel.cfg.duckVolume + 0.05 * dvCtrl._dir) / 0.05) * 0.05))
-                        }
-                        Rectangle {
-                            id: dvMinusBtn
-                            anchors { left: parent.left; verticalCenter: parent.verticalCenter }
-                            width: units.gu(5); height: units.gu(4); radius: units.gu(0.6)
-                            color: dvMinus.pressed ? "#1E3A5F" : "#2A2A3E"; border.color: "#37474F"; border.width: 1
-                            Label { anchors.centerIn: parent; text: "−"; color: "#29B6F6"; font.pixelSize: ts(2.5); font.bold: true }
-                            MouseArea { id: dvMinus; anchors.fill: parent
-                                onClicked: if (panel.cfg) panel.cfg.duckVolume = Math.max(0.10, Math.min(1.00, Math.round((panel.cfg.duckVolume - 0.05) / 0.05) * 0.05))
-                                onPressAndHold: dvCtrl._dir = -1
-                                onReleased: dvCtrl._dir = 0 }
-                        }
-                        Rectangle {
-                            anchors { left: dvMinusBtn.right; right: dvPlusBtn.left; verticalCenter: parent.verticalCenter; margins: units.gu(1) }
-                            height: units.gu(0.5); radius: height / 2; color: "#37474F"
-                            Rectangle {
-                                width: panel.cfg ? (panel.cfg.duckVolume - 0.10) / 0.90 * parent.width : 0
-                                height: parent.height; radius: parent.radius; color: "#29B6F6"
-                            }
-                        }
-                        Rectangle {
-                            id: dvPlusBtn
-                            anchors { right: parent.right; verticalCenter: parent.verticalCenter }
-                            width: units.gu(5); height: units.gu(4); radius: units.gu(0.6)
-                            color: dvPlus.pressed ? "#1E3A5F" : "#2A2A3E"; border.color: "#37474F"; border.width: 1
-                            Label { anchors.centerIn: parent; text: "+"; color: "#29B6F6"; font.pixelSize: ts(2.5); font.bold: true }
-                            MouseArea { id: dvPlus; anchors.fill: parent
-                                onClicked: if (panel.cfg) panel.cfg.duckVolume = Math.max(0.10, Math.min(1.00, Math.round((panel.cfg.duckVolume + 0.05) / 0.05) * 0.05))
-                                onPressAndHold: dvCtrl._dir = 1
-                                onReleased: dvCtrl._dir = 0 }
-                        }
+                    Slider {
+                        theme.name: pal.isDark ? "Ubuntu.Components.Themes.SuruDark"
+                                               : "Ubuntu.Components.Themes.Ambiance"
+                        width: parent.width
+                        minimumValue: 0.10; maximumValue: 1.00; stepSize: 0.05; live: true
+                        value: panel.cfg ? panel.cfg.duckVolume : 0.70
+                        onValueChanged: if (panel.cfg) panel.cfg.duckVolume = Math.round(value / 0.05) * 0.05
                     }
                 }
             }
@@ -3386,17 +2806,18 @@ Rectangle {
         // ════════════════════════════════════════════════════════════════
         Rectangle {
             visible: cuentaCol.hasContent
-            width: parent.width; height: units.gu(5.5)
-            color: "#252535"; radius: units.gu(1)
+            width: parent.width; height: units.gu(6)
+            color: pal.bgHeader; radius: units.gu(1)
             Label {
                 anchors { left: parent.left; verticalCenter: parent.verticalCenter; leftMargin: units.gu(2) }
                 text: i18n.tr("Cuenta Navius")
                 color: "#29B6F6"; font.pixelSize: ts(2.0); font.bold: true
             }
-            Label {
-                anchors { right: parent.right; verticalCenter: parent.verticalCenter; rightMargin: units.gu(2) }
-                text: secSettings.cuenta ? "▲" : "▼"
-                color: "#29B6F6"; font.pixelSize: ts(1.6)
+            Icon {
+                anchors { right: parent.right; rightMargin: units.gu(2); verticalCenter: parent.verticalCenter }
+                width: units.gu(2.5); height: units.gu(2.5)
+                name: secSettings.cuenta ? "go-up" : "go-down"
+                color: "#29B6F6"
             }
             MouseArea { anchors.fill: parent; onClicked: secSettings.cuenta = !secSettings.cuenta }
         }
@@ -3406,20 +2827,20 @@ Rectangle {
             property int  _sectionMinLevel: 0
             property bool hasContent: panel.cfg ? panel.cfg.prefLevel >= _sectionMinLevel : false
             visible: secSettings.cuenta && hasContent
-            width: parent.width; spacing: units.gu(1.5)
+            width: parent.width; spacing: 0
 
             // Estado de sesión
             Rectangle {
                 width: parent.width; height: units.gu(6)
-                color: "#131F2E"; radius: units.gu(0.8)
-                border.color: "#1E3A5F"
+                color: pal.bgCard; radius: units.gu(0.8)
+                border.color: "#29B6F6"
                 Row {
                     anchors { left: parent.left; verticalCenter: parent.verticalCenter; leftMargin: units.gu(2) }
                     spacing: units.gu(1.5)
                     Label { text: authSettings.token !== "" ? "✅" : "👤"; font.pixelSize: ts(2.5); anchors.verticalCenter: parent.verticalCenter }
                     Label {
                         text: authSettings.token !== "" ? authSettings.email : i18n.tr("No identificado")
-                        color: authSettings.token !== "" ? "#66BB6A" : "#90A4AE"
+                        color: authSettings.token !== "" ? "#66BB6A" : pal.fgSecondary
                         font.pixelSize: ts(2.0); anchors.verticalCenter: parent.verticalCenter
                     }
                 }
@@ -3428,15 +2849,15 @@ Rectangle {
             // Botón entrar / cerrar sesión
             Rectangle {
                 width: parent.width; height: units.gu(5.5); radius: units.gu(0.8)
-                color: cuentaAccMa.pressed ? "#1A2535" : "#131F2E"
-                border.color: "#1E3A5F"
+                color: cuentaAccMa.pressed ? pal.bgInputAlt : pal.bgCard
+                border.color: "#29B6F6"
                 Row {
                     anchors { left: parent.left; verticalCenter: parent.verticalCenter; leftMargin: units.gu(2) }
                     spacing: units.gu(1.5)
                     Label { text: authSettings.token !== "" ? "🚪" : "🔑"; font.pixelSize: ts(2.2); anchors.verticalCenter: parent.verticalCenter }
                     Label {
                         text: authSettings.token !== "" ? i18n.tr("Cerrar sesión") : i18n.tr("Iniciar sesión / Registro")
-                        color: "white"; font.pixelSize: ts(1.9); anchors.verticalCenter: parent.verticalCenter
+                        color: pal.fgPrimary; font.pixelSize: ts(1.9); anchors.verticalCenter: parent.verticalCenter
                     }
                 }
                 Label {
@@ -3462,17 +2883,18 @@ Rectangle {
         // ════════════════════════════════════════════════════════════════
         Rectangle {
             visible: ayudaCol.hasContent
-            width: parent.width; height: units.gu(5.5)
-            color: "#252535"; radius: units.gu(1)
+            width: parent.width; height: units.gu(6)
+            color: pal.bgHeader; radius: units.gu(1)
             Label {
                 anchors { left: parent.left; verticalCenter: parent.verticalCenter; leftMargin: units.gu(2) }
                 text: i18n.tr("Ayuda")
                 color: "#29B6F6"; font.pixelSize: ts(2.0); font.bold: true
             }
-            Label {
-                anchors { right: parent.right; verticalCenter: parent.verticalCenter; rightMargin: units.gu(2) }
-                text: secSettings.ayuda ? "▲" : "▼"
-                color: "#29B6F6"; font.pixelSize: ts(1.6)
+            Icon {
+                anchors { right: parent.right; rightMargin: units.gu(2); verticalCenter: parent.verticalCenter }
+                width: units.gu(2.5); height: units.gu(2.5)
+                name: secSettings.ayuda ? "go-up" : "go-down"
+                color: "#29B6F6"
             }
             MouseArea { anchors.fill: parent; onClicked: secSettings.ayuda = !secSettings.ayuda }
         }
@@ -3482,13 +2904,13 @@ Rectangle {
             property int  _sectionMinLevel: 0
             property bool hasContent: panel.cfg ? panel.cfg.prefLevel >= _sectionMinLevel : false
             visible: secSettings.ayuda && hasContent
-            width: parent.width; spacing: units.gu(1.5)
+            width: parent.width; spacing: 0
 
             // ── Manual de usuario ─────────────────────────────────────────
             Rectangle {
                 width: parent.width; height: units.gu(5.5); radius: units.gu(0.8)
-                color: helpMa.pressed ? "#1A2535" : "#131F2E"
-                border.color: "#1E3A5F"; border.width: 1
+                color: helpMa.pressed ? pal.bgInputAlt : pal.bgCard
+                border.color: "#29B6F6"; border.width: 1
 
                 Row {
                     anchors { left: parent.left; verticalCenter: parent.verticalCenter; leftMargin: units.gu(2) }
@@ -3496,7 +2918,7 @@ Rectangle {
                     Label { text: "📖"; font.pixelSize: ts(2.2); anchors.verticalCenter: parent.verticalCenter }
                     Label {
                         text: i18n.tr("Manual de usuario")
-                        color: "white"; font.pixelSize: ts(1.9)
+                        color: pal.fgPrimary; font.pixelSize: ts(1.9)
                         anchors.verticalCenter: parent.verticalCenter
                     }
                 }
@@ -3510,8 +2932,8 @@ Rectangle {
             // ── Asistente de bienvenida ───────────────────────────────────
             Rectangle {
                 width: parent.width; height: units.gu(5.5); radius: units.gu(0.8)
-                color: tourMa.pressed ? "#1A2535" : "#131F2E"
-                border.color: "#1E3A5F"; border.width: 1
+                color: tourMa.pressed ? pal.bgInputAlt : pal.bgCard
+                border.color: "#29B6F6"; border.width: 1
 
                 Row {
                     anchors { left: parent.left; verticalCenter: parent.verticalCenter; leftMargin: units.gu(2) }
@@ -3519,7 +2941,7 @@ Rectangle {
                     Label { text: "🧭"; font.pixelSize: ts(2.2); anchors.verticalCenter: parent.verticalCenter }
                     Label {
                         text: i18n.tr("Abrir asistente")
-                        color: "white"; font.pixelSize: ts(1.9)
+                        color: pal.fgPrimary; font.pixelSize: ts(1.9)
                         anchors.verticalCenter: parent.verticalCenter
                     }
                 }
@@ -3533,7 +2955,7 @@ Rectangle {
             // ── Mostrar asistente al inicio ───────────────────────────────
             Rectangle {
                 width: parent.width; height: units.gu(5.5); radius: units.gu(0.8)
-                color: "#131F2E"; border.color: "#1E3A5F"; border.width: 1
+                color: pal.bgCard; border.color: "#29B6F6"; border.width: 1
 
                 Row {
                     anchors { left: parent.left; right: parent.right; verticalCenter: parent.verticalCenter
@@ -3541,7 +2963,7 @@ Rectangle {
                     spacing: units.gu(1)
                     Label {
                         text: i18n.tr("Mostrar asistente al inicio")
-                        color: "#CFD8DC"; font.pixelSize: ts(1.8)
+                        color: pal.fgPrimary; font.pixelSize: ts(1.8)
                         anchors.verticalCenter: parent.verticalCenter
                         width: parent.width - units.gu(9)
                         wrapMode: Text.WordWrap
@@ -3565,8 +2987,8 @@ Rectangle {
             // ── Acerca de… ────────────────────────────────────────────────
             Rectangle {
                 width: parent.width; height: units.gu(5.5); radius: units.gu(0.8)
-                color: aboutMa.pressed ? "#1A2535" : "#131F2E"
-                border.color: "#1E3A5F"; border.width: 1
+                color: aboutMa.pressed ? pal.bgInputAlt : pal.bgCard
+                border.color: "#29B6F6"; border.width: 1
 
                 Row {
                     anchors { left: parent.left; verticalCenter: parent.verticalCenter; leftMargin: units.gu(2) }
@@ -3574,7 +2996,7 @@ Rectangle {
                     Label { text: "ℹ️"; font.pixelSize: ts(2.2); anchors.verticalCenter: parent.verticalCenter }
                     Label {
                         text: i18n.tr("Acerca de…")
-                        color: "white"; font.pixelSize: ts(1.9)
+                        color: pal.fgPrimary; font.pixelSize: ts(1.9)
                         anchors.verticalCenter: parent.verticalCenter
                     }
                 }
@@ -3592,17 +3014,18 @@ Rectangle {
         // ════════════════════════════════════════════════════════════════
         Rectangle {
             visible: debugCol.hasContent
-            width: parent.width; height: units.gu(5.5)
-            color: "#252535"; radius: units.gu(1)
+            width: parent.width; height: units.gu(6)
+            color: pal.bgHeader; radius: units.gu(1)
             Label {
                 anchors { left: parent.left; verticalCenter: parent.verticalCenter; leftMargin: units.gu(2) }
                 text: i18n.tr("Debug")
                 color: "#29B6F6"; font.pixelSize: ts(2.0); font.bold: true
             }
-            Label {
-                anchors { right: parent.right; verticalCenter: parent.verticalCenter; rightMargin: units.gu(2) }
-                text: secSettings.debug ? "▲" : "▼"
-                color: "#29B6F6"; font.pixelSize: ts(1.6)
+            Icon {
+                anchors { right: parent.right; rightMargin: units.gu(2); verticalCenter: parent.verticalCenter }
+                width: units.gu(2.5); height: units.gu(2.5)
+                name: secSettings.debug ? "go-up" : "go-down"
+                color: "#29B6F6"
             }
             MouseArea { anchors.fill: parent; onClicked: secSettings.debug = !secSettings.debug }
         }
@@ -3612,47 +3035,37 @@ Rectangle {
             property int  _sectionMinLevel: 2
             property bool hasContent: panel.cfg ? panel.cfg.prefLevel >= _sectionMinLevel : false
             visible: secSettings.debug && hasContent
-            width: parent.width; spacing: units.gu(1.5)
+            width: parent.width; spacing: 0
 
             // ── Modo debug ───────────────────────────────────────────────
-            Rectangle {
-                width: parent.width; height: units.gu(8)
-                color: "#1C1C2E"; radius: units.gu(1)
-                Row {
-                    anchors { fill: parent; margins: units.gu(2) }
-                    Column {
-                        anchors.verticalCenter: parent.verticalCenter
-                        width: parent.width - units.gu(7)
-                        Label { text: i18n.tr("Modo Debug"); color: "white"; font.pixelSize: ts(1.8) }
-                        Label {
-                            text: i18n.tr("Sim GPS, POI")
-                            color: "#90A4AE"; font.pixelSize: ts(1.8)
-                            wrapMode: Text.WordWrap; width: parent.width
-                        }
-                    }
-                    Item { width: units.gu(1); height: 1 }
-                    Rectangle {
-                        anchors.verticalCenter: parent.verticalCenter
-                        width: units.gu(5.5); height: units.gu(3); radius: height / 2
-                        color: panel.cfg && panel.cfg.debugMode ? "#1565C0" : "#37474F"
-                        Rectangle {
-                            width: units.gu(2.4); height: units.gu(2.4); radius: width / 2; color: "white"
-                            anchors.verticalCenter: parent.verticalCenter
-                            x: panel.cfg && panel.cfg.debugMode ? parent.width - width - units.gu(0.3) : units.gu(0.3)
-                            Behavior on x { NumberAnimation { duration: 150 } }
-                        }
-                        MouseArea {
-                            anchors.fill: parent
-                            onClicked: {
-                                if (!panel.cfg) return
-                                panel.cfg.debugMode = !panel.cfg.debugMode
-                                if (!panel.cfg.debugMode) {
-                                    panel.cfg.simMode = false
-                                    if (panel.cfg.manualPosActive) panel.manualPosCleared()
-                                    panel.debugOff()
-                                } else {
-                                    panel.debugOn()
-                                }
+            ListItem {
+                width: parent.width
+                divider.colorFrom: pal.divider; divider.colorTo: pal.divider
+                color: pal.bgCard
+                highlightColor: pal.highlight
+                height: liDebugModeLayout.height + units.gu(1)
+                ListItemLayout {
+                    id: liDebugModeLayout
+                    title.text: i18n.tr("Modo Debug")
+                    title.color: pal.fgPrimary
+                    title.font.pixelSize: ts(1.8)
+                    subtitle.text: i18n.tr("Sim GPS, POI")
+                    subtitle.color: pal.fgSecondary
+                    subtitle.font.pixelSize: ts(1.5)
+                    subtitle.wrapMode: Text.WordWrap
+                    Switch {
+                        id: swDebugMode
+                        SlotsLayout.position: SlotsLayout.Trailing
+                        checked: panel.cfg ? panel.cfg.debugMode : false
+                        onCheckedChanged: {
+                            if (!panel.cfg) return
+                            panel.cfg.debugMode = checked
+                            if (!checked) {
+                                panel.cfg.simMode = false
+                                if (panel.cfg.manualPosActive) panel.manualPosCleared()
+                                panel.debugOff()
+                            } else {
+                                panel.debugOn()
                             }
                         }
                     }
@@ -3660,78 +3073,57 @@ Rectangle {
             }
 
             // ── Activar trazas y TUI ─────────────────────────────────────
-            Rectangle {
+            ListItem {
                 visible: panel.cfg && panel.cfg.debugMode
-                width: parent.width; height: units.gu(8)
-                color: "#1C1C2E"; radius: units.gu(1)
-                Row {
-                    anchors { fill: parent; margins: units.gu(2) }
-                    Column {
-                        anchors.verticalCenter: parent.verticalCenter
-                        width: parent.width - units.gu(7)
-                        Label { text: i18n.tr("Activar trazas y TUI"); color: "white"; font.pixelSize: ts(1.8) }
-                        Label {
-                            text: i18n.tr("net_debug.log · tts_debug.log · piper_limit.log · control remoto")
-                            color: "#90A4AE"; font.pixelSize: ts(1.5)
-                            wrapMode: Text.WordWrap; width: parent.width
-                        }
-                    }
-                    Item { width: units.gu(1); height: 1 }
-                    Rectangle {
-                        anchors.verticalCenter: parent.verticalCenter
-                        width: units.gu(5.5); height: units.gu(3); radius: height / 2
-                        color: panel.cfg && panel.cfg.tracesEnabled ? "#1565C0" : "#37474F"
-                        Rectangle {
-                            width: units.gu(2.4); height: units.gu(2.4); radius: width / 2; color: "white"
-                            anchors.verticalCenter: parent.verticalCenter
-                            x: panel.cfg && panel.cfg.tracesEnabled ? parent.width - width - units.gu(0.3) : units.gu(0.3)
-                            Behavior on x { NumberAnimation { duration: 150 } }
-                        }
-                        MouseArea {
-                            anchors.fill: parent
-                            onClicked: { if (panel.cfg) panel.cfg.tracesEnabled = !panel.cfg.tracesEnabled }
-                        }
+                width: parent.width
+                divider.colorFrom: pal.divider; divider.colorTo: pal.divider
+                color: pal.bgCard
+                highlightColor: pal.highlight
+                height: liTracesEnabledLayout.height + units.gu(1)
+                ListItemLayout {
+                    id: liTracesEnabledLayout
+                    title.text: i18n.tr("Activar trazas y TUI")
+                    title.color: pal.fgPrimary
+                    title.font.pixelSize: ts(1.8)
+                    subtitle.text: i18n.tr("net_debug.log · tts_debug.log · piper_limit.log · control remoto")
+                    subtitle.color: pal.fgSecondary
+                    subtitle.font.pixelSize: ts(1.5)
+                    subtitle.wrapMode: Text.WordWrap
+                    Switch {
+                        id: swTracesEnabled
+                        SlotsLayout.position: SlotsLayout.Trailing
+                        checked: panel.cfg ? panel.cfg.tracesEnabled : false
+                        onCheckedChanged: if (panel.cfg) panel.cfg.tracesEnabled = checked
                     }
                 }
             }
 
             // ── Simulación GPS ───────────────────────────────────────────
-            Rectangle {
+            ListItem {
                 visible: panel.cfg && panel.cfg.debugMode
-                width: parent.width; height: units.gu(11)
-                color: "#1C1C2E"; radius: units.gu(1)
-                Row {
-                    anchors { fill: parent; margins: units.gu(2) }
-                    Column {
-                        anchors.verticalCenter: parent.verticalCenter
-                        width: parent.width - units.gu(7)
-                        Label { text: i18n.tr("Simulación GPS"); color: "white"; font.pixelSize: ts(1.8) }
-                        Label { text: i18n.tr("Muntaner → Gran Via (Barcelona)"); color: "#90A4AE"; font.pixelSize: ts(1.8) }
-                        Label {
-                            text: i18n.tr("Sustituye al GPS real para pruebas en interior")
-                            color: "#90A4AE"; font.pixelSize: ts(1.8)
-                            wrapMode: Text.WordWrap; width: parent.width
-                        }
-                    }
-                    Item { width: units.gu(1); height: 1 }
-                    Rectangle {
-                        anchors.verticalCenter: parent.verticalCenter
-                        width: units.gu(5.5); height: units.gu(3); radius: height / 2
-                        color: panel.cfg && panel.cfg.simMode ? "#9C27B0" : "#37474F"
-                        Rectangle {
-                            width: units.gu(2.4); height: units.gu(2.4); radius: width / 2; color: "white"
-                            anchors.verticalCenter: parent.verticalCenter
-                            x: panel.cfg && panel.cfg.simMode ? parent.width - width - units.gu(0.3) : units.gu(0.3)
-                            Behavior on x { NumberAnimation { duration: 150 } }
-                        }
-                        MouseArea {
-                            anchors.fill: parent
-                            onClicked: {
-                                if (!panel.cfg) return
-                                panel.cfg.simMode = !panel.cfg.simMode
-                                if (!panel.cfg.simMode && panel.cfg.manualPosActive) panel.manualPosCleared()
-                                panel.simToggled(panel.cfg.simMode)
-                            }
+                width: parent.width
+                divider.colorFrom: pal.divider; divider.colorTo: pal.divider
+                color: pal.bgCard
+                highlightColor: pal.highlight
+                height: liSimModeLayout.height + units.gu(1)
+                ListItemLayout {
+                    id: liSimModeLayout
+                    title.text: i18n.tr("Simulación GPS")
+                    title.color: pal.fgPrimary
+                    title.font.pixelSize: ts(1.8)
+                    subtitle.text: i18n.tr("Muntaner → Gran Via (Barcelona)") + " · " + i18n.tr("Sustituye al GPS real para pruebas en interior")
+                    subtitle.color: pal.fgSecondary
+                    subtitle.font.pixelSize: ts(1.5)
+                    subtitle.wrapMode: Text.WordWrap
+                    Switch {
+                        id: swSimMode
+                        SlotsLayout.position: SlotsLayout.Trailing
+                        checked: panel.cfg ? panel.cfg.simMode : false
+                        onCheckedChanged: {
+                            if (!panel.cfg) return
+                            panel.cfg.simMode = checked
+                            if (!checked && panel.cfg.manualPosActive) panel.manualPosCleared()
+                            panel.simToggled(panel.cfg.simMode)
                         }
                     }
                 }
@@ -3742,12 +3134,12 @@ Rectangle {
                 visible: panel.cfg && panel.cfg.debugMode && panel.cfg.simMode
                 width: parent.width
                 height: routeSelCol.implicitHeight + units.gu(4)
-                color: "#1C1C2E"; radius: units.gu(1)
+                color: pal.bgCard; radius: 0
                 Column {
                     id: routeSelCol
                     anchors { left: parent.left; right: parent.right; top: parent.top; margins: units.gu(2) }
                     spacing: units.gu(1)
-                    Label { text: i18n.tr("Ruta de simulación"); color: "white"; font.pixelSize: ts(1.8) }
+                    Label { text: i18n.tr("Ruta de simulación"); color: pal.fgPrimary; font.pixelSize: ts(1.8) }
                     OptionSelector {
                         id: routeSelector
                         width: parent.width
@@ -3773,7 +3165,7 @@ Rectangle {
                         }
                     }
                     Label {
-                        text: i18n.tr("Grabaciones en sim"); color: "#90A4AE"; font.pixelSize: ts(1.6)
+                        text: i18n.tr("Grabaciones en sim"); color: pal.fgSecondary; font.pixelSize: ts(1.6)
                         visible: {
                             try { return JSON.parse(panel.cfg ? panel.cfg.customSimTracks : "[]").length > 0 }
                             catch(e) { return false }
@@ -3787,7 +3179,7 @@ Rectangle {
                         }
                         delegate: Rectangle {
                             width: routeSelCol.width; height: units.gu(5); radius: units.gu(0.6)
-                            color: panel.cfg && panel.cfg.simRouteIdx === (5 + index) ? "#1E3A5F" : "#2A2A3E"
+                            color: panel.cfg && panel.cfg.simRouteIdx === (5 + index) ? pal.bgSelBlue : pal.bgInput
                             border.color: panel.cfg && panel.cfg.simRouteIdx === (5 + index) ? "#29B6F6" : "transparent"
                             border.width: units.gu(0.12)
                             Row {
@@ -3796,12 +3188,12 @@ Rectangle {
                                     anchors.verticalCenter: parent.verticalCenter
                                     width: parent.width - units.gu(4.5)
                                     text: modelData.name
-                                    color: panel.cfg && panel.cfg.simRouteIdx === (5 + index) ? "#29B6F6" : "white"
+                                    color: panel.cfg && panel.cfg.simRouteIdx === (5 + index) ? "#29B6F6" : pal.fgPrimary
                                     font.pixelSize: ts(1.7); elide: Text.ElideRight
                                 }
                                 Rectangle {
                                     anchors.verticalCenter: parent.verticalCenter
-                                    width: units.gu(3.5); height: units.gu(3.5); radius: width / 2; color: "#37474F"
+                                    width: units.gu(3.5); height: units.gu(3.5); radius: width / 2; color: pal.bgBtn
                                     Label { anchors.centerIn: parent; text: "✕"; color: "#EF5350"; font.pixelSize: ts(1.8) }
                                     MouseArea { anchors.fill: parent; onClicked: panel.trackRemovedFromSim(index) }
                                 }
@@ -3816,74 +3208,54 @@ Rectangle {
             }
 
             // ── Perder señal GPS ─────────────────────────────────────────
-            Rectangle {
+            ListItem {
                 visible: panel.cfg && panel.cfg.debugMode && panel.cfg.simMode
-                width: parent.width; height: units.gu(8)
-                color: "#1C1C2E"; radius: units.gu(1)
-                Row {
-                    anchors { fill: parent; margins: units.gu(2) }
-                    Column {
-                        anchors.verticalCenter: parent.verticalCenter
-                        width: parent.width - units.gu(7)
-                        Label {
-                            text: panel.simSignalLost ? i18n.tr("Señal perdida (simulado)") : i18n.tr("Perder señal GPS")
-                            color: panel.simSignalLost ? "#FF5252" : "white"; font.pixelSize: ts(1.8)
-                        }
-                        Label {
-                            text: panel.simSignalLost ? i18n.tr("El vehículo sigue avanzando internamente")
-                                                      : i18n.tr("Simula túnel o zona sin cobertura")
-                            color: "#90A4AE"; font.pixelSize: ts(1.8)
-                            wrapMode: Text.WordWrap; width: parent.width
-                        }
-                    }
-                    Item { width: units.gu(1); height: 1 }
-                    Rectangle {
-                        anchors.verticalCenter: parent.verticalCenter
-                        width: units.gu(5.5); height: units.gu(3); radius: height / 2
-                        color: panel.simSignalLost ? "#C62828" : "#37474F"
-                        Rectangle {
-                            width: units.gu(2.4); height: units.gu(2.4); radius: width / 2; color: "white"
-                            anchors.verticalCenter: parent.verticalCenter
-                            x: panel.simSignalLost ? parent.width - width - units.gu(0.3) : units.gu(0.3)
-                            Behavior on x { NumberAnimation { duration: 150 } }
-                        }
-                        MouseArea { anchors.fill: parent; onClicked: panel.signalLostToggled() }
+                width: parent.width
+                divider.colorFrom: pal.divider; divider.colorTo: pal.divider
+                color: pal.bgCard
+                highlightColor: pal.highlight
+                height: liSimSignalLostLayout.height + units.gu(1)
+                ListItemLayout {
+                    id: liSimSignalLostLayout
+                    title.text: panel.simSignalLost ? i18n.tr("Señal perdida (simulado)") : i18n.tr("Perder señal GPS")
+                    title.color: panel.simSignalLost ? "#FF5252" : pal.fgPrimary
+                    title.font.pixelSize: ts(1.8)
+                    subtitle.text: panel.simSignalLost ? i18n.tr("El vehículo sigue avanzando internamente")
+                                                       : i18n.tr("Simula túnel o zona sin cobertura")
+                    subtitle.color: pal.fgSecondary
+                    subtitle.font.pixelSize: ts(1.5)
+                    subtitle.wrapMode: Text.WordWrap
+                    Switch {
+                        id: swSimSignalLost
+                        SlotsLayout.position: SlotsLayout.Trailing
+                        checked: panel.simSignalLost
+                        onCheckedChanged: { if (panel.simSignalLost !== checked) panel.signalLostToggled() }
                     }
                 }
             }
 
             // ── Deslizable posición en ruta sim ──────────────────────────
-            Rectangle {
+            ListItem {
                 visible: panel.cfg && panel.cfg.debugMode && panel.cfg.simMode
-                width: parent.width; height: units.gu(8)
-                color: "#1C1C2E"; radius: units.gu(1)
-                Row {
-                    anchors { fill: parent; margins: units.gu(2) }
-                    Column {
-                        anchors.verticalCenter: parent.verticalCenter
-                        width: parent.width - units.gu(7)
-                        Label { text: i18n.tr("Deslizable posición en ruta sim"); color: "white"; font.pixelSize: ts(1.8) }
-                        Label {
-                            text: i18n.tr("Desplegable lateral para mover la posición GPS simulada")
-                            color: "#90A4AE"; font.pixelSize: ts(1.8)
-                            wrapMode: Text.WordWrap; width: parent.width
-                        }
-                    }
-                    Item { width: units.gu(1); height: 1 }
-                    Rectangle {
-                        anchors.verticalCenter: parent.verticalCenter
-                        width: units.gu(5.5); height: units.gu(3); radius: height / 2
-                        color: panel.cfg && panel.cfg.showSimScrubber ? "#9C27B0" : "#37474F"
-                        Rectangle {
-                            width: units.gu(2.4); height: units.gu(2.4); radius: width / 2; color: "white"
-                            anchors.verticalCenter: parent.verticalCenter
-                            x: panel.cfg && panel.cfg.showSimScrubber ? parent.width - width - units.gu(0.3) : units.gu(0.3)
-                            Behavior on x { NumberAnimation { duration: 150 } }
-                        }
-                        MouseArea {
-                            anchors.fill: parent
-                            onClicked: { if (panel.cfg) panel.cfg.showSimScrubber = !panel.cfg.showSimScrubber }
-                        }
+                width: parent.width
+                divider.colorFrom: pal.divider; divider.colorTo: pal.divider
+                color: pal.bgCard
+                highlightColor: pal.highlight
+                height: liSimScrubberLayout.height + units.gu(1)
+                ListItemLayout {
+                    id: liSimScrubberLayout
+                    title.text: i18n.tr("Deslizable posición en ruta sim")
+                    title.color: pal.fgPrimary
+                    title.font.pixelSize: ts(1.8)
+                    subtitle.text: i18n.tr("Desplegable lateral para mover la posición GPS simulada")
+                    subtitle.color: pal.fgSecondary
+                    subtitle.font.pixelSize: ts(1.5)
+                    subtitle.wrapMode: Text.WordWrap
+                    Switch {
+                        id: swShowSimScrubber
+                        SlotsLayout.position: SlotsLayout.Trailing
+                        checked: panel.cfg ? panel.cfg.showSimScrubber : false
+                        onCheckedChanged: if (panel.cfg) panel.cfg.showSimScrubber = checked
                     }
                 }
             }
@@ -3893,33 +3265,24 @@ Rectangle {
                 visible: panel.cfg && panel.cfg.debugMode && panel.cfg.simMode
                 width: parent.width
                 height: minSpeedCol.implicitHeight + units.gu(4)
-                color: "#1C1C2E"; radius: units.gu(1)
+                color: pal.bgCard; radius: 0
                 Column {
                     id: minSpeedCol
                     anchors { fill: parent; margins: units.gu(2) }
                     spacing: units.gu(1)
-                    Label { text: i18n.tr("Velocidad mínima sim (km/h)"); color: "white"; font.pixelSize: ts(1.8) }
-                    Row {
-                        spacing: units.gu(1)
-                        Repeater {
-                            model: [0, 30, 50, 80, 120, 200]
-                            Rectangle {
-                                property int spd: modelData
-                                property bool sel: panel.cfg && panel.cfg.simMinSpeedKmh === spd
-                                width: units.gu(6.5); height: units.gu(4.5); radius: units.gu(0.6)
-                                color:        sel ? "#1E3A5F" : "#2A2A3E"
-                                border.color: sel ? "#9C27B0" : "transparent"; border.width: units.gu(0.15)
-                                Label {
-                                    anchors.centerIn: parent
-                                    text: spd === 0 ? i18n.tr("Off") : spd
-                                    color: sel ? "#CE93D8" : "#78909C"
-                                    font.pixelSize: ts(1.8); font.bold: sel
-                                }
-                                MouseArea {
-                                    anchors.fill: parent
-                                    onClicked: { if (panel.cfg) panel.cfg.simMinSpeedKmh = spd }
-                                }
-                            }
+                    Label { text: i18n.tr("Velocidad mínima sim (km/h)"); color: pal.fgPrimary; font.pixelSize: ts(1.8) }
+                    OptionSelector {
+                        width: parent.width
+                        property var _vals: [0, 30, 50, 80, 120, 200]
+                        model: [i18n.tr("Off"), "30 km/h", "50 km/h", "80 km/h", "120 km/h", "200 km/h"]
+                        selectedIndex: {
+                            if (!panel.cfg) return 0
+                            var idx = _vals.indexOf(panel.cfg.simMinSpeedKmh)
+                            return idx >= 0 ? idx : 0
+                        }
+                        containerHeight: units.gu(4.5) * 6
+                        onSelectedIndexChanged: {
+                            if (panel.cfg) panel.cfg.simMinSpeedKmh = _vals[selectedIndex]
                         }
                     }
                 }
@@ -3930,12 +3293,12 @@ Rectangle {
                 visible: panel.cfg && (panel.cfg.debugMode || panel.cfg.simMode)
                 width: parent.width
                 height: visible ? manPosCol.implicitHeight + units.gu(4) : 0
-                color: "#1C1C2E"; radius: units.gu(1)
+                color: pal.bgCard; radius: 0
                 Column {
                     id: manPosCol
                     anchors { left: parent.left; right: parent.right; top: parent.top; margins: units.gu(2) }
                     spacing: units.gu(1.2)
-                    Label { text: i18n.tr("Posición manual"); color: "white"; font.pixelSize: ts(1.8) }
+                    Label { text: i18n.tr("Posición manual"); color: pal.fgPrimary; font.pixelSize: ts(1.8) }
                     Label {
                         visible: panel.cfg && panel.cfg.manualPosActive
                         width: parent.width
@@ -3975,9 +3338,9 @@ Rectangle {
                         Rectangle {
                             width: (parent.width - units.gu(1)) / 2; height: units.gu(5)
                             radius: units.gu(0.6)
-                            color: panel.cfg && panel.cfg.manualPosActive ? "#C62828" : "#37474F"
+                            color: panel.cfg && panel.cfg.manualPosActive ? "#C62828" : pal.bgBtn
                             Behavior on color { ColorAnimation { duration: 150 } }
-                            Label { anchors.centerIn: parent; text: i18n.tr("Liberar GPS"); color: "white"; font.pixelSize: ts(1.8); font.bold: true }
+                            Label { anchors.centerIn: parent; text: i18n.tr("Liberar GPS"); color: pal.fgPrimary; font.pixelSize: ts(1.8); font.bold: true }
                             MouseArea { anchors.fill: parent; onClicked: panel.manualPosCleared() }
                         }
                     }
@@ -3985,109 +3348,79 @@ Rectangle {
             }
 
             // ── Panel debug velocidades (v_sim) ──────────────────────────
-            Rectangle {
+            ListItem {
                 visible: panel.cfg && panel.cfg.debugMode && panel.cfg.simMode
-                width: parent.width; height: units.gu(8)
-                color: "#1C1C2E"; radius: units.gu(1)
-                Row {
-                    anchors { fill: parent; margins: units.gu(2) }
-                    Column {
-                        anchors.verticalCenter: parent.verticalCenter
-                        width: parent.width - units.gu(7)
-                        Label { text: i18n.tr("Panel debug velocidades (v_sim)"); color: "white"; font.pixelSize: ts(1.8) }
-                        Label {
-                            text: i18n.tr("Muestra vValhalla, límite y velocidad genérica")
-                            color: "#90A4AE"; font.pixelSize: ts(1.5)
-                            wrapMode: Text.WordWrap; width: parent.width
-                        }
-                    }
-                    Item { width: units.gu(1); height: 1 }
-                    Rectangle {
-                        anchors.verticalCenter: parent.verticalCenter
-                        width: units.gu(5.5); height: units.gu(3); radius: height / 2
-                        color: panel.cfg && panel.cfg.showVSimDebug ? "#9C27B0" : "#37474F"
-                        Rectangle {
-                            width: units.gu(2.4); height: units.gu(2.4); radius: width / 2; color: "white"
-                            anchors.verticalCenter: parent.verticalCenter
-                            x: panel.cfg && panel.cfg.showVSimDebug ? parent.width - width - units.gu(0.3) : units.gu(0.3)
-                            Behavior on x { NumberAnimation { duration: 150 } }
-                        }
-                        MouseArea {
-                            anchors.fill: parent
-                            onClicked: { if (panel.cfg) panel.cfg.showVSimDebug = !panel.cfg.showVSimDebug }
-                        }
+                width: parent.width
+                divider.colorFrom: pal.divider; divider.colorTo: pal.divider
+                color: pal.bgCard
+                highlightColor: pal.highlight
+                height: liVSimDebugLayout.height + units.gu(1)
+                ListItemLayout {
+                    id: liVSimDebugLayout
+                    title.text: i18n.tr("Panel debug velocidades (v_sim)")
+                    title.color: pal.fgPrimary
+                    title.font.pixelSize: ts(1.8)
+                    subtitle.text: i18n.tr("Muestra vValhalla, límite y velocidad genérica")
+                    subtitle.color: pal.fgSecondary
+                    subtitle.font.pixelSize: ts(1.5)
+                    subtitle.wrapMode: Text.WordWrap
+                    Switch {
+                        id: swShowVSimDebug
+                        SlotsLayout.position: SlotsLayout.Trailing
+                        checked: panel.cfg ? panel.cfg.showVSimDebug : false
+                        onCheckedChanged: if (panel.cfg) panel.cfg.showVSimDebug = checked
                     }
                 }
             }
 
             // ── Overlay límites de velocidad por tramo ───────────────────
-            Rectangle {
+            ListItem {
                 visible: panel.cfg && panel.cfg.debugMode
-                width: parent.width; height: units.gu(8)
-                color: "#1C1C2E"; radius: units.gu(1)
-                Row {
-                    anchors { fill: parent; margins: units.gu(2) }
-                    Column {
-                        anchors.verticalCenter: parent.verticalCenter
-                        width: parent.width - units.gu(7)
-                        Label { text: i18n.tr("Overlay límites de velocidad"); color: "white"; font.pixelSize: ts(1.8) }
-                        Label {
-                            text: i18n.tr("Muestra límite, velocidad Valhalla y fuente por tramo")
-                            color: "#90A4AE"; font.pixelSize: ts(1.5)
-                            wrapMode: Text.WordWrap; width: parent.width
-                        }
-                    }
-                    Item { width: units.gu(1); height: 1 }
-                    Rectangle {
-                        anchors.verticalCenter: parent.verticalCenter
-                        width: units.gu(5.5); height: units.gu(3); radius: height / 2
-                        color: panel.cfg && panel.cfg.showSlDebug ? "#9C27B0" : "#37474F"
-                        Rectangle {
-                            width: units.gu(2.4); height: units.gu(2.4); radius: width / 2; color: "white"
-                            anchors.verticalCenter: parent.verticalCenter
-                            x: panel.cfg && panel.cfg.showSlDebug ? parent.width - width - units.gu(0.3) : units.gu(0.3)
-                            Behavior on x { NumberAnimation { duration: 150 } }
-                        }
-                        MouseArea {
-                            anchors.fill: parent
-                            onClicked: { if (panel.cfg) panel.cfg.showSlDebug = !panel.cfg.showSlDebug }
-                        }
+                width: parent.width
+                divider.colorFrom: pal.divider; divider.colorTo: pal.divider
+                color: pal.bgCard
+                highlightColor: pal.highlight
+                height: liSlDebugLayout.height + units.gu(1)
+                ListItemLayout {
+                    id: liSlDebugLayout
+                    title.text: i18n.tr("Overlay límites de velocidad")
+                    title.color: pal.fgPrimary
+                    title.font.pixelSize: ts(1.8)
+                    subtitle.text: i18n.tr("Muestra límite, velocidad Valhalla y fuente por tramo")
+                    subtitle.color: pal.fgSecondary
+                    subtitle.font.pixelSize: ts(1.5)
+                    subtitle.wrapMode: Text.WordWrap
+                    Switch {
+                        id: swShowSlDebug
+                        SlotsLayout.position: SlotsLayout.Trailing
+                        checked: panel.cfg ? panel.cfg.showSlDebug : false
+                        onCheckedChanged: if (panel.cfg) panel.cfg.showSlDebug = checked
                     }
                 }
             }
 
             // ── Mostrar ticks GPS ────────────────────────────────────────
-            Rectangle {
+            ListItem {
                 visible: panel.cfg && panel.cfg.debugMode
-                width: parent.width; height: units.gu(8)
-                color: "#1C1C2E"; radius: units.gu(1)
-                Row {
-                    anchors { fill: parent; margins: units.gu(2) }
-                    Column {
-                        anchors.verticalCenter: parent.verticalCenter
-                        width: parent.width - units.gu(7)
-                        Label { text: i18n.tr("Mostrar ticks GPS (isReal)"); color: "white"; font.pixelSize: ts(1.8) }
-                        Label {
-                            text: i18n.tr("Puntos cian en el mapa por cada fix real")
-                            color: "#90A4AE"; font.pixelSize: ts(1.5)
-                            wrapMode: Text.WordWrap; width: parent.width
-                        }
-                    }
-                    Item { width: units.gu(1); height: 1 }
-                    Rectangle {
-                        anchors.verticalCenter: parent.verticalCenter
-                        width: units.gu(5.5); height: units.gu(3); radius: height / 2
-                        color: panel.cfg && panel.cfg.showGpsTicks ? "#00838F" : "#37474F"
-                        Rectangle {
-                            width: units.gu(2.4); height: units.gu(2.4); radius: width / 2; color: "white"
-                            anchors.verticalCenter: parent.verticalCenter
-                            x: panel.cfg && panel.cfg.showGpsTicks ? parent.width - width - units.gu(0.3) : units.gu(0.3)
-                            Behavior on x { NumberAnimation { duration: 150 } }
-                        }
-                        MouseArea {
-                            anchors.fill: parent
-                            onClicked: { if (panel.cfg) panel.cfg.showGpsTicks = !panel.cfg.showGpsTicks }
-                        }
+                width: parent.width
+                divider.colorFrom: pal.divider; divider.colorTo: pal.divider
+                color: pal.bgCard
+                highlightColor: pal.highlight
+                height: liGpsTicksLayout.height + units.gu(1)
+                ListItemLayout {
+                    id: liGpsTicksLayout
+                    title.text: i18n.tr("Mostrar ticks GPS (isReal)")
+                    title.color: pal.fgPrimary
+                    title.font.pixelSize: ts(1.8)
+                    subtitle.text: i18n.tr("Puntos cian en el mapa por cada fix real")
+                    subtitle.color: pal.fgSecondary
+                    subtitle.font.pixelSize: ts(1.5)
+                    subtitle.wrapMode: Text.WordWrap
+                    Switch {
+                        id: swShowGpsTicks
+                        SlotsLayout.position: SlotsLayout.Trailing
+                        checked: panel.cfg ? panel.cfg.showGpsTicks : false
+                        onCheckedChanged: if (panel.cfg) panel.cfg.showGpsTicks = checked
                     }
                 }
             }
@@ -4097,35 +3430,24 @@ Rectangle {
                 visible: panel.cfg && panel.cfg.debugMode && panel.cfg.simMode
                 width: parent.width
                 height: visible ? gpsFailCol.implicitHeight + units.gu(4) : 0
-                color: "#1C1C2E"; radius: units.gu(1)
+                color: pal.bgCard; radius: 0
                 Column {
                     id: gpsFailCol
                     anchors { left: parent.left; right: parent.right; top: parent.top; margins: units.gu(2) }
                     spacing: units.gu(1.2)
                     // Toggle
-                    Row {
-                        width: parent.width
+                    Item {
+                        width: parent.width; height: units.gu(3)
+                        Switch {
+                            id: swGpsFailEnabled
+                            anchors { right: parent.right; verticalCenter: parent.verticalCenter }
+                            checked: panel.cfg ? panel.cfg.gpsFailEnabled : false
+                            onCheckedChanged: if (panel.cfg) panel.cfg.gpsFailEnabled = checked
+                        }
                         Label {
                             text: i18n.tr("Simulación fallos GPS")
-                            color: "white"; font.pixelSize: ts(1.8)
-                            anchors.verticalCenter: parent.verticalCenter
-                            width: parent.width - units.gu(7)
-                        }
-                        Item { width: units.gu(1); height: 1 }
-                        Rectangle {
-                            anchors.verticalCenter: parent.verticalCenter
-                            width: units.gu(5.5); height: units.gu(3); radius: height / 2
-                            color: panel.cfg && panel.cfg.gpsFailEnabled ? "#1565C0" : "#37474F"
-                            Rectangle {
-                                width: units.gu(2.4); height: units.gu(2.4); radius: width / 2; color: "white"
-                                anchors.verticalCenter: parent.verticalCenter
-                                x: panel.cfg && panel.cfg.gpsFailEnabled ? parent.width - width - units.gu(0.3) : units.gu(0.3)
-                                Behavior on x { NumberAnimation { duration: 150 } }
-                            }
-                            MouseArea {
-                                anchors.fill: parent
-                                onClicked: { if (panel.cfg) panel.cfg.gpsFailEnabled = !panel.cfg.gpsFailEnabled }
-                            }
+                            color: pal.fgPrimary; font.pixelSize: ts(1.8)
+                            anchors { left: parent.left; right: swGpsFailEnabled.left; rightMargin: units.gu(1); verticalCenter: parent.verticalCenter }
                         }
                     }
                     // Probabilidad
@@ -4180,7 +3502,7 @@ Rectangle {
             Rectangle {
                 visible: panel.cfg && panel.cfg.debugMode
                 width: parent.width
-                height: units.gu(8); color: "#1C1C2E"; radius: units.gu(1)
+                height: units.gu(8); color: pal.bgCard; radius: 0
                 property string _ttsText: ""
                 Row {
                     anchors { fill: parent; margins: units.gu(1.5) }
@@ -4189,12 +3511,12 @@ Rectangle {
                         anchors.verticalCenter: parent.verticalCenter
                         width: parent.width - ttsSayBtn.width - units.gu(1)
                         height: units.gu(5); radius: units.gu(0.6)
-                        color: "#0D1B2A"; border.color: "#37474F"; border.width: 1
+                        color: "#0D1B2A"; border.color: pal.bgBtn; border.width: 1
                         TextInput {
                             id: ttsTestInput
                             anchors { fill: parent; leftMargin: units.gu(1); rightMargin: units.gu(1) }
                             verticalAlignment: TextInput.AlignVCenter
-                            color: "white"; font.pixelSize: ts(1.9)
+                            color: pal.fgPrimary; font.pixelSize: ts(1.9)
                             onTextChanged: parent.parent.parent._ttsText = text
                             onAccepted: if (panel.ttsRef && parent.parent.parent._ttsText.length > 0)
                                             panel.ttsRef.say(parent.parent.parent._ttsText)
@@ -4205,7 +3527,7 @@ Rectangle {
                             verticalAlignment: Text.AlignVCenter
                             visible: ttsTestInput.text.length === 0
                             text: i18n.tr("Texto para reproducir…")
-                            color: "#90A4AE"; font.pixelSize: ts(1.9)
+                            color: pal.fgSecondary; font.pixelSize: ts(1.9)
                         }
                     }
                     Rectangle {
@@ -4214,7 +3536,7 @@ Rectangle {
                         width: units.gu(8); height: units.gu(5); radius: units.gu(0.6)
                         color: ttsSayMa.pressed ? "#1B5E20" : "#2E7D32"
                         Label { anchors.centerIn: parent; text: "▶ " + i18n.tr("Decir")
-                                color: "white"; font.pixelSize: ts(1.9); font.bold: true }
+                                color: pal.fgPrimary; font.pixelSize: ts(1.9); font.bold: true }
                         MouseArea {
                             id: ttsSayMa; anchors.fill: parent
                             onClicked: if (panel.ttsRef && parent.parent.parent._ttsText.length > 0)
@@ -4228,7 +3550,7 @@ Rectangle {
             Rectangle {
                 visible: panel.cfg && panel.cfg.debugMode
                 width: parent.width
-                height: units.gu(4); color: "#1C1C2E"; radius: units.gu(1)
+                height: units.gu(4); color: pal.bgCard; radius: 0
                 Label {
                     anchors { left: parent.left; leftMargin: units.gu(2); verticalCenter: parent.verticalCenter }
                     text: i18n.tr("Ficheros debug")
@@ -4237,33 +3559,22 @@ Rectangle {
             }
 
             // Borrar al salir
-            Rectangle {
+            ListItem {
                 visible: panel.cfg && panel.cfg.debugMode
-                width: parent.width; height: units.gu(6.5); color: "#1C1C2E"; radius: units.gu(1)
-                Row {
-                    anchors { fill: parent; margins: units.gu(1.5) }
-                    spacing: units.gu(1.5)
-                    Label {
-                        anchors.verticalCenter: parent.verticalCenter
-                        width: parent.width - cleanExitToggle.width - units.gu(1.5)
-                        text: i18n.tr("Borrar todos los ficheros debug al salir")
-                        color: "white"; font.pixelSize: ts(1.9); wrapMode: Text.WordWrap
-                    }
-                    Rectangle {
-                        id: cleanExitToggle
-                        anchors.verticalCenter: parent.verticalCenter
-                        width: units.gu(5.5); height: units.gu(3); radius: height / 2
-                        color: panel.cfg && panel.cfg.debugCleanOnExit ? "#1565C0" : "#37474F"
-                        Rectangle {
-                            width: units.gu(2.4); height: units.gu(2.4); radius: width / 2; color: "white"
-                            anchors.verticalCenter: parent.verticalCenter
-                            x: panel.cfg && panel.cfg.debugCleanOnExit ? parent.width - width - units.gu(0.3) : units.gu(0.3)
-                            Behavior on x { NumberAnimation { duration: 150 } }
-                        }
-                        MouseArea {
-                            anchors.fill: parent
-                            onClicked: { if (panel.cfg) panel.cfg.debugCleanOnExit = !panel.cfg.debugCleanOnExit }
-                        }
+                width: parent.width
+                divider.colorFrom: pal.divider; divider.colorTo: pal.divider
+                color: pal.bgCard
+                highlightColor: pal.highlight
+                ListItemLayout {
+                    id: liDebugCleanLayout
+                    title.text: i18n.tr("Borrar todos los ficheros debug al salir")
+                    title.color: pal.fgPrimary
+                    title.font.pixelSize: ts(1.8)
+                    Switch {
+                        id: swDebugCleanOnExit
+                        SlotsLayout.position: SlotsLayout.Trailing
+                        checked: panel.cfg ? panel.cfg.debugCleanOnExit : false
+                        onCheckedChanged: if (panel.cfg) panel.cfg.debugCleanOnExit = checked
                     }
                 }
             }
@@ -4272,7 +3583,7 @@ Rectangle {
             Rectangle {
                 id: dbgAllBtn
                 visible: panel.cfg && panel.cfg.debugMode
-                width: parent.width; height: units.gu(6.5); color: "#1C1C2E"; radius: units.gu(1)
+                width: parent.width; height: units.gu(6.5); color: pal.bgCard; radius: 0
                 property bool _done: false
                 Timer { interval: 2500; running: parent._done; onTriggered: parent._done = false }
                 Row {
@@ -4282,7 +3593,7 @@ Rectangle {
                         anchors.verticalCenter: parent.verticalCenter
                         width: parent.width * 0.55
                         text: i18n.tr("Todos los ficheros debug")
-                        color: "white"; font.pixelSize: ts(1.9); wrapMode: Text.WordWrap
+                        color: pal.fgPrimary; font.pixelSize: ts(1.9); wrapMode: Text.WordWrap
                     }
                     Rectangle {
                         anchors.verticalCenter: parent.verticalCenter
@@ -4292,7 +3603,7 @@ Rectangle {
                         Label {
                             anchors.centerIn: parent
                             text: dbgAllBtn._done ? "✓ " + i18n.tr("Borrados") : i18n.tr("Borrar todo")
-                            color: dbgAllBtn._done ? "#66BB6A" : "white"
+                            color: dbgAllBtn._done ? "#66BB6A" : pal.fgPrimary
                             font.pixelSize: ts(1.8); font.bold: true
                         }
                         MouseArea {
@@ -4318,7 +3629,7 @@ Rectangle {
                 ] : []
                 delegate: Rectangle {
                     visible: panel.cfg && panel.cfg.debugMode
-                    width: parent ? parent.width : 0; height: units.gu(6); color: "#1C1C2E"; radius: units.gu(1)
+                    width: parent ? parent.width : 0; height: units.gu(6); color: pal.bgCard; radius: 0
                     property bool _done: false
                     Timer { interval: 2500; running: _done; onTriggered: _done = false }
                     Row {
@@ -4328,7 +3639,7 @@ Rectangle {
                             anchors.verticalCenter: parent.verticalCenter
                             width: parent.width * 0.62
                             text: modelData.label
-                            color: "#B0BEC5"; font.pixelSize: ts(1.75)
+                            color: pal.fgDataSub; font.pixelSize: ts(1.75)
                             elide: Text.ElideRight
                         }
                         Rectangle {
@@ -4339,7 +3650,7 @@ Rectangle {
                             Label {
                                 anchors.centerIn: parent
                                 text: parent.parent.parent._done ? "✓ " + i18n.tr("Borrado") : i18n.tr("Borrar")
-                                color: parent.parent.parent._done ? "#66BB6A" : "white"
+                                color: parent.parent.parent._done ? "#66BB6A" : pal.fgPrimary
                                 font.pixelSize: ts(1.75); font.bold: true
                             }
                             MouseArea {

@@ -7,11 +7,11 @@
 /src/moc_location_props.cpp
 /audit/
 
-# extras/mimic — build artifacts y datos grandes
+# extras/mimic — build artifacts and large auto-generated voice data
 extras/mimic/_build/
-extras/mimic/voices/
-extras/mimic/lang/vid_gb_ap/
 extras/mimic/autom4te.cache/
+extras/mimic/lang/vid_gb_ap/*_params.c
+extras/mimic/voices/*.flitevox
 extras/mimic/configure~
 extras/mimic/config.log
 extras/mimic/config.status

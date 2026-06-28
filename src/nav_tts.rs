@@ -257,42 +257,88 @@ fn round_dist(m: i32) -> i32 {
     m
 }
 
-/// Texto hablado para una distancia de redondeo ("En 400 metros", "En 2 kilómetros").
-fn format_dist_text(dist_m: i32, lang: &str) -> String {
-    let base = lang.split('_').next().unwrap_or(lang);
-    if dist_m < 1000 {
-        let (prep, unit) = match base {
-            "en" => ("In",   "meters"),
-            "fr" => ("Dans", "mètres"),
-            "de" => ("In",   "Meter"),
-            "pt" => ("Em",   "metros"),
-            "it" => ("Fra",  "metri"),
-            "ca" => ("En",   "metres"),
-            _    => ("En",   "metros"),
-        };
-        format!("{prep} {dist_m} {unit}")
-    } else {
-        let km = dist_m / 1000;
-        let (prep, unit) = match base {
-            "en" => ("In",   if km == 1 { "kilometer"   } else { "kilometers"   }),
-            "fr" => ("Dans", if km == 1 { "kilomètre"   } else { "kilomètres"   }),
-            "de" => ("In",   "Kilometer"),
-            "pt" => ("Em",   if km == 1 { "quilómetro"  } else { "quilómetros"  }),
-            "it" => ("Fra",  if km == 1 { "chilometro"  } else { "chilometri"   }),
-            "ca" => ("En",   if km == 1 { "quilòmetre"  } else { "quilòmetres"  }),
-            _    => ("En",   if km == 1 { "kilómetro"   } else { "kilómetros"   }),
-        };
-        // Usar forma apócope para 1 (evita "uno kilómetro" en TTS español/similar)
-        let km_str = if km == 1 {
-            match base {
-                "en" => "one".to_string(),
-                "pt" => "um".to_string(),
-                _    => "un".to_string(),
-            }
+/// Texto hablado para una distancia de redondeo.
+/// imperial=true → pies/millas (siempre en inglés); false → metros/km en el idioma dado.
+fn format_dist_text(dist_m: i32, lang: &str, imperial: bool) -> String {
+    if imperial {
+        if dist_m < 500 {
+            let feet = ((dist_m as f64) * 3.28084).round() as i32;
+            let feet_r = if feet < 100 { (feet / 10).max(1) * 10 }
+                         else          { ((feet + 25) / 50) * 50 };
+            format!("In {} {}", feet_r, if feet_r == 1 { "foot" } else { "feet" })
         } else {
-            km.to_string()
-        };
-        format!("{prep} {km_str} {unit}")
+            let miles_10 = ((dist_m as f64 * 0.000621371 * 10.0).round() as i32).max(1);
+            let whole    = miles_10 / 10;
+            let tenth    = miles_10 % 10;
+            if whole == 0 {
+                format!("In 0.{} miles", tenth)
+            } else if tenth == 0 {
+                format!("In {} {}", whole, if whole == 1 { "mile" } else { "miles" })
+            } else {
+                format!("In {}.{} miles", whole, tenth)
+            }
+        }
+    } else {
+        let base = lang.split('_').next().unwrap_or(lang);
+        if dist_m < 1000 {
+            let (prep, unit) = match base {
+                "en" => ("In",   "meters"),
+                "fr" => ("Dans", "mètres"),
+                "de" => ("In",   "Meter"),
+                "pt" => ("Em",   "metros"),
+                "it" => ("Fra",  "metri"),
+                "ca" => ("En",   "metres"),
+                _    => ("En",   "metros"),
+            };
+            format!("{prep} {dist_m} {unit}")
+        } else {
+            let km = dist_m / 1000;
+            let (prep, unit) = match base {
+                "en" => ("In",   if km == 1 { "kilometer"   } else { "kilometers"   }),
+                "fr" => ("Dans", if km == 1 { "kilomètre"   } else { "kilomètres"   }),
+                "de" => ("In",   "Kilometer"),
+                "pt" => ("Em",   if km == 1 { "quilómetro"  } else { "quilómetros"  }),
+                "it" => ("Fra",  if km == 1 { "chilometro"  } else { "chilometri"   }),
+                "ca" => ("En",   if km == 1 { "quilòmetre"  } else { "quilòmetres"  }),
+                _    => ("En",   if km == 1 { "kilómetro"   } else { "kilómetros"   }),
+            };
+            let km_str = if km == 1 {
+                match base {
+                    "en" => "one".to_string(),
+                    "pt" => "um".to_string(),
+                    _    => "un".to_string(),
+                }
+            } else {
+                km.to_string()
+            };
+            format!("{prep} {km_str} {unit}")
+        }
+    }
+}
+
+fn arrived_text(lang: &str) -> &'static str {
+    match lang.split('_').next().unwrap_or(lang) {
+        "en" => "You have arrived at your destination",
+        "fr" => "Vous êtes arrivé à destination",
+        "de" => "Sie haben Ihr Ziel erreicht",
+        "pt" => "Chegou ao seu destino",
+        "it" => "Sei arrivato a destinazione",
+        "ca" => "Has arribat al teu destí",
+        "ru" => "Вы прибыли к месту назначения",
+        _    => "Has llegado a tu destino",
+    }
+}
+
+fn leg_arrived_text(lang: &str) -> &'static str {
+    match lang.split('_').next().unwrap_or(lang) {
+        "en" => "Have you arrived at your destination?",
+        "fr" => "Êtes-vous arrivé à destination?",
+        "de" => "Sind Sie angekommen?",
+        "pt" => "Chegou ao seu destino?",
+        "it" => "Sei arrivato a destinazione?",
+        "ca" => "Has arribat al teu destí?",
+        "ru" => "Вы прибыли к месту назначения?",
+        _    => "¿Has llegado a tu destino?",
     }
 }
 
@@ -1259,6 +1305,16 @@ pub struct NavTts {
         });
     }),
 
+    /// Texto de llegada al destino final en el idioma TTS dado.
+    pub arrived_text_qt: qt_method!(fn arrived_text_qt(&self, lang: QString) -> QString {
+        arrived_text(&lang.to_string()).into()
+    }),
+
+    /// Texto de pregunta de llegada a un waypoint intermedio en el idioma TTS dado.
+    pub leg_arrived_text_qt: qt_method!(fn leg_arrived_text_qt(&self, lang: QString) -> QString {
+        leg_arrived_text(&lang.to_string()).into()
+    }),
+
     /// True si el binario del motor indicado está disponible.
     pub engine_available: qt_method!(fn engine_available(&self, name: QString) -> bool {
         let name: String = name.into();
@@ -1492,7 +1548,8 @@ pub struct NavTts {
     /// Reproduce frase de inicio de ruta y, opcionalmente, la primera instrucción.
     /// first_dist_m_raw=0 → no hay primera instrucción que decir (navBar lo gestionará pronto).
     pub play_start_route: qt_method!(fn play_start_route(
-        &self, first_dist_m_raw: i32, first_key: QString, first_text: QString, lang: QString
+        &self, first_dist_m_raw: i32, first_key: QString, first_text: QString, lang: QString,
+        imperial: bool
     ) {
         if self.muted { return; }
         let first_key:  String = first_key.into();
@@ -1533,12 +1590,12 @@ pub struct NavTts {
                     && !generating().lock().unwrap_or_else(|e| e.into_inner()).contains(&first_key);
 
                 if !instr_ready {
-                    let full = format!("{}, {first_text}", format_dist_text(first_dist_m, &lang));
+                    let full = format!("{}, {first_text}", format_dist_text(first_dist_m, &lang, imperial));
                     log(&format!("play_start_route: backup first instr dist={first_dist_m}m"));
                     say_backup(&engine, &voice, &norm, &base, &full);
                 } else {
                     // Prefijo de distancia
-                    let dist_text  = format_dist_text(first_dist_m, &lang);
+                    let dist_text  = format_dist_text(first_dist_m, &lang, imperial);
                     let round_key  = cache_key(engine_name(&engine), &lang, &dist_text);
                     let round_path = format!("{CACHE_ROUND_DIR}/{round_key}.wav");
                     if std::path::Path::new(&round_path).exists()
@@ -1562,7 +1619,7 @@ pub struct NavTts {
     /// Pre-genera todos los ficheros de distancia de redondeo para el idioma dado.
     /// Los jobs se encolan en el worker FIFO: un proceso piper a la vez.
     /// Solo aplica si el motor activo es Piper.
-    pub pregenerate_round_dists: qt_method!(fn pregenerate_round_dists(&self, lang: QString) {
+    pub pregenerate_round_dists: qt_method!(fn pregenerate_round_dists(&self, lang: QString, imperial: bool) {
         let lang: String = lang.into();
         PREGEN_ACTIVE.store(true, Ordering::SeqCst);
         std::thread::spawn(move || {
@@ -1586,7 +1643,7 @@ pub struct NavTts {
                 tasks.push((phrase.to_string(), phrase_key, phrase_path));
             }
             for &dist_m in ROUND_DISTANCES {
-                let text = format_dist_text(dist_m, &lang);
+                let text = format_dist_text(dist_m, &lang, imperial);
                 let key  = cache_key(engine_name(&engine), &lang, &text);
                 let path = format!("{CACHE_ROUND_DIR}/{key}.wav");
                 if !std::path::Path::new(&path).exists() {
@@ -1631,7 +1688,7 @@ pub struct NavTts {
         &self, dist_m: i32,
         key1: QString, text1: QString,
         key2: QString, text2: QString,
-        lang: QString
+        lang: QString, imperial: bool
     ) {
         if self.muted { return; }
         let key1:  String = key1.into();
@@ -1661,7 +1718,7 @@ pub struct NavTts {
                 let full_instr = if text2.is_empty() { text1.clone() }
                                  else { format!("{text1}. {text2}") };
                 let full = if dist_m > 0 {
-                    format!("{}, {full_instr}", format_dist_text(dist_m, &lang))
+                    format!("{}, {full_instr}", format_dist_text(dist_m, &lang, imperial))
                 } else {
                     full_instr
                 };
@@ -1673,7 +1730,7 @@ pub struct NavTts {
             // ── Instrucción lista en caché ────────────────────────────────────
             // Prefijo de distancia (si existe)
             if dist_m > 0 {
-                let dist_text = format_dist_text(dist_m, &lang);
+                let dist_text = format_dist_text(dist_m, &lang, imperial);
                 let dist_played = if dist_m > 10000 {
                     if matches!(ts_engine, Engine::Piper | Engine::MimicHts) {
                         let live_key  = cache_key(engine_name(&ts_engine), &lang, &dist_text);

@@ -2,13 +2,12 @@
 
 Navegador GPS para Ubuntu Touch. Rust + QML, empaquetado como Click.
 
-[Web](https://www.egpsistemas.com/site/navius) · [GitHub](https://github.com/woodyst/navius) · [Donaciones](https://liberapay.com/Navius-GPS/) · [English version](README.md)
+[Web](https://www.egpsistemas.com/site/navius) · [GitHub](https://github.com/woodyst/navius) · [Donaciones](https://liberapay.com/Navius-GPS/)
 
 **Comunidad** · [Telegram — GUI & Design](https://t.me/navius_gui_and_design) · [Telegram — Bugs & Issues](https://t.me/navius_bugs_and_issues)
 
-[¿Otro navegador GPS?](docs/philosophy.es.md) · [Manual de usuario](docs/user.es.md) · [Documentación del desarrollador](docs/developer.es.md)
-
-[Another GPS navigator?](docs/philosophy.en.md) · [User manual](docs/user.en.md) · [Developer docs](docs/developer.en.md)
+[Manual de usuario](docs/user.es.md) · [Documentación del desarrollador](docs/developer.es.md)
+[User manual English](docs/user.md) · [Developer docs English](docs/developer.md)
 
 ---
 
@@ -122,9 +121,9 @@ El `postbuild` de `clickable.yaml` empaqueta automáticamente:
 
 ## GPS y lomiri-location-service
 
-Navius usa [lomiri-location-service](https://gitlab.com/ubports/development/core/lomiri-location-service) (LLS) como backend GPS via D-Bus. Se distribuye un paquete parcheado (`3.4.1+navius6`) que corrige múltiples problemas de estabilidad con el GPS HAL de HALIUM_10, especialmente cuando Waydroid corre en paralelo.
+Navius usa [lomiri-location-service](https://gitlab.com/ubports/development/core/lomiri-location-service) (LLS) como backend GPS via D-Bus. Se distribuye un paquete parcheado (`3.4.1+navius5`) que corrige múltiples problemas de estabilidad con el GPS HAL de HALIUM_10, especialmente cuando Waydroid corre en paralelo.
 
-### Parches LLS (navius1–navius6)
+### Parches LLS (navius1–navius5)
 
 **navius1** — Waydroid SIGSEGV + EDEADLK  
 Waydroid sobreescribe los callbacks GPS de LLS mientras LLS los está despachando → SIGSEGV. Corregido con `std::shared_mutex` (callbacks en shared lock; `register_callbacks()` en exclusive). Split en tres fases de `register_callbacks()` para evitar EDEADLK por re-entrada del HAL durante `u_hardware_gps_new()`.
@@ -140,21 +139,6 @@ Thread watchdog (tick 5 s, umbral 10 s): detecta GPS congelado, re-registra call
 
 **navius5** — `lls_trace.h` centralizado  
 Constante `LLS_DEBUG` y macro `LLS_TRACE()` movidas a un único header compartido (`include/location_service/com/lomiri/location/lls_trace.h`).
-
-**navius6** — Fix indicador GPS + protección deadlock HAL  
-`engine.cpp`: `is_any_active = resultado_último_provider` → `|=` — con dos providers solo el resultado del último determinaba el indicador, por lo que el GPS nunca aparecía como activo si solo el primer provider estaba funcionando. `android_hardware_abstraction_layer.cpp`: `start_positioning()` usa `try_to_lock` para no bloquear el hilo D-Bus; la fase 4 de `register_callbacks()` corre sin lock para evitar deadlock por re-entrada; null guard en `stop_positioning()`.
-
-### Contribuciones upstream (UBports)
-
-Se han enviado cinco merge requests al [repositorio upstream](https://gitlab.com/ubports/development/core/lomiri-location-service) para beneficiar a todos los usuarios de Ubuntu Touch. Fork: [gitlab.com/woodyst1/lomiri-location-service](https://gitlab.com/woodyst1/lomiri-location-service).
-
-| MR | Descripción | Estado |
-|---|---|---|
-| [!57](https://gitlab.com/ubports/development/core/lomiri-location-service/-/merge_requests/57) | `engine`: fix `is_any_active \|=` | ✅ Aprobado |
-| [!58](https://gitlab.com/ubports/development/core/lomiri-location-service/-/merge_requests/58) | `gps`: race/EDEADLK/cuelgue D-Bus/watchdog | En revisión |
-| [!59](https://gitlab.com/ubports/development/core/lomiri-location-service/-/merge_requests/59) | `data`: unidad `.path` de trust-stored | En revisión |
-| [!60](https://gitlab.com/ubports/development/core/lomiri-location-service/-/merge_requests/60) | `data`: `Restart=always` + limpiar `After=` | En revisión |
-| [!61](https://gitlab.com/ubports/development/core/lomiri-location-service/-/merge_requests/61) | `service`: método D-Bus `GetVisibleSpaceVehicles` | En revisión |
 
 ### Fixes en navius (este repo)
 
@@ -210,31 +194,6 @@ El tráfico predicho usa perfiles sintéticos por nivel de tile:
 Horas punta: Lu-Vi 7-9h y 17-19h (fade parabólico).
 
 Las peticiones de ruta incluyen siempre `date_time` para que Valhalla aplique el perfil de velocidad correspondiente a la hora actual o a la hora de salida programada.
-
----
-
-## Búsqueda de POI (Overpass API)
-
-Los puntos de interés cercanos (gasolina, parking, restaurantes, hoteles, radares…) se obtienen via [Overpass API](https://wiki.openstreetmap.org/wiki/Overpass_API) usando un pool de servidores públicos con fallback automático.
-
-### Selección de servidor
-
-Al arrancar, Navius sondea una lista de servidores candidatos y construye un pool activo con los que responden correctamente. Al realizar una búsqueda, el servidor se elige en función del **centro geográfico de la ruta** (no la posición del dispositivo), de modo que las búsquedas en Alemania o Japón usen un servidor apropiado aunque el dispositivo esté en España.
-
-- **Servidor propio — España** (`navius-maps.egpsistemas.com/overpass/`): se usa para consultas en España. Instancia Overpass propia que cubre la Península Ibérica.
-- **Servidor propio — mundial** (`navius-maps.egpsistemas.com/overpass-world/`): se usa para el resto de regiones. Instancia Overpass propia con datos del planeta completo.
-- **Pool público**: 9 servidores de fallback mundiales (`z.overpass-api.de`, `overpass.nchc.org.tw`, `overpass.openstreetmap.fr`, y otros).
-- **Reintento en 0 resultados**: si un servidor devuelve 0 elementos, la consulta se reintenta con el siguiente candidato (máx. 2 reintentos).
-
----
-
-## Geocodificación
-
-La búsqueda de direcciones y lugares usa [Photon](https://github.com/komoot/photon), un geocodificador de código abierto basado en datos de OpenStreetMap.
-
-Servidor por defecto: `https://navius-maps.egpsistemas.com/photon` (instancia propia, índice mundial)
-
-Los resultados usan el nombre local OSM de cada lugar. El idioma de la consulta se elige automáticamente según el idioma del sistema (soportados: `de`, `en`, `fr`; otros idiomas devuelven el nombre local).
 
 ---
 
@@ -359,7 +318,7 @@ El log de instrucciones y peticiones de red se puede ver dentro de la app activa
 
 ## Licencia
 
-Copyright (C) 2026 Eduardo García-Mádico Portabella
+Copyright (C) 2026 Edi
 
 Este programa es software libre: puede redistribuirlo y/o modificarlo bajo los términos de la GNU General Public License versión 3, tal como la publica la Free Software Foundation.
 
