@@ -2,24 +2,39 @@ use cpp::cpp;
 use qmetaobject::*;
 use std::collections::HashSet;
 use std::sync::{Mutex, OnceLock};
-use std::sync::atomic::{AtomicBool, AtomicUsize, Ordering};
-use std::io::Write;
+use std::sync::atomic::{AtomicBool, Ordering};
+use std::io::{BufRead, BufReader, BufWriter, Write};
 
 static TTS_LOCK:        Mutex<()>   = Mutex::new(());
 static PREGEN_ACTIVE:   AtomicBool  = AtomicBool::new(false);
-static PREGEN_TOTAL:    AtomicUsize = AtomicUsize::new(0);
-static PREGEN_DONE:     AtomicUsize = AtomicUsize::new(0);
+static PREGEN_TOTAL:    std::sync::atomic::AtomicUsize = std::sync::atomic::AtomicUsize::new(0);
+static PREGEN_DONE:     std::sync::atomic::AtomicUsize = std::sync::atomic::AtomicUsize::new(0);
 // Set to true by play_round_then_instr to interrupt any ongoing WAV playback.
-static PLAYBACK_CANCEL: AtomicBool  = AtomicBool::new(false);
+static PLAYBACK_CANCEL: AtomicBool = AtomicBool::new(false);
+// True mientras backup synthesis está esperando el daemon; el worker no inicia más jobs.
+static BACKUP_URGENT:   AtomicBool = AtomicBool::new(false);
+
+// ── Piper daemon ─────────────────────────────────────────────────────────────
+// Un solo proceso piper con el modelo cargado, acepta textos vía stdin (JSON)
+// y escribe WAVs en los paths indicados. Mucho más rápido que relanzar piper por cada WAV.
+
+struct PiperDaemon {
+    child:  std::process::Child,
+    stdin:  BufWriter<std::process::ChildStdin>,
+    stdout: BufReader<std::process::ChildStdout>,
+    voice:  String,
+}
+
+// Safety: enviamos PiperDaemon entre hilos a través del Mutex; Child/Stdin/Stdout son Send.
+unsafe impl Send for PiperDaemon {}
+
+static PIPER_DAEMON: Mutex<Option<PiperDaemon>> = Mutex::new(None);
 
 /// Called from C++ navius_play_wav to check if playback should stop.
 #[no_mangle]
 pub extern "C" fn navius_is_cancelled() -> bool {
     PLAYBACK_CANCEL.load(Ordering::SeqCst)
 }
-
-// Serializa todos los procesos piper: el worker de la cola y say_piper comparten este mutex.
-static PIPER_PROC_LOCK: Mutex<()> = Mutex::new(());
 
 // Cola FIFO de jobs de pre-generación. El worker consume de uno en uno.
 static PIPER_TX: OnceLock<std::sync::mpsc::SyncSender<PiperJob>> = OnceLock::new();
@@ -33,8 +48,12 @@ fn piper_enqueue(job: PiperJob) {
             .name("piper-worker".to_string())
             .spawn(move || {
                 for job in rx {
+                    // Cede si hay una síntesis de anuncio urgente esperando el daemon
+                    while BACKUP_URGENT.load(Ordering::SeqCst) {
+                        std::thread::sleep(std::time::Duration::from_millis(30));
+                    }
                     if !std::path::Path::new(&job.out_path).exists() {
-                        generate_piper_wav(&job.voice, &job.text, &job.out_path, 1);
+                        daemon_synthesize(&job.voice, &job.text, &job.out_path);
                     }
                     generating().lock().unwrap_or_else(|e| e.into_inner()).remove(&job.key);
                     PREGEN_DONE.fetch_add(1, Ordering::SeqCst);
@@ -69,6 +88,132 @@ const ROUND_DISTANCES: &[i32] = &[
     600, 800, 1000,
     2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000,
 ];
+
+// ── Frases cortas de maniobra (caché permanente, como ROUND_DISTANCES) ────────
+// Mapeo de tipo Valhalla → categoría simplificada.
+
+#[derive(Debug, Clone, Copy)]
+enum ManeuverCat { Right, Left, Straight, UTurn, Roundabout(u8) }
+
+fn classify_maneuver(man_type: i32, exit_count: i32) -> Option<ManeuverCat> {
+    match man_type {
+        // Derecha: kStartRight(2), kSlightRight(10), kRight(11), kSharpRight(12),
+        //          kRampRight(19), kStayRight(24), kExitRight(22)
+        2 | 10 | 11 | 12 | 19 | 22 | 24 => Some(ManeuverCat::Right),
+        // Izquierda: kStartLeft(3), kSharpLeft(15), kLeft(16), kSlightLeft(17),
+        //            kRampLeft(20), kExitLeft(21), kStayLeft(25)
+        3 | 15 | 16 | 17 | 20 | 21 | 25 => Some(ManeuverCat::Left),
+        // Recto: kStart(1), kBecomes(8), kContinue(9), kRampStraight(18),
+        //        kStayStraight(23), kMerge(26)
+        1 | 8 | 9 | 18 | 23 | 26 => Some(ManeuverCat::Straight),
+        // Cambio de sentido: kUturnRight(13), kUturnLeft(14)
+        13 | 14 => Some(ManeuverCat::UTurn),
+        // Glorieta: kRoundaboutEnter(27) — exit_count = salida a tomar
+        27 => Some(ManeuverCat::Roundabout(exit_count.clamp(1, 9) as u8)),
+        _ => None,
+    }
+}
+
+fn maneuver_phrase(cat: ManeuverCat, lang: &str) -> &'static str {
+    match lang {
+        "es" | "ca" => match cat {
+            ManeuverCat::Right    => "Gire a la derecha",
+            ManeuverCat::Left     => "Gire a la izquierda",
+            ManeuverCat::Straight => "Continúe recto",
+            ManeuverCat::UTurn    => "Dé la vuelta",
+            ManeuverCat::Roundabout(n) => match n {
+                1 => "En la rotonda, tome la primera salida",
+                2 => "En la rotonda, tome la segunda salida",
+                3 => "En la rotonda, tome la tercera salida",
+                4 => "En la rotonda, tome la cuarta salida",
+                5 => "En la rotonda, tome la quinta salida",
+                6 => "En la rotonda, tome la sexta salida",
+                _ => "En la rotonda, tome la siguiente salida",
+            },
+        },
+        "en" => match cat {
+            ManeuverCat::Right    => "Turn right",
+            ManeuverCat::Left     => "Turn left",
+            ManeuverCat::Straight => "Continue straight",
+            ManeuverCat::UTurn    => "Make a U-turn",
+            ManeuverCat::Roundabout(n) => match n {
+                1 => "At the roundabout, take the first exit",
+                2 => "At the roundabout, take the second exit",
+                3 => "At the roundabout, take the third exit",
+                4 => "At the roundabout, take the fourth exit",
+                5 => "At the roundabout, take the fifth exit",
+                6 => "At the roundabout, take the sixth exit",
+                _ => "At the roundabout, take the next exit",
+            },
+        },
+        "fr" => match cat {
+            ManeuverCat::Right    => "Tournez à droite",
+            ManeuverCat::Left     => "Tournez à gauche",
+            ManeuverCat::Straight => "Continuez tout droit",
+            ManeuverCat::UTurn    => "Faites demi-tour",
+            ManeuverCat::Roundabout(n) => match n {
+                1 => "Au rond-point, prenez la première sortie",
+                2 => "Au rond-point, prenez la deuxième sortie",
+                3 => "Au rond-point, prenez la troisième sortie",
+                _ => "Au rond-point, prenez la prochaine sortie",
+            },
+        },
+        "de" => match cat {
+            ManeuverCat::Right    => "Rechts abbiegen",
+            ManeuverCat::Left     => "Links abbiegen",
+            ManeuverCat::Straight => "Geradeaus fahren",
+            ManeuverCat::UTurn    => "Wenden",
+            ManeuverCat::Roundabout(n) => match n {
+                1 => "Im Kreisverkehr, erste Ausfahrt nehmen",
+                2 => "Im Kreisverkehr, zweite Ausfahrt nehmen",
+                3 => "Im Kreisverkehr, dritte Ausfahrt nehmen",
+                _ => "Im Kreisverkehr, nächste Ausfahrt nehmen",
+            },
+        },
+        "pt" => match cat {
+            ManeuverCat::Right    => "Vire à direita",
+            ManeuverCat::Left     => "Vire à esquerda",
+            ManeuverCat::Straight => "Continue em frente",
+            ManeuverCat::UTurn    => "Faça o retorno",
+            ManeuverCat::Roundabout(n) => match n {
+                1 => "Na rotatória, tome a primeira saída",
+                2 => "Na rotatória, tome a segunda saída",
+                3 => "Na rotatória, tome a terceira saída",
+                _ => "Na rotatória, tome a próxima saída",
+            },
+        },
+        "it" => match cat {
+            ManeuverCat::Right    => "Gira a destra",
+            ManeuverCat::Left     => "Gira a sinistra",
+            ManeuverCat::Straight => "Vai dritto",
+            ManeuverCat::UTurn    => "Fai inversione",
+            ManeuverCat::Roundabout(n) => match n {
+                1 => "Alla rotonda, prendi la prima uscita",
+                2 => "Alla rotonda, prendi la seconda uscita",
+                3 => "Alla rotonda, prendi la terza uscita",
+                _ => "Alla rotonda, prendi la prossima uscita",
+            },
+        },
+        _ => "",
+    }
+}
+
+// Todas las categorías a pre-generar para un idioma dado.
+fn all_maneuver_cats() -> &'static [ManeuverCat] {
+    &[
+        ManeuverCat::Right, ManeuverCat::Left, ManeuverCat::Straight, ManeuverCat::UTurn,
+        ManeuverCat::Roundabout(1), ManeuverCat::Roundabout(2), ManeuverCat::Roundabout(3),
+        ManeuverCat::Roundabout(4), ManeuverCat::Roundabout(5), ManeuverCat::Roundabout(6),
+        ManeuverCat::Roundabout(7),  // "siguiente salida" (≥7)
+    ]
+}
+
+fn maneuver_phrase_key(engine: &str, lang: &str, man_type: i32, exit_count: i32) -> Option<String> {
+    let cat = classify_maneuver(man_type, exit_count)?;
+    let phrase = maneuver_phrase(cat, lang);
+    if phrase.is_empty() { return None; }
+    Some(cache_key(engine, lang, phrase))
+}
 
 fn log(msg: &str) {
     let flag = format!("{DATA_DIR}/debug/.traces_enabled");
@@ -342,7 +487,7 @@ fn leg_arrived_text(lang: &str) -> &'static str {
     }
 }
 
-fn generate_to_cache(engine: &Engine, voice: &str, text: &str, path: &str, num_threads: u32) {
+fn generate_to_cache(engine: &Engine, voice: &str, text: &str, path: &str, _num_threads: u32) {
     match engine {
         Engine::MimicHts => {}  // sin caché; síntesis al vuelo en say_mimic_hts
         Engine::PicoTts => {
@@ -359,7 +504,7 @@ fn generate_to_cache(engine: &Engine, voice: &str, text: &str, path: &str, num_t
             log(&format!("cache pico: ok={ok} path={path}"));
         }
         Engine::Piper => {
-            generate_piper_wav(voice, text, path, num_threads);
+            daemon_synthesize(voice, text, path);
         }
         Engine::Espeak => {}  // espeak no genera fichero WAV
     }
@@ -522,57 +667,100 @@ fn tmp_wav() -> String {
     format!("{CACHE_TMP_DIR}/tts_{}{:06}.wav", ts.as_secs(), ts.subsec_micros())
 }
 
-fn generate_piper_wav(voice_onnx: &str, text: &str, out_path: &str, num_threads: u32) {
-    // Solo un proceso piper a la vez: el worker de la cola y say_piper comparten este mutex.
-    let _plock = PIPER_PROC_LOCK.lock().unwrap_or_else(|e| e.into_inner());
-    use std::io::Write;
-    let lang = std::path::Path::new(voice_onnx)
+/// Sintetiza `text` con el daemon piper persistente y escribe el WAV en `out_path`.
+/// El daemon se arranca automáticamente (o se reinicia si la voz cambia).
+/// Cada llamada tarda ~0.3-0.6s (solo inferencia) vs ~5-7s por subproceso nuevo.
+fn daemon_synthesize(voice: &str, text: &str, out_path: &str) -> bool {
+    let lang = std::path::Path::new(voice)
         .file_name().and_then(|n| n.to_str())
         .and_then(|n| n.split('_').next())
         .unwrap_or("es");
-    let norm    = normalize_for_piper(text, lang);
-    let bin     = format!("{APP_ROOT}/lib/piper");
-    let lib_dir = format!("{APP_ROOT}/lib");
-    let nt = num_threads.to_string();
-    let shim = format!("{APP_ROOT}/lib/libpiper_limit.so");
-    let mut cmd = std::process::Command::new(&bin);
-    cmd.env("LD_LIBRARY_PATH", &lib_dir)
-       .env("LD_PRELOAD", &shim)
-       .env("OMP_NUM_THREADS", &nt)
-       .env("GOMP_SPINCOUNT", "0")
-       .arg("--model").arg(voice_onnx)
-       .arg("--output_file").arg(out_path)
-       .arg("--num-threads").arg(&nt)
-       .stdin(std::process::Stdio::piped())
-       .stdout(std::process::Stdio::null())
-       .stderr(std::process::Stdio::piped());
-    let mut child = match cmd.spawn() {
-        Ok(c) => c,
-        Err(e) => { log(&format!("piper spawn failed: {e}")); return; }
-    };
-    if let Some(mut stdin) = child.stdin.take() {
-        let _ = stdin.write_all(norm.as_bytes());
+    let norm = normalize_for_piper(text, lang);
+
+    let mut guard = PIPER_DAEMON.lock().unwrap_or_else(|e| e.into_inner());
+
+    // Arranca o reinicia el daemon si es necesario
+    let needs_start = guard.as_ref().map_or(true, |d| d.voice != voice);
+    if needs_start {
+        if let Some(mut old) = guard.take() {
+            let _ = old.child.kill();
+            let _ = old.child.wait();
+        }
+        let bin     = format!("{APP_ROOT}/lib/piper");
+        let lib_dir = format!("{APP_ROOT}/lib");
+        let shim    = format!("{APP_ROOT}/lib/libpiper_limit.so");
+        let mut cmd = std::process::Command::new(&bin);
+        cmd.env("LD_LIBRARY_PATH", &lib_dir)
+           .env("LD_PRELOAD",      &shim)
+           .env("OMP_NUM_THREADS", "2")
+           .env("GOMP_SPINCOUNT",  "0")
+           .arg("--model").arg(voice)
+           .arg("--json-input")
+           .arg("--num-threads").arg("2")
+           .arg("--quiet")
+           .stdin(std::process::Stdio::piped())
+           .stdout(std::process::Stdio::piped())
+           .stderr(std::process::Stdio::null());
+        match cmd.spawn() {
+            Ok(mut child) => {
+                let stdin  = BufWriter::new(child.stdin.take().expect("piper stdin"));
+                let stdout = BufReader::new(child.stdout.take().expect("piper stdout"));
+                log(&format!("piper daemon started: voice={voice}"));
+                *guard = Some(PiperDaemon { child, stdin, stdout, voice: voice.to_string() });
+            }
+            Err(e) => {
+                log(&format!("piper daemon spawn failed: {e}"));
+                return false;
+            }
+        }
     }
-    let stderr_bytes = match child.wait_with_output() {
-        Ok(out) => out.stderr,
-        Err(e)  => { log(&format!("piper wait failed: {e}")); Vec::new() }
-    };
-    let sz = std::fs::metadata(out_path).map(|m| m.len()).unwrap_or(0);
-    let err = String::from_utf8_lossy(&stderr_bytes);
-    if !err.is_empty() { log(&format!("piper stderr: {}", err.trim())); }
-    log(&format!("piper: bytes={sz} path={out_path}"));
+
+    let daemon = guard.as_mut().unwrap();
+
+    // JSON manual (sin serde): escapamos los caracteres necesarios
+    let esc_text = norm
+        .replace('\\', "\\\\").replace('"', "\\\"")
+        .replace('\n', "\\n").replace('\r', "\\r");
+    let esc_path = out_path
+        .replace('\\', "\\\\").replace('"', "\\\"");
+    let json = format!("{{\"text\":\"{esc_text}\",\"output_file\":\"{esc_path}\"}}\n");
+
+    if daemon.stdin.write_all(json.as_bytes()).and_then(|_| daemon.stdin.flush()).is_err() {
+        log("piper daemon write failed — restarting next call");
+        *guard = None;
+        return false;
+    }
+
+    // Piper escribe el path del WAV en stdout cuando termina
+    let mut response = String::new();
+    match daemon.stdout.read_line(&mut response) {
+        Ok(0) | Err(_) => {
+            log("piper daemon stdout closed — restarting next call");
+            *guard = None;
+            false
+        }
+        Ok(_) => {
+            let sz = std::fs::metadata(out_path).map(|m| m.len()).unwrap_or(0);
+            if sz <= 44 {
+                let _ = std::fs::remove_file(out_path);
+                log(&format!("piper daemon: empty output for {:?}", &text[..text.len().min(40)]));
+                false
+            } else {
+                log(&format!("piper daemon: bytes={sz} path={out_path}"));
+                true
+            }
+        }
+    }
 }
 
 fn say_piper(voice: &str, text: &str) {
     let tmp = tmp_wav();
-    generate_piper_wav(voice, text, &tmp, 2);
-    let sz = std::fs::metadata(&tmp).map(|m| m.len()).unwrap_or(0);
-    if sz > 44 {
+    if daemon_synthesize(voice, text, &tmp) {
         let tmp_c = format!("{tmp}\0");
         unsafe { navius_play_wav(tmp_c.as_ptr()); }
         log(&format!("said (piper/{}): {:?}", voice, text));
     } else {
-        log("piper failed → espeak fallback");
+        log("piper daemon failed → espeak fallback");
         say_espeak_voice("es", text);
     }
     let _ = std::fs::remove_file(&tmp);
@@ -905,6 +1093,13 @@ cpp! {{
                     err = 0;
                     g_pa_write(ws, buf, n, &err);
                     rem -= (uint32_t)n;
+                }
+                // Silence tail: 40 ms of zeros so the stream ends at amplitude 0,
+                // preventing the pop/click caused by abrupt stream closure.
+                if (!navius_is_cancelled()) {
+                    uint32_t tail = sample_rate * channels * 2 * 40 / 1000;
+                    std::vector<char> sil(tail, 0);
+                    g_pa_write(ws, sil.data(), tail, nullptr);
                 }
                 if (!navius_is_cancelled()) g_pa_drain(ws, nullptr);
                 g_pa_free(ws);
@@ -1547,14 +1742,16 @@ pub struct NavTts {
 
     /// Reproduce frase de inicio de ruta y, opcionalmente, la primera instrucción.
     /// first_dist_m_raw=0 → no hay primera instrucción que decir (navBar lo gestionará pronto).
+    /// Reproduce pitido + frase de inicio + primera instrucción (solo desde caché).
+    /// `short_key`: clave CACHE_ROUND_DIR de la frase de maniobra corta ("Gire a la derecha").
+    /// Si alguno de los dos WAVs (distancia o maniobra) no está en caché, omite la instrucción;
+    /// NavBar la dirá en breve por el flujo normal de anuncios.
     pub play_start_route: qt_method!(fn play_start_route(
-        &self, first_dist_m_raw: i32, first_key: QString, first_text: QString, lang: QString,
-        imperial: bool
+        &self, first_dist_m_raw: i32, short_key: QString, lang: QString, imperial: bool
     ) {
         if self.muted { return; }
-        let first_key:  String = first_key.into();
-        let first_text: String = first_text.into();
-        let lang:       String = lang.into();
+        let short_key: String = short_key.into();
+        let lang:      String = lang.into();
         std::thread::spawn(move || {
             let _g = TTS_LOCK.lock().unwrap_or_else(|e| e.into_inner());
             let norm = lang.replace('-', "_");
@@ -1582,38 +1779,81 @@ pub struct NavTts {
                 log("play_start_route: phrase (backup)");
             }
 
-            // ── 2. Primera instrucción (si procede) ───────────────────────────
-            if first_dist_m_raw > 0 && !first_text.is_empty() {
+            // ── 2. Instrucción inicial: [distancia] + [maniobra] desde caché ─
+            // Solo si ambos WAVs están precacheados; sin backup (NavBar lo anuncia en breve).
+            if navius_is_cancelled() { return; }
+            if first_dist_m_raw > 0 && !short_key.is_empty() {
                 let first_dist_m = round_dist(first_dist_m_raw);
-                let instr_path   = format!("{CACHE_LIVE_DIR}/{first_key}.wav");
-                let instr_ready  = std::path::Path::new(&instr_path).exists()
-                    && !generating().lock().unwrap_or_else(|e| e.into_inner()).contains(&first_key);
+                let dist_text    = format_dist_text(first_dist_m, &lang, imperial);
+                let round_key    = cache_key(engine_name(&engine), &base, &dist_text);
+                let round_path   = format!("{CACHE_ROUND_DIR}/{round_key}.wav");
+                let short_path   = format!("{CACHE_ROUND_DIR}/{short_key}.wav");
 
-                if !instr_ready {
-                    let full = format!("{}, {first_text}", format_dist_text(first_dist_m, &lang, imperial));
-                    log(&format!("play_start_route: backup first instr dist={first_dist_m}m"));
-                    say_backup(&engine, &voice, &norm, &base, &full);
-                } else {
-                    // Prefijo de distancia
-                    let dist_text  = format_dist_text(first_dist_m, &lang, imperial);
-                    let round_key  = cache_key(engine_name(&engine), &lang, &dist_text);
-                    let round_path = format!("{CACHE_ROUND_DIR}/{round_key}.wav");
-                    if std::path::Path::new(&round_path).exists()
-                        && !generating().lock().unwrap_or_else(|e| e.into_inner()).contains(&round_key) {
-                        let p = format!("{round_path}\0");
-                        unsafe { navius_play_wav(p.as_ptr()); }
-                    } else {
-                        say_backup(&engine, &voice, &norm, &base, &dist_text);
-                    }
-                    // Instrucción desde caché
-                    let p = format!("{instr_path}\0");
+                let gen = generating().lock().unwrap_or_else(|e| e.into_inner());
+                let round_ok = std::path::Path::new(&round_path).exists() && !gen.contains(&round_key);
+                let short_ok = std::path::Path::new(&short_path).exists() && !gen.contains(&short_key);
+                drop(gen);
+
+                if round_ok && short_ok {
+                    let p = format!("{round_path}\0");
                     unsafe { navius_play_wav(p.as_ptr()); }
-                    log(&format!("play_start_route: first instr dist={first_dist_m}m"));
+                    if !navius_is_cancelled() {
+                        let p = format!("{short_path}\0");
+                        unsafe { navius_play_wav(p.as_ptr()); }
+                    }
+                    log(&format!("play_start_route: short instr dist={first_dist_m}m key={short_key}"));
+                } else {
+                    log(&format!("play_start_route: short WAVs not ready ({}/{}) — navBar lo anuncia",
+                        round_ok as u8, short_ok as u8));
                 }
-            } else {
-                log("play_start_route: no first instr (navBar will handle)");
             }
         });
+    }),
+
+    /// Pre-genera las frases cortas de maniobra para el idioma dado.
+    /// Se almacenan en CACHE_ROUND_DIR (permanente, como las distancias de redondeo).
+    /// Solo aplica si el motor activo es Piper.
+    pub pregenerate_maneuver_phrases: qt_method!(fn pregenerate_maneuver_phrases(&self, lang: QString) {
+        let lang: String = lang.into();
+        std::thread::spawn(move || {
+            let (engine, voice) = {
+                let st = tts_state().lock().unwrap_or_else(|e| e.into_inner());
+                (st.engine.clone(), st.voice.clone())
+            };
+            if !matches!(engine, Engine::Piper) { return; }
+            let base = lang.replace('-', "_");
+            let base = base.split('_').next().unwrap_or(&base).to_string();
+            let _ = std::fs::create_dir_all(CACHE_ROUND_DIR);
+            for &cat in all_maneuver_cats() {
+                let phrase = maneuver_phrase(cat, &base);
+                if phrase.is_empty() { continue; }
+                let key  = cache_key(engine_name(&engine), &base, phrase);
+                let path = format!("{CACHE_ROUND_DIR}/{key}.wav");
+                if !std::path::Path::new(&path).exists() {
+                    generating().lock().unwrap_or_else(|e| e.into_inner()).insert(key.clone());
+                    piper_enqueue(PiperJob { voice: voice.clone(), text: phrase.to_string(), out_path: path, key });
+                }
+            }
+            log(&format!("pregenerate_maneuver_phrases: encoladas (lang={})", base));
+        });
+    }),
+
+    /// Devuelve la clave de caché (CACHE_ROUND_DIR) para la frase corta de una maniobra
+    /// dada por tipo Valhalla y número de salida (glorietas). Retorna "" si no aplica o
+    /// el motor activo no es Piper.
+    pub short_maneuver_key: qt_method!(fn short_maneuver_key(&self, man_type: i32, exit_count: i32, lang: QString) -> QString {
+        let lang: String = lang.into();
+        let base = lang.replace('-', "_");
+        let base_str = base.split('_').next().unwrap_or(&base).to_string();
+        let (engine, _voice) = {
+            let st = tts_state().lock().unwrap_or_else(|e| e.into_inner());
+            (st.engine.clone(), st.voice.clone())
+        };
+        if !matches!(engine, Engine::Piper) { return "".into(); }
+        match maneuver_phrase_key(engine_name(&engine), &base_str, man_type, exit_count) {
+            Some(k) => k.into(),
+            None    => "".into(),
+        }
     }),
 
     /// Pre-genera todos los ficheros de distancia de redondeo para el idioma dado.
@@ -1684,18 +1924,23 @@ pub struct NavTts {
 
     /// Reproduce: prefijo de distancia (si dist_m>0) + instrucción parte1 (key1) +
     /// opcionalmente parte2 (key2, solo en "ya"). Backup a PicoTTS/espeak si WAVs no listos.
+    /// `short_key`: clave CACHE_ROUND_DIR de la frase corta de maniobra ("Gire a la derecha").
+    /// `prefer_short`: si true, usa la frase corta incluso cuando key1 está en caché
+    ///   (p.ej. cuando la siguiente maniobra está a < 5s — no hay tiempo para instrucción larga).
     pub play_round_then_instr: qt_method!(fn play_round_then_instr(
         &self, dist_m: i32,
         key1: QString, text1: QString,
         key2: QString, text2: QString,
+        short_key: QString, prefer_short: bool,
         lang: QString, imperial: bool
     ) {
         if self.muted { return; }
-        let key1:  String = key1.into();
-        let text1: String = text1.into();
-        let key2:  String = key2.into();
-        let text2: String = text2.into();
-        let lang:  String = lang.into();
+        let key1:      String = key1.into();
+        let text1:     String = text1.into();
+        let key2:      String = key2.into();
+        let text2:     String = text2.into();
+        let short_key: String = short_key.into();
+        let lang:      String = lang.into();
         // Signal any ongoing WAV playback to stop immediately.
         PLAYBACK_CANCEL.store(true, Ordering::SeqCst);
         std::thread::spawn(move || {
@@ -1713,8 +1958,37 @@ pub struct NavTts {
                 (st.engine.clone(), st.voice.clone())
             };
 
+            // ── Frase corta cacheada: úsala si la instrucción no está lista O se prefiere corta ──
+            if (prefer_short || !instr_ready) && !short_key.is_empty() {
+                let short_path = format!("{CACHE_ROUND_DIR}/{short_key}.wav");
+                let short_sz = std::fs::metadata(&short_path).map(|m| m.len()).unwrap_or(0);
+                if short_sz > 44 {
+                    log(&format!("short announce (prefer={prefer_short} ready={instr_ready}): dist_m={dist_m} sk={short_key}"));
+                    // Prefijo de distancia desde CACHE_ROUND_DIR
+                    if dist_m > 0 && !PLAYBACK_CANCEL.load(Ordering::SeqCst) {
+                        let dist_text  = format_dist_text(dist_m, &lang, imperial);
+                        let round_key  = cache_key(engine_name(&ts_engine), &lang, &dist_text);
+                        let round_path = format!("{CACHE_ROUND_DIR}/{round_key}.wav");
+                        if std::path::Path::new(&round_path).exists() {
+                            let p = format!("{round_path}\0");
+                            unsafe { navius_play_wav(p.as_ptr()); }
+                        } else {
+                            say_backup(&ts_engine, &ts_voice, &norm, &base, &dist_text);
+                        }
+                    }
+                    if !PLAYBACK_CANCEL.load(Ordering::SeqCst) {
+                        let p = format!("{short_path}\0");
+                        unsafe { navius_play_wav(p.as_ptr()); }
+                    }
+                    return;
+                }
+                // Frase corta no disponible aún → continúa con el flujo normal
+            }
+
             if !instr_ready {
-                // Instrucción no disponible en caché → backup TTS frase completa
+                // Instrucción no disponible en caché y sin frase corta: síntesis urgente.
+                // BACKUP_URGENT pausa el worker de pregen entre utterances (~0.5s max).
+                BACKUP_URGENT.store(true, Ordering::SeqCst);
                 let full_instr = if text2.is_empty() { text1.clone() }
                                  else { format!("{text1}. {text2}") };
                 let full = if dist_m > 0 {
@@ -1724,6 +1998,7 @@ pub struct NavTts {
                 };
                 log(&format!("backup full announce: dist_m={dist_m} key1={key1}"));
                 say_backup(&ts_engine, &ts_voice, &norm, &base, &full);
+                BACKUP_URGENT.store(false, Ordering::SeqCst);
                 return;
             }
 
@@ -1764,20 +2039,28 @@ pub struct NavTts {
             }
 
             // Instrucción parte1 desde caché
-            let p1 = format!("{instr_path}\0");
-            unsafe { navius_play_wav(p1.as_ptr()); }
-            log(&format!("play_instr part1: key1={key1}"));
+            let wav_size1 = std::fs::metadata(&instr_path).map(|m| m.len()).unwrap_or(0);
+            if wav_size1 > 44 {
+                let p1 = format!("{instr_path}\0");
+                unsafe { navius_play_wav(p1.as_ptr()); }
+                log(&format!("play_instr part1: key1={key1}"));
+            } else {
+                log(&format!("part1 empty WAV ({wav_size1}B) → backup: key1={key1}"));
+                say_backup(&ts_engine, &ts_voice, &norm, &base, &text1);
+            }
 
             // Instrucción parte2 (solo "ya"): caché si lista, backup si no
             if !key2.is_empty() && !text2.is_empty() {
                 let instr2_path = format!("{CACHE_LIVE_DIR}/{key2}.wav");
+                let wav_size2 = std::fs::metadata(&instr2_path).map(|m| m.len()).unwrap_or(0);
                 if std::path::Path::new(&instr2_path).exists()
-                    && !generating().lock().unwrap_or_else(|e| e.into_inner()).contains(&key2) {
+                    && !generating().lock().unwrap_or_else(|e| e.into_inner()).contains(&key2)
+                    && wav_size2 > 44 {
                     let p2 = format!("{instr2_path}\0");
                     unsafe { navius_play_wav(p2.as_ptr()); }
                     log(&format!("play_instr part2: key2={key2}"));
                 } else {
-                    log(&format!("part2 not ready → backup: key2={key2}"));
+                    log(&format!("part2 not ready or empty ({wav_size2}B) → backup: key2={key2}"));
                     say_backup(&ts_engine, &ts_voice, &norm, &base, &text2);
                 }
             }
@@ -1805,6 +2088,28 @@ pub struct NavTts {
         log("tts live cache cleared");
     }),
 
+    /// Borra los WAVs más antiguos de tts_cache_live si supera `max_files`.
+    /// Llamar tras iniciar ruta para acotar el crecimiento sin invalidar WAVs recientes.
+    pub trim_live_cache: qt_method!(fn trim_live_cache(&self, max_files: i32) {
+        let max = max_files as usize;
+        let mut entries: Vec<(std::time::SystemTime, std::path::PathBuf)> = Vec::new();
+        if let Ok(dir) = std::fs::read_dir(CACHE_LIVE_DIR) {
+            for e in dir.flatten() {
+                if let Ok(meta) = e.metadata() {
+                    let mtime = meta.modified().unwrap_or(std::time::SystemTime::UNIX_EPOCH);
+                    entries.push((mtime, e.path()));
+                }
+            }
+        }
+        if entries.len() <= max { return; }
+        entries.sort_by_key(|(t, _)| *t); // más antiguos primero
+        let to_delete = entries.len() - max;
+        for (_, path) in entries.iter().take(to_delete) {
+            let _ = std::fs::remove_file(path);
+        }
+        log(&format!("tts live cache trimmed: removed {to_delete} old entries"));
+    }),
+
     /// Borra toda la caché TTS (live + round + tmp). Llamar desde el botón manual en preferencias.
     pub clear_all_tts_cache: qt_method!(fn clear_all_tts_cache(&self) {
         fn rm_dir_contents(path: &str) {
@@ -1822,5 +2127,16 @@ pub struct NavTts {
     /// Se comprueba intentando adquirir TTS_LOCK; si está tomado, hay reproducción activa.
     pub is_speaking: qt_method!(fn is_speaking(&self) -> bool {
         TTS_LOCK.try_lock().is_err()
+    }),
+
+    /// Para el daemon de piper y libera recursos.
+    /// Llamar cuando se cancela la navegación para no mantener el proceso vivo.
+    pub stop_piper_daemon: qt_method!(fn stop_piper_daemon(&self) {
+        let mut g = PIPER_DAEMON.lock().unwrap_or_else(|e| e.into_inner());
+        if let Some(mut d) = g.take() {
+            let _ = d.child.kill();
+            let _ = d.child.wait();
+            log("piper daemon stopped");
+        }
     }),
 }

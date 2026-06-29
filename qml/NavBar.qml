@@ -133,6 +133,7 @@ Rectangle {
     property real _annTarget: -1
     property bool _yaDone:   false
     property real _lastYaMs:  0   // timestamp del último "ya" emitido
+    property real _navStartMs: 0  // timestamp de inicio de ruta (para gracia inicial)
 
     // ETA desde un punto de la ruta. endIdx opcional (por defecto hasta el final).
     // Devuelve {stepSec, totalSec, totalKm}.
@@ -544,12 +545,18 @@ Rectangle {
             _annStep   = _step
             _yaDone    = false
             _annTarget = -1
-            if      (timeToMnv >= 123) _annCount = 2
-            else if (timeToMnv >= 48)  _annCount = 1
-            else                       _annCount = 0
+            // Cuando el coche está parado (spdMs≤0.5), timeToMnv=99999 provoca _annCount=2
+            // para maniobras cercanas → pre2+pre1+ya todos disparan. Usar estimación
+            // por distancia (50 km/h nominal) para calcular el _annCount correcto.
+            var _tEff = spdMs > 0.5 ? timeToMnv : (distM / 13.9)
+            if      (_tEff >= 123) _annCount = 2
+            else if (_tEff >= 48)  _annCount = 1
+            else                   _annCount = 0
         }
 
         var now = Date.now()
+        // Periodo de gracia al inicio: deja terminar play_start_route antes del primer aviso
+        if ((now - _navStartMs) < 4000) return
 
         // Dividir instrucción: parte1 (antes del primer punto) y parte2 (resto)
         var _instrFixed = _fixOrdinales(instrText)
@@ -557,44 +564,72 @@ Rectangle {
         var _annText1 = _annParts[0]
         var _annText2 = _annParts.length > 1 ? _annParts.slice(1).join(". ") : ""
 
-        // ── pre2: a 2 min de maniobra, máximo 2000 m ──────────────────────
+        // ── Texto de fusión con siguiente maniobra ─────────────────────────
+        // Si el siguiente maneuver llega antes de que termine de sonar el TTS
+        // actual, lo fusionamos: "…, y a continuación [siguiente instrucción]"
+        var _nextDispIdx = Math.min(dispIdx + 1, man.length - 1)
+        var _nextMv = (_nextDispIdx > dispIdx) ? man[_nextDispIdx] : null
+        var _nextText = _nextMv ? (_nextMv.verbal_pre_transition_instruction || _nextMv.instruction || "") : ""
+        var _nextText1 = _nextText ? _fixOrdinales(_nextText).split(". ")[0] : ""
+        // Tiempo hasta el siguiente maneuver desde posición actual
+        var _timeToNext = (spdMs > 0.5 && mv2.length)
+                          ? timeToMnv + (mv2.length * 1000 / spdMs)
+                          : 99999
+        // Duración estimada TTS: 65 ms/carácter; +20 para "En X metros, " en pre1/pre2
+        function _ttsSec(txt, withDist) { return (txt.length + (withDist ? 20 : 0)) * 0.065 }
+        function _fuseText(txt, withDist) {
+            if (!_nextText1 || _annText2) return txt
+            if (_timeToNext < _ttsSec(txt, withDist) + 15 + 5)
+                return txt + ", y a continuación " + _nextText1.toLowerCase()
+            return txt
+        }
+
+        // ── pre2: ventana 48–123 s, máximo 2000 m ────────────────────────
+        // Si timeToMnv ya cayó al rango de pre1 o ya, omitir pre2 directamente.
         if (_annCount >= 2) {
-            if (_annTarget < 0 && timeToMnv <= 123 && distM <= 2000)
+            if (_annTarget < 0 && timeToMnv <= 123 && timeToMnv > 48 && distM <= 2000)
                 _annTarget = _roundDist(distM)
             if (_annTarget >= 0 && distM <= _annTarget) {
                 if (now - _lastYaMs >= 3000) {
-                    bar.announce(_annTarget, _annText1, "", dispIdx, "pre2")
+                    bar.announce(_annTarget, _fuseText(_annText1, true), "", dispIdx, "pre2")
                     _annCount  = 1
                     _annTarget = -1
                 } else {
-                    // "ya" reciente: omitir pre2
                     _annCount  = 1
                     _annTarget = -1
                 }
+            } else if (_annTarget < 0 && timeToMnv <= 48) {
+                // timeToMnv ya está en zona de pre1: saltar pre2
+                _annCount  = 1
+                _annTarget = -1
             }
         }
 
-        // ── pre1: a 48 s de maniobra, máximo 500 m ────────────────────────
+        // ── pre1: ventana 15–48 s, máximo 500 m ──────────────────────────
+        // Si timeToMnv ya cayó al rango de ya, omitir pre1 directamente.
         if (_annCount === 1) {
-            if (_annTarget < 0 && timeToMnv <= 48 && distM <= 500)
+            if (_annTarget < 0 && timeToMnv <= 48 && timeToMnv > 15 && distM <= 500)
                 _annTarget = _roundDist(distM)
             if (_annTarget >= 0 && distM <= _annTarget) {
                 if (now - _lastYaMs >= 3000) {
-                    bar.announce(_annTarget, _annText1, "", dispIdx, "pre1")
+                    bar.announce(_annTarget, _fuseText(_annText1, true), "", dispIdx, "pre1")
                     _annCount  = 0
                     _annTarget = -1
                 } else {
-                    // "ya" reciente: omitir pre1
                     _annCount  = 0
                     _annTarget = -1
                 }
+            } else if (_annTarget < 0 && timeToMnv <= 15) {
+                // timeToMnv ya está en zona de ya: saltar pre1
+                _annCount  = 0
+                _annTarget = -1
             }
         }
 
         // ── ya: a 15 s de maniobra, mínimo 15 m, siempre ──────────────────
         // text2 se reproduce justo tras la maniobra (paso de la indicación)
         if (!_yaDone && timeToMnv <= 15 && distM >= 15) {
-            bar.announce(0, _annText1, _annText2, dispIdx, "ya")
+            bar.announce(0, _fuseText(_annText1, false), _annText2, dispIdx, "ya")
             _yaDone   = true
             _lastYaMs = now
         }
@@ -664,6 +699,7 @@ Rectangle {
     onRouteDataChanged: {
         _step = 0; _offCount = 0; _status = "nav"; _arrivedEmitted = false; _completedLegs = 0; _lastUpdateMs = 0
         _legArrivalPending = false; _legArrivalArmed = true; _legDismissMs = 0; _legStoppedMs = 0
+        _navStartMs = Date.now()
         if (routeData && routeData.shape && routeData.shape.length > 0) {
             _realLat = routeData.shape[0][1]
             _realLon = routeData.shape[0][0]

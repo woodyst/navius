@@ -1569,12 +1569,14 @@ ApplicationWindow {
     }
 
     function _ttsClearCache() {
+        navTts.stop_piper_daemon()
         navTts.clear_tts_cache()
         root._ttsPregenKeys = {}
     }
 
     function _startRoundPregen(lang, imperial) {
         navTts.pregenerate_round_dists(lang, imperial === true)
+        navTts.pregenerate_maneuver_phrases(lang)
         root._ttsPregenBusy = true
         ttsPregenPollTimer.start()
     }
@@ -1707,24 +1709,28 @@ ApplicationWindow {
         var _lang = root._ttsEffectiveLang()
         root._startRoundPregen(_lang, navBar.imperial)
         root._pregenerateUpcoming(0)
-        // Frase de inicio + primera instrucción si el navBar no la va a anunciar pronto
+        // Frase de inicio + instrucción inicial desde caché (distancia + dirección corta).
+        // Solo si man[0].time > 150s: así hay margen suficiente antes de que NavBar
+        // dispare pre2 (umbral 123s) y no se repite la misma instrucción dos veces.
         if (root._effInstrSound === "tts") {
             var _man = routeData.maneuvers
             var _firstDistMRaw = 0
-            var _firstKey = ""
-            var _firstText = ""
-            // man[0] = depart, man[1] = primera maniobra real
-            // Si man[0].time > 120s, el navBar no anunciará nada en breve → lo decimos nosotros
-            if (_man && _man.length > 1 && (_man[0].time || 0) > 120) {
-                _firstText = navBar._fixOrdinales(_man[1].verbal_pre_transition_instruction || _man[1].instruction || "")
-                if (_firstText) {
-                    _firstDistMRaw = Math.round((_man[0].length || 0) * 1000)
-                    _firstKey = navTts.pregenerate(_firstText, _lang)
-                    var _tmp = root._ttsPregenKeys; _tmp[_firstText] = _firstKey
-                    root._ttsPregenKeys = _tmp
+            var _shortKey = ""
+            var _man0time = (_man && _man.length > 1) ? (_man[0].time || 0) : 0
+            // Dos casos para instrucción inicial vía play_start_route:
+            //  ≤ 20s: maniobra muy cercana → frase corta inmediata antes de que el coche llegue
+            //  > 150s: maniobra lejana → aviso anticipado (NavBar cubre el rango 20-150s)
+            if (_man0time <= 20 || _man0time > 150) {
+                _firstDistMRaw = Math.round((_man[0].length || 0) * 1000)
+                if (_firstDistMRaw > 0) {
+                    var _m1 = _man[1]
+                    _shortKey = navTts.short_maneuver_key(
+                        _m1.type || 0,
+                        _m1.roundabout_exit_count || 0,
+                        _lang)
                 }
             }
-            navTts.play_start_route(_firstDistMRaw, _firstKey, _firstText, _lang, navBar.imperial)
+            navTts.play_start_route(_firstDistMRaw, _shortKey, _lang, navBar.imperial)
         }
         var routes = root._navRoutes.length > 0 ? root._navRoutes : [routeData]
         root.drawRoute(routes, root._navRoutes.length > 0 ? root._navSelIdx : 0)
@@ -5810,8 +5816,21 @@ ApplicationWindow {
                         var tmp2 = root._ttsPregenKeys; tmp2[text2] = key2; root._ttsPregenKeys = tmp2
                     }
                 }
+                // Frase corta de maniobra: fallback si caché no lista, o forzado si siguiente
+                // maniobra está a < 5s (no hay tiempo para instrucción larga completa).
+                var _navMan = _navData ? _navData.maneuvers : null
+                var _mvAnn  = _navMan ? _navMan[instrId] : null
+                var shortKey = _mvAnn ? navTts.short_maneuver_key(
+                    _mvAnn.type || 0, _mvAnn.roundabout_exit_count || 0, lang) : ""
+                var preferShort = false
+                if (shortKey !== "" && _mvAnn && _mvAnn.length) {
+                    var _spdMs = navBar.gpsSpeedKmh / 3.6
+                    var _timeToNext = _spdMs > 0.5 ? (_mvAnn.length * 1000 / _spdMs) : 99999
+                    preferShort = _timeToNext < 5
+                }
                 navTts.beep()
-                navTts.play_round_then_instr(distM, key1, text, key2, text2, lang, navBar.imperial)
+                navTts.play_round_then_instr(distM, key1, text, key2, text2,
+                                             shortKey, preferShort, lang, navBar.imperial)
                 root._pregenerateUpcoming(navBar._step)
             } else if (root._effInstrSound === "beep") {
                 navTts.beep()
