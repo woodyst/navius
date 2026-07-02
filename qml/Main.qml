@@ -2271,7 +2271,11 @@ ApplicationWindow {
         }
     }
 
-    // Guardar última posición al salir
+    // Guardar última posición y liberar el GPS al cerrar la app.
+    // La sesión GPS se mantiene en segundo plano (posicionamiento continuo),
+    // pero al cerrar hay que soltar la sesión LLS explícitamente: el LLS de
+    // stock (24.04-1.3) puede dejar sesiones huérfanas con el chip GPS
+    // encendido si el cliente muere sin llamar StopPositionUpdates.
     Connections {
         target: Qt.application
         onAboutToQuit: {
@@ -2280,6 +2284,7 @@ ApplicationWindow {
                 var lon = gpsSource.hasFix ? gpsSource.lon : appSettings.lastLon
                 vehicleManager.saveLastPos(lat, lon)
             }
+            satModel.stop_updates()
         }
     }
 
