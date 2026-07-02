@@ -333,18 +333,7 @@ public:
     }
 
     SatelliteSource() {
-        // --- PropertiesChanged watcher for VisibleSpaceVehicles ---
         m_watcher = new LocationPropsWatcher(nullptr);
-        bool ok = QDBusConnection::systemBus().connect(
-            QStringLiteral("com.lomiri.location.Service"),
-            QStringLiteral("/com/lomiri/location/Service"),
-            QStringLiteral("org.freedesktop.DBus.Properties"),
-            QStringLiteral("PropertiesChanged"),
-            m_watcher,
-            SLOT(onPropertiesChanged(QString,QVariantMap,QStringList)));
-        NAVIUS_TRACE("[navius] PropertiesChanged subscribe: %s\n",
-                ok ? "OK" : "FAILED");
-
         // Defer potentially-blocking source creation so the UI renders first.
         QTimer::singleShot(0, [this]() { init_sources(); });
     }
@@ -396,6 +385,10 @@ public:
                 m_sat_src ? 1 : 0, m_pos_src ? 1 : 0);
         if (m_sat_src) m_sat_src->startUpdates();
         if (m_pos_src) m_pos_src->startUpdates();
+        // Re-arm the LLS session after a stop() (app resumed from suspension);
+        // harmless if it is already running.
+        if (m_lls_session && m_lls_session->isValid())
+            m_lls_session->call(QDBus::NoBlock, QStringLiteral("StartPositionUpdates"));
         m_watcher->start_polling();
     }
     void stop() {

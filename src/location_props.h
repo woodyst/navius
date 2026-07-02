@@ -31,7 +31,6 @@ public:
     void stop_polling();
 
     // True once the first successful VisibleSpaceVehicles reply is received.
-    // False until probed, and permanently false on original UBports LLS.
     bool svs_available() const { return m_svs_available; }
 
     bool take_updated();

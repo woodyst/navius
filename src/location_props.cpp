@@ -3,6 +3,7 @@
 #include <QtDBus/QDBusConnection>
 #include <QtDBus/QDBusMessage>
 #include <QtDBus/QDBusPendingCall>
+#include <algorithm>
 #include <cstdio>
 
 LocationPropsWatcher::LocationPropsWatcher(QObject *parent) : QObject(parent) {}
@@ -51,13 +52,28 @@ QVector<SpVehicle> LocationPropsWatcher::vehicles() const {
 }
 
 
+// LLS SpaceVehicle::Type (space_vehicle.h): 0=unknown 1=beidou 2=galileo
+// 3=glonass 4=gps 5=compass 6=irnss 7=qzss. The rest of the app (bridge file,
+// QGeoSatelliteInfoSource) uses Qt's QGeoSatelliteInfo::SatelliteSystem
+// numbering: 0=Undefined 1=GPS 2=GLONASS 3=GALILEO 4=BEIDOU 5=QZSS.
+static int lls_type_to_qt_system(quint32 t) {
+    switch (t) {
+    case 4: return 1;             // gps
+    case 3: return 2;             // glonass
+    case 2: return 3;             // galileo
+    case 1: case 5: return 4;     // beidou / compass
+    case 7: return 5;             // qzss
+    default: return 0;            // unknown / irnss
+    }
+}
+
 void LocationPropsWatcher::parse_svs_arg(const QDBusArgument &arg) {
     int prev_count = m_vehicles.size();
     m_vehicles.clear();
     int count = 0;
 
     // D-Bus type is a(uudbbbdd): array of SpaceVehicle structs where each is:
-    //   u=key.type (1=GPS,2=GLONASS,3=Beidou,4=Galileo)
+    //   u=key.type (LLS enum, see lls_type_to_qt_system)
     //   u=key.id   (PRN)
     //   d=snr
     //   b=has_almanac  b=has_ephimeris  b=used_in_fix
@@ -79,11 +95,24 @@ void LocationPropsWatcher::parse_svs_arg(const QDBusArgument &arg) {
         sv.used      = used_in_fix;
         sv.azimuth   = (float)azimuth;
         sv.elevation = (float)elevation;
-        sv.system    = (int)sys_type;
+        sv.system    = lls_type_to_qt_system(sys_type);
         m_vehicles.append(sv);
         ++count;
     }
     arg.endArray();
+
+    // Unpatched LLS cross-assigns azimuth/elevation in on_sv_status_update, so
+    // elevation arrives with azimuth values (up to 360°). Elevation can never
+    // exceed 90°, so any such value means the whole batch is swapped — undo it.
+    // Works with both patched and unpatched LLS.
+    for (const SpVehicle &sv : m_vehicles) {
+        if (sv.elevation > 90.0f) {
+            for (SpVehicle &v : m_vehicles)
+                std::swap(v.azimuth, v.elevation);
+            NAVIUS_TRACE("[navius] poll svs: swapped az/el detected, normalized\n");
+            break;
+        }
+    }
 
     // Signal update if satellites appeared, changed count, or just disappeared
     m_updated = (count > 0) || (prev_count > 0);
@@ -121,8 +150,12 @@ void LocationPropsWatcher::onPollTimeout() {
     QDBusMessage msg = QDBusMessage::createMethodCall(
         QStringLiteral("com.lomiri.location.Service"),
         QStringLiteral("/com/lomiri/location/Service"),
-        QStringLiteral("com.lomiri.location.Service"),
-        QStringLiteral("GetVisibleSpaceVehicles"));
+        QStringLiteral("org.freedesktop.DBus.Properties"),
+        QStringLiteral("Get"));
+    msg.setArguments({
+        QVariant(QStringLiteral("com.lomiri.location.Service")),
+        QVariant(QStringLiteral("VisibleSpaceVehicles"))
+    });
 
     QDBusPendingCall pending = QDBusConnection::systemBus().asyncCall(msg, 2000);
     m_pending = new QDBusPendingCallWatcher(pending, this);
@@ -138,19 +171,10 @@ void LocationPropsWatcher::onPollReply(QDBusPendingCallWatcher *watcher) {
 
     QDBusMessage reply = watcher->reply();
     if (reply.type() != QDBusMessage::ReplyMessage) {
-        QString err = reply.errorName();
-        if (err == QLatin1String("org.freedesktop.DBus.Error.UnknownMethod") ||
-            err == QLatin1String("org.freedesktop.DBus.Error.UnknownInterface")) {
-            // GetVisibleSpaceVehicles not present → stock UBports LLS.
-            NAVIUS_TRACE("[navius] poll: original LLS detected, satellite polling disabled\n");
-            m_svs_available = false;
-            stop_polling();
-        } else {
-            // Transient error (ServiceUnknown, NoReply, etc.): daemon may have
-            // restarted. Keep polling; svs_available stays as-is.
-            NAVIUS_TRACE("[navius] poll: transient error %s, will retry\n",
-                    err.toUtf8().constData());
-        }
+        // Transient error (ServiceUnknown, NoReply, etc.): daemon may have
+        // restarted or property temporarily unavailable. Keep polling.
+        NAVIUS_TRACE("[navius] poll: error %s, will retry\n",
+                reply.errorName().toUtf8().constData());
         return;
     }
     m_svs_available = true;
@@ -159,9 +183,8 @@ void LocationPropsWatcher::onPollReply(QDBusPendingCallWatcher *watcher) {
         return;
     }
 
-    // GetVisibleSpaceVehicles returns a(uudbbbdd) directly (no Variant wrapper)
+    // Properties.Get returns v (Variant wrapping a(uudbbbdd)); unwrap all layers.
     QVariant arg0 = reply.arguments().at(0);
-    // Unwrap any QDBusVariant layers just in case
     while (arg0.canConvert<QDBusVariant>())
         arg0 = qvariant_cast<QDBusVariant>(arg0).variant();
 
