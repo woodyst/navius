@@ -39,7 +39,7 @@ ApplicationWindow {
     NavTracker     { id: navTracker }
 
     ScreenSaver {
-        screenSaverEnabled: !(appSettings.inhibitSuspend && root._navActive)
+        screenSaverEnabled: !appSettings.inhibitSuspend
     }
     Timer {
         id: navTrackerPollTimer

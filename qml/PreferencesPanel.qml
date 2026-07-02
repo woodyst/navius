@@ -1843,7 +1843,7 @@ Rectangle {
                 }
             }
 
-            // ── Inhibir suspensión durante navegación ────────────────────
+            // ── Inhibir suspensión de pantalla ───────────────────────────
             ListItem {
                 visible: panel.cfg && panel.cfg.prefLevel >= 2
                 width: parent.width
@@ -1853,10 +1853,10 @@ Rectangle {
                 height: liInhibitSuspendLayout.height + units.gu(1)
                 ListItemLayout {
                     id: liInhibitSuspendLayout
-                    title.text: i18n.tr("Inhibir suspensión durante la navegación")
+                    title.text: i18n.tr("Inhibir suspensión de pantalla")
                     title.color: pal.fgPrimary
                     title.font.pixelSize: ts(1.8)
-                    subtitle.text: i18n.tr("Mantiene la pantalla encendida mientras navegas") + "  · ↺ act."
+                    subtitle.text: i18n.tr("Mantiene la pantalla encendida mientras la app está abierta") + "  · ↺ act."
                     subtitle.color: pal.fgSecondary
                     subtitle.font.pixelSize: ts(1.5)
                     subtitle.wrapMode: Text.WordWrap
