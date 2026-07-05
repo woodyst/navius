@@ -30,12 +30,14 @@ use cpp::cpp;
 
 mod nav_http;
 mod nav_music;
+mod nav_tile_cache;
 mod nav_tracker;
 mod nav_tts;
 mod qrc;
 mod satellite_model;
 
 use nav_http::NavHttp;
+use nav_tile_cache::NavTileCache;
 use nav_tracker::NavTracker;
 use nav_tts::NavTts;
 use satellite_model::SatelliteModel;
@@ -85,6 +87,11 @@ fn main() {
         cstr!("Navius"),
         1, 0,
         cstr!("NavTts"),
+    );
+    qml_register_type::<NavTileCache>(
+        cstr!("Navius"),
+        1, 0,
+        cstr!("NavTileCache"),
     );
 
     let mut engine = QmlEngine::new();
