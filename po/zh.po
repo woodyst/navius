@@ -3150,3 +3150,11 @@ msgstr "🗑 已删除停车位置 · "
 #: qml/(referencia desconocida)
 msgid "🚨  Añadir alerta aquí"
 msgstr "🚨  在此添加警报"
+
+#: qml/GpsSource.qml
+msgid "GPS impreciso. Simulando trayecto."
+msgstr "GPS不准确。正在模拟路线。"
+
+#: qml/Main.qml
+msgid "GPS recuperado"
+msgstr "GPS已恢复"

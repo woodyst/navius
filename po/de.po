@@ -3682,3 +3682,11 @@ msgstr "🗑 Parkplatz gelöscht · "
 #: qml/(referencia desconocida)
 msgid "🚨  Añadir alerta aquí"
 msgstr "🚨  Meldung hier hinzufügen"
+
+#: qml/GpsSource.qml
+msgid "GPS impreciso. Simulando trayecto."
+msgstr "GPS ungenau. Simuliere Route."
+
+#: qml/Main.qml
+msgid "GPS recuperado"
+msgstr "GPS wiederhergestellt"

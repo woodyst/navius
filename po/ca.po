@@ -3358,3 +3358,11 @@ msgstr "🗑 Aparcament eliminat · "
 #: qml/(referencia desconocida)
 msgid "🚨  Añadir alerta aquí"
 msgstr "🚨  Afegir alerta aquí"
+
+#: qml/GpsSource.qml
+msgid "GPS impreciso. Simulando trayecto."
+msgstr "GPS imprecís. Simulant el trajecte."
+
+#: qml/Main.qml
+msgid "GPS recuperado"
+msgstr "GPS recuperat"

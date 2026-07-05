@@ -3344,3 +3344,11 @@ msgstr "🗑 محل پارک حذف شد · "
 #: qml/(referencia desconocida)
 msgid "🚨  Añadir alerta aquí"
 msgstr "🚨  افزودن هشدار اینجا"
+
+#: qml/GpsSource.qml
+msgid "GPS impreciso. Simulando trayecto."
+msgstr "GPS نادقیق. شبیه‌سازی مسیر."
+
+#: qml/Main.qml
+msgid "GPS recuperado"
+msgstr "GPS بازیابی شد"

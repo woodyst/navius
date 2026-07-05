@@ -3343,3 +3343,11 @@ msgstr "🗑 Parking spot deleted · "
 #: qml/(referencia desconocida)
 msgid "🚨  Añadir alerta aquí"
 msgstr "🚨  Add alert here"
+
+#: qml/GpsSource.qml
+msgid "GPS impreciso. Simulando trayecto."
+msgstr "GPS inaccurate. Simulating route."
+
+#: qml/Main.qml
+msgid "GPS recuperado"
+msgstr "GPS recovered"

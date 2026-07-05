@@ -3306,3 +3306,11 @@ msgstr "🗑 تم حذف موقف السيارة · "
 #: qml/(referencia desconocida)
 msgid "🚨  Añadir alerta aquí"
 msgstr "🚨  إضافة تنبيه هنا"
+
+#: qml/GpsSource.qml
+msgid "GPS impreciso. Simulando trayecto."
+msgstr "GPS غير دقيق. محاكاة المسار."
+
+#: qml/Main.qml
+msgid "GPS recuperado"
+msgstr "تم استعادة GPS"

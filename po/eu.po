@@ -3375,3 +3375,11 @@ msgstr "🗑 Aparkalekua ezabatuta · "
 #: qml/(referencia desconocida)
 msgid "🚨  Añadir alerta aquí"
 msgstr "🚨  Alerta hemen gehitu"
+
+#: qml/GpsSource.qml
+msgid "GPS impreciso. Simulando trayecto."
+msgstr "GPS zehaztugabea. Ibilbidea simulatzen."
+
+#: qml/Main.qml
+msgid "GPS recuperado"
+msgstr "GPS berreskuratua"

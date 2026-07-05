@@ -1328,7 +1328,7 @@ ApplicationWindow {
                 mainAuthSettings.settingsChangedSinceSync = false
                 mainAuthSettings.settingsLastSyncAt = new Date().toISOString()
                 if (!silent)
-                    root._statusQueue.push({ text: "✓ Configuración guardada en el servidor", color: "#81C784" })
+                    root._statusQueue.push({ text: i18n.tr("✓ Configuración guardada en el servidor"), color: "#81C784" })
             } else if (!silent) {
                 var msg = errCode === "net"  ? "Sin conexión: configuración no guardada"
                         : errCode === "401"  ? "Sesión caducada: configuración no guardada"
@@ -1347,9 +1347,9 @@ ApplicationWindow {
                     // Servidor sin soporte aún → subir los locales para inicializarlo
                     _pushSettingsToServer(true)
                 else if (errCode === "net")
-                    root._statusQueue.push({ text: "Sin conexión: no se pudo cargar la configuración del servidor", color: "#FF8A65" })
+                    root._statusQueue.push({ text: i18n.tr("Sin conexión: no se pudo cargar la configuración del servidor"), color: "#FF8A65" })
                 else if (errCode !== "401")
-                    root._statusQueue.push({ text: "Error al cargar configuración del servidor: " + errCode, color: "#FF8A65" })
+                    root._statusQueue.push({ text: i18n.tr("Error al cargar configuración del servidor: ") + errCode, color: "#FF8A65" })
                 return
             }
             if (Object.keys(data).length === 0) {
@@ -2200,7 +2200,7 @@ ApplicationWindow {
             var arr = allVehicles()
             for (var i = 0; i < arr.length; i++) if (arr[i].costing === "pedestrian") return
             var id = generateId()
-            arr.unshift({ id: id, alias: "A pie", costing: "pedestrian",
+            arr.unshift({ id: id, alias: i18n.tr("A pie"), costing: "pedestrian",
                           parkLat: 0, parkLon: 0, hasPark: false,
                           lastLat: 0, lastLon: 0, hasLast: false })
             saveVehicles(arr)
@@ -2230,12 +2230,12 @@ ApplicationWindow {
             return allVehicles().filter(function(v) { return v.hasPark })
         }
         function costingLabel(c) {
-            if (c === "auto")          return "Coche"
-            if (c === "motorcycle")    return "Moto"
-            if (c === "motor_scooter") return "Scooter"
-            if (c === "truck")         return "Camión"
-            if (c === "bicycle")       return "Bicicleta"
-            if (c === "pedestrian")    return "A pie"
+            if (c === "auto")          return i18n.tr("Coche")
+            if (c === "motorcycle")    return i18n.tr("Moto")
+            if (c === "motor_scooter") return i18n.tr("Scooter")
+            if (c === "truck")         return i18n.tr("Camión")
+            if (c === "bicycle")       return i18n.tr("Bicicleta")
+            if (c === "pedestrian")    return i18n.tr("A pie")
             return c
         }
     }
@@ -2262,7 +2262,7 @@ ApplicationWindow {
                 {costing: costing},
                 function(err, routes) {
                     if (err || !routes || routes.length === 0) {
-                        root._startupMsg = "No se pudo calcular la ruta al aparcamiento"
+                        root._startupMsg = i18n.tr("No se pudo calcular la ruta al aparcamiento")
                         startupMsgTimer.restart()
                         return
                     }
@@ -2403,7 +2403,7 @@ ApplicationWindow {
                 if (found) {
                     NavSearch.setRouteBlocked(false)
                     searchPanel.setRouteBlocked(false)
-                    root._startupMsg = "OSM Scout · rutas y mapas offline"
+                    root._startupMsg = i18n.tr("OSM Scout · rutas y mapas offline")
                     startupMsgTimer.restart()
                 } else {
                     // No está instalado o no arrancó — fallback silencioso
@@ -2415,7 +2415,7 @@ ApplicationWindow {
             })
         } else {
             _setEffectiveUrl(appSettings.valhallaUrl)
-            root._startupMsg = "Servidor: " + appSettings.valhallaUrl.replace("https://","").replace("http://","")
+            root._startupMsg = i18n.tr("Servidor: ") + appSettings.valhallaUrl.replace("https://","").replace("http://","")
             startupMsgTimer.restart()
         }
         // Restaurar navegación desde navius_route si quedó activa al cerrar
@@ -2981,7 +2981,7 @@ ApplicationWindow {
 
         function onSimFinishedChanged() {
             if (gpsSource.simFinished && root._trackReplayActive) {
-                root._startupMsg = "Reproducción terminada"
+                root._startupMsg = i18n.tr("Reproducción terminada")
                 startupMsgTimer.restart()
                 Qt.callLater(function() { root.clearRoute() })
             }
@@ -4161,6 +4161,13 @@ ApplicationWindow {
         Connections {
             target: gpsSource
             function onBisectorCtrPtChanged() { if (appSettings.showBisectorDebug) alertCanvas.requestPaint() }
+        }
+        Connections {
+            target: gpsSource
+            function onDrActiveChanged() {
+                if (!gpsSource.drActive)
+                    root._statusQueue.push({ text: i18n.tr("GPS recuperado"), color: "#81C784" })
+            }
         }
     }
 
@@ -5416,13 +5423,13 @@ ApplicationWindow {
         border.width: units.gu(0.15)
 
         readonly property var _styleMeta: ({
-            "auto3d":    { icon: "🏢", label: "Mapa 3D"  },
-            "auto":      { icon: "🗺", label: "Mapa"      },
-            "satellite": { icon: "🛰", label: "Satélite"  },
-            "positron":  { icon: "☀", label: "Claro"      },
-            "bright":    { icon: "🌐", label: "Vivo"       },
+            "auto3d":    { icon: "🏢", label: i18n.tr("Mapa 3D")  },
+            "auto":      { icon: "🗺", label: i18n.tr("Mapa")      },
+            "satellite": { icon: "🛰", label: i18n.tr("Satélite")  },
+            "positron":  { icon: "☀", label: i18n.tr("Claro")      },
+            "bright":    { icon: "🌐", label: i18n.tr("Vivo")       },
             "fiord":     { icon: "🌊", label: "Fiord"      },
-            "dark":      { icon: "🌙", label: "Noche"      }
+            "dark":      { icon: "🌙", label: i18n.tr("Noche")      }
         })
 
         property var _modes: {
@@ -6525,7 +6532,7 @@ ApplicationWindow {
                     var lat = gpsSource.hasFix ? gpsSource.lat : appSettings.lastLat
                     var lon = gpsSource.hasFix ? gpsSource.lon : appSettings.lastLon
                     vehicleManager.savePark(lat, lon)
-                    root._startupMsg = "🅿 Aparcamiento guardado · " + (vehicleManager.activeVehicle() ? vehicleManager.activeVehicle().alias : "")
+                    root._startupMsg = i18n.tr("🅿 Aparcamiento guardado · ") + (vehicleManager.activeVehicle() ? vehicleManager.activeVehicle().alias : "")
                     startupMsgTimer.restart()
                     root._updateParkingMarkers()
                 }
@@ -6553,7 +6560,7 @@ ApplicationWindow {
                     if (av) {
                         vehicleManager.clearPark(av.id)
                         root._updateParkingMarkers()
-                        root._startupMsg = "🗑 Aparcamiento eliminado · " + av.alias
+                        root._startupMsg = i18n.tr("🗑 Aparcamiento eliminado · ") + av.alias
                         startupMsgTimer.restart()
                     }
                 }
@@ -7296,7 +7303,7 @@ ApplicationWindow {
                 color: alertaPinMa.pressed ? "#E65100" : "#BF360C"
                 Label {
                     anchors.centerIn: parent
-                    text: "🚨  Añadir alerta aquí"
+                    text: i18n.tr("🚨  Añadir alerta aquí")
                     color: "white"; font.pixelSize: units.gu(1.6 * appSettings.textScale); font.bold: true
                 }
                 MouseArea {
@@ -7325,7 +7332,7 @@ ApplicationWindow {
                 border.color: "#CE93D8"; border.width: units.gu(0.12)
                 Label {
                     anchors.centerIn: parent
-                    text: "📍 Establecer posición GPS"
+                    text: i18n.tr("📍 Establecer posición GPS")
                     color: "#CE93D8"; font.pixelSize: units.gu(1.6 * appSettings.textScale); font.bold: true
                 }
                 MouseArea {
@@ -7450,7 +7457,7 @@ ApplicationWindow {
                 Rectangle {
                     width: units.gu(18); height: units.gu(7); radius: units.gu(1)
                     color: voteOkMa.pressed ? "#1B5E20" : "#2E7D32"
-                    Label { anchors.centerIn: parent; text: "👍  Confirmar"
+                    Label { anchors.centerIn: parent; text: i18n.tr("👍  Confirmar")
                             color: "white"; font.pixelSize: units.gu(2.5 * appSettings.textScale) }
                     MouseArea {
                         id: voteOkMa; anchors.fill: parent
@@ -7473,7 +7480,7 @@ ApplicationWindow {
                 Rectangle {
                     width: units.gu(18); height: units.gu(7); radius: units.gu(1)
                     color: voteNoMa.pressed ? "#B71C1C" : "#C62828"
-                    Label { anchors.centerIn: parent; text: "👎  Desmentir"
+                    Label { anchors.centerIn: parent; text: i18n.tr("👎  Desmentir")
                             color: "white"; font.pixelSize: units.gu(2.5 * appSettings.textScale) }
                     MouseArea {
                         id: voteNoMa; anchors.fill: parent
@@ -7498,7 +7505,7 @@ ApplicationWindow {
                 width: parent.width; height: units.gu(7); radius: units.gu(0.8)
                 visible: alertaVotePopup._isOwn
                 color: deleteAlertMa.pressed ? "#B71C1C" : "#7B1FA2"
-                Label { anchors.centerIn: parent; text: "🗑  Cancelar mi alerta"
+                Label { anchors.centerIn: parent; text: i18n.tr("🗑  Cancelar mi alerta")
                         color: "white"; font.pixelSize: units.gu(2.5 * appSettings.textScale) }
                 MouseArea {
                     id: deleteAlertMa; anchors.fill: parent
@@ -7686,10 +7693,10 @@ ApplicationWindow {
                 root._osmScoutActive = found
                 if (found) {
                     _setEffectiveUrl("http://127.0.0.1:8553/v2")
-                    root._startupMsg = "OSM Scout · rutas y mapas offline"
+                    root._startupMsg = i18n.tr("OSM Scout · rutas y mapas offline")
                 } else {
                     _setEffectiveUrl(appSettings.valhallaUrl)
-                    root._startupMsg = "OSM Scout no disponible · usando " + appSettings.valhallaUrl.replace("https://","").replace("http://","")
+                    root._startupMsg = i18n.tr("OSM Scout no disponible · usando ") + appSettings.valhallaUrl.replace("https://","").replace("http://","")
                 }
                 startupMsgTimer.restart()
             })
@@ -7747,7 +7754,7 @@ ApplicationWindow {
             Qt.callLater(function() { mapView.styleUrl = _savedUrl })
             mapView._tileBusy = true
             mapView._tileIdleTimer.restart()
-            root._startupMsg = "Caché de mapas eliminada"
+            root._startupMsg = i18n.tr("Caché de mapas eliminada")
             startupMsgTimer.restart()
         }
         onGoogleMapsCacheClearRequested: {
@@ -8068,7 +8075,7 @@ ApplicationWindow {
                 Rectangle {
                     width: parent.width; height: units.gu(8); radius: units.gu(0.8)
                     color: clpCancelMa.pressed ? "#1A2535" : "#1C2D40"; border.color: "#2A4060"
-                    Label { anchors.centerIn: parent; text: "Cancelar"; color: "#90A4AE"; font.pixelSize: units.gu(2.7 * appSettings.textScale) }
+                    Label { anchors.centerIn: parent; text: i18n.tr("Cancelar"); color: "#90A4AE"; font.pixelSize: units.gu(2.7 * appSettings.textScale) }
                     MouseArea { id: clpCancelMa; anchors.fill: parent; onClicked: commLimitPicker.visible = false }
                 }
 
@@ -8123,7 +8130,7 @@ ApplicationWindow {
 
             Label {
                 width: parent.width
-                text: "⚙  Configuración en el servidor"
+                text: i18n.tr("⚙  Configuración en el servidor")
                 color: "#90CAF9"; font.bold: true
                 font.pixelSize: units.gu(2.2 * appSettings.textScale)
                 wrapMode: Text.WordWrap
@@ -8151,7 +8158,7 @@ ApplicationWindow {
                     radius: units.gu(0.7); color: "#1565C0"
                     Label {
                         anchors.centerIn: parent
-                        text: "Usar del servidor"; color: "white"
+                        text: i18n.tr("Usar del servidor"); color: "white"
                         font.pixelSize: units.gu(1.8 * appSettings.textScale); font.bold: true
                         wrapMode: Text.WordWrap; horizontalAlignment: Text.AlignHCenter
                         width: parent.width - units.gu(1)
@@ -8161,7 +8168,7 @@ ApplicationWindow {
                         onClicked: {
                             root._applyServerSettings(settingsConflictDialog._serverData)
                             settingsConflictDialog.visible = false
-                            root._statusQueue.push({ text: "✓ Configuración del servidor aplicada", color: "#81C784" })
+                            root._statusQueue.push({ text: i18n.tr("✓ Configuración del servidor aplicada"), color: "#81C784" })
                         }
                     }
                 }
@@ -8170,7 +8177,7 @@ ApplicationWindow {
                     radius: units.gu(0.7); color: "#37474F"
                     Label {
                         anchors.centerIn: parent
-                        text: "Mantener la local"; color: "white"
+                        text: i18n.tr("Mantener la local"); color: "white"
                         font.pixelSize: units.gu(1.8 * appSettings.textScale); font.bold: true
                         wrapMode: Text.WordWrap; horizontalAlignment: Text.AlignHCenter
                         width: parent.width - units.gu(1)
@@ -8273,7 +8280,7 @@ ApplicationWindow {
                     root._preCachePhase = 1
                     root._preCacheSweepI = 0
                     root._preCacheSweepStep = Math.max(1, Math.floor(shape.length / 150))
-                    root._startupMsg = "Cacheando mapa… detalle"
+                    root._startupMsg = i18n.tr("Cacheando mapa… detalle")
                     startupMsgTimer.restart()
                     return
                 }
@@ -8293,7 +8300,7 @@ ApplicationWindow {
             // Actualizar progreso en status bar cada 10 pasos
             if (root._preCacheSweepI % (root._preCacheSweepStep * 10) < root._preCacheSweepStep) {
                 var pct = root._preCacheProgress()
-                root._startupMsg = "Cacheando mapa… " + pct
+                root._startupMsg = i18n.tr("Cacheando mapa… ") + pct
                 startupMsgTimer.restart()
             }
         }
@@ -8323,20 +8330,20 @@ ApplicationWindow {
         target: appSettings
         onMapOnlineSourceChanged: {
             if (appSettings.mapOnlineSource === "osmscout" && root._osmScoutActive)
-                root._startupMsg = "Mapa online: OSM Scout"
+                root._startupMsg = i18n.tr("Mapa online: OSM Scout")
             else if (appSettings.mapOnlineSource === "osmscout")
-                root._startupMsg = "Mapa online: OSM Scout (no disponible · usando Mapbox)"
+                root._startupMsg = i18n.tr("Mapa online: OSM Scout (no disponible · usando Mapbox)")
             else
-                root._startupMsg = "Mapa online: Mapbox"
+                root._startupMsg = i18n.tr("Mapa online: Mapbox")
             startupMsgTimer.restart()
         }
         onMapOfflineModeChanged: {
             if (appSettings.mapOfflineMode === "osmscout" && root._osmScoutActive)
-                root._startupMsg = "Sin internet: fallback a OSM Scout"
+                root._startupMsg = i18n.tr("Sin internet: fallback a OSM Scout")
             else if (appSettings.mapOfflineMode === "osmscout")
-                root._startupMsg = "Sin internet: fallback OSM Scout (no disponible)"
+                root._startupMsg = i18n.tr("Sin internet: fallback OSM Scout (no disponible)")
             else
-                root._startupMsg = "Sin internet: caché de tiles"
+                root._startupMsg = i18n.tr("Sin internet: caché de tiles")
             startupMsgTimer.restart()
         }
     }
@@ -8356,7 +8363,7 @@ ApplicationWindow {
                     // Desbloquear: si hay petición pendiente se dispara sola; si no, rerouteIfActive la lanza
                     NavSearch.setRouteBlocked(false)
                     searchPanel.setRouteBlocked(false)
-                    root._startupMsg = "OSM Scout · rutas y mapas offline"
+                    root._startupMsg = i18n.tr("OSM Scout · rutas y mapas offline")
                     startupMsgTimer.restart()
                     searchPanel.rerouteIfActive()
                 }
@@ -8521,7 +8528,7 @@ ApplicationWindow {
                 root._preCacheSweepStep = Math.max(1, Math.floor(rd.shape.length / 25))
                 root._preCacheSweepI = 0
                 preCacheSweepTimer.restart()
-                root._startupMsg = "Cacheando mapa… 0%"
+                root._startupMsg = i18n.tr("Cacheando mapa… 0%")
                 startupMsgTimer.restart()
             } else {
                 root._startNavigation(rd)
@@ -8739,11 +8746,13 @@ ApplicationWindow {
         Label {
             anchors.centerIn: parent
             text: root._ttsPregenBusy   ? (i18n.tr("Pre-procesando motor TTS") + " " + root._ttsPregenProgress)
+                : gpsSource.drActive    ? i18n.tr("GPS impreciso. Simulando trayecto.")
                 : root._statusCurrent   ? root._statusCurrent.text
                 : root._startupMsg      ? root._startupMsg
                 : mapView._tileBusy     ? i18n.tr("Cargando mapa…")
                 :                         ("v" + root._version)
             color: root._ttsPregenBusy  ? "#FFA000"
+                 : gpsSource.drActive   ? "#FF8A65"
                  : root._statusCurrent  ? root._statusCurrent.color
                  : root._startupMsg     ? (root._osmScoutActive ? "#66BB6A" : "#B0BEC5")
                  : mapView._tileBusy    ? "#80CBC4"
@@ -9617,7 +9626,7 @@ ApplicationWindow {
                       leftMargin: units.gu(1.5); rightMargin: units.gu(1.5) }
             spacing: units.gu(1)
             Label {
-                text: "🅿 ¿Guardar aparcamiento aquí?"
+                text: i18n.tr("🅿 ¿Guardar aparcamiento aquí?")
                 color: "#FF9800"; font.pixelSize: units.gu(2.0 * appSettings.textScale)
                 anchors.verticalCenter: parent.verticalCenter
                 wrapMode: Text.WordWrap
@@ -9626,7 +9635,7 @@ ApplicationWindow {
             Rectangle {
                 width: units.gu(10); height: units.gu(5.5); radius: height / 2; color: "#FF9800"
                 anchors.verticalCenter: parent.verticalCenter
-                Label { anchors.centerIn: parent; text: "Guardar"; color: "#0A0A1A"; font.pixelSize: units.gu(2.0 * appSettings.textScale); font.bold: true }
+                Label { anchors.centerIn: parent; text: i18n.tr("Guardar"); color: "#0A0A1A"; font.pixelSize: units.gu(2.0 * appSettings.textScale); font.bold: true }
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
@@ -9635,7 +9644,7 @@ ApplicationWindow {
                         var lon = gpsSource.hasFix ? gpsSource.lon : appSettings.lastLon
                         vehicleManager.savePark(lat, lon)
                         root._updateParkingMarkers()
-                        root._startupMsg = "🅿 Aparcamiento guardado"
+                        root._startupMsg = i18n.tr("🅿 Aparcamiento guardado")
                         startupMsgTimer.restart()
                     }
                 }

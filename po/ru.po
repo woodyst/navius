@@ -3437,3 +3437,11 @@ msgstr "Использовать этот пункт"
 
 #~ msgid "Rev ON"
 #~ msgstr "Реверс ВКЛ"
+
+#: qml/GpsSource.qml
+msgid "GPS impreciso. Simulando trayecto."
+msgstr "GPS неточен. Симуляция маршрута."
+
+#: qml/Main.qml
+msgid "GPS recuperado"
+msgstr "GPS восстановлен"

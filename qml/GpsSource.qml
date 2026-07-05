@@ -183,6 +183,17 @@ Item {
     property real _lastMapVehicleHeadingRad: 0
     property real _lastMapVehicleSpeedMs:    0
 
+    // ── Dead reckoning (GPS impreciso o perdido) ──────────────────────────────
+    // drActive se pone a true cuando se detecta una posición GPS inválida
+    // (salto brusco o pérdida de fix) mientras hay ruta activa. En ese estado
+    // se emiten ticks sintéticos source="dr" avanzando por el shape de la ruta
+    // con la velocidad Valhalla × ratio hasta que GPS recupera 3 fixes válidos.
+    property bool drActive:     false  // true = simulando trayecto por ruta
+    property int  _drBadCount:  0      // fixes malos consecutivos
+    property int  _drGoodCount: 0      // fixes buenos consecutivos (recuperación)
+    property real _drSpeedMs:   0      // velocidad al entrar en DR (m/s)
+    property var  _drRecovFix:  null   // {lat,lon,ms} último candidato de recuperación
+
     // ── Dirección inversa (solo simMode+debugMode) ────────────────────────────
     property var  revRoute:    null  // [{lat,lon,spd}] ruta inversa ~100 m
     property var  revShape:    null  // [[lon,lat],...] formato NavBar, generado al iniciar revMode
@@ -268,6 +279,54 @@ Item {
 
     // ── GPS real: tick primario ───────────────────────────────────────────────
     function _onRealGpsTick(pLat, pLon, pHasFix, hwSpeedKmh, ms) {
+        // ── Detección de fix inválido ─────────────────────────────────────────
+        // _p2 aún apunta al último fix BUENO (no se actualiza hasta el final).
+        var _isBad = !pHasFix
+        if (!_isBad && _p2 !== null) {
+            var _dtJ = (ms - _p2.ms) / 1000.0
+            if (_dtJ > 0.1 && _dtJ < 10.0) {
+                var _jumpDist = _haversineM(_p2.lat, _p2.lon, pLat, pLon)
+                // Salto: posición nueva > 2.5× el desplazamiento esperado (con mín 30 m)
+                _isBad = _jumpDist > Math.max(30.0, _speedMs * _dtJ * 2.5)
+            }
+        }
+
+        // ── Gestión de modo DR ────────────────────────────────────────────────
+        if (_isBad) {
+            _drBadCount++; _drGoodCount = 0; _drRecovFix = null
+            if (!drActive && _drBadCount >= 1
+                    && routeShape && routeShape.length > 1
+                    && _lastRealTickPos !== null && _speedMs > 1.0) {
+                drActive = true
+                _drSpeedMs = _speedMs
+            }
+            if (drActive) { _drSimulateTick(ms); return }
+            // Sin ruta o parado: no hay DR, usar fix malo tal cual (comportamiento anterior)
+        } else if (drActive) {
+            // Recuperación: esperar 3 fixes buenos consecutivos sin salto entre ellos
+            var _recovOk = true
+            if (_drRecovFix !== null) {
+                var _dtR = (ms - _drRecovFix.ms) / 1000.0
+                if (_dtR > 0.1 && _dtR < 10.0)
+                    _recovOk = _haversineM(_drRecovFix.lat, _drRecovFix.lon, pLat, pLon)
+                                <= Math.max(30.0, _speedMs * _dtR * 2.5)
+            }
+            _drRecovFix = {lat: pLat, lon: pLon, ms: ms}
+            if (_recovOk) {
+                _drGoodCount++
+                if (_drGoodCount < 3) { _drSimulateTick(ms); return }
+                // 3 fixes buenos → salir de DR
+                drActive = false; _drBadCount = 0; _drGoodCount = 0; _drRecovFix = null
+                _p0 = null; _p1 = null  // fixes anteriores al DR no son válidos para v/a
+            } else {
+                _drGoodCount = 0; _drRecovFix = null
+                _drSimulateTick(ms); return
+            }
+        } else {
+            _drBadCount = 0
+        }
+
+        // ── Procesamiento normal ──────────────────────────────────────────────
         _realTickMs = ms
         _p0 = _p1
         _p1 = _p2
@@ -442,6 +501,32 @@ Item {
             " hdg=" + (_headRad * 180 / Math.PI).toFixed(1) +
             " pos=" + posLat.toFixed(6) + "," + posLon.toFixed(6) +
             " dist=" + _simDistM.toFixed(1))
+
+        // ── DR en modo sim (mismo comportamiento que GPS real) ────────────────
+        var _isBadSim = !_hasFix  // simSignalLost
+        if (!_isBadSim && gpsFailEnabled && _failTicksLeft > 0 && _p1 !== null) {
+            var _dtJs = (now - _p1.ms) / 1000.0
+            if (_dtJs > 0.05 && _dtJs < 10.0) {
+                var _jdSim = _haversineM(_p1.lat, _p1.lon, emitLat, emitLon)
+                _isBadSim = _jdSim > Math.max(30.0, _speedMs * _dtJs * 2.5)
+            }
+        }
+        if (_isBadSim) {
+            _drBadCount++; _drGoodCount = 0
+            if (!drActive && _drBadCount >= 1
+                    && routeShape && routeShape.length > 1
+                    && _lastRealTickPos !== null && _speedMs > 1.0) {
+                drActive = true; _drSpeedMs = _speedMs
+            }
+            if (drActive) { _drSimulateTick(now); return }
+        } else if (drActive) {
+            _drGoodCount++
+            if (_drGoodCount < 3) { _drSimulateTick(now); return }
+            drActive = false; _drBadCount = 0; _drGoodCount = 0; _drRecovFix = null
+        } else {
+            _drBadCount = 0
+        }
+
         _emit(emitLat, emitLon, emitSpd, _headRad, _hasFix, true, now, "sim")
     }
 
@@ -1330,6 +1415,40 @@ Item {
     }
 
     // Filtra _headRateRads: requiere ≥2 ticks consecutivos girando; aplica solo 50%.
+    // Emite un tick sintético source="dr" avanzando por el shape con la velocidad
+    // del último fix real corregida por ratio Valhalla. Actualiza _lastRealTickPos
+    // y _realTickMs para que el interpTimer siga a 20 Hz sin cambios.
+    function _drSimulateTick(ms) {
+        if (!_lastRealTickPos || !routeShape || routeShape.length < 2) {
+            drActive = false; return
+        }
+        var dt = (_realTickMs > 0) ? (ms - _realTickMs) / 1000.0 : 1.0
+        dt = Math.max(0.1, Math.min(5.0, dt))
+
+        var spd = _drSpeedMs
+        if (interpUseVhRatio && routeShapeSpeedKmh
+                && _lastRealTickPos.idx < routeShapeSpeedKmh.length) {
+            var vVh = routeShapeSpeedKmh[_lastRealTickPos.idx] / 3.6
+            if (vVh > 0.1 && _drSpeedMs > 0.1) {
+                var ratio = Math.max(0.1, Math.min(3.0, _drSpeedMs / vVh))
+                spd = vVh * ratio
+            }
+        }
+
+        var pos = _walkShape(_lastRealTickPos.idx, _lastRealTickPos.frac, spd * dt)
+        if (!pos) { drActive = false; return }
+
+        var n   = routeShape.length
+        var hdg = _bearing(routeShape[pos.idx][1], routeShape[pos.idx][0],
+                           routeShape[Math.min(pos.idx + 1, n - 1)][1],
+                           routeShape[Math.min(pos.idx + 1, n - 1)][0])
+        _speedMs     = spd
+        realSpeedKmh = spd * 3.6
+        _headRad     = hdg
+        _realTickMs  = ms
+        _emit(pos.lat, pos.lon, spd * 3.6, hdg, _hasFix, true, ms, "dr")
+    }
+
     function _applyTurnFilter() {
         var dir = _headRateRads > 0.02 ? 1 : (_headRateRads < -0.02 ? -1 : 0)
         if (dir !== 0 && dir === _turnDirPrev) _turnConsec++
