@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: navius.woodyst\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-02 19:33+0000\n"
+"POT-Creation-Date: 2026-07-05 21:33+0000\n"
 "PO-Revision-Date: 2026-05-24 00:00+0000\n"
 "Last-Translator: Claude\n"
 "Language-Team: 中文（简体）\n"
@@ -23,7 +23,7 @@ msgstr "🔴 分享中"
 msgid "Generando enlace…"
 msgstr "正在生成链接…"
 
-#: qml/TripSharePanel.qml:53 qml/HelpPanel.qml:164 qml/Main.qml:6461
+#: qml/TripSharePanel.qml:53 qml/HelpPanel.qml:164 qml/Main.qml:6470
 #: qml/TourOverlay.qml:72
 msgid "Compartir viaje"
 msgstr "分享行程"
@@ -58,7 +58,7 @@ msgstr "创建链接"
 msgid "Detener"
 msgstr "停止"
 
-#: qml/TripSharePanel.qml:187 qml/Main.qml:7521 qml/Main.qml:7982
+#: qml/TripSharePanel.qml:187 qml/Main.qml:7530 qml/Main.qml:7991
 #: qml/LoginPanel.qml:145 qml/AboutDialog.qml:253 qml/ParkingDialog.qml:162
 #: qml/TourOverlay.qml:314
 msgid "Cerrar"
@@ -81,7 +81,9 @@ msgid ""
 "Desliza un dedo para mover el mapa. Pellizca para hacer zoom o usa la barra "
 "lateral. Toca la brújula para recentrar en tu posición y activar el "
 "seguimiento GPS."
-msgstr "滑动手指移动地图。双指捏合进行缩放，或使用侧边栏。点击指南针可重新居中至您的位置并激活 GPS 追踪。"
+msgstr ""
+"滑动手指移动地图。双指捏合进行缩放，或使用侧边栏。点击指南针可重新居中至您的"
+"位置并激活 GPS 追踪。"
 
 #: qml/HelpPanel.qml:60
 msgid "Modo 2D y 3D"
@@ -91,7 +93,9 @@ msgstr "2D / 3D 模式"
 msgid ""
 "El botón 2D/3D alterna entre vista plana y perspectiva inclinada de "
 "conducción. En 3D puedes ver los edificios extruidos en el área urbana."
-msgstr "2D/3D 按钮可在平面视图和倾斜驾驶视角之间切换。在 3D 模式下，您可以看到城市区域的立体建筑。"
+msgstr ""
+"2D/3D 按钮可在平面视图和倾斜驾驶视角之间切换。在 3D 模式下，您可以看到城市区"
+"域的立体建筑。"
 
 #: qml/HelpPanel.qml:62
 msgid "Modo día / noche / automático"
@@ -101,7 +105,9 @@ msgstr "白天 / 夜间 / 自动模式"
 msgid ""
 "En Ajustes → Ajustes rápidos puedes fijar el modo de color del mapa, o "
 "dejarlo en «auto» para que cambie con la hora del día."
-msgstr "在设置 → 快速设置中，您可以固定地图颜色模式，或将其设为「自动」，使其随时间自动变换。"
+msgstr ""
+"在设置 → 快速设置中，您可以固定地图颜色模式，或将其设为「自动」，使其随时间自"
+"动变换。"
 
 #: qml/HelpPanel.qml:64
 msgid "Orientación del mapa"
@@ -123,8 +129,9 @@ msgid ""
 "noche) y Noche/Dark (oscuro intenso). El nombre del estilo actual aparece "
 "bajo el icono."
 msgstr ""
-"地图样式按钮（在地图上）可切换多种样式：自动（随日照变化）、卫星（航拍图片）、Positron（明亮）、Vivo/Bright（鲜艳色彩）、Fi"
-"ord（柔和深色，自动夜间模式）和夜间/Dark（深色强烈）。当前样式名称显示在图标下方。"
+"地图样式按钮（在地图上）可切换多种样式：自动（随日照变化）、卫星（航拍图"
+"片）、Positron（明亮）、Vivo/Bright（鲜艳色彩）、Fiord（柔和深色，自动夜间模"
+"式）和夜间/Dark（深色强烈）。当前样式名称显示在图标下方。"
 
 #: qml/HelpPanel.qml:72
 msgid "Buscar y planificar"
@@ -139,7 +146,9 @@ msgid ""
 "Toca el botón «Iniciar navegación» en la parte superior para abrir el panel "
 "de planificación. Escribe el nombre de un lugar, dirección o coordenadas. La "
 "búsqueda usa OpenStreetMap."
-msgstr "点击顶部的「开始导航」按钮打开规划面板。输入地点名称、地址或坐标。搜索使用 OpenStreetMap 数据。"
+msgstr ""
+"点击顶部的「开始导航」按钮打开规划面板。输入地点名称、地址或坐标。搜索使用 "
+"OpenStreetMap 数据。"
 
 #: qml/HelpPanel.qml:76
 msgid "Ruta con múltiples paradas"
@@ -149,7 +158,9 @@ msgstr "多途径点路线"
 msgid ""
 "Añade tantos destinos como necesites. La ruta pasará por todos en el orden "
 "indicado. Puedes reordenarlos o eliminarlos."
-msgstr "可添加任意数量的目的地。路线将按指定顺序经过所有目的地。您可以对其重新排序或删除。"
+msgstr ""
+"可添加任意数量的目的地。路线将按指定顺序经过所有目的地。您可以对其重新排序或"
+"删除。"
 
 #: qml/HelpPanel.qml:78
 msgid "Opciones de ruta"
@@ -160,7 +171,9 @@ msgid ""
 "Antes de calcular puedes excluir: peajes, autopistas, ferries y pistas de "
 "tierra. También puedes elegir el tipo de vehículo en la pantalla de "
 "selección de ruta."
-msgstr "计算前，您可以排除：收费站、高速公路、渡轮和土路。您也可以在路线选择界面选择车辆类型。"
+msgstr ""
+"计算前，您可以排除：收费站、高速公路、渡轮和土路。您也可以在路线选择界面选择"
+"车辆类型。"
 
 #: qml/HelpPanel.qml:80
 msgid "Buscar POI cercanos"
@@ -173,8 +186,8 @@ msgid ""
 "gasolineras muestran el precio del combustible cuando está disponible en "
 "OSM. Otros POIs muestran información adicional: horario, teléfono, web, etc."
 msgstr ""
-"规划面板中显示「附近兴趣点」栏目。选择类别并选择结果，将其添加为目的地。加油站在 OSM 数据可用时显示油价。其他兴趣点显示附加信息：营业时间、"
-"电话、网站等。"
+"规划面板中显示「附近兴趣点」栏目。选择类别并选择结果，将其添加为目的地。加油"
+"站在 OSM 数据可用时显示油价。其他兴趣点显示附加信息：营业时间、电话、网站等。"
 
 #: qml/HelpPanel.qml:82
 msgid "Historial y favoritos"
@@ -184,7 +197,9 @@ msgstr "历史记录与收藏"
 msgid ""
 "Los últimos 50 destinos se guardan en el historial. Puedes marcar cualquier "
 "lugar como favorito y darle un nombre personalizado."
-msgstr "最近 50 个目的地保存在历史记录中。您可以将任意地点标记为收藏，并为其设置自定义名称。"
+msgstr ""
+"最近 50 个目的地保存在历史记录中。您可以将任意地点标记为收藏，并为其设置自定"
+"义名称。"
 
 #: qml/HelpPanel.qml:88 qml/TourOverlay.qml:47
 msgid "TODOs por destino"
@@ -198,7 +213,8 @@ msgstr "为目的地添加任务"
 msgid ""
 "Toca «+ Tarea» junto a cualquier destino del panel para añadir un TODO. Las "
 "tareas quedan asociadas a esa ubicación geográfica."
-msgstr "点击面板中任意目的地旁的「+ 任务」来添加待办事项。任务与该地理位置关联。"
+msgstr ""
+"点击面板中任意目的地旁的「+ 任务」来添加待办事项。任务与该地理位置关联。"
 
 #: qml/HelpPanel.qml:92
 msgid "Gestionar TODOs durante la navegación"
@@ -208,7 +224,9 @@ msgstr "导航中管理待办事项"
 msgid ""
 "Al llegar a un destino con TODOs, aparece un aviso en la pantalla. Toca "
 "«Abrir» para ver la lista y marcar las tareas como completadas."
-msgstr "到达有待办事项的目的地时，屏幕上会出现提示。点击「打开」查看列表，并将任务标记为已完成。"
+msgstr ""
+"到达有待办事项的目的地时，屏幕上会出现提示。点击「打开」查看列表，并将任务标"
+"记为已完成。"
 
 #: qml/HelpPanel.qml:94
 msgid "Persistencia de TODOs"
@@ -218,7 +236,9 @@ msgstr "TODOs 持久化"
 msgid ""
 "Los TODOs se guardan por coordenadas y persisten entre sesiones. La próxima "
 "vez que planifiques una ruta al mismo lugar, aparecerán de nuevo."
-msgstr "待办事项按坐标保存，在会话之间持久存在。下次您规划前往同一地点的路线时，它们将再次出现。"
+msgstr ""
+"待办事项按坐标保存，在会话之间持久存在。下次您规划前往同一地点的路线时，它们"
+"将再次出现。"
 
 #: qml/HelpPanel.qml:100 qml/TourOverlay.qml:52
 msgid "Hora de salida y planes guardados"
@@ -233,7 +253,9 @@ msgid ""
 "Activa «Hora de salida» en la parte inferior del panel de planificación. "
 "Selecciona el día (hoy, mañana…) y la hora con los selectores. La ruta usará "
 "el tráfico predicho para ese momento."
-msgstr "在规划面板底部激活「出发时间」。使用选择器选择日期（今天、明天…）和时间。路线将使用该时刻的预测交通数据。"
+msgstr ""
+"在规划面板底部激活「出发时间」。使用选择器选择日期（今天、明天…）和时间。路线"
+"将使用该时刻的预测交通数据。"
 
 #: qml/HelpPanel.qml:104
 msgid "Guardar un plan"
@@ -243,7 +265,9 @@ msgstr "保存计划"
 msgid ""
 "Pulsa el botón ⊕ junto a CALCULAR RUTA para guardar el plan completo "
 "(destinos + TODOs + hora de salida + opciones de ruta)."
-msgstr "点击「计算路线」旁的 ⊕ 按钮，保存完整计划（目的地 + 待办事项 + 出发时间 + 路线选项）。"
+msgstr ""
+"点击「计算路线」旁的 ⊕ 按钮，保存完整计划（目的地 + 待办事项 + 出发时间 + 路"
+"线选项）。"
 
 #: qml/HelpPanel.qml:106
 msgid "Cargar un plan guardado"
@@ -254,7 +278,9 @@ msgid ""
 "Los planes aparecen en la sección «Planes guardados» al inicio del panel. "
 "Toca un plan para cargarlo. Si su fecha de salida ya pasó, se actualiza "
 "automáticamente al próximo día."
-msgstr "计划显示在面板开头的「已保存计划」栏目中。点击计划以加载它。如果其出发日期已过，将自动更新至下一天。"
+msgstr ""
+"计划显示在面板开头的「已保存计划」栏目中。点击计划以加载它。如果其出发日期已"
+"过，将自动更新至下一天。"
 
 #: qml/HelpPanel.qml:108
 msgid "Eliminar un plan"
@@ -287,7 +313,9 @@ msgid ""
 "La barra superior muestra: icono de maniobra, distancia al giro, nombre de "
 "la calle, velocidad actual, límite de velocidad y ETA (hora de llegada "
 "estimada)."
-msgstr "顶部栏显示：操作图标、到转弯的距离、街道名称、当前速度、限速和 ETA（预计到达时间）。"
+msgstr ""
+"顶部栏显示：操作图标、到转弯的距离、街道名称、当前速度、限速和 ETA（预计到达"
+"时间）。"
 
 #: qml/HelpPanel.qml:120
 msgid "Recálculo de ruta"
@@ -317,7 +345,9 @@ msgstr "可用引擎"
 msgid ""
 "Piper (neural, alta calidad), Mimic HTS (español, buena calidad) y PicoTTS "
 "(básico, muy rápido). Configúralo en Ajustes → Voz."
-msgstr "Piper（神经网络，高品质）、Mimic HTS（西班牙语，高品质）和 PicoTTS（基础，极快速）。在设置 → 语音中配置。"
+msgstr ""
+"Piper（神经网络，高品质）、Mimic HTS（西班牙语，高品质）和 PicoTTS（基础，极"
+"快速）。在设置 → 语音中配置。"
 
 #: qml/HelpPanel.qml:132
 msgid "Voces Piper"
@@ -327,7 +357,9 @@ msgstr "Piper 语音"
 msgid ""
 "Piper soporta múltiples idiomas y voces .onnx. Descarga voces adicionales "
 "desde Ajustes → Voz → Ver voces disponibles."
-msgstr "Piper 支持多种语言和 .onnx 语音文件。从设置 → 语音 → 查看可用语音下载其他语音。"
+msgstr ""
+"Piper 支持多种语言和 .onnx 语音文件。从设置 → 语音 → 查看可用语音下载其他语"
+"音。"
 
 #: qml/HelpPanel.qml:134
 msgid "Test de voz"
@@ -351,7 +383,8 @@ msgstr "卫星视图"
 msgid ""
 "El panel de satélites (icono de antena) muestra la posición y señal SNR de "
 "cada satélite en una vista polar acimutal."
-msgstr "卫星面板（天线图标）以方位极坐标视图显示每颗卫星的位置和 SNR 信号强度。"
+msgstr ""
+"卫星面板（天线图标）以方位极坐标视图显示每颗卫星的位置和 SNR 信号强度。"
 
 #: qml/HelpPanel.qml:144
 msgid "Fix GPS"
@@ -361,7 +394,9 @@ msgstr "GPS 定位"
 msgid ""
 "El indicador de fix muestra: sin señal, fix 2D (posición sin altitud) o fix "
 "3D (posición + altitud). La navegación requiere fix 3D."
-msgstr "定位指示器显示：无信号、2D 定位（有位置无高度）或 3D 定位（位置 + 高度）。导航需要 3D 定位。"
+msgstr ""
+"定位指示器显示：无信号、2D 定位（有位置无高度）或 3D 定位（位置 + 高度）。导"
+"航需要 3D 定位。"
 
 #: qml/HelpPanel.qml:146
 msgid "Dead-reckoning"
@@ -371,7 +406,9 @@ msgstr "Dead-reckoning"
 msgid ""
 "Navius interpola la posición GPS a 10-30 Hz entre lecturas reales para que "
 "el icono de posición se mueva con fluidez. Configúralo en Ajustes → General."
-msgstr "Navius 在实际 GPS 读数之间以 10-30 Hz 插值位置，使位置图标平滑移动。在设置 → 常规中配置。"
+msgstr ""
+"Navius 在实际 GPS 读数之间以 10-30 Hz 插值位置，使位置图标平滑移动。在设置 → "
+"常规中配置。"
 
 #: qml/HelpPanel.qml:148 qml/PreferencesPanel.qml:1908
 msgid "Velocidad GPS Doppler"
@@ -386,8 +423,9 @@ msgid ""
 "del hardware directamente. Si observas valores erráticos con tu dispositivo "
 "concreto, desactívala para volver al cálculo clásico."
 msgstr ""
-"现代 GPS 芯片通过卫星信号的多普勒效应计算速度，这比通过连续位置差计算更精确，尤其在低速行驶和急加速或急刹车时。在设置 → 导航中激活此选项"
-"，直接使用硬件速度。如果您的具体设备出现不稳定数值，请禁用此选项以恢复经典计算方式。"
+"现代 GPS 芯片通过卫星信号的多普勒效应计算速度，这比通过连续位置差计算更精确，"
+"尤其在低速行驶和急加速或急刹车时。在设置 → 导航中激活此选项，直接使用硬件速"
+"度。如果您的具体设备出现不稳定数值，请禁用此选项以恢复经典计算方式。"
 
 #: qml/HelpPanel.qml:154 qml/TourOverlay.qml:102
 msgid "Grabación de tracks"
@@ -401,7 +439,8 @@ msgstr "录制 GPS 轨迹"
 msgid ""
 "Activa la grabación en Ajustes → Navegación. El track se guarda en SQLite "
 "con marca de tiempo y distancia acumulada."
-msgstr "在设置 → 导航中激活录制。轨迹以带时间戳和累计距离的形式保存在 SQLite 中。"
+msgstr ""
+"在设置 → 导航中激活录制。轨迹以带时间戳和累计距离的形式保存在 SQLite 中。"
 
 #: qml/HelpPanel.qml:158
 msgid "Exportar a GPX"
@@ -411,7 +450,9 @@ msgstr "导出为 GPX"
 msgid ""
 "En el panel de tracks puedes exportar cualquier track grabado al formato GPX "
 "estándar, compatible con aplicaciones externas."
-msgstr "在轨迹面板中，您可以将任意已录制的轨迹导出为标准 GPX 格式，与外部应用程序兼容。"
+msgstr ""
+"在轨迹面板中，您可以将任意已录制的轨迹导出为标准 GPX 格式，与外部应用程序兼"
+"容。"
 
 #: qml/HelpPanel.qml:166
 msgid "¿Qué es el compartir viaje?"
@@ -422,7 +463,9 @@ msgid ""
 "Permite que otras personas sigan tu posición y ruta en tiempo real desde "
 "cualquier navegador web, sin necesidad de tener Navius instalado. Necesitas "
 "una cuenta Navius activa (sesión iniciada)."
-msgstr "允许其他人从任何网络浏览器实时跟踪您的位置和路线，无需安装 Navius。您需要一个活跃的 Navius 账户（已登录）。"
+msgstr ""
+"允许其他人从任何网络浏览器实时跟踪您的位置和路线，无需安装 Navius。您需要一个"
+"活跃的 Navius 账户（已登录）。"
 
 #: qml/HelpPanel.qml:168
 msgid "Cómo activar el share"
@@ -435,8 +478,9 @@ msgid ""
 "Telegram o cualquier otra app. Mientras el share está activo, el ítem del "
 "menú aparece en rojo con el texto «Compartiendo»."
 msgstr ""
-"打开菜单 ≡ → 点击「共享行程」→「创建链接」。Navius 生成一个唯一链接，您可以直接通过 WhatsApp、Telegram 或其他应用"
-"复制或分享。共享激活时，菜单项目以红色显示「正在共享」。"
+"打开菜单 ≡ → 点击「共享行程」→「创建链接」。Navius 生成一个唯一链接，您可以直"
+"接通过 WhatsApp、Telegram 或其他应用复制或分享。共享激活时，菜单项目以红色显"
+"示「正在共享」。"
 
 #: qml/HelpPanel.qml:170
 msgid "¿Qué ve el seguidor?"
@@ -450,8 +494,9 @@ msgid ""
 "(día/noche/positron/bright) y usar el botón ◎ Centrar para volver a seguir "
 "tu posición si mueve el mapa."
 msgstr ""
-"跟踪者网页每 5 秒更新一次您的位置地图、您的速度、活跃路线（仅剩余路段）以及带距离和 ETA 的目的地。跟踪者可以更改地图样式（日间/夜间/p"
-"ositron/bright），并使用 ◎ 居中按钮在移动地图后重新跟踪您的位置。"
+"跟踪者网页每 5 秒更新一次您的位置地图、您的速度、活跃路线（仅剩余路段）以及带"
+"距离和 ETA 的目的地。跟踪者可以更改地图样式（日间/夜间/positron/bright），并"
+"使用 ◎ 居中按钮在移动地图后重新跟踪您的位置。"
 
 #: qml/HelpPanel.qml:172
 msgid "¿Qué pasa si cierro Navius?"
@@ -461,7 +506,9 @@ msgstr "关闭 Navius 会怎样？"
 msgid ""
 "Si Navius se cierra o pasa a segundo plano, el seguidor ve el aviso «Navius "
 "cerrado · Última posición conocida». El enlace sigue siendo válido 24 horas."
-msgstr "如果 Navius 关闭或进入后台，跟踪者会看到「Navius 已关闭 · 最后已知位置」的提示。链接在 24 小时内仍然有效。"
+msgstr ""
+"如果 Navius 关闭或进入后台，跟踪者会看到「Navius 已关闭 · 最后已知位置」的提"
+"示。链接在 24 小时内仍然有效。"
 
 #: qml/HelpPanel.qml:174
 msgid "Renovación automática de sesión"
@@ -472,7 +519,9 @@ msgid ""
 "Si tu sesión ha expirado al intentar compartir, Navius renueva el token "
 "automáticamente (hasta 90 días tras la caducidad) sin que tengas que volver "
 "a hacer login."
-msgstr "如果您在尝试共享时会话已过期，Navius 会自动更新令牌（在过期后最长 90 天内），无需重新登录。"
+msgstr ""
+"如果您在尝试共享时会话已过期，Navius 会自动更新令牌（在过期后最长 90 天内），"
+"无需重新登录。"
 
 #: qml/HelpPanel.qml:176
 msgid "Cómo detener el share"
@@ -496,7 +545,9 @@ msgstr "官方服务器"
 msgid ""
 "valhalla.egpsistemas.com está preconfigurado y ofrece rutas para todo el "
 "mundo con tráfico predicho, sin límite de uso para usuarios de Navius."
-msgstr "valhalla.egpsistemas.com 已预先配置，为全球用户提供带预测交通数据的路线，Navius 用户无使用限制。"
+msgstr ""
+"valhalla.egpsistemas.com 已预先配置，为全球用户提供带预测交通数据的路线，"
+"Navius 用户无使用限制。"
 
 #: qml/HelpPanel.qml:186
 msgid "Servidor propio"
@@ -506,7 +557,9 @@ msgstr "自定义服务器"
 msgid ""
 "Puedes instalar tu propio servidor Valhalla y configurar su URL en Ajustes → "
 "Servidor Valhalla. Útil si quieres datos locales o privacidad total."
-msgstr "您可以安装自己的 Valhalla 服务器，并在设置 → Valhalla 服务器中配置其 URL。适合需要本地数据或完全隐私的用户。"
+msgstr ""
+"您可以安装自己的 Valhalla 服务器，并在设置 → Valhalla 服务器中配置其 URL。适"
+"合需要本地数据或完全隐私的用户。"
 
 #: qml/HelpPanel.qml:188
 msgid "Tráfico predicho"
@@ -517,7 +570,9 @@ msgid ""
 "Valhalla usa perfiles sintéticos por hora del día y día de la semana para "
 "estimar velocidades según el tipo de vía. Las rutas programadas con hora de "
 "salida aplican automáticamente el perfil correspondiente."
-msgstr "Valhalla 使用按时段和星期合成的配置文件，根据道路类型估算速度。设置了出发时间的计划路线会自动应用相应配置文件。"
+msgstr ""
+"Valhalla 使用按时段和星期合成的配置文件，根据道路类型估算速度。设置了出发时间"
+"的计划路线会自动应用相应配置文件。"
 
 #: qml/HelpPanel.qml:190
 msgid "Mapas offline con OSM Scout Server"
@@ -529,10 +584,10 @@ msgid ""
 "rutas y buscar lugares completamente sin conexión. Navius lo detecta "
 "automáticamente en Ajustes → Servidor Valhalla → Detectar servidor local."
 msgstr ""
-"从 Ubuntu Touch 的 OpenStore 安装 OSM Scout Server，可完全离线计算路线和搜索地点。Navius 在设置"
-" → Valhalla 服务器 → 检测本地服务器中自动检测它。"
+"从 Ubuntu Touch 的 OpenStore 安装 OSM Scout Server，可完全离线计算路线和搜索"
+"地点。Navius 在设置 → Valhalla 服务器 → 检测本地服务器中自动检测它。"
 
-#: qml/HelpPanel.qml:196 qml/Main.qml:6639 qml/PreferencesPanel.qml:137
+#: qml/HelpPanel.qml:196 qml/Main.qml:6648 qml/PreferencesPanel.qml:137
 #: qml/TourOverlay.qml:112
 msgid "Ajustes"
 msgstr "设置"
@@ -546,7 +601,9 @@ msgid ""
 "El selector de nivel en la parte superior del panel de ajustes oculta o "
 "muestra opciones según su complejidad. Mínimo: solo lo esencial. Medio: "
 "opciones adicionales de navegación. Avanzado: configuración técnica completa."
-msgstr "设置面板顶部的级别选择器根据复杂度显示或隐藏选项。最低：仅显示基本选项。中级：额外的导航选项。高级：完整的技术配置。"
+msgstr ""
+"设置面板顶部的级别选择器根据复杂度显示或隐藏选项。最低：仅显示基本选项。中"
+"级：额外的导航选项。高级：完整的技术配置。"
 
 #: qml/HelpPanel.qml:200
 msgid "Controles [−] y [+]"
@@ -557,7 +614,9 @@ msgid ""
 "Los valores numéricos (frecuencia GPS, distancias, tiempos...) se ajustan "
 "con botones [−] y [+] en lugar de sliders. Esto evita que al hacer scroll "
 "por el panel se cambie el valor accidentalmente."
-msgstr "数值（GPS 频率、距离、时间…）通过 [−] 和 [+] 按钮调整，而非滑块。这可以避免在面板中滚动时意外更改值。"
+msgstr ""
+"数值（GPS 频率、距离、时间…）通过 [−] 和 [+] 按钮调整，而非滑块。这可以避免在"
+"面板中滚动时意外更改值。"
 
 #: qml/HelpPanel.qml:202
 msgid "Indicador ↺ de valor por defecto"
@@ -568,7 +627,9 @@ msgid ""
 "Junto a cada opción con valor personalizado aparece el valor por defecto con "
 "el símbolo ↺ (por ejemplo: ↺ 8 m, ↺ 15 s, ↺ act.). Si el valor ya es el "
 "predeterminado, el indicador no aparece."
-msgstr "每个自定义值的选项旁边显示带 ↺ 符号的默认值（例如：↺ 8 m、↺ 15 s、↺ 启用）。如果值已是默认值，指示符不会显示。"
+msgstr ""
+"每个自定义值的选项旁边显示带 ↺ 符号的默认值（例如：↺ 8 m、↺ 15 s、↺ 启用）。"
+"如果值已是默认值，指示符不会显示。"
 
 #: qml/HelpPanel.qml:204 qml/PreferencesPanel.qml:200
 msgid "Restaurar valores por defecto"
@@ -580,7 +641,9 @@ msgid ""
 "Requiere dos toques para confirmar: el primero muestra el aviso ⚠, el "
 "segundo (en menos de 3 segundos) aplica el reinicio. Si no confirmas a "
 "tiempo, la acción se cancela automáticamente."
-msgstr "面板顶部有一个 ↺ 恢复默认值按钮。需要两次点击确认：第一次显示 ⚠ 警告，第二次（在 3 秒内）应用重置。如果未及时确认，操作将自动取消。"
+msgstr ""
+"面板顶部有一个 ↺ 恢复默认值按钮。需要两次点击确认：第一次显示 ⚠ 警告，第二次"
+"（在 3 秒内）应用重置。如果未及时确认，操作将自动取消。"
 
 #: qml/HelpPanel.qml:210
 msgid "Anuncios"
@@ -596,7 +659,9 @@ msgid ""
 "propia app en la carretera. Están diseñados para ser discretos: aparecen "
 "como señales al borde de la vía y en un pequeño panel en la parte inferior "
 "de la pantalla, sin interrumpir la navegación."
-msgstr "Navius 可能偶尔在道路上显示本地商家和应用本身的广告。它们设计得较为低调：显示为道路边的标志以及屏幕底部的小面板，不会打断导航。"
+msgstr ""
+"Navius 可能偶尔在道路上显示本地商家和应用本身的广告。它们设计得较为低调：显示"
+"为道路边的标志以及屏幕底部的小面板，不会打断导航。"
 
 #: qml/HelpPanel.qml:214
 msgid "¿Son intrusivos?"
@@ -607,7 +672,9 @@ msgid ""
 "No. Los anuncios respetan un intervalo mínimo de 1 hora entre apariciones, "
 "no producen sonido adicional ni bloquean el mapa. Puedes cerrarlos en "
 "cualquier momento tocando la X del panel."
-msgstr "不会。广告之间至少间隔 1 小时，不会产生额外声音，也不会遮挡地图。您可以随时点击面板上的 X 将其关闭。"
+msgstr ""
+"不会。广告之间至少间隔 1 小时，不会产生额外声音，也不会遮挡地图。您可以随时点"
+"击面板上的 X 将其关闭。"
 
 #: qml/HelpPanel.qml:216
 msgid "¿Cómo colaboran con Navius?"
@@ -619,7 +686,9 @@ msgid ""
 "supone una pequeña ayuda; si además haces click en él, contribuyes "
 "directamente a financiar el desarrollo y mantenimiento de la app. ¡Gracias "
 "por tu apoyo!"
-msgstr "Navius 是一款免费的开源应用程序。浏览广告本身就是一种小帮助；如果您还点击了它，您将直接为应用的开发和维护做出贡献。感谢您的支持！"
+msgstr ""
+"Navius 是一款免费的开源应用程序。浏览广告本身就是一种小帮助；如果您还点击了"
+"它，您将直接为应用的开发和维护做出贡献。感谢您的支持！"
 
 #: qml/HelpPanel.qml:218
 msgid "¿Qué datos se registran?"
@@ -630,7 +699,9 @@ msgid ""
 "Cuando el panel de anuncio aparece se registra una impresión anónima. Si "
 "haces click, el servidor anota el momento del click para estadísticas de "
 "rendimiento del anuncio. No se comparten datos con terceros."
-msgstr "当广告面板出现时，会记录一次匿名展示。如果您点击，服务器会记录点击时间用于广告效果统计。数据不会与第三方共享。"
+msgstr ""
+"当广告面板出现时，会记录一次匿名展示。如果您点击，服务器会记录点击时间用于广"
+"告效果统计。数据不会与第三方共享。"
 
 #: qml/HelpPanel.qml:315 qml/AboutDialog.qml:177
 msgid "Apoya el desarrollo"
@@ -678,7 +749,7 @@ msgstr "重试"
 
 #: qml/ServerFallbackDialog.qml:143 qml/SearchPanel.qml:2148
 #: qml/VehicleSetupDialog.qml:160 qml/SharedLocationDialog.qml:163
-#: qml/AlertasOverlay.qml:410 qml/LoginPanel.qml:345
+#: qml/Main.qml:8080 qml/AlertasOverlay.qml:410 qml/LoginPanel.qml:345
 #: qml/PreferencesPanel.qml:419 qml/PreferencesPanel.qml:931
 #: qml/PreferencesPanel.qml:2179
 msgid "Cancelar"
@@ -974,7 +1045,7 @@ msgstr "我附近"
 msgid "Gasolina"
 msgstr "加油站"
 
-#: qml/SearchPanel.qml:1830 qml/InstructionListPanel.qml:344 qml/Main.qml:6518
+#: qml/SearchPanel.qml:1830 qml/InstructionListPanel.qml:344 qml/Main.qml:6527
 msgid "Parking"
 msgstr "停车场"
 
@@ -1014,7 +1085,7 @@ msgstr "最近目的地"
 msgid "Rutas disponibles"
 msgstr "可用路线"
 
-#: qml/SearchPanel.qml:2044 qml/RouteSelectPanel.qml:170 qml/Main.qml:8662
+#: qml/SearchPanel.qml:2044 qml/RouteSelectPanel.qml:170 qml/Main.qml:8671
 msgid "Ruta más rápida"
 msgstr "最快路线"
 
@@ -1030,7 +1101,7 @@ msgstr "保存收藏"
 msgid "Nombre del favorito"
 msgstr "收藏名称"
 
-#: qml/SearchPanel.qml:2159 qml/PreferencesPanel.qml:941
+#: qml/SearchPanel.qml:2159 qml/Main.qml:9640 qml/PreferencesPanel.qml:941
 msgid "Guardar"
 msgstr "保存"
 
@@ -1053,6 +1124,26 @@ msgstr "此站任务"
 #: qml/InstructionListPanel.qml:396
 msgid "Editar ruta"
 msgstr "编辑路线"
+
+#: qml/VehicleSetupDialog.qml:51 qml/Main.qml:2235 qml/PreferencesPanel.qml:391
+msgid "Coche"
+msgstr "汽车"
+
+#: qml/VehicleSetupDialog.qml:52 qml/Main.qml:2236 qml/PreferencesPanel.qml:392
+msgid "Moto"
+msgstr "摩托车"
+
+#: qml/VehicleSetupDialog.qml:53 qml/Main.qml:2237 qml/PreferencesPanel.qml:393
+msgid "Scooter"
+msgstr "踏板摩托车"
+
+#: qml/VehicleSetupDialog.qml:54 qml/Main.qml:2238 qml/PreferencesPanel.qml:394
+msgid "Camión"
+msgstr "卡车"
+
+#: qml/VehicleSetupDialog.qml:55 qml/Main.qml:2239 qml/PreferencesPanel.qml:395
+msgid "Bicicleta"
+msgstr "自行车"
 
 #: qml/VehicleSetupDialog.qml:82 qml/TourOverlay.qml:27
 msgid "Bienvenido a Navius"
@@ -1082,7 +1173,7 @@ msgstr "类型"
 msgid "Crear"
 msgstr "创建"
 
-#: qml/SharedLocationDialog.qml:61 qml/Main.qml:9299
+#: qml/SharedLocationDialog.qml:61 qml/Main.qml:9310
 msgid "Ubicación compartida"
 msgstr "共享位置"
 
@@ -1150,7 +1241,7 @@ msgstr "等待编译 (clickable build)"
 msgid "Alta calidad (neuronal)"
 msgstr "高质量（神经网络）"
 
-#: qml/MediaPanel.qml:222 qml/Main.qml:6624
+#: qml/MediaPanel.qml:222 qml/Main.qml:6633
 msgid "Música"
 msgstr "音乐"
 
@@ -1185,14 +1276,17 @@ msgid ""
 "simbólicos a su carpeta ~/Music desde una Terminal (o por SSH). Navius "
 "reproducirá los enlaces sin copiar nada:"
 msgstr ""
-"添加音乐时，文件会被复制到应用文件夹，占用额外空间。为避免重复，高级用户可以从终端（或通过 SSH）创建指向 ~/Music 文件夹的符号链接。"
-"Navius 将直接播放链接而不复制任何内容："
+"添加音乐时，文件会被复制到应用文件夹，占用额外空间。为避免重复，高级用户可以"
+"从终端（或通过 SSH）创建指向 ~/Music 文件夹的符号链接。Navius 将直接播放链接"
+"而不复制任何内容："
 
 #: qml/MediaPanel.qml:540
 msgid ""
 "Después, vuelve a abrir el reproductor para ver tu música. Para quitar un "
 "enlace usa la papelera 🗑 (no borra el fichero original)."
-msgstr "之后，重新打开播放器查看您的音乐。要移除链接，请使用回收站 🗑（不会删除原始文件）。"
+msgstr ""
+"之后，重新打开播放器查看您的音乐。要移除链接，请使用回收站 🗑（不会删除原始文"
+"件）。"
 
 #: qml/OsmScoutDialog.qml:42
 msgid ""
@@ -1222,7 +1316,7 @@ msgstr "打开链接"
 msgid "Ir a"
 msgstr "前往"
 
-#: qml/MsgDetailPopup.qml:175 qml/Main.qml:7255 qml/MessagesPanel.qml:351
+#: qml/MsgDetailPopup.qml:175 qml/Main.qml:7264 qml/MessagesPanel.qml:351
 msgid "Añadir destino"
 msgstr "添加目的地"
 
@@ -1290,321 +1384,601 @@ msgstr "已完成"
 msgid "Sin historial de tareas"
 msgstr "无任务历史"
 
-#: qml/Main.qml:1451
+#: qml/Main.qml:1333
+msgid "✓ Configuración guardada en el servidor"
+msgstr "✓ 配置已保存到服务器"
+
+#: qml/Main.qml:1352
+msgid "Sin conexión: no se pudo cargar la configuración del servidor"
+msgstr "无网络连接：无法加载服务器配置"
+
+#: qml/Main.qml:1354
+msgid "Error al cargar configuración del servidor: "
+msgstr "加载服务器配置出错："
+
+#: qml/Main.qml:1453
 msgid "Error al procesar la respuesta del servidor"
 msgstr "处理服务器响应时出错"
 
-#: qml/Main.qml:1460
+#: qml/Main.qml:1462
 msgid "Sesión no válida — vuelve a iniciar sesión"
 msgstr "会话无效，请重新登录"
 
-#: qml/Main.qml:1465
+#: qml/Main.qml:1467
 msgid "Sin conexión con el servidor"
 msgstr "无法连接服务器"
 
-#: qml/Main.qml:1468
+#: qml/Main.qml:1470
 msgid "Error del servidor (%1)"
 msgstr "服务器错误 (%1)"
 
-#: qml/Main.qml:4677
+#: qml/Main.qml:2205 qml/Main.qml:2240 qml/ParkingDialog.qml:111
+msgid "A pie"
+msgstr "步行"
+
+#: qml/Main.qml:2267
+msgid "No se pudo calcular la ruta al aparcamiento"
+msgstr "无法计算前往停车位置的路线"
+
+#: qml/Main.qml:2408 qml/Main.qml:7698 qml/Main.qml:8368
+msgid "OSM Scout · rutas y mapas offline"
+msgstr "OSM Scout · 离线路线与地图"
+
+#: qml/Main.qml:2420
+msgid "Servidor: "
+msgstr "服务器："
+
+#: qml/Main.qml:2986
+msgid "Reproducción terminada"
+msgstr "播放结束"
+
+#: qml/Main.qml:4171
+msgid "GPS recuperado"
+msgstr "GPS已恢复"
+
+#: qml/Main.qml:4686
 msgid "Rumbo"
 msgstr "方位"
 
-#: qml/Main.qml:4695
+#: qml/Main.qml:4704
 msgid "km/h ◄"
 msgstr "km/h ◄"
 
-#: qml/Main.qml:4695
+#: qml/Main.qml:4704
 msgid "km/h"
 msgstr "km/h"
 
-#: qml/Main.qml:4734
+#: qml/Main.qml:4743
 msgid "Fallo GPS ON"
 msgstr "GPS故障 ON"
 
-#: qml/Main.qml:4734 qml/Main.qml:6765
+#: qml/Main.qml:4743 qml/Main.qml:6774
 msgid "Fallo GPS"
 msgstr "GPS故障"
 
-#: qml/Main.qml:4761
+#: qml/Main.qml:4770
 msgid "Rev."
 msgstr "倒车"
 
-#: qml/Main.qml:4850
+#: qml/Main.qml:4859
 msgid "Ctrl ON"
 msgstr "控制 ON"
 
-#: qml/Main.qml:4850
+#: qml/Main.qml:4859
 msgid "Ctrl"
 msgstr "控制"
 
-#: qml/Main.qml:4898
+#: qml/Main.qml:4907
 msgid "Con ruta"
 msgstr "有路线"
 
-#: qml/Main.qml:4937
+#: qml/Main.qml:4946
 msgid "Hdg blend"
 msgstr "Hdg blend"
 
-#: qml/Main.qml:4948
+#: qml/Main.qml:4957
 msgid "Sin ruta"
 msgstr "无路线"
 
-#: qml/Main.qml:4962
+#: qml/Main.qml:4971
 msgid "Hdg accel"
 msgstr "Hdg accel"
 
-#: qml/Main.qml:4978
+#: qml/Main.qml:4987
 msgid "Pos sin nav"
 msgstr "Pos sin nav"
 
-#: qml/Main.qml:5088
+#: qml/Main.qml:5097
 msgid "Seguir ruta"
 msgstr "跟随路线"
 
-#: qml/Main.qml:5115
+#: qml/Main.qml:5124
 msgid "SIMULACIÓN GPS"
 msgstr "GPS模拟"
 
-#: qml/Main.qml:5144
+#: qml/Main.qml:5153
 msgid "OSM Scout Server  ·  límites de velocidad por tramo"
 msgstr "OSM Scout Server · 分段限速"
 
-#: qml/Main.qml:5661 qml/Main.qml:5683
+#: qml/Main.qml:5428
+msgid "Mapa 3D"
+msgstr "3D 地图"
+
+#: qml/Main.qml:5429
+msgid "Mapa"
+msgstr "地图"
+
+#: qml/Main.qml:5430 qml/PreferencesPanel.qml:25
+msgid "Satélite"
+msgstr "卫星"
+
+#: qml/Main.qml:5431 qml/PreferencesPanel.qml:29
+msgid "Claro"
+msgstr "明亮"
+
+#: qml/Main.qml:5432 qml/PreferencesPanel.qml:29
+msgid "Vivo"
+msgstr "鲜艳"
+
+#: qml/Main.qml:5434 qml/PreferencesPanel.qml:30 qml/PreferencesPanel.qml:329
+msgid "Noche"
+msgstr "夜间"
+
+#: qml/Main.qml:5670 qml/Main.qml:5692
 msgid "Alerta"
 msgstr "警报"
 
-#: qml/Main.qml:5711 qml/PreferencesPanel.qml:24 qml/PreferencesPanel.qml:329
+#: qml/Main.qml:5720 qml/PreferencesPanel.qml:24 qml/PreferencesPanel.qml:329
 msgid "Auto"
 msgstr "自动"
 
-#: qml/Main.qml:6360
+#: qml/Main.qml:6369
 msgid "Silenciado"
 msgstr "静音"
 
-#: qml/Main.qml:6361
+#: qml/Main.qml:6370
 msgid "Indicaciones y alertas por voz"
 msgstr "语音指示和提醒"
 
-#: qml/Main.qml:6362
+#: qml/Main.qml:6371
 msgid "Indicaciones voz, alertas pitido"
 msgstr "语音指示，蜂鸣提醒"
 
-#: qml/Main.qml:6363
+#: qml/Main.qml:6372
 msgid "Solo indicaciones por voz"
 msgstr "仅语音指示"
 
-#: qml/Main.qml:6364
+#: qml/Main.qml:6373
 msgid "Indicaciones pitido, alertas voz"
 msgstr "蜂鸣指示，语音提醒"
 
-#: qml/Main.qml:6365 qml/Main.qml:6429
+#: qml/Main.qml:6374 qml/Main.qml:6438
 msgid "Solo pitidos"
 msgstr "仅蜂鸣"
 
-#: qml/Main.qml:6366
+#: qml/Main.qml:6375
 msgid "Solo indicaciones (pitido)"
 msgstr "仅指示(蜂鸣)"
 
-#: qml/Main.qml:6367
+#: qml/Main.qml:6376
 msgid "Solo alertas por voz"
 msgstr "仅语音提醒"
 
-#: qml/Main.qml:6368
+#: qml/Main.qml:6377
 msgid "Solo alertas (pitido)"
 msgstr "仅提醒(蜂鸣)"
 
-#: qml/Main.qml:6427
+#: qml/Main.qml:6436
 msgid "Voz + alertas"
 msgstr "语音 + 警报"
 
-#: qml/Main.qml:6428
+#: qml/Main.qml:6437
 msgid "Solo alertas"
 msgstr "仅警报"
 
-#: qml/Main.qml:6429
+#: qml/Main.qml:6438
 msgid "Silencio"
 msgstr "静音"
 
-#: qml/Main.qml:6461
+#: qml/Main.qml:6470
 msgid "Compartiendo"
 msgstr "正在共享"
 
-#: qml/Main.qml:6486
+#: qml/Main.qml:6495
 msgid "Prev. Ruta"
 msgstr "预览路线"
 
-#: qml/Main.qml:6501
+#: qml/Main.qml:6510
 msgid "Tareas"
 msgstr "任务"
 
-#: qml/Main.qml:6545
+#: qml/Main.qml:6537
+msgid "🅿 Aparcamiento guardado · "
+msgstr "🅿 已保存停车位置 · "
+
+#: qml/Main.qml:6554
 msgid "Borrar aparcamiento"
 msgstr "清除停车位"
 
-#: qml/Main.qml:6573
+#: qml/Main.qml:6565
+msgid "🗑 Aparcamiento eliminado · "
+msgstr "🗑 已删除停车位置 · "
+
+#: qml/Main.qml:6582
 msgid "Ver vehículo"
 msgstr "查看车辆"
 
-#: qml/Main.qml:6606 qml/ParkingDialog.qml:61
+#: qml/Main.qml:6615 qml/ParkingDialog.qml:61
 msgid "Ir al aparcamiento"
 msgstr "前往停车场"
 
-#: qml/Main.qml:6656 qml/LoginPanel.qml:104
+#: qml/Main.qml:6665 qml/LoginPanel.qml:104
 msgid "Mi cuenta"
 msgstr "我的账户"
 
-#: qml/Main.qml:6656
+#: qml/Main.qml:6665
 msgid "Login"
 msgstr "登录"
 
-#: qml/Main.qml:6672 qml/MessagesPanel.qml:106
+#: qml/Main.qml:6681 qml/MessagesPanel.qml:106
 msgid "Mensajes"
 msgstr "消息"
 
-#: qml/Main.qml:6702
+#: qml/Main.qml:6711
 msgid "Bloq. Mapa"
 msgstr "锁定地图"
 
-#: qml/Main.qml:6719 qml/PreferencesPanel.qml:3021
+#: qml/Main.qml:6728 qml/PreferencesPanel.qml:3021
 msgid "Debug"
 msgstr "Debug"
 
-#: qml/Main.qml:6734
+#: qml/Main.qml:6743
 msgid "Sim GPS"
 msgstr "Sim GPS"
 
-#: qml/Main.qml:6765
+#: qml/Main.qml:6774
 msgid "GPS on"
 msgstr "GPS开启"
 
-#: qml/Main.qml:6780
+#: qml/Main.qml:6789
 msgid "Reanudar"
 msgstr "继续"
 
-#: qml/Main.qml:6780
+#: qml/Main.qml:6789
 msgid "Pausar sim"
 msgstr "暂停模拟"
 
-#: qml/Main.qml:6796 qml/PreferencesPanel.qml:1776
+#: qml/Main.qml:6805 qml/PreferencesPanel.qml:1776
 msgid "Suavizado GPS"
 msgstr "GPS平滑"
 
-#: qml/Main.qml:6813
+#: qml/Main.qml:6822
 msgid "Bisector"
 msgstr "Bisector"
 
-#: qml/Main.qml:6830
+#: qml/Main.qml:6839
 msgid "POIs debug"
 msgstr "POIs debug"
 
-#: qml/Main.qml:6860
+#: qml/Main.qml:6869
 msgid "Donar"
 msgstr "捐赠"
 
-#: qml/Main.qml:7067
+#: qml/Main.qml:7076
 msgid "INICIO"
 msgstr "起点"
 
-#: qml/Main.qml:7104
+#: qml/Main.qml:7113
 msgid "FIN"
 msgstr "终点"
 
-#: qml/Main.qml:7235
+#: qml/Main.qml:7244
 msgid "Inicio sim"
 msgstr "模拟开始"
 
-#: qml/Main.qml:7585
+#: qml/Main.qml:7308
+msgid "🚨  Añadir alerta aquí"
+msgstr "🚨  在此添加警报"
+
+#: qml/Main.qml:7337
+msgid "📍 Establecer posición GPS"
+msgstr "📍 设置 GPS 位置"
+
+#: qml/Main.qml:7462
+msgid "👍  Confirmar"
+msgstr "👍  确认"
+
+#: qml/Main.qml:7485
+msgid "👎  Desmentir"
+msgstr "👎  否认"
+
+#: qml/Main.qml:7510
+msgid "🗑  Cancelar mi alerta"
+msgstr "🗑  取消我的警报"
+
+#: qml/Main.qml:7594
 msgid "Satélites"
 msgstr "卫星"
 
-#: qml/Main.qml:7953
+#: qml/Main.qml:7701
+msgid "OSM Scout no disponible · usando "
+msgstr "OSM Scout 不可用 · 正在使用 "
+
+#: qml/Main.qml:7759
+msgid "Caché de mapas eliminada"
+msgstr "地图缓存已清除"
+
+#: qml/Main.qml:7962
 msgid "Límite comunitario"
 msgstr "社区限速"
 
-#: qml/Main.qml:7960
+#: qml/Main.qml:7969
 msgid "Eliminar este límite"
 msgstr "删除此限速"
 
-#: qml/Main.qml:8027
+#: qml/Main.qml:8036
 msgid "Límite de velocidad aquí"
 msgstr "此处限速"
 
-#: qml/Main.qml:8142
+#: qml/Main.qml:8135
+msgid "⚙  Configuración en el servidor"
+msgstr "⚙  服务器上的配置"
+
+#: qml/Main.qml:8151
 msgid "Tienes cambios locales no sincronizados. ¿Cuál configuración usar?"
 msgstr "你有未同步的本地更改，请选择使用哪个配置。"
 
-#: qml/Main.qml:8396
+#: qml/Main.qml:8163
+msgid "Usar del servidor"
+msgstr "使用服务器配置"
+
+#: qml/Main.qml:8173
+msgid "✓ Configuración del servidor aplicada"
+msgstr "✓ 已应用服务器配置"
+
+#: qml/Main.qml:8182
+msgid "Mantener la local"
+msgstr "保留本地配置"
+
+#: qml/Main.qml:8285
+msgid "Cacheando mapa… detalle"
+msgstr "正在缓存地图… 细节"
+
+#: qml/Main.qml:8305
+msgid "Cacheando mapa… "
+msgstr "正在缓存地图… "
+
+#: qml/Main.qml:8335
+msgid "Mapa online: OSM Scout"
+msgstr "在线地图：OSM Scout"
+
+#: qml/Main.qml:8337
+msgid "Mapa online: OSM Scout (no disponible · usando Mapbox)"
+msgstr "在线地图：OSM Scout（不可用 · 正在使用 Mapbox）"
+
+#: qml/Main.qml:8339
+msgid "Mapa online: Mapbox"
+msgstr "在线地图：Mapbox"
+
+#: qml/Main.qml:8344
+msgid "Sin internet: fallback a OSM Scout"
+msgstr "无网络：回退到 OSM Scout"
+
+#: qml/Main.qml:8346
+msgid "Sin internet: fallback OSM Scout (no disponible)"
+msgstr "无网络：回退到 OSM Scout（不可用）"
+
+#: qml/Main.qml:8348
+msgid "Sin internet: caché de tiles"
+msgstr "无网络：使用瓦片缓存"
+
+#: qml/Main.qml:8405
 msgid "Mapas: servidor no disponible · usando OSM Scout"
 msgstr "地图：服务器不可用 · 使用 OSM Scout"
 
-#: qml/Main.qml:8398
+#: qml/Main.qml:8407
 msgid "Mapas: servidor no disponible · usando servidor público"
 msgstr "地图：服务器不可用 · 使用公共服务器"
 
-#: qml/Main.qml:8418
+#: qml/Main.qml:8427
 msgid "Servidor de mapas recuperado · restaurando"
 msgstr "地图服务器已恢复 · 正在还原"
 
-#: qml/Main.qml:8436 qml/Main.qml:8444
+#: qml/Main.qml:8445 qml/Main.qml:8453
 msgid "Sin internet · usando OSM Scout Server"
 msgstr "无网络 · 使用 OSM Scout Server"
 
-#: qml/Main.qml:8460 qml/Main.qml:8465
+#: qml/Main.qml:8469 qml/Main.qml:8474
 msgid "Conexión restaurada · volviendo a mapas online"
 msgstr "连接已恢复 · 返回在线地图"
 
-#: qml/Main.qml:8627
+#: qml/Main.qml:8533
+msgid "Cacheando mapa… 0%"
+msgstr "正在缓存地图… 0%"
+
+#: qml/Main.qml:8636
 msgid "Tienes un mensaje nuevo"
 msgstr "您有一条新消息"
 
-#: qml/Main.qml:8628
+#: qml/Main.qml:8637
 msgid "Tienes %1 mensajes nuevos"
 msgstr "您有 %1 条新消息"
 
-#: qml/Main.qml:8666
+#: qml/Main.qml:8675
 msgid "Ahorra"
 msgstr "节省"
 
-#: qml/Main.qml:8676
+#: qml/Main.qml:8685
 msgid "Revisar"
 msgstr "查看"
 
-#: qml/Main.qml:8685
+#: qml/Main.qml:8694
 msgid "Ignorar"
 msgstr "忽略"
 
-#: qml/Main.qml:8741
+#: qml/Main.qml:8750
 msgid "Pre-procesando motor TTS"
 msgstr "正在预处理 TTS 引擎"
 
-#: qml/Main.qml:8744
+#: qml/Main.qml:8751
+msgid "GPS impreciso. Simulando trayecto."
+msgstr "GPS不准确。正在模拟路线。"
+
+#: qml/Main.qml:8754
 msgid "Cargando mapa…"
 msgstr "加载地图中…"
 
-#: qml/Main.qml:9517
+#: qml/Main.qml:9528
 msgid "¿Has llegado a"
 msgstr "你已到达"
 
-#: qml/Main.qml:9518
+#: qml/Main.qml:9529
 msgid "el destino"
 msgstr "目的地"
 
-#: qml/Main.qml:9527
+#: qml/Main.qml:9538
 msgid "Sí, he llegado"
 msgstr "是的，已到达"
 
-#: qml/Main.qml:9538
+#: qml/Main.qml:9549
 msgid "Todavía no"
 msgstr "还没有"
 
-#: qml/Main.qml:9570
+#: qml/Main.qml:9581
 msgid "Tareas pendientes"
 msgstr "待办任务"
 
-#: qml/Main.qml:9579
+#: qml/Main.qml:9590
 msgid "Abrir"
 msgstr "打开"
+
+#: qml/Main.qml:9631
+msgid "🅿 ¿Guardar aparcamiento aquí?"
+msgstr "🅿 要在此保存停车位置吗？"
+
+#: qml/Main.qml:9649
+msgid "🅿 Aparcamiento guardado"
+msgstr "🅿 已保存停车位置"
+
+#: qml/AlertasOverlay.qml:97 qml/AlertasOverlay.qml:99
+msgid "Tráfico"
+msgstr "路况"
+
+#: qml/AlertasOverlay.qml:100
+msgid "Denso"
+msgstr "拥堵"
+
+#: qml/AlertasOverlay.qml:101
+msgid "Detenido"
+msgstr "停滞"
+
+#: qml/AlertasOverlay.qml:104 qml/AlertasOverlay.qml:106
+msgid "Policía"
+msgstr "警察"
+
+#: qml/AlertasOverlay.qml:107
+msgid "Cámara móvil"
+msgstr "流动测速"
+
+#: qml/AlertasOverlay.qml:108
+msgid "Oculto"
+msgstr "隐蔽"
+
+#: qml/AlertasOverlay.qml:111 qml/AlertasOverlay.qml:113
+msgid "Accidente"
+msgstr "事故"
+
+#: qml/AlertasOverlay.qml:114
+msgid "Col. múltiple"
+msgstr "多车相撞"
+
+#: qml/AlertasOverlay.qml:117 qml/AlertasOverlay.qml:119
+msgid "Peligro"
+msgstr "危险"
+
+#: qml/AlertasOverlay.qml:120
+msgid "Obras"
+msgstr "道路施工"
+
+#: qml/AlertasOverlay.qml:121
+msgid "Coche en arcén"
+msgstr "路肩有车"
+
+#: qml/AlertasOverlay.qml:122
+msgid "Semáforo roto"
+msgstr "红绿灯故障"
+
+#: qml/AlertasOverlay.qml:123
+msgid "Bache"
+msgstr "坑洼"
+
+#: qml/AlertasOverlay.qml:126
+msgid "Cortada"
+msgstr "道路封闭"
+
+#: qml/AlertasOverlay.qml:127
+msgid "Carril"
+msgstr "车道"
+
+#: qml/AlertasOverlay.qml:129
+msgid "Carril bloq."
+msgstr "车道封闭"
+
+#: qml/AlertasOverlay.qml:130
+msgid "Izquierdo"
+msgstr "左侧"
+
+#: qml/AlertasOverlay.qml:131
+msgid "Derecho"
+msgstr "右侧"
+
+#: qml/AlertasOverlay.qml:132
+msgid "Central"
+msgstr "中间"
+
+#: qml/AlertasOverlay.qml:135
+msgid "Error mapa"
+msgstr "地图错误"
+
+#: qml/AlertasOverlay.qml:136 qml/AlertasOverlay.qml:138
+msgid "Mal tiempo"
+msgstr "恶劣天气"
+
+#: qml/AlertasOverlay.qml:139
+msgid "Resbaladiza"
+msgstr "路面湿滑"
+
+#: qml/AlertasOverlay.qml:140
+msgid "Inundación"
+msgstr "道路积水"
+
+#: qml/AlertasOverlay.qml:141
+msgid "Nieve"
+msgstr "积雪"
+
+#: qml/AlertasOverlay.qml:142
+msgid "Niebla"
+msgstr "大雾"
+
+#: qml/AlertasOverlay.qml:143
+msgid "Hielo"
+msgstr "路面结冰"
+
+#: qml/AlertasOverlay.qml:146
+msgid "Asistencia"
+msgstr "道路救援"
+
+#: qml/AlertasOverlay.qml:148
+msgid "Compañeros"
+msgstr "车友"
+
+#: qml/AlertasOverlay.qml:149
+msgid "Emergencia"
+msgstr "紧急情况"
+
+#: qml/AlertasOverlay.qml:152
+msgid "Lugar"
+msgstr "地点"
 
 #: qml/AlertasOverlay.qml:249
 msgid "Añadir alerta"
@@ -1748,7 +2122,9 @@ msgid ""
 "aparecen como carteles en la carretera sin interrumpir la navegación. Ver un "
 "anuncio ya ayuda; hacer click contribuye directamente al desarrollo de la "
 "app. ¡Gracias!"
-msgstr "Navius 是免费的开源应用。广告低调 — 以道路标志形式出现，不干扰导航。浏览广告已是帮助；点击则直接为应用开发做贡献。谢谢！"
+msgstr ""
+"Navius 是免费的开源应用。广告低调 — 以道路标志形式出现，不干扰导航。浏览广告"
+"已是帮助；点击则直接为应用开发做贡献。谢谢！"
 
 #: qml/AboutDialog.qml:237
 msgid "Licencia GNU GPL v3. Software libre."
@@ -1794,10 +2170,6 @@ msgstr "已停放车辆"
 msgid "Modo de desplazamiento"
 msgstr "出行方式"
 
-#: qml/ParkingDialog.qml:111
-msgid "A pie"
-msgstr "步行"
-
 #: qml/ParkingDialog.qml:124
 msgid "En "
 msgstr "在"
@@ -1831,29 +2203,29 @@ msgstr ""
 msgid "Pulsa Iniciar para activar el GPS"
 msgstr "按开始激活GPS"
 
+#: qml/SatelliteView.qml:262
+msgid "GPS en uso"
+msgstr "GPS 使用中"
+
+#: qml/SatelliteView.qml:263
+msgid "GLONASS en uso"
+msgstr "GLONASS 使用中"
+
+#: qml/SatelliteView.qml:264
+msgid "No en uso"
+msgstr "未在使用"
+
+#: qml/SatelliteView.qml:370
+msgid "No uso"
+msgstr "未使用"
+
 #: qml/SatelliteView.qml:417
 msgid "Sin satélites visibles"
 msgstr "无可见卫星"
 
-#: qml/PreferencesPanel.qml:25
-msgid "Satélite"
-msgstr "卫星"
-
-#: qml/PreferencesPanel.qml:29
-msgid "Claro"
-msgstr "明亮"
-
-#: qml/PreferencesPanel.qml:29
-msgid "Vivo"
-msgstr "鲜艳"
-
 #: qml/PreferencesPanel.qml:30
 msgid "Fiord"
 msgstr "峡湾"
-
-#: qml/PreferencesPanel.qml:30 qml/PreferencesPanel.qml:329
-msgid "Noche"
-msgstr "夜间"
 
 #: qml/PreferencesPanel.qml:198
 msgid "Restaurado"
@@ -1917,6 +2289,10 @@ msgstr "是"
 #: qml/PreferencesPanel.qml:1383
 msgid "No"
 msgstr "关闭"
+
+#: qml/PreferencesPanel.qml:552
+msgid "Mi vehículo"
+msgstr "我的车辆"
 
 #: qml/PreferencesPanel.qml:583
 msgid "Crear vehículo"
@@ -2385,6 +2761,14 @@ msgstr "关"
 msgid "Posición manual"
 msgstr "手动定位"
 
+#: qml/PreferencesPanel.qml:3311
+msgid "Latitud  (ej. 40.322130)"
+msgstr "纬度（例如 40.322130）"
+
+#: qml/PreferencesPanel.qml:3318
+msgid "Longitud  (ej. -3.515801)"
+msgstr "经度（例如 -3.515801）"
+
 #: qml/PreferencesPanel.qml:3327
 msgid "Fijar"
 msgstr "固定"
@@ -2474,7 +2858,9 @@ msgid ""
 "Este asistente te guiará por todas las funciones de la aplicación. Puedes "
 "consultar este tour en cualquier momento desde Ajustes → Ayuda."
 msgstr ""
-"Navius 是适用于 Ubuntu Touch 的 GPS 导航应用。集离线矢量地图、语音逐步导航、高级路线规划和全球行驶支持于一体。\n\n"
+"Navius 是适用于 Ubuntu Touch 的 GPS 导航应用。集离线矢量地图、语音逐步导航、"
+"高级路线规划和全球行驶支持于一体。\n"
+"\n"
 "本向导将引导您了解应用的所有功能。您可以随时从设置 → 帮助访问此教程。"
 
 #: qml/TourOverlay.qml:33
@@ -2488,8 +2874,13 @@ msgid ""
 "• El botón 3D/2D alterna entre vista plana y perspectiva de conducción\n"
 "• En modo noche el mapa cambia automáticamente a paleta oscura"
 msgstr ""
-"地图为矢量格式（MapLibre GL）—在任何缩放级别都清晰，下载瓦片后可离线使用。\n\n• 双指捏合缩放或使用侧边栏\n• 点击指南针按钮"
-"重新居中并激活追踪\n• 滑动手指自由探索\n• 3D/2D 按钮在平面视图和驾驶视角之间切换\n• 夜间模式下地图自动切换至深色调色板"
+"地图为矢量格式（MapLibre GL）—在任何缩放级别都清晰，下载瓦片后可离线使用。\n"
+"\n"
+"• 双指捏合缩放或使用侧边栏\n"
+"• 点击指南针按钮重新居中并激活追踪\n"
+"• 滑动手指自由探索\n"
+"• 3D/2D 按钮在平面视图和驾驶视角之间切换\n"
+"• 夜间模式下地图自动切换至深色调色板"
 
 #: qml/TourOverlay.qml:38
 msgid ""
@@ -2504,8 +2895,14 @@ msgid ""
 "• Puedes añadir varios destinos en secuencia (ruta multistop)\n"
 "• El historial y los favoritos aparecen automáticamente"
 msgstr ""
-"点击顶部的「开始导航」按钮打开规划面板。\n\n输入地点名称、地址或兴趣点。搜索使用 Photon/Komoot 配合 OpenStreetMa"
-"p 数据，适用于世界任何地方。\n\n• 点击结果将其添加为目的地\n• 您可以依次添加多个目的地（多站路线）\n• 历史记录和收藏会自动显示"
+"点击顶部的「开始导航」按钮打开规划面板。\n"
+"\n"
+"输入地点名称、地址或兴趣点。搜索使用 Photon/Komoot 配合 OpenStreetMap 数据，"
+"适用于世界任何地方。\n"
+"\n"
+"• 点击结果将其添加为目的地\n"
+"• 您可以依次添加多个目的地（多站路线）\n"
+"• 历史记录和收藏会自动显示"
 
 #: qml/TourOverlay.qml:42
 msgid "Planificación de ruta"
@@ -2522,9 +2919,13 @@ msgid ""
 "restaurantes, hoteles…\n"
 "• Pulsa CALCULAR RUTA para ver las alternativas disponibles"
 msgstr ""
-"面板打开后，您可以配置行程的所有详情：\n\n• 添加多个目的地 — 路线按顺序经过所有目的地\n• 使用每个目的地旁的按钮重新排序或删除\n•"
-" 路线选项：无收费站、无高速公路、无渡轮、无土路\n• 搜索附近兴趣点：加油站（含油价）、停车场、餐厅、酒店…\n• 点击计算路线查看可用的替代"
-"方案"
+"面板打开后，您可以配置行程的所有详情：\n"
+"\n"
+"• 添加多个目的地 — 路线按顺序经过所有目的地\n"
+"• 使用每个目的地旁的按钮重新排序或删除\n"
+"• 路线选项：无收费站、无高速公路、无渡轮、无土路\n"
+"• 搜索附近兴趣点：加油站（含油价）、停车场、餐厅、酒店…\n"
+"• 点击计算路线查看可用的替代方案"
 
 #: qml/TourOverlay.qml:48
 msgid ""
@@ -2538,8 +2939,14 @@ msgid ""
 "Los TODOs se conservan entre sesiones y se muestran la próxima vez que "
 "visites el mismo lugar."
 msgstr ""
-"您可以为行程中的每个目的地添加待办事项列表。\n\n• 点击目的地旁的「+ 任务」添加待办事项\n• 任务按位置（坐标）保存\n• 到达目的地时"
-"会出现提示打开列表\n• 直接在面板中将任务标记为已完成\n\n待办事项在会话间保留，下次访问同一地点时会再次显示。"
+"您可以为行程中的每个目的地添加待办事项列表。\n"
+"\n"
+"• 点击目的地旁的「+ 任务」添加待办事项\n"
+"• 任务按位置（坐标）保存\n"
+"• 到达目的地时会出现提示打开列表\n"
+"• 直接在面板中将任务标记为已完成\n"
+"\n"
+"待办事项在会话间保留，下次访问同一地点时会再次显示。"
 
 #: qml/TourOverlay.qml:53
 msgid ""
@@ -2552,8 +2959,13 @@ msgid ""
 "• Aparecen en la sección «Planes guardados» en la parte superior del panel\n"
 "• Toca un plan para cargarlo, o el icono de papelera para borrarlo"
 msgstr ""
-"激活「出发时间」以规划未来的行程。选择出发日期和时间 — 路线将使用该时刻的预测交通数据计算。\n\n• 点击计算路线旁的 ⊕ 保存完整计划\n"
-"• 计划包含目的地、待办事项、出发时间和路线选项\n• 计划显示在面板顶部的「已保存计划」栏目\n• 点击计划加载，或点击回收站图标删除"
+"激活「出发时间」以规划未来的行程。选择出发日期和时间 — 路线将使用该时刻的预测"
+"交通数据计算。\n"
+"\n"
+"• 点击计算路线旁的 ⊕ 保存完整计划\n"
+"• 计划包含目的地、待办事项、出发时间和路线选项\n"
+"• 计划显示在面板顶部的「已保存计划」栏目\n"
+"• 点击计划加载，或点击回收站图标删除"
 
 #: qml/TourOverlay.qml:57
 msgid "Selección de ruta y alternativas"
@@ -2569,8 +2981,12 @@ msgid ""
 "• Toca una alternativa para verla; confirma para iniciar la navegación\n"
 "• También puedes ver la lista completa de instrucciones antes de salir"
 msgstr ""
-"Navius 向 Valhalla 请求最多 3 条备选路线。计算完成后，出现选择面板：\n\n• 每条备选方案显示距离、时间和地图上的路线\n"
-"• 选择车辆类型：轿车、摩托车、自行车、步行等\n• 点击备选方案查看；确认后开始导航\n• 您还可以在出发前查看完整的指令列表"
+"Navius 向 Valhalla 请求最多 3 条备选路线。计算完成后，出现选择面板：\n"
+"\n"
+"• 每条备选方案显示距离、时间和地图上的路线\n"
+"• 选择车辆类型：轿车、摩托车、自行车、步行等\n"
+"• 点击备选方案查看；确认后开始导航\n"
+"• 您还可以在出发前查看完整的指令列表"
 
 #: qml/TourOverlay.qml:62
 msgid "Navegación turn-by-turn"
@@ -2589,8 +3005,15 @@ msgid ""
 "Las instrucciones se anuncian por voz con antelación suficiente para "
 "reaccionar a tiempo."
 msgstr ""
-"导航过程中，顶部栏显示：\n\n• 带操作图标的当前指令\n• 到下一个转弯的距离\n• 当前和下一条街道的名称\n• 预计到达时间 (ETA)"
-"\n• 您的当前速度和该路段的限速\n\n指令会提前通过语音播报，给您足够的反应时间。"
+"导航过程中，顶部栏显示：\n"
+"\n"
+"• 带操作图标的当前指令\n"
+"• 到下一个转弯的距离\n"
+"• 当前和下一条街道的名称\n"
+"• 预计到达时间 (ETA)\n"
+"• 您的当前速度和该路段的限速\n"
+"\n"
+"指令会提前通过语音播报，给您足够的反应时间。"
 
 #: qml/TourOverlay.qml:67
 msgid "Alertas comunitarias"
@@ -2609,8 +3032,14 @@ msgid ""
 "\n"
 "Requiere cuenta Navius activa."
 msgstr ""
-"其他 Navius 驾驶者实时上报事故，显示在您的地图上。\n\n• 事故、移动测速、警察、交通、危险、施工…\n• 点击地图上的三角形警告按钮"
-"进行上报\n• 您路线上的活跃警报会显示声音提示\n• 使用投票按钮确认或否认其他用户的警报\n\n需要活跃的 Navius 账户。"
+"其他 Navius 驾驶者实时上报事故，显示在您的地图上。\n"
+"\n"
+"• 事故、移动测速、警察、交通、危险、施工…\n"
+"• 点击地图上的三角形警告按钮进行上报\n"
+"• 您路线上的活跃警报会显示声音提示\n"
+"• 使用投票按钮确认或否认其他用户的警报\n"
+"\n"
+"需要活跃的 Navius 账户。"
 
 #: qml/TourOverlay.qml:73
 msgid ""
@@ -2625,9 +3054,15 @@ msgid ""
 "\n"
 "Requiere cuenta Navius activa."
 msgstr ""
-"与任何人实时共享您的位置和路线，他们无需安装 Navius。\n\n• 菜单 ≡ → 共享行程 → 创建链接\n• 复制链接并通过您喜欢的方式分"
-"享\n• 跟踪者每 5 秒在其浏览器中查看您的最新位置\n• 链接有效期 24 小时\n• 随时从相同菜单停止共享\n\n需要活跃的 Naviu"
-"s 账户。"
+"与任何人实时共享您的位置和路线，他们无需安装 Navius。\n"
+"\n"
+"• 菜单 ≡ → 共享行程 → 创建链接\n"
+"• 复制链接并通过您喜欢的方式分享\n"
+"• 跟踪者每 5 秒在其浏览器中查看您的最新位置\n"
+"• 链接有效期 24 小时\n"
+"• 随时从相同菜单停止共享\n"
+"\n"
+"需要活跃的 Navius 账户。"
 
 #: qml/TourOverlay.qml:77
 msgid "Instrucciones de voz (TTS)"
@@ -2644,9 +3079,13 @@ msgid ""
 "Piper pre-genera los WAVs de las próximas instrucciones en segundo plano "
 "para que la voz suene sin retraso perceptible."
 msgstr ""
-"语音使用在设置 → 语音中选择的引擎：\n\n• Piper（神经网络）：最自然，约 300 ms 延迟，下载 .onnx 语音\n• Mimi"
-"c HTS：内置语音，约 100 ms，高质量\n• PicoTTS：备用引擎，约 50 ms，基本质量\n\nPiper 在后台预生成下一条指"
-"令的 WAV 文件，使语音播放无明显延迟。"
+"语音使用在设置 → 语音中选择的引擎：\n"
+"\n"
+"• Piper（神经网络）：最自然，约 300 ms 延迟，下载 .onnx 语音\n"
+"• Mimic HTS：内置语音，约 100 ms，高质量\n"
+"• PicoTTS：备用引擎，约 50 ms，基本质量\n"
+"\n"
+"Piper 在后台预生成下一条指令的 WAV 文件，使语音播放无明显延迟。"
 
 #: qml/TourOverlay.qml:82
 msgid "Reproductor de música"
@@ -2663,8 +3102,12 @@ msgid ""
 "• La música baja automáticamente cuando el navegador habla (ducking)\n"
 "  y se restaura 600 ms después"
 msgstr ""
-"Navius 内置音乐播放器。通过内容中心导入音轨 — 菜单 ≡ → 音乐 → 添加音乐。\n\n• 点击音轨播放\n• 支持 mp3、ogg、"
-"flac、m4a、opus、wav 等格式\n• 紧凑小部件保持在状态栏上可见\n• 导航播报时音乐自动降低音量（闪避），600 ms 后恢复"
+"Navius 内置音乐播放器。通过内容中心导入音轨 — 菜单 ≡ → 音乐 → 添加音乐。\n"
+"\n"
+"• 点击音轨播放\n"
+"• 支持 mp3、ogg、flac、m4a、opus、wav 等格式\n"
+"• 紧凑小部件保持在状态栏上可见\n"
+"• 导航播报时音乐自动降低音量（闪避），600 ms 后恢复"
 
 #: qml/TourOverlay.qml:87
 msgid "Velocímetro y límites de velocidad"
@@ -2679,8 +3122,11 @@ msgid ""
 "Ajustes)\n"
 "• Los límites provienen de los datos OSM con el estándar Legal Default Speeds"
 msgstr ""
-"圆形速度计实时显示您的速度。\n\n• 当前路段的限速显示在导航栏中\n• 如果超速，指示器会变色（可在设置中配置）\n• 限速数据来自 OSM"
-" 数据，遵循 Legal Default Speeds 标准"
+"圆形速度计实时显示您的速度。\n"
+"\n"
+"• 当前路段的限速显示在导航栏中\n"
+"• 如果超速，指示器会变色（可在设置中配置）\n"
+"• 限速数据来自 OSM 数据，遵循 Legal Default Speeds 标准"
 
 #: qml/TourOverlay.qml:93
 msgid ""
@@ -2694,8 +3140,14 @@ msgid ""
 "Útil para diagnosticar problemas de recepción GPS o comparar señal en "
 "distintas ubicaciones."
 msgstr ""
-"卫星视图实时显示：\n\n• 每颗卫星在天空中的位置（方位极坐标视图）\n• 正在使用的每颗卫星的信号强度 (SNR)\n• 可见和正在使用的卫"
-"星数量\n• GPS 定位状态（无定位 / 2D 定位 / 3D 定位）\n\n适用于诊断 GPS 接收问题或比较不同位置的信号强度。"
+"卫星视图实时显示：\n"
+"\n"
+"• 每颗卫星在天空中的位置（方位极坐标视图）\n"
+"• 正在使用的每颗卫星的信号强度 (SNR)\n"
+"• 可见和正在使用的卫星数量\n"
+"• GPS 定位状态（无定位 / 2D 定位 / 3D 定位）\n"
+"\n"
+"适用于诊断 GPS 接收问题或比较不同位置的信号强度。"
 
 #: qml/TourOverlay.qml:97
 msgid "Mensajes del servidor"
@@ -2713,8 +3165,14 @@ msgid ""
 "\n"
 "Requiere cuenta Navius activa."
 msgstr ""
-"Navius 服务器可以向您发送消息：通知、新功能或提醒。\n\n• 菜单 ≡ → 消息 查看您的收件箱\n• 图标旁的计数器表示未读消息\n•"
-" 新消息显示通知横幅\n• 部分消息包含带直接目的地的导航按钮\n\n需要活跃的 Navius 账户。"
+"Navius 服务器可以向您发送消息：通知、新功能或提醒。\n"
+"\n"
+"• 菜单 ≡ → 消息 查看您的收件箱\n"
+"• 图标旁的计数器表示未读消息\n"
+"• 新消息显示通知横幅\n"
+"• 部分消息包含带直接目的地的导航按钮\n"
+"\n"
+"需要活跃的 Navius 账户。"
 
 #: qml/TourOverlay.qml:103
 msgid ""
@@ -2726,8 +3184,13 @@ msgid ""
 "• La simulación reproduce el track como si fuera un viaje real:\n"
 "  todas las funciones de navegación funcionan sobre el track grabado"
 msgstr ""
-"Navius 可以实时录制您的 GPS 轨迹。\n\n• 在设置 → 导航中激活「录制轨迹」\n• 已录制的轨迹显示在设置 → 导航 → 已录制"
-"轨迹中\n• 选项：在地图上查看、导出为 GPX、模拟或删除\n• 模拟播放轨迹，如同真实旅程：\n  所有导航功能在已录制轨迹上正常运作"
+"Navius 可以实时录制您的 GPS 轨迹。\n"
+"\n"
+"• 在设置 → 导航中激活「录制轨迹」\n"
+"• 已录制的轨迹显示在设置 → 导航 → 已录制轨迹中\n"
+"• 选项：在地图上查看、导出为 GPX、模拟或删除\n"
+"• 模拟播放轨迹，如同真实旅程：\n"
+"  所有导航功能在已录制轨迹上正常运作"
 
 #: qml/TourOverlay.qml:107
 msgid "Servidor oficial Valhalla"
@@ -2751,10 +3214,18 @@ msgid ""
 "rutas y buscar lugares sin conexión a internet, directamente en el "
 "dispositivo."
 msgstr ""
-"Navius 默认配置了服务器 valhalla.egpsistemas.com。\n\n• 全球覆盖：完整星球数据（OpenStreetMap"
-"）\n• 全路网按时段和星期的预测交通数据\n• 所有车辆类型：轿车、摩托车、卡车、自行车、步行…\n• 备选路线，无收费站、无高速公路、无渡轮"
-"\n• 高可用性，Navius 用户无使用限制\n\n您也可以在设置 → Valhalla 服务器中配置自己的服务器。\n\n🗺 离线地图：在 "
-"Ubuntu Touch 上安装 OSM Scout Server，直接在设备上计算路线和搜索地点，无需网络连接。"
+"Navius 默认配置了服务器 valhalla.egpsistemas.com。\n"
+"\n"
+"• 全球覆盖：完整星球数据（OpenStreetMap）\n"
+"• 全路网按时段和星期的预测交通数据\n"
+"• 所有车辆类型：轿车、摩托车、卡车、自行车、步行…\n"
+"• 备选路线，无收费站、无高速公路、无渡轮\n"
+"• 高可用性，Navius 用户无使用限制\n"
+"\n"
+"您也可以在设置 → Valhalla 服务器中配置自己的服务器。\n"
+"\n"
+"🗺 离线地图：在 Ubuntu Touch 上安装 OSM Scout Server，直接在设备上计算路线和搜"
+"索地点，无需网络连接。"
 
 #: qml/TourOverlay.qml:113
 msgid ""
@@ -2769,9 +3240,16 @@ msgid ""
 "\n"
 "Tus ajustes se sincronizan automáticamente si tienes cuenta Navius activa."
 msgstr ""
-"设置面板将配置分为以下几个部分：\n\n• 快速设置：日间/夜间模式、自动缩放、地图方向\n• 常规：GPS 插值、航位推测、速度警报\n• V"
-"alhalla 服务器：服务器 URL、本地服务器检测\n• 导航：车辆类型、停车、轨迹录制\n• 语音：TTS 引擎、语言、可用语音、语音测试"
-"\n• 帮助：本教程、用户手册、应用信息\n\n如果您拥有活跃的 Navius 账户，您的设置将自动同步。"
+"设置面板将配置分为以下几个部分：\n"
+"\n"
+"• 快速设置：日间/夜间模式、自动缩放、地图方向\n"
+"• 常规：GPS 插值、航位推测、速度警报\n"
+"• Valhalla 服务器：服务器 URL、本地服务器检测\n"
+"• 导航：车辆类型、停车、轨迹录制\n"
+"• 语音：TTS 引擎、语言、可用语音、语音测试\n"
+"• 帮助：本教程、用户手册、应用信息\n"
+"\n"
+"如果您拥有活跃的 Navius 账户，您的设置将自动同步。"
 
 #: qml/TourOverlay.qml:117
 msgid "¡Listo para navegar!"
@@ -2792,9 +3270,18 @@ msgid ""
 "Puedes volver a este tour en cualquier momento desde\n"
 "Ajustes → Ayuda → Abrir asistente."
 msgstr ""
-"您已了解 Navius。以下是快速总结：\n\n① 点击「开始导航」搜索目的地\n② 选择路线并点击开始\n③ 跟随语音指示\n④ 向其他驾驶者"
-"上报警报\n⑤ 到达后，标记已完成的待办事项\n\n更多功能：音乐 🎵 · 共享行程 📡 · 消息 ✉️ · 轨迹 📍\n\n您可以随时从\n设"
-"置 → 帮助 → 打开向导 返回此教程。"
+"您已了解 Navius。以下是快速总结：\n"
+"\n"
+"① 点击「开始导航」搜索目的地\n"
+"② 选择路线并点击开始\n"
+"③ 跟随语音指示\n"
+"④ 向其他驾驶者上报警报\n"
+"⑤ 到达后，标记已完成的待办事项\n"
+"\n"
+"更多功能：音乐 🎵 · 共享行程 📡 · 消息 ✉️ · 轨迹 📍\n"
+"\n"
+"您可以随时从\n"
+"设置 → 帮助 → 打开向导 返回此教程。"
 
 #: qml/TourOverlay.qml:137
 msgid "Descarga una voz Piper"
@@ -2810,8 +3297,12 @@ msgid ""
 "\n"
 "Pulsa «Gestionar voces» para descargar una voz Piper."
 msgstr ""
-"Navius 使用 Piper 引擎提供高质量语音。\n\n您的语言目前没有安装 Piper 语音。没有它，导航指令将使用 PicoTTS 或 "
-"espeak-ng，听起来不够自然。\n\n点击「管理语音」下载 Piper 语音。"
+"Navius 使用 Piper 引擎提供高质量语音。\n"
+"\n"
+"您的语言目前没有安装 Piper 语音。没有它，导航指令将使用 PicoTTS 或 espeak-"
+"ng，听起来不够自然。\n"
+"\n"
+"点击「管理语音」下载 Piper 语音。"
 
 #: qml/TourOverlay.qml:267
 msgid "No mostrar al inicio"
@@ -2850,311 +3341,3 @@ msgstr "使用此目的地"
 
 #~ msgid "Rev ON"
 #~ msgstr "倒车 ON"
-
-#: qml/Main.qml qml/PreferencesPanel.qml qml/VehicleSetupDialog.qml
-msgid "Coche"
-msgstr "汽车"
-
-#: qml/Main.qml qml/PreferencesPanel.qml qml/VehicleSetupDialog.qml
-msgid "Moto"
-msgstr "摩托车"
-
-#: qml/Main.qml qml/PreferencesPanel.qml qml/VehicleSetupDialog.qml
-msgid "Scooter"
-msgstr "踏板摩托车"
-
-#: qml/Main.qml qml/PreferencesPanel.qml qml/VehicleSetupDialog.qml
-msgid "Camión"
-msgstr "卡车"
-
-#: qml/Main.qml qml/PreferencesPanel.qml qml/VehicleSetupDialog.qml
-msgid "Bicicleta"
-msgstr "自行车"
-
-#: qml/(referencia desconocida)
-msgid "Accidente"
-msgstr "事故"
-
-#: qml/(referencia desconocida)
-msgid "Asistencia"
-msgstr "道路救援"
-
-#: qml/(referencia desconocida)
-msgid "Bache"
-msgstr "坑洼"
-
-#: qml/(referencia desconocida)
-msgid "Cacheando mapa… "
-msgstr "正在缓存地图… "
-
-#: qml/(referencia desconocida)
-msgid "Cacheando mapa… 0%"
-msgstr "正在缓存地图… 0%"
-
-#: qml/(referencia desconocida)
-msgid "Cacheando mapa… detalle"
-msgstr "正在缓存地图… 细节"
-
-#: qml/(referencia desconocida)
-msgid "Caché de mapas eliminada"
-msgstr "地图缓存已清除"
-
-#: qml/(referencia desconocida)
-msgid "Carril"
-msgstr "车道"
-
-#: qml/(referencia desconocida)
-msgid "Carril bloq."
-msgstr "车道封闭"
-
-#: qml/(referencia desconocida)
-msgid "Central"
-msgstr "中间"
-
-#: qml/(referencia desconocida)
-msgid "Coche en arcén"
-msgstr "路肩有车"
-
-#: qml/(referencia desconocida)
-msgid "Col. múltiple"
-msgstr "多车相撞"
-
-#: qml/(referencia desconocida)
-msgid "Compañeros"
-msgstr "车友"
-
-#: qml/(referencia desconocida)
-msgid "Cortada"
-msgstr "道路封闭"
-
-#: qml/(referencia desconocida)
-msgid "Cámara móvil"
-msgstr "流动测速"
-
-#: qml/(referencia desconocida)
-msgid "Denso"
-msgstr "拥堵"
-
-#: qml/(referencia desconocida)
-msgid "Derecho"
-msgstr "右侧"
-
-#: qml/(referencia desconocida)
-msgid "Detenido"
-msgstr "停滞"
-
-#: qml/(referencia desconocida)
-msgid "Emergencia"
-msgstr "紧急情况"
-
-#: qml/(referencia desconocida)
-msgid "Error al cargar configuración del servidor: "
-msgstr "加载服务器配置出错："
-
-#: qml/(referencia desconocida)
-msgid "Error mapa"
-msgstr "地图错误"
-
-#: qml/(referencia desconocida)
-msgid "GLONASS en uso"
-msgstr "GLONASS 使用中"
-
-#: qml/(referencia desconocida)
-msgid "GPS en uso"
-msgstr "GPS 使用中"
-
-#: qml/(referencia desconocida)
-msgid "Hielo"
-msgstr "路面结冰"
-
-#: qml/(referencia desconocida)
-msgid "Inundación"
-msgstr "道路积水"
-
-#: qml/(referencia desconocida)
-msgid "Izquierdo"
-msgstr "左侧"
-
-#: qml/(referencia desconocida)
-msgid "Latitud  (ej. 40.322130)"
-msgstr "纬度（例如 40.322130）"
-
-#: qml/(referencia desconocida)
-msgid "Longitud  (ej. -3.515801)"
-msgstr "经度（例如 -3.515801）"
-
-#: qml/(referencia desconocida)
-msgid "Lugar"
-msgstr "地点"
-
-#: qml/(referencia desconocida)
-msgid "Mal tiempo"
-msgstr "恶劣天气"
-
-#: qml/(referencia desconocida)
-msgid "Mantener la local"
-msgstr "保留本地配置"
-
-#: qml/(referencia desconocida)
-msgid "Mapa"
-msgstr "地图"
-
-#: qml/(referencia desconocida)
-msgid "Mapa 3D"
-msgstr "3D 地图"
-
-#: qml/(referencia desconocida)
-msgid "Mapa online: Mapbox"
-msgstr "在线地图：Mapbox"
-
-#: qml/(referencia desconocida)
-msgid "Mapa online: OSM Scout"
-msgstr "在线地图：OSM Scout"
-
-#: qml/(referencia desconocida)
-msgid "Mapa online: OSM Scout (no disponible · usando Mapbox)"
-msgstr "在线地图：OSM Scout（不可用 · 正在使用 Mapbox）"
-
-#: qml/(referencia desconocida)
-msgid "Mi vehículo"
-msgstr "我的车辆"
-
-#: qml/(referencia desconocida)
-msgid "Niebla"
-msgstr "大雾"
-
-#: qml/(referencia desconocida)
-msgid "Nieve"
-msgstr "积雪"
-
-#: qml/(referencia desconocida)
-msgid "No en uso"
-msgstr "未在使用"
-
-#: qml/(referencia desconocida)
-msgid "No se pudo calcular la ruta al aparcamiento"
-msgstr "无法计算前往停车位置的路线"
-
-#: qml/(referencia desconocida)
-msgid "No uso"
-msgstr "未使用"
-
-#: qml/(referencia desconocida)
-msgid "OSM Scout no disponible · usando "
-msgstr "OSM Scout 不可用 · 正在使用 "
-
-#: qml/(referencia desconocida)
-msgid "OSM Scout · rutas y mapas offline"
-msgstr "OSM Scout · 离线路线与地图"
-
-#: qml/(referencia desconocida)
-msgid "Obras"
-msgstr "道路施工"
-
-#: qml/(referencia desconocida)
-msgid "Oculto"
-msgstr "隐蔽"
-
-#: qml/(referencia desconocida)
-msgid "Peligro"
-msgstr "危险"
-
-#: qml/(referencia desconocida)
-msgid "Policía"
-msgstr "警察"
-
-#: qml/(referencia desconocida)
-msgid "Reproducción terminada"
-msgstr "播放结束"
-
-#: qml/(referencia desconocida)
-msgid "Resbaladiza"
-msgstr "路面湿滑"
-
-#: qml/(referencia desconocida)
-msgid "Semáforo roto"
-msgstr "红绿灯故障"
-
-#: qml/(referencia desconocida)
-msgid "Servidor: "
-msgstr "服务器："
-
-#: qml/(referencia desconocida)
-msgid "Sin conexión: no se pudo cargar la configuración del servidor"
-msgstr "无网络连接：无法加载服务器配置"
-
-#: qml/(referencia desconocida)
-msgid "Sin internet: caché de tiles"
-msgstr "无网络：使用瓦片缓存"
-
-#: qml/(referencia desconocida)
-msgid "Sin internet: fallback OSM Scout (no disponible)"
-msgstr "无网络：回退到 OSM Scout（不可用）"
-
-#: qml/(referencia desconocida)
-msgid "Sin internet: fallback a OSM Scout"
-msgstr "无网络：回退到 OSM Scout"
-
-#: qml/(referencia desconocida)
-msgid "Tráfico"
-msgstr "路况"
-
-#: qml/(referencia desconocida)
-msgid "Usar del servidor"
-msgstr "使用服务器配置"
-
-#: qml/(referencia desconocida)
-msgid "⚙  Configuración en el servidor"
-msgstr "⚙  服务器上的配置"
-
-#: qml/(referencia desconocida)
-msgid "✓ Configuración del servidor aplicada"
-msgstr "✓ 已应用服务器配置"
-
-#: qml/(referencia desconocida)
-msgid "✓ Configuración guardada en el servidor"
-msgstr "✓ 配置已保存到服务器"
-
-#: qml/(referencia desconocida)
-msgid "🅿 Aparcamiento guardado"
-msgstr "🅿 已保存停车位置"
-
-#: qml/(referencia desconocida)
-msgid "🅿 Aparcamiento guardado · "
-msgstr "🅿 已保存停车位置 · "
-
-#: qml/(referencia desconocida)
-msgid "🅿 ¿Guardar aparcamiento aquí?"
-msgstr "🅿 要在此保存停车位置吗？"
-
-#: qml/(referencia desconocida)
-msgid "👍  Confirmar"
-msgstr "👍  确认"
-
-#: qml/(referencia desconocida)
-msgid "👎  Desmentir"
-msgstr "👎  否认"
-
-#: qml/(referencia desconocida)
-msgid "📍 Establecer posición GPS"
-msgstr "📍 设置 GPS 位置"
-
-#: qml/(referencia desconocida)
-msgid "🗑  Cancelar mi alerta"
-msgstr "🗑  取消我的警报"
-
-#: qml/(referencia desconocida)
-msgid "🗑 Aparcamiento eliminado · "
-msgstr "🗑 已删除停车位置 · "
-
-#: qml/(referencia desconocida)
-msgid "🚨  Añadir alerta aquí"
-msgstr "🚨  在此添加警报"
-
-#: qml/GpsSource.qml
-msgid "GPS impreciso. Simulando trayecto."
-msgstr "GPS不准确。正在模拟路线。"
-
-#: qml/Main.qml
-msgid "GPS recuperado"
-msgstr "GPS已恢复"

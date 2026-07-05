@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: navius.woodyst\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-02 19:33+0000\n"
+"POT-Creation-Date: 2026-07-05 21:33+0000\n"
 "PO-Revision-Date: 2026-05-24 00:00+0000\n"
 "Last-Translator: Claude\n"
 "Language-Team: English\n"
@@ -23,7 +23,7 @@ msgstr "🔴 Sharing trip"
 msgid "Generando enlace…"
 msgstr "Generating link…"
 
-#: qml/TripSharePanel.qml:53 qml/HelpPanel.qml:164 qml/Main.qml:6461
+#: qml/TripSharePanel.qml:53 qml/HelpPanel.qml:164 qml/Main.qml:6470
 #: qml/TourOverlay.qml:72
 msgid "Compartir viaje"
 msgstr "Share trip"
@@ -60,7 +60,7 @@ msgstr "Create link"
 msgid "Detener"
 msgstr "Stop"
 
-#: qml/TripSharePanel.qml:187 qml/Main.qml:7521 qml/Main.qml:7982
+#: qml/TripSharePanel.qml:187 qml/Main.qml:7530 qml/Main.qml:7991
 #: qml/LoginPanel.qml:145 qml/AboutDialog.qml:253 qml/ParkingDialog.qml:162
 #: qml/TourOverlay.qml:314
 msgid "Cerrar"
@@ -84,8 +84,8 @@ msgid ""
 "lateral. Toca la brújula para recentrar en tu posición y activar el "
 "seguimiento GPS."
 msgstr ""
-"Swipe one finger to move the map. Pinch to zoom or use the sidebar. Tap "
-"the compass to re-center on your position and activate GPS tracking."
+"Swipe one finger to move the map. Pinch to zoom or use the sidebar. Tap the "
+"compass to re-center on your position and activate GPS tracking."
 
 #: qml/HelpPanel.qml:60
 msgid "Modo 2D y 3D"
@@ -96,8 +96,8 @@ msgid ""
 "El botón 2D/3D alterna entre vista plana y perspectiva inclinada de "
 "conducción. En 3D puedes ver los edificios extruidos en el área urbana."
 msgstr ""
-"The 2D/3D button toggles between flat view and tilted driving perspectiv"
-"e. In 3D you can see extruded buildings in urban areas."
+"The 2D/3D button toggles between flat view and tilted driving perspective. "
+"In 3D you can see extruded buildings in urban areas."
 
 #: qml/HelpPanel.qml:62
 msgid "Modo día / noche / automático"
@@ -108,8 +108,8 @@ msgid ""
 "En Ajustes → Ajustes rápidos puedes fijar el modo de color del mapa, o "
 "dejarlo en «auto» para que cambie con la hora del día."
 msgstr ""
-"In Settings → Quick settings you can fix the map color mode, or leave it"
-" on «auto» to change with the time of day."
+"In Settings → Quick settings you can fix the map color mode, or leave it on "
+"«auto» to change with the time of day."
 
 #: qml/HelpPanel.qml:64
 msgid "Orientación del mapa"
@@ -131,11 +131,10 @@ msgid ""
 "noche) y Noche/Dark (oscuro intenso). El nombre del estilo actual aparece "
 "bajo el icono."
 msgstr ""
-"The map style button (on the map) lets you cycle through several styles:"
-" Auto (changes with the sun), Satellite (aerial photos), Positron (light"
-"), Vivid/Bright (vivid colors), Fiord (soft dark, used by Auto at night)"
-" and Night/Dark (intense dark). The current style name appears below the"
-" icon."
+"The map style button (on the map) lets you cycle through several styles: "
+"Auto (changes with the sun), Satellite (aerial photos), Positron (light), "
+"Vivid/Bright (vivid colors), Fiord (soft dark, used by Auto at night) and "
+"Night/Dark (intense dark). The current style name appears below the icon."
 
 #: qml/HelpPanel.qml:72
 msgid "Buscar y planificar"
@@ -151,9 +150,9 @@ msgid ""
 "de planificación. Escribe el nombre de un lugar, dirección o coordenadas. La "
 "búsqueda usa OpenStreetMap."
 msgstr ""
-"Tap the «Start navigation» button at the top to open the planning panel."
-" Type the name of a place, address or coordinates. The search uses OpenS"
-"treetMap."
+"Tap the «Start navigation» button at the top to open the planning panel. "
+"Type the name of a place, address or coordinates. The search uses "
+"OpenStreetMap."
 
 #: qml/HelpPanel.qml:76
 msgid "Ruta con múltiples paradas"
@@ -164,8 +163,8 @@ msgid ""
 "Añade tantos destinos como necesites. La ruta pasará por todos en el orden "
 "indicado. Puedes reordenarlos o eliminarlos."
 msgstr ""
-"Add as many destinations as you need. The route will pass through all of"
-" them in the indicated order. You can reorder or delete them."
+"Add as many destinations as you need. The route will pass through all of "
+"them in the indicated order. You can reorder or delete them."
 
 #: qml/HelpPanel.qml:78
 msgid "Opciones de ruta"
@@ -177,9 +176,8 @@ msgid ""
 "tierra. También puedes elegir el tipo de vehículo en la pantalla de "
 "selección de ruta."
 msgstr ""
-"Before calculating you can exclude: tolls, motorways, ferries and dirt t"
-"racks. You can also choose the vehicle type in the route selection scree"
-"n."
+"Before calculating you can exclude: tolls, motorways, ferries and dirt "
+"tracks. You can also choose the vehicle type in the route selection screen."
 
 #: qml/HelpPanel.qml:80
 msgid "Buscar POI cercanos"
@@ -192,10 +190,10 @@ msgid ""
 "gasolineras muestran el precio del combustible cuando está disponible en "
 "OSM. Otros POIs muestran información adicional: horario, teléfono, web, etc."
 msgstr ""
-"In the planning panel the «Nearby POI» section appears. Select the categ"
-"ory and choose the result to add it as a destination. Gas stations show "
-"the fuel price when available in OSM. Other POIs show additional informa"
-"tion: hours, phone, website, etc."
+"In the planning panel the «Nearby POI» section appears. Select the category "
+"and choose the result to add it as a destination. Gas stations show the fuel "
+"price when available in OSM. Other POIs show additional information: hours, "
+"phone, website, etc."
 
 #: qml/HelpPanel.qml:82
 msgid "Historial y favoritos"
@@ -206,8 +204,8 @@ msgid ""
 "Los últimos 50 destinos se guardan en el historial. Puedes marcar cualquier "
 "lugar como favorito y darle un nombre personalizado."
 msgstr ""
-"The last 50 destinations are saved in history. You can mark any place as"
-" a favorite and give it a custom name."
+"The last 50 destinations are saved in history. You can mark any place as a "
+"favorite and give it a custom name."
 
 #: qml/HelpPanel.qml:88 qml/TourOverlay.qml:47
 msgid "TODOs por destino"
@@ -222,8 +220,8 @@ msgid ""
 "Toca «+ Tarea» junto a cualquier destino del panel para añadir un TODO. Las "
 "tareas quedan asociadas a esa ubicación geográfica."
 msgstr ""
-"Tap «+ Task» next to any destination in the panel to add a TODO. Tasks a"
-"re associated with that geographic location."
+"Tap «+ Task» next to any destination in the panel to add a TODO. Tasks are "
+"associated with that geographic location."
 
 #: qml/HelpPanel.qml:92
 msgid "Gestionar TODOs durante la navegación"
@@ -234,8 +232,8 @@ msgid ""
 "Al llegar a un destino con TODOs, aparece un aviso en la pantalla. Toca "
 "«Abrir» para ver la lista y marcar las tareas como completadas."
 msgstr ""
-"Upon arriving at a destination with TODOs, a notice appears on the scree"
-"n. Tap «Open» to see the list and mark tasks as completed."
+"Upon arriving at a destination with TODOs, a notice appears on the screen. "
+"Tap «Open» to see the list and mark tasks as completed."
 
 #: qml/HelpPanel.qml:94
 msgid "Persistencia de TODOs"
@@ -246,8 +244,8 @@ msgid ""
 "Los TODOs se guardan por coordenadas y persisten entre sesiones. La próxima "
 "vez que planifiques una ruta al mismo lugar, aparecerán de nuevo."
 msgstr ""
-"TODOs are saved by coordinates and persist between sessions. The next ti"
-"me you plan a route to the same place, they will appear again."
+"TODOs are saved by coordinates and persist between sessions. The next time "
+"you plan a route to the same place, they will appear again."
 
 #: qml/HelpPanel.qml:100 qml/TourOverlay.qml:52
 msgid "Hora de salida y planes guardados"
@@ -263,9 +261,9 @@ msgid ""
 "Selecciona el día (hoy, mañana…) y la hora con los selectores. La ruta usará "
 "el tráfico predicho para ese momento."
 msgstr ""
-"Activate «Departure time» at the bottom of the planning panel. Select th"
-"e day (today, tomorrow…) and the time with the selectors. The route will"
-" use the predicted traffic for that moment."
+"Activate «Departure time» at the bottom of the planning panel. Select the "
+"day (today, tomorrow…) and the time with the selectors. The route will use "
+"the predicted traffic for that moment."
 
 #: qml/HelpPanel.qml:104
 msgid "Guardar un plan"
@@ -276,8 +274,8 @@ msgid ""
 "Pulsa el botón ⊕ junto a CALCULAR RUTA para guardar el plan completo "
 "(destinos + TODOs + hora de salida + opciones de ruta)."
 msgstr ""
-"Press the ⊕ button next to CALCULATE ROUTE to save the complete plan (de"
-"stinations + TODOs + departure time + route options)."
+"Press the ⊕ button next to CALCULATE ROUTE to save the complete plan "
+"(destinations + TODOs + departure time + route options)."
 
 #: qml/HelpPanel.qml:106
 msgid "Cargar un plan guardado"
@@ -289,9 +287,9 @@ msgid ""
 "Toca un plan para cargarlo. Si su fecha de salida ya pasó, se actualiza "
 "automáticamente al próximo día."
 msgstr ""
-"Plans appear in the «Saved plans» section at the start of the panel. Tap"
-" a plan to load it. If its departure date has passed, it updates automat"
-"ically to the next day."
+"Plans appear in the «Saved plans» section at the start of the panel. Tap a "
+"plan to load it. If its departure date has passed, it updates automatically "
+"to the next day."
 
 #: qml/HelpPanel.qml:108
 msgid "Eliminar un plan"
@@ -314,8 +312,8 @@ msgid ""
 "La voz avisa con antelación de cada maniobra. Las instrucciones se generan "
 "en el motor TTS configurado en Ajustes → Voz."
 msgstr ""
-"The voice warns in advance of each maneuver. Instructions are generated "
-"in the TTS engine configured in Settings → Voice."
+"The voice warns in advance of each maneuver. Instructions are generated in "
+"the TTS engine configured in Settings → Voice."
 
 #: qml/HelpPanel.qml:118
 msgid "Barra de navegación"
@@ -327,8 +325,8 @@ msgid ""
 "la calle, velocidad actual, límite de velocidad y ETA (hora de llegada "
 "estimada)."
 msgstr ""
-"The top bar shows: maneuver icon, distance to turn, street name, current"
-" speed, speed limit and ETA (estimated arrival time)."
+"The top bar shows: maneuver icon, distance to turn, street name, current "
+"speed, speed limit and ETA (estimated arrival time)."
 
 #: qml/HelpPanel.qml:120
 msgid "Recálculo de ruta"
@@ -359,8 +357,8 @@ msgid ""
 "Piper (neural, alta calidad), Mimic HTS (español, buena calidad) y PicoTTS "
 "(básico, muy rápido). Configúralo en Ajustes → Voz."
 msgstr ""
-"Piper (neural, high quality), Mimic HTS (Spanish, good quality) and Pico"
-"TTS (basic, very fast). Configure it in Settings → Voice."
+"Piper (neural, high quality), Mimic HTS (Spanish, good quality) and PicoTTS "
+"(basic, very fast). Configure it in Settings → Voice."
 
 #: qml/HelpPanel.qml:132
 msgid "Voces Piper"
@@ -383,8 +381,8 @@ msgid ""
 "En Ajustes → Voz hay un campo para escribir texto de prueba y escucharlo con "
 "el motor actual."
 msgstr ""
-"In Settings → Voice there is a field to type test text and hear it with "
-"the current engine."
+"In Settings → Voice there is a field to type test text and hear it with the "
+"current engine."
 
 #: qml/HelpPanel.qml:140
 msgid "GPS y satélites"
@@ -399,8 +397,8 @@ msgid ""
 "El panel de satélites (icono de antena) muestra la posición y señal SNR de "
 "cada satélite en una vista polar acimutal."
 msgstr ""
-"The satellite panel (antenna icon) shows the position and SNR signal of "
-"each satellite in an azimuthal polar view."
+"The satellite panel (antenna icon) shows the position and SNR signal of each "
+"satellite in an azimuthal polar view."
 
 #: qml/HelpPanel.qml:144
 msgid "Fix GPS"
@@ -411,8 +409,8 @@ msgid ""
 "El indicador de fix muestra: sin señal, fix 2D (posición sin altitud) o fix "
 "3D (posición + altitud). La navegación requiere fix 3D."
 msgstr ""
-"The fix indicator shows: no signal, 2D fix (position without altitude) o"
-"r 3D fix (position + altitude). Navigation requires 3D fix."
+"The fix indicator shows: no signal, 2D fix (position without altitude) or 3D "
+"fix (position + altitude). Navigation requires 3D fix."
 
 #: qml/HelpPanel.qml:146
 msgid "Dead-reckoning"
@@ -423,8 +421,8 @@ msgid ""
 "Navius interpola la posición GPS a 10-30 Hz entre lecturas reales para que "
 "el icono de posición se mueva con fluidez. Configúralo en Ajustes → General."
 msgstr ""
-"Navius interpolates the GPS position at 10-30 Hz between real readings s"
-"o the position icon moves smoothly. Configure it in Settings → General."
+"Navius interpolates the GPS position at 10-30 Hz between real readings so "
+"the position icon moves smoothly. Configure it in Settings → General."
 
 #: qml/HelpPanel.qml:148 qml/PreferencesPanel.qml:1908
 msgid "Velocidad GPS Doppler"
@@ -440,11 +438,11 @@ msgid ""
 "concreto, desactívala para volver al cálculo clásico."
 msgstr ""
 "Modern GPS chips calculate speed by the Doppler effect of the satellite "
-"signal, which is more accurate than calculating it by difference of cons"
-"ecutive positions, especially at low speed and in sudden starts or stops"
-". Enable this option in Settings → Navigation to use the hardware speed "
-"directly. If you observe erratic values with your specific device, disab"
-"le it to return to classic calculation."
+"signal, which is more accurate than calculating it by difference of "
+"consecutive positions, especially at low speed and in sudden starts or "
+"stops. Enable this option in Settings → Navigation to use the hardware speed "
+"directly. If you observe erratic values with your specific device, disable "
+"it to return to classic calculation."
 
 #: qml/HelpPanel.qml:154 qml/TourOverlay.qml:102
 msgid "Grabación de tracks"
@@ -459,8 +457,8 @@ msgid ""
 "Activa la grabación en Ajustes → Navegación. El track se guarda en SQLite "
 "con marca de tiempo y distancia acumulada."
 msgstr ""
-"Enable recording in Settings → Navigation. The track is saved in SQLite "
-"with timestamp and accumulated distance."
+"Enable recording in Settings → Navigation. The track is saved in SQLite with "
+"timestamp and accumulated distance."
 
 #: qml/HelpPanel.qml:158
 msgid "Exportar a GPX"
@@ -471,8 +469,8 @@ msgid ""
 "En el panel de tracks puedes exportar cualquier track grabado al formato GPX "
 "estándar, compatible con aplicaciones externas."
 msgstr ""
-"In the tracks panel you can export any recorded track to the standard GP"
-"X format, compatible with external applications."
+"In the tracks panel you can export any recorded track to the standard GPX "
+"format, compatible with external applications."
 
 #: qml/HelpPanel.qml:166
 msgid "¿Qué es el compartir viaje?"
@@ -484,9 +482,9 @@ msgid ""
 "cualquier navegador web, sin necesidad de tener Navius instalado. Necesitas "
 "una cuenta Navius activa (sesión iniciada)."
 msgstr ""
-"Allows other people to follow your position and route in real time from "
-"any web browser, without needing to have Navius installed. You need an a"
-"ctive Navius account (logged in)."
+"Allows other people to follow your position and route in real time from any "
+"web browser, without needing to have Navius installed. You need an active "
+"Navius account (logged in)."
 
 #: qml/HelpPanel.qml:168
 msgid "Cómo activar el share"
@@ -499,10 +497,10 @@ msgid ""
 "Telegram o cualquier otra app. Mientras el share está activo, el ítem del "
 "menú aparece en rojo con el texto «Compartiendo»."
 msgstr ""
-"Open the ≡ menu → tap «Share trip» → «Create link». Navius generates a u"
-"nique link that you can copy or share directly via WhatsApp, Telegram or"
-" any other app. While sharing is active, the menu item appears in red wi"
-"th the text «Sharing»."
+"Open the ≡ menu → tap «Share trip» → «Create link». Navius generates a "
+"unique link that you can copy or share directly via WhatsApp, Telegram or "
+"any other app. While sharing is active, the menu item appears in red with "
+"the text «Sharing»."
 
 #: qml/HelpPanel.qml:170
 msgid "¿Qué ve el seguidor?"
@@ -516,11 +514,11 @@ msgid ""
 "(día/noche/positron/bright) y usar el botón ◎ Centrar para volver a seguir "
 "tu posición si mueve el mapa."
 msgstr ""
-"The follower web page shows the map with your position updated every 5 s"
-"econds, your speed, the active route (remaining segment only) and the de"
-"stinations with distance and ETA. The follower can change the map style "
-"(day/night/positron/bright) and use the ◎ Center button to follow your p"
-"osition again if they move the map."
+"The follower web page shows the map with your position updated every 5 "
+"seconds, your speed, the active route (remaining segment only) and the "
+"destinations with distance and ETA. The follower can change the map style "
+"(day/night/positron/bright) and use the ◎ Center button to follow your "
+"position again if they move the map."
 
 #: qml/HelpPanel.qml:172
 msgid "¿Qué pasa si cierro Navius?"
@@ -531,9 +529,8 @@ msgid ""
 "Si Navius se cierra o pasa a segundo plano, el seguidor ve el aviso «Navius "
 "cerrado · Última posición conocida». El enlace sigue siendo válido 24 horas."
 msgstr ""
-"If Navius closes or goes to the background, the follower sees the notice"
-" «Navius closed · Last known position». The link remains valid for 24 ho"
-"urs."
+"If Navius closes or goes to the background, the follower sees the notice "
+"«Navius closed · Last known position». The link remains valid for 24 hours."
 
 #: qml/HelpPanel.qml:174
 msgid "Renovación automática de sesión"
@@ -545,9 +542,9 @@ msgid ""
 "automáticamente (hasta 90 días tras la caducidad) sin que tengas que volver "
 "a hacer login."
 msgstr ""
-"If your session has expired when trying to share, Navius renews the toke"
-"n automatically (up to 90 days after expiration) without you having to l"
-"og in again."
+"If your session has expired when trying to share, Navius renews the token "
+"automatically (up to 90 days after expiration) without you having to log in "
+"again."
 
 #: qml/HelpPanel.qml:176
 msgid "Cómo detener el share"
@@ -572,8 +569,8 @@ msgid ""
 "valhalla.egpsistemas.com está preconfigurado y ofrece rutas para todo el "
 "mundo con tráfico predicho, sin límite de uso para usuarios de Navius."
 msgstr ""
-"valhalla.egpsistemas.com is preconfigured and offers routes for the enti"
-"re world with predicted traffic, without usage limits for Navius users."
+"valhalla.egpsistemas.com is preconfigured and offers routes for the entire "
+"world with predicted traffic, without usage limits for Navius users."
 
 #: qml/HelpPanel.qml:186
 msgid "Servidor propio"
@@ -584,8 +581,8 @@ msgid ""
 "Puedes instalar tu propio servidor Valhalla y configurar su URL en Ajustes → "
 "Servidor Valhalla. Útil si quieres datos locales o privacidad total."
 msgstr ""
-"You can install your own Valhalla server and configure its URL in Settin"
-"gs → Valhalla Server. Useful if you want local data or complete privacy."
+"You can install your own Valhalla server and configure its URL in Settings → "
+"Valhalla Server. Useful if you want local data or complete privacy."
 
 #: qml/HelpPanel.qml:188
 msgid "Tráfico predicho"
@@ -597,9 +594,9 @@ msgid ""
 "estimar velocidades según el tipo de vía. Las rutas programadas con hora de "
 "salida aplican automáticamente el perfil correspondiente."
 msgstr ""
-"Valhalla uses synthetic profiles by time of day and day of the week to e"
-"stimate speeds according to the road type. Scheduled routes with departu"
-"re time automatically apply the corresponding profile."
+"Valhalla uses synthetic profiles by time of day and day of the week to "
+"estimate speeds according to the road type. Scheduled routes with departure "
+"time automatically apply the corresponding profile."
 
 #: qml/HelpPanel.qml:190
 msgid "Mapas offline con OSM Scout Server"
@@ -611,11 +608,11 @@ msgid ""
 "rutas y buscar lugares completamente sin conexión. Navius lo detecta "
 "automáticamente en Ajustes → Servidor Valhalla → Detectar servidor local."
 msgstr ""
-"Install OSM Scout Server from the Ubuntu Touch OpenStore to calculate ro"
-"utes and search for places completely offline. Navius detects it automat"
-"ically in Settings → Valhalla Server → Detect local server."
+"Install OSM Scout Server from the Ubuntu Touch OpenStore to calculate routes "
+"and search for places completely offline. Navius detects it automatically in "
+"Settings → Valhalla Server → Detect local server."
 
-#: qml/HelpPanel.qml:196 qml/Main.qml:6639 qml/PreferencesPanel.qml:137
+#: qml/HelpPanel.qml:196 qml/Main.qml:6648 qml/PreferencesPanel.qml:137
 #: qml/TourOverlay.qml:112
 msgid "Ajustes"
 msgstr "Settings"
@@ -630,10 +627,9 @@ msgid ""
 "muestra opciones según su complejidad. Mínimo: solo lo esencial. Medio: "
 "opciones adicionales de navegación. Avanzado: configuración técnica completa."
 msgstr ""
-"The level selector at the top of the settings panel hides or shows optio"
-"ns according to their complexity. Minimum: only the essentials. Medium: "
-"additional navigation options. Advanced: complete technical configuratio"
-"n."
+"The level selector at the top of the settings panel hides or shows options "
+"according to their complexity. Minimum: only the essentials. Medium: "
+"additional navigation options. Advanced: complete technical configuration."
 
 #: qml/HelpPanel.qml:200
 msgid "Controles [−] y [+]"
@@ -645,9 +641,9 @@ msgid ""
 "con botones [−] y [+] en lugar de sliders. Esto evita que al hacer scroll "
 "por el panel se cambie el valor accidentalmente."
 msgstr ""
-"Numeric values (GPS frequency, distances, times...) are adjusted with [−"
-"] and [+] buttons instead of sliders. This prevents accidentally changin"
-"g the value when scrolling through the panel."
+"Numeric values (GPS frequency, distances, times...) are adjusted with [−] "
+"and [+] buttons instead of sliders. This prevents accidentally changing the "
+"value when scrolling through the panel."
 
 #: qml/HelpPanel.qml:202
 msgid "Indicador ↺ de valor por defecto"
@@ -659,9 +655,9 @@ msgid ""
 "el símbolo ↺ (por ejemplo: ↺ 8 m, ↺ 15 s, ↺ act.). Si el valor ya es el "
 "predeterminado, el indicador no aparece."
 msgstr ""
-"Next to each option with a custom value, the default value appears with "
-"the ↺ symbol (for example: ↺ 8 m, ↺ 15 s, ↺ on). If the value is already"
-" the default, the indicator does not appear."
+"Next to each option with a custom value, the default value appears with the "
+"↺ symbol (for example: ↺ 8 m, ↺ 15 s, ↺ on). If the value is already the "
+"default, the indicator does not appear."
 
 #: qml/HelpPanel.qml:204 qml/PreferencesPanel.qml:200
 msgid "Restaurar valores por defecto"
@@ -674,10 +670,10 @@ msgid ""
 "segundo (en menos de 3 segundos) aplica el reinicio. Si no confirmas a "
 "tiempo, la acción se cancela automáticamente."
 msgstr ""
-"At the top of the panel there is a ↺ Restore default values button. It r"
-"equires two taps to confirm: the first shows the ⚠ warning, the second ("
-"in less than 3 seconds) applies the reset. If you do not confirm in time"
-", the action is automatically cancelled."
+"At the top of the panel there is a ↺ Restore default values button. It "
+"requires two taps to confirm: the first shows the ⚠ warning, the second (in "
+"less than 3 seconds) applies the reset. If you do not confirm in time, the "
+"action is automatically cancelled."
 
 #: qml/HelpPanel.qml:210
 msgid "Anuncios"
@@ -694,10 +690,10 @@ msgid ""
 "como señales al borde de la vía y en un pequeño panel en la parte inferior "
 "de la pantalla, sin interrumpir la navegación."
 msgstr ""
-"Navius may occasionally show signs from local businesses and the app its"
-"elf on the road. They are designed to be discreet: they appear as signs "
-"on the roadside and in a small panel at the bottom of the screen, withou"
-"t interrupting navigation."
+"Navius may occasionally show signs from local businesses and the app itself "
+"on the road. They are designed to be discreet: they appear as signs on the "
+"roadside and in a small panel at the bottom of the screen, without "
+"interrupting navigation."
 
 #: qml/HelpPanel.qml:214
 msgid "¿Son intrusivos?"
@@ -709,9 +705,9 @@ msgid ""
 "no producen sonido adicional ni bloquean el mapa. Puedes cerrarlos en "
 "cualquier momento tocando la X del panel."
 msgstr ""
-"No. Ads respect a minimum interval of 1 hour between appearances, do not"
-" produce additional sound or block the map. You can close them at any ti"
-"me by tapping the X on the panel."
+"No. Ads respect a minimum interval of 1 hour between appearances, do not "
+"produce additional sound or block the map. You can close them at any time by "
+"tapping the X on the panel."
 
 #: qml/HelpPanel.qml:216
 msgid "¿Cómo colaboran con Navius?"
@@ -724,10 +720,9 @@ msgid ""
 "directamente a financiar el desarrollo y mantenimiento de la app. ¡Gracias "
 "por tu apoyo!"
 msgstr ""
-"Navius is a free and open source application. Viewing an ad is already a"
-" small help; if you also click on it, you contribute directly to financi"
-"ng the development and maintenance of the app. Thank you for your suppor"
-"t!"
+"Navius is a free and open source application. Viewing an ad is already a "
+"small help; if you also click on it, you contribute directly to financing "
+"the development and maintenance of the app. Thank you for your support!"
 
 #: qml/HelpPanel.qml:218
 msgid "¿Qué datos se registran?"
@@ -739,9 +734,9 @@ msgid ""
 "haces click, el servidor anota el momento del click para estadísticas de "
 "rendimiento del anuncio. No se comparten datos con terceros."
 msgstr ""
-"When the ad panel appears, an anonymous impression is registered. If you"
-" click, the server records the click moment for ad performance statistic"
-"s. No data is shared with third parties."
+"When the ad panel appears, an anonymous impression is registered. If you "
+"click, the server records the click moment for ad performance statistics. No "
+"data is shared with third parties."
 
 #: qml/HelpPanel.qml:315 qml/AboutDialog.qml:177
 msgid "Apoya el desarrollo"
@@ -752,8 +747,8 @@ msgid ""
 "Si Navius te resulta útil, considera hacer una donación para ayudar a "
 "mantener los servidores y seguir mejorando la app."
 msgstr ""
-"If you find Navius useful, consider making a donation to help maintain t"
-"he servers and continue improving the app."
+"If you find Navius useful, consider making a donation to help maintain the "
+"servers and continue improving the app."
 
 #: qml/HelpPanel.qml:344 qml/AboutDialog.qml:207
 msgid "Donar con Liberapay"
@@ -776,8 +771,8 @@ msgid ""
 "OSM Scout Server no detectado. Instálalo desde la OpenStore para usar mapas "
 "y rutas offline."
 msgstr ""
-"OSM Scout Server not detected. Install it from the OpenStore to use offl"
-"ine maps and routes."
+"OSM Scout Server not detected. Install it from the OpenStore to use offline "
+"maps and routes."
 
 #: qml/ServerFallbackDialog.qml:108
 msgid "Detectando OSM Scout…"
@@ -793,7 +788,7 @@ msgstr "Retry"
 
 #: qml/ServerFallbackDialog.qml:143 qml/SearchPanel.qml:2148
 #: qml/VehicleSetupDialog.qml:160 qml/SharedLocationDialog.qml:163
-#: qml/AlertasOverlay.qml:410 qml/LoginPanel.qml:345
+#: qml/Main.qml:8080 qml/AlertasOverlay.qml:410 qml/LoginPanel.qml:345
 #: qml/PreferencesPanel.qml:419 qml/PreferencesPanel.qml:931
 #: qml/PreferencesPanel.qml:2179
 msgid "Cancelar"
@@ -1091,7 +1086,7 @@ msgstr "Near me"
 msgid "Gasolina"
 msgstr "Fuel"
 
-#: qml/SearchPanel.qml:1830 qml/InstructionListPanel.qml:344 qml/Main.qml:6518
+#: qml/SearchPanel.qml:1830 qml/InstructionListPanel.qml:344 qml/Main.qml:6527
 msgid "Parking"
 msgstr "Parking"
 
@@ -1131,7 +1126,7 @@ msgstr "Recent destinations"
 msgid "Rutas disponibles"
 msgstr "Available routes"
 
-#: qml/SearchPanel.qml:2044 qml/RouteSelectPanel.qml:170 qml/Main.qml:8662
+#: qml/SearchPanel.qml:2044 qml/RouteSelectPanel.qml:170 qml/Main.qml:8671
 msgid "Ruta más rápida"
 msgstr "Fastest route"
 
@@ -1147,7 +1142,7 @@ msgstr "Save favourite"
 msgid "Nombre del favorito"
 msgstr "Favourite name"
 
-#: qml/SearchPanel.qml:2159 qml/PreferencesPanel.qml:941
+#: qml/SearchPanel.qml:2159 qml/Main.qml:9640 qml/PreferencesPanel.qml:941
 msgid "Guardar"
 msgstr "Save"
 
@@ -1170,6 +1165,26 @@ msgstr "Tasks at this stop"
 #: qml/InstructionListPanel.qml:396
 msgid "Editar ruta"
 msgstr "Edit route"
+
+#: qml/VehicleSetupDialog.qml:51 qml/Main.qml:2235 qml/PreferencesPanel.qml:391
+msgid "Coche"
+msgstr "Car"
+
+#: qml/VehicleSetupDialog.qml:52 qml/Main.qml:2236 qml/PreferencesPanel.qml:392
+msgid "Moto"
+msgstr "Motorcycle"
+
+#: qml/VehicleSetupDialog.qml:53 qml/Main.qml:2237 qml/PreferencesPanel.qml:393
+msgid "Scooter"
+msgstr "Scooter"
+
+#: qml/VehicleSetupDialog.qml:54 qml/Main.qml:2238 qml/PreferencesPanel.qml:394
+msgid "Camión"
+msgstr "Truck"
+
+#: qml/VehicleSetupDialog.qml:55 qml/Main.qml:2239 qml/PreferencesPanel.qml:395
+msgid "Bicicleta"
+msgstr "Bicycle"
 
 #: qml/VehicleSetupDialog.qml:82 qml/TourOverlay.qml:27
 msgid "Bienvenido a Navius"
@@ -1199,7 +1214,7 @@ msgstr "Type"
 msgid "Crear"
 msgstr "Create"
 
-#: qml/SharedLocationDialog.qml:61 qml/Main.qml:9299
+#: qml/SharedLocationDialog.qml:61 qml/Main.qml:9310
 msgid "Ubicación compartida"
 msgstr "Shared location"
 
@@ -1267,7 +1282,7 @@ msgstr "Pending build (clickable build)"
 msgid "Alta calidad (neuronal)"
 msgstr "High quality (neural)"
 
-#: qml/MediaPanel.qml:222 qml/Main.qml:6624
+#: qml/MediaPanel.qml:222 qml/Main.qml:6633
 msgid "Música"
 msgstr "Music"
 
@@ -1302,18 +1317,18 @@ msgid ""
 "simbólicos a su carpeta ~/Music desde una Terminal (o por SSH). Navius "
 "reproducirá los enlaces sin copiar nada:"
 msgstr ""
-"When adding music, the files are copied to the app folder, occupying ext"
-"ra space. To avoid duplicating them, an advanced user can create symboli"
-"c links to their ~/Music folder from a Terminal (or via SSH). Navius wil"
-"l play the links without copying anything:"
+"When adding music, the files are copied to the app folder, occupying extra "
+"space. To avoid duplicating them, an advanced user can create symbolic links "
+"to their ~/Music folder from a Terminal (or via SSH). Navius will play the "
+"links without copying anything:"
 
 #: qml/MediaPanel.qml:540
 msgid ""
 "Después, vuelve a abrir el reproductor para ver tu música. Para quitar un "
 "enlace usa la papelera 🗑 (no borra el fichero original)."
 msgstr ""
-"Then, reopen the player to see your music. To remove a link use the tras"
-"h 🗑 (it does not delete the original file)."
+"Then, reopen the player to see your music. To remove a link use the trash 🗑 "
+"(it does not delete the original file)."
 
 #: qml/OsmScoutDialog.qml:42
 msgid ""
@@ -1343,7 +1358,7 @@ msgstr "Open link"
 msgid "Ir a"
 msgstr "Go to"
 
-#: qml/MsgDetailPopup.qml:175 qml/Main.qml:7255 qml/MessagesPanel.qml:351
+#: qml/MsgDetailPopup.qml:175 qml/Main.qml:7264 qml/MessagesPanel.qml:351
 msgid "Añadir destino"
 msgstr "Add destination"
 
@@ -1411,321 +1426,601 @@ msgstr "Completed"
 msgid "Sin historial de tareas"
 msgstr "No task history"
 
-#: qml/Main.qml:1451
+#: qml/Main.qml:1333
+msgid "✓ Configuración guardada en el servidor"
+msgstr "✓ Settings saved to server"
+
+#: qml/Main.qml:1352
+msgid "Sin conexión: no se pudo cargar la configuración del servidor"
+msgstr "Offline: could not load server settings"
+
+#: qml/Main.qml:1354
+msgid "Error al cargar configuración del servidor: "
+msgstr "Error loading server settings: "
+
+#: qml/Main.qml:1453
 msgid "Error al procesar la respuesta del servidor"
 msgstr "Error processing server response"
 
-#: qml/Main.qml:1460
+#: qml/Main.qml:1462
 msgid "Sesión no válida — vuelve a iniciar sesión"
 msgstr "Invalid session — please sign in again"
 
-#: qml/Main.qml:1465
+#: qml/Main.qml:1467
 msgid "Sin conexión con el servidor"
 msgstr "No connection to server"
 
-#: qml/Main.qml:1468
+#: qml/Main.qml:1470
 msgid "Error del servidor (%1)"
 msgstr "Server error (%1)"
 
-#: qml/Main.qml:4677
+#: qml/Main.qml:2205 qml/Main.qml:2240 qml/ParkingDialog.qml:111
+msgid "A pie"
+msgstr "On foot"
+
+#: qml/Main.qml:2267
+msgid "No se pudo calcular la ruta al aparcamiento"
+msgstr "Could not calculate route to parking spot"
+
+#: qml/Main.qml:2408 qml/Main.qml:7698 qml/Main.qml:8368
+msgid "OSM Scout · rutas y mapas offline"
+msgstr "OSM Scout · offline routes and maps"
+
+#: qml/Main.qml:2420
+msgid "Servidor: "
+msgstr "Server: "
+
+#: qml/Main.qml:2986
+msgid "Reproducción terminada"
+msgstr "Playback finished"
+
+#: qml/Main.qml:4171
+msgid "GPS recuperado"
+msgstr "GPS recovered"
+
+#: qml/Main.qml:4686
 msgid "Rumbo"
 msgstr "Heading"
 
-#: qml/Main.qml:4695
+#: qml/Main.qml:4704
 msgid "km/h ◄"
 msgstr "km/h ◄"
 
-#: qml/Main.qml:4695
+#: qml/Main.qml:4704
 msgid "km/h"
 msgstr "km/h"
 
-#: qml/Main.qml:4734
+#: qml/Main.qml:4743
 msgid "Fallo GPS ON"
 msgstr "GPS fail ON"
 
-#: qml/Main.qml:4734 qml/Main.qml:6765
+#: qml/Main.qml:4743 qml/Main.qml:6774
 msgid "Fallo GPS"
 msgstr "GPS fail"
 
-#: qml/Main.qml:4761
+#: qml/Main.qml:4770
 msgid "Rev."
 msgstr "Rev."
 
-#: qml/Main.qml:4850
+#: qml/Main.qml:4859
 msgid "Ctrl ON"
 msgstr "Ctrl ON"
 
-#: qml/Main.qml:4850
+#: qml/Main.qml:4859
 msgid "Ctrl"
 msgstr "Ctrl"
 
-#: qml/Main.qml:4898
+#: qml/Main.qml:4907
 msgid "Con ruta"
 msgstr "With route"
 
-#: qml/Main.qml:4937
+#: qml/Main.qml:4946
 msgid "Hdg blend"
 msgstr "Hdg blend"
 
-#: qml/Main.qml:4948
+#: qml/Main.qml:4957
 msgid "Sin ruta"
 msgstr "No route"
 
-#: qml/Main.qml:4962
+#: qml/Main.qml:4971
 msgid "Hdg accel"
 msgstr "Hdg accel"
 
-#: qml/Main.qml:4978
+#: qml/Main.qml:4987
 msgid "Pos sin nav"
 msgstr "Pos sin nav"
 
-#: qml/Main.qml:5088
+#: qml/Main.qml:5097
 msgid "Seguir ruta"
 msgstr "Follow route"
 
-#: qml/Main.qml:5115
+#: qml/Main.qml:5124
 msgid "SIMULACIÓN GPS"
 msgstr "GPS SIMULATION"
 
-#: qml/Main.qml:5144
+#: qml/Main.qml:5153
 msgid "OSM Scout Server  ·  límites de velocidad por tramo"
 msgstr "OSM Scout Server  ·  speed limits per segment"
 
-#: qml/Main.qml:5661 qml/Main.qml:5683
+#: qml/Main.qml:5428
+msgid "Mapa 3D"
+msgstr "3D map"
+
+#: qml/Main.qml:5429
+msgid "Mapa"
+msgstr "Map"
+
+#: qml/Main.qml:5430 qml/PreferencesPanel.qml:25
+msgid "Satélite"
+msgstr "Satellite"
+
+#: qml/Main.qml:5431 qml/PreferencesPanel.qml:29
+msgid "Claro"
+msgstr "Light"
+
+#: qml/Main.qml:5432 qml/PreferencesPanel.qml:29
+msgid "Vivo"
+msgstr "Vivid"
+
+#: qml/Main.qml:5434 qml/PreferencesPanel.qml:30 qml/PreferencesPanel.qml:329
+msgid "Noche"
+msgstr "Night"
+
+#: qml/Main.qml:5670 qml/Main.qml:5692
 msgid "Alerta"
 msgstr "Alert"
 
-#: qml/Main.qml:5711 qml/PreferencesPanel.qml:24 qml/PreferencesPanel.qml:329
+#: qml/Main.qml:5720 qml/PreferencesPanel.qml:24 qml/PreferencesPanel.qml:329
 msgid "Auto"
 msgstr "Auto"
 
-#: qml/Main.qml:6360
+#: qml/Main.qml:6369
 msgid "Silenciado"
 msgstr "Muted"
 
-#: qml/Main.qml:6361
+#: qml/Main.qml:6370
 msgid "Indicaciones y alertas por voz"
 msgstr "Voice directions & alerts"
 
-#: qml/Main.qml:6362
+#: qml/Main.qml:6371
 msgid "Indicaciones voz, alertas pitido"
 msgstr "Voice directions, beep alerts"
 
-#: qml/Main.qml:6363
+#: qml/Main.qml:6372
 msgid "Solo indicaciones por voz"
 msgstr "Voice directions only"
 
-#: qml/Main.qml:6364
+#: qml/Main.qml:6373
 msgid "Indicaciones pitido, alertas voz"
 msgstr "Beep directions, voice alerts"
 
-#: qml/Main.qml:6365 qml/Main.qml:6429
+#: qml/Main.qml:6374 qml/Main.qml:6438
 msgid "Solo pitidos"
 msgstr "Beeps only"
 
-#: qml/Main.qml:6366
+#: qml/Main.qml:6375
 msgid "Solo indicaciones (pitido)"
 msgstr "Directions only (beep)"
 
-#: qml/Main.qml:6367
+#: qml/Main.qml:6376
 msgid "Solo alertas por voz"
 msgstr "Voice alerts only"
 
-#: qml/Main.qml:6368
+#: qml/Main.qml:6377
 msgid "Solo alertas (pitido)"
 msgstr "Alerts only (beep)"
 
-#: qml/Main.qml:6427
+#: qml/Main.qml:6436
 msgid "Voz + alertas"
 msgstr "Voice + alerts"
 
-#: qml/Main.qml:6428
+#: qml/Main.qml:6437
 msgid "Solo alertas"
 msgstr "Alerts only"
 
-#: qml/Main.qml:6429
+#: qml/Main.qml:6438
 msgid "Silencio"
 msgstr "Silence"
 
-#: qml/Main.qml:6461
+#: qml/Main.qml:6470
 msgid "Compartiendo"
 msgstr "Sharing"
 
-#: qml/Main.qml:6486
+#: qml/Main.qml:6495
 msgid "Prev. Ruta"
 msgstr "Route prev."
 
-#: qml/Main.qml:6501
+#: qml/Main.qml:6510
 msgid "Tareas"
 msgstr "Tasks"
 
-#: qml/Main.qml:6545
+#: qml/Main.qml:6537
+msgid "🅿 Aparcamiento guardado · "
+msgstr "🅿 Parking spot saved · "
+
+#: qml/Main.qml:6554
 msgid "Borrar aparcamiento"
 msgstr "Clear parking"
 
-#: qml/Main.qml:6573
+#: qml/Main.qml:6565
+msgid "🗑 Aparcamiento eliminado · "
+msgstr "🗑 Parking spot deleted · "
+
+#: qml/Main.qml:6582
 msgid "Ver vehículo"
 msgstr "View vehicle"
 
-#: qml/Main.qml:6606 qml/ParkingDialog.qml:61
+#: qml/Main.qml:6615 qml/ParkingDialog.qml:61
 msgid "Ir al aparcamiento"
 msgstr "Go to parking"
 
-#: qml/Main.qml:6656 qml/LoginPanel.qml:104
+#: qml/Main.qml:6665 qml/LoginPanel.qml:104
 msgid "Mi cuenta"
 msgstr "My account"
 
-#: qml/Main.qml:6656
+#: qml/Main.qml:6665
 msgid "Login"
 msgstr "Login"
 
-#: qml/Main.qml:6672 qml/MessagesPanel.qml:106
+#: qml/Main.qml:6681 qml/MessagesPanel.qml:106
 msgid "Mensajes"
 msgstr "Messages"
 
-#: qml/Main.qml:6702
+#: qml/Main.qml:6711
 msgid "Bloq. Mapa"
 msgstr "Map lock"
 
-#: qml/Main.qml:6719 qml/PreferencesPanel.qml:3021
+#: qml/Main.qml:6728 qml/PreferencesPanel.qml:3021
 msgid "Debug"
 msgstr "Debug"
 
-#: qml/Main.qml:6734
+#: qml/Main.qml:6743
 msgid "Sim GPS"
 msgstr "GPS sim"
 
-#: qml/Main.qml:6765
+#: qml/Main.qml:6774
 msgid "GPS on"
 msgstr "GPS on"
 
-#: qml/Main.qml:6780
+#: qml/Main.qml:6789
 msgid "Reanudar"
 msgstr "Resume"
 
-#: qml/Main.qml:6780
+#: qml/Main.qml:6789
 msgid "Pausar sim"
 msgstr "Pause sim"
 
-#: qml/Main.qml:6796 qml/PreferencesPanel.qml:1776
+#: qml/Main.qml:6805 qml/PreferencesPanel.qml:1776
 msgid "Suavizado GPS"
 msgstr "GPS smoothing"
 
-#: qml/Main.qml:6813
+#: qml/Main.qml:6822
 msgid "Bisector"
 msgstr "Bisector"
 
-#: qml/Main.qml:6830
+#: qml/Main.qml:6839
 msgid "POIs debug"
 msgstr "POIs debug"
 
-#: qml/Main.qml:6860
+#: qml/Main.qml:6869
 msgid "Donar"
 msgstr "Donate"
 
-#: qml/Main.qml:7067
+#: qml/Main.qml:7076
 msgid "INICIO"
 msgstr "START"
 
-#: qml/Main.qml:7104
+#: qml/Main.qml:7113
 msgid "FIN"
 msgstr "END"
 
-#: qml/Main.qml:7235
+#: qml/Main.qml:7244
 msgid "Inicio sim"
 msgstr "Sim start"
 
-#: qml/Main.qml:7585
+#: qml/Main.qml:7308
+msgid "🚨  Añadir alerta aquí"
+msgstr "🚨  Add alert here"
+
+#: qml/Main.qml:7337
+msgid "📍 Establecer posición GPS"
+msgstr "📍 Set GPS position"
+
+#: qml/Main.qml:7462
+msgid "👍  Confirmar"
+msgstr "👍  Confirm"
+
+#: qml/Main.qml:7485
+msgid "👎  Desmentir"
+msgstr "👎  Not there"
+
+#: qml/Main.qml:7510
+msgid "🗑  Cancelar mi alerta"
+msgstr "🗑  Cancel my alert"
+
+#: qml/Main.qml:7594
 msgid "Satélites"
 msgstr "Satellites"
 
-#: qml/Main.qml:7953
+#: qml/Main.qml:7701
+msgid "OSM Scout no disponible · usando "
+msgstr "OSM Scout unavailable · using "
+
+#: qml/Main.qml:7759
+msgid "Caché de mapas eliminada"
+msgstr "Map cache cleared"
+
+#: qml/Main.qml:7962
 msgid "Límite comunitario"
 msgstr "Community limit"
 
-#: qml/Main.qml:7960
+#: qml/Main.qml:7969
 msgid "Eliminar este límite"
 msgstr "Remove this limit"
 
-#: qml/Main.qml:8027
+#: qml/Main.qml:8036
 msgid "Límite de velocidad aquí"
 msgstr "Speed limit here"
 
-#: qml/Main.qml:8142
+#: qml/Main.qml:8135
+msgid "⚙  Configuración en el servidor"
+msgstr "⚙  Settings on the server"
+
+#: qml/Main.qml:8151
 msgid "Tienes cambios locales no sincronizados. ¿Cuál configuración usar?"
 msgstr "You have unsynced local changes. Which configuration should be used?"
 
-#: qml/Main.qml:8396
+#: qml/Main.qml:8163
+msgid "Usar del servidor"
+msgstr "Use server's"
+
+#: qml/Main.qml:8173
+msgid "✓ Configuración del servidor aplicada"
+msgstr "✓ Server settings applied"
+
+#: qml/Main.qml:8182
+msgid "Mantener la local"
+msgstr "Keep local"
+
+#: qml/Main.qml:8285
+msgid "Cacheando mapa… detalle"
+msgstr "Caching map… detail"
+
+#: qml/Main.qml:8305
+msgid "Cacheando mapa… "
+msgstr "Caching map… "
+
+#: qml/Main.qml:8335
+msgid "Mapa online: OSM Scout"
+msgstr "Online map: OSM Scout"
+
+#: qml/Main.qml:8337
+msgid "Mapa online: OSM Scout (no disponible · usando Mapbox)"
+msgstr "Online map: OSM Scout (unavailable · using Mapbox)"
+
+#: qml/Main.qml:8339
+msgid "Mapa online: Mapbox"
+msgstr "Online map: Mapbox"
+
+#: qml/Main.qml:8344
+msgid "Sin internet: fallback a OSM Scout"
+msgstr "No internet: falling back to OSM Scout"
+
+#: qml/Main.qml:8346
+msgid "Sin internet: fallback OSM Scout (no disponible)"
+msgstr "No internet: OSM Scout fallback (unavailable)"
+
+#: qml/Main.qml:8348
+msgid "Sin internet: caché de tiles"
+msgstr "No internet: tile cache"
+
+#: qml/Main.qml:8405
 msgid "Mapas: servidor no disponible · usando OSM Scout"
 msgstr "Maps: server unavailable · using OSM Scout"
 
-#: qml/Main.qml:8398
+#: qml/Main.qml:8407
 msgid "Mapas: servidor no disponible · usando servidor público"
 msgstr "Maps: server unavailable · using public server"
 
-#: qml/Main.qml:8418
+#: qml/Main.qml:8427
 msgid "Servidor de mapas recuperado · restaurando"
 msgstr "Map server recovered · restoring"
 
-#: qml/Main.qml:8436 qml/Main.qml:8444
+#: qml/Main.qml:8445 qml/Main.qml:8453
 msgid "Sin internet · usando OSM Scout Server"
 msgstr "No internet · using OSM Scout Server"
 
-#: qml/Main.qml:8460 qml/Main.qml:8465
+#: qml/Main.qml:8469 qml/Main.qml:8474
 msgid "Conexión restaurada · volviendo a mapas online"
 msgstr "Connection restored · returning to online maps"
 
-#: qml/Main.qml:8627
+#: qml/Main.qml:8533
+msgid "Cacheando mapa… 0%"
+msgstr "Caching map… 0%"
+
+#: qml/Main.qml:8636
 msgid "Tienes un mensaje nuevo"
 msgstr "You have a new message"
 
-#: qml/Main.qml:8628
+#: qml/Main.qml:8637
 msgid "Tienes %1 mensajes nuevos"
 msgstr "You have %1 new messages"
 
-#: qml/Main.qml:8666
+#: qml/Main.qml:8675
 msgid "Ahorra"
 msgstr "Save"
 
-#: qml/Main.qml:8676
+#: qml/Main.qml:8685
 msgid "Revisar"
 msgstr "Review"
 
-#: qml/Main.qml:8685
+#: qml/Main.qml:8694
 msgid "Ignorar"
 msgstr "Ignore"
 
-#: qml/Main.qml:8741
+#: qml/Main.qml:8750
 msgid "Pre-procesando motor TTS"
 msgstr "Pre-processing TTS engine"
 
-#: qml/Main.qml:8744
+#: qml/Main.qml:8751
+msgid "GPS impreciso. Simulando trayecto."
+msgstr "GPS inaccurate. Simulating route."
+
+#: qml/Main.qml:8754
 msgid "Cargando mapa…"
 msgstr "Loading map…"
 
-#: qml/Main.qml:9517
+#: qml/Main.qml:9528
 msgid "¿Has llegado a"
 msgstr "Have you arrived at"
 
-#: qml/Main.qml:9518
+#: qml/Main.qml:9529
 msgid "el destino"
 msgstr "the destination"
 
-#: qml/Main.qml:9527
+#: qml/Main.qml:9538
 msgid "Sí, he llegado"
 msgstr "Yes, I've arrived"
 
-#: qml/Main.qml:9538
+#: qml/Main.qml:9549
 msgid "Todavía no"
 msgstr "Not yet"
 
-#: qml/Main.qml:9570
+#: qml/Main.qml:9581
 msgid "Tareas pendientes"
 msgstr "Pending tasks"
 
-#: qml/Main.qml:9579
+#: qml/Main.qml:9590
 msgid "Abrir"
 msgstr "Open"
+
+#: qml/Main.qml:9631
+msgid "🅿 ¿Guardar aparcamiento aquí?"
+msgstr "🅿 Save parking spot here?"
+
+#: qml/Main.qml:9649
+msgid "🅿 Aparcamiento guardado"
+msgstr "🅿 Parking spot saved"
+
+#: qml/AlertasOverlay.qml:97 qml/AlertasOverlay.qml:99
+msgid "Tráfico"
+msgstr "Traffic"
+
+#: qml/AlertasOverlay.qml:100
+msgid "Denso"
+msgstr "Heavy"
+
+#: qml/AlertasOverlay.qml:101
+msgid "Detenido"
+msgstr "Stopped"
+
+#: qml/AlertasOverlay.qml:104 qml/AlertasOverlay.qml:106
+msgid "Policía"
+msgstr "Police"
+
+#: qml/AlertasOverlay.qml:107
+msgid "Cámara móvil"
+msgstr "Mobile speed camera"
+
+#: qml/AlertasOverlay.qml:108
+msgid "Oculto"
+msgstr "Hidden"
+
+#: qml/AlertasOverlay.qml:111 qml/AlertasOverlay.qml:113
+msgid "Accidente"
+msgstr "Accident"
+
+#: qml/AlertasOverlay.qml:114
+msgid "Col. múltiple"
+msgstr "Pileup"
+
+#: qml/AlertasOverlay.qml:117 qml/AlertasOverlay.qml:119
+msgid "Peligro"
+msgstr "Hazard"
+
+#: qml/AlertasOverlay.qml:120
+msgid "Obras"
+msgstr "Roadwork"
+
+#: qml/AlertasOverlay.qml:121
+msgid "Coche en arcén"
+msgstr "Car on shoulder"
+
+#: qml/AlertasOverlay.qml:122
+msgid "Semáforo roto"
+msgstr "Broken traffic light"
+
+#: qml/AlertasOverlay.qml:123
+msgid "Bache"
+msgstr "Pothole"
+
+#: qml/AlertasOverlay.qml:126
+msgid "Cortada"
+msgstr "Closed"
+
+#: qml/AlertasOverlay.qml:127
+msgid "Carril"
+msgstr "Lane"
+
+#: qml/AlertasOverlay.qml:129
+msgid "Carril bloq."
+msgstr "Lane blocked"
+
+#: qml/AlertasOverlay.qml:130
+msgid "Izquierdo"
+msgstr "Left"
+
+#: qml/AlertasOverlay.qml:131
+msgid "Derecho"
+msgstr "Right"
+
+#: qml/AlertasOverlay.qml:132
+msgid "Central"
+msgstr "Center"
+
+#: qml/AlertasOverlay.qml:135
+msgid "Error mapa"
+msgstr "Map error"
+
+#: qml/AlertasOverlay.qml:136 qml/AlertasOverlay.qml:138
+msgid "Mal tiempo"
+msgstr "Bad weather"
+
+#: qml/AlertasOverlay.qml:139
+msgid "Resbaladiza"
+msgstr "Slippery"
+
+#: qml/AlertasOverlay.qml:140
+msgid "Inundación"
+msgstr "Flooding"
+
+#: qml/AlertasOverlay.qml:141
+msgid "Nieve"
+msgstr "Snow"
+
+#: qml/AlertasOverlay.qml:142
+msgid "Niebla"
+msgstr "Fog"
+
+#: qml/AlertasOverlay.qml:143
+msgid "Hielo"
+msgstr "Ice"
+
+#: qml/AlertasOverlay.qml:146
+msgid "Asistencia"
+msgstr "Assistance"
+
+#: qml/AlertasOverlay.qml:148
+msgid "Compañeros"
+msgstr "Companions"
+
+#: qml/AlertasOverlay.qml:149
+msgid "Emergencia"
+msgstr "Emergency"
+
+#: qml/AlertasOverlay.qml:152
+msgid "Lugar"
+msgstr "Place"
 
 #: qml/AlertasOverlay.qml:249
 msgid "Añadir alerta"
@@ -1870,9 +2165,9 @@ msgid ""
 "anuncio ya ayuda; hacer click contribuye directamente al desarrollo de la "
 "app. ¡Gracias!"
 msgstr ""
-"Navius is free and open source. Ads are discreet — they appear as signs "
-"on the road without interrupting navigation. Viewing an ad already helps"
-"; clicking contributes directly to the app's development. Thank you!"
+"Navius is free and open source. Ads are discreet — they appear as signs on "
+"the road without interrupting navigation. Viewing an ad already helps; "
+"clicking contributes directly to the app's development. Thank you!"
 
 #: qml/AboutDialog.qml:237
 msgid "Licencia GNU GPL v3. Software libre."
@@ -1918,10 +2213,6 @@ msgstr "Parked vehicle"
 msgid "Modo de desplazamiento"
 msgstr "Scroll mode"
 
-#: qml/ParkingDialog.qml:111
-msgid "A pie"
-msgstr "On foot"
-
 #: qml/ParkingDialog.qml:124
 msgid "En "
 msgstr "In "
@@ -1955,29 +2246,29 @@ msgstr ""
 msgid "Pulsa Iniciar para activar el GPS"
 msgstr "Tap Start to enable GPS"
 
+#: qml/SatelliteView.qml:262
+msgid "GPS en uso"
+msgstr "GPS in use"
+
+#: qml/SatelliteView.qml:263
+msgid "GLONASS en uso"
+msgstr "GLONASS in use"
+
+#: qml/SatelliteView.qml:264
+msgid "No en uso"
+msgstr "Not in use"
+
+#: qml/SatelliteView.qml:370
+msgid "No uso"
+msgstr "Not used"
+
 #: qml/SatelliteView.qml:417
 msgid "Sin satélites visibles"
 msgstr "No satellites visible"
 
-#: qml/PreferencesPanel.qml:25
-msgid "Satélite"
-msgstr "Satellite"
-
-#: qml/PreferencesPanel.qml:29
-msgid "Claro"
-msgstr "Light"
-
-#: qml/PreferencesPanel.qml:29
-msgid "Vivo"
-msgstr "Vivid"
-
 #: qml/PreferencesPanel.qml:30
 msgid "Fiord"
 msgstr "Fiord"
-
-#: qml/PreferencesPanel.qml:30 qml/PreferencesPanel.qml:329
-msgid "Noche"
-msgstr "Night"
 
 #: qml/PreferencesPanel.qml:198
 msgid "Restaurado"
@@ -2041,6 +2332,10 @@ msgstr "Yes"
 #: qml/PreferencesPanel.qml:1383
 msgid "No"
 msgstr "Off"
+
+#: qml/PreferencesPanel.qml:552
+msgid "Mi vehículo"
+msgstr "My vehicle"
 
 #: qml/PreferencesPanel.qml:583
 msgid "Crear vehículo"
@@ -2512,6 +2807,14 @@ msgstr "Off"
 msgid "Posición manual"
 msgstr "Manual position"
 
+#: qml/PreferencesPanel.qml:3311
+msgid "Latitud  (ej. 40.322130)"
+msgstr "Latitude  (e.g. 40.322130)"
+
+#: qml/PreferencesPanel.qml:3318
+msgid "Longitud  (ej. -3.515801)"
+msgstr "Longitude  (e.g. -3.515801)"
+
 #: qml/PreferencesPanel.qml:3327
 msgid "Fijar"
 msgstr "Fix"
@@ -2601,11 +2904,12 @@ msgid ""
 "Este asistente te guiará por todas las funciones de la aplicación. Puedes "
 "consultar este tour en cualquier momento desde Ajustes → Ayuda."
 msgstr ""
-"Navius is a GPS navigator for Ubuntu Touch. It combines offline vector m"
-"aps, turn-by-turn navigation with voice, advanced route planning and com"
-"plete support for getting around the whole world.\n\nThis assistant will"
-" guide you through all the app's features. You can consult this tour at "
-"any time from Settings → Help."
+"Navius is a GPS navigator for Ubuntu Touch. It combines offline vector maps, "
+"turn-by-turn navigation with voice, advanced route planning and complete "
+"support for getting around the whole world.\n"
+"\n"
+"This assistant will guide you through all the app's features. You can "
+"consult this tour at any time from Settings → Help."
 
 #: qml/TourOverlay.qml:33
 msgid ""
@@ -2618,12 +2922,14 @@ msgid ""
 "• El botón 3D/2D alterna entre vista plana y perspectiva de conducción\n"
 "• En modo noche el mapa cambia automáticamente a paleta oscura"
 msgstr ""
-"The map is vector-based (MapLibre GL) — it looks sharp at any zoom and w"
-"orks offline once tiles are downloaded.\n\n• Pinch to zoom or use the si"
-"debar\n• Tap the compass button to re-center and activate tracking\n• Sw"
-"ipe one finger to explore freely\n• The 3D/2D button toggles between fla"
-"t view and driving perspective\n• In night mode the map automatically sw"
-"itches to a dark palette"
+"The map is vector-based (MapLibre GL) — it looks sharp at any zoom and works "
+"offline once tiles are downloaded.\n"
+"\n"
+"• Pinch to zoom or use the sidebar\n"
+"• Tap the compass button to re-center and activate tracking\n"
+"• Swipe one finger to explore freely\n"
+"• The 3D/2D button toggles between flat view and driving perspective\n"
+"• In night mode the map automatically switches to a dark palette"
 
 #: qml/TourOverlay.qml:38
 msgid ""
@@ -2638,12 +2944,14 @@ msgid ""
 "• Puedes añadir varios destinos en secuencia (ruta multistop)\n"
 "• El historial y los favoritos aparecen automáticamente"
 msgstr ""
-"Tap the «Start navigation» button at the top to open the planning panel."
-"\n\nType the name of a place, address or point of interest. The search u"
-"ses Photon/Komoot with OpenStreetMap data and works for any place in the"
-" world.\n\n• Tap a result to add it as a destination\n• You can add mult"
-"iple destinations in sequence (multistop route)\n• History and favorites"
-" appear automatically"
+"Tap the «Start navigation» button at the top to open the planning panel.\n"
+"\n"
+"Type the name of a place, address or point of interest. The search uses "
+"Photon/Komoot with OpenStreetMap data and works for any place in the world.\n"
+"\n"
+"• Tap a result to add it as a destination\n"
+"• You can add multiple destinations in sequence (multistop route)\n"
+"• History and favorites appear automatically"
 
 #: qml/TourOverlay.qml:42
 msgid "Planificación de ruta"
@@ -2660,12 +2968,14 @@ msgid ""
 "restaurantes, hoteles…\n"
 "• Pulsa CALCULAR RUTA para ver las alternativas disponibles"
 msgstr ""
-"With the panel open you can configure all the details of your trip:\n\n•"
-" Add multiple destinations — the route passes through all in order\n• Re"
-"order or delete destinations with the buttons next to each one\n• Route "
-"options: no tolls, no motorways, no ferries, no dirt\n• Search nearby PO"
-"I: gas stations (with fuel price), parking, restaurants, hotels…\n• Pres"
-"s CALCULATE ROUTE to see the available alternatives"
+"With the panel open you can configure all the details of your trip:\n"
+"\n"
+"• Add multiple destinations — the route passes through all in order\n"
+"• Reorder or delete destinations with the buttons next to each one\n"
+"• Route options: no tolls, no motorways, no ferries, no dirt\n"
+"• Search nearby POI: gas stations (with fuel price), parking, restaurants, "
+"hotels…\n"
+"• Press CALCULATE ROUTE to see the available alternatives"
 
 #: qml/TourOverlay.qml:48
 msgid ""
@@ -2679,12 +2989,15 @@ msgid ""
 "Los TODOs se conservan entre sesiones y se muestran la próxima vez que "
 "visites el mismo lugar."
 msgstr ""
-"You can add a list of pending tasks to each destination of the trip.\n\n"
-"• Tap '+ Task' next to a destination to add a TODO\n• Tasks are saved as"
-"sociated with the location (by coordinates)\n• Upon arriving at the dest"
-"ination a notice appears to open the list\n• Mark tasks as done directly"
-" in the panel\n\nTODOs are preserved between sessions and are shown the "
-"next time you visit the same place."
+"You can add a list of pending tasks to each destination of the trip.\n"
+"\n"
+"• Tap '+ Task' next to a destination to add a TODO\n"
+"• Tasks are saved associated with the location (by coordinates)\n"
+"• Upon arriving at the destination a notice appears to open the list\n"
+"• Mark tasks as done directly in the panel\n"
+"\n"
+"TODOs are preserved between sessions and are shown the next time you visit "
+"the same place."
 
 #: qml/TourOverlay.qml:53
 msgid ""
@@ -2697,12 +3010,14 @@ msgid ""
 "• Aparecen en la sección «Planes guardados» en la parte superior del panel\n"
 "• Toca un plan para cargarlo, o el icono de papelera para borrarlo"
 msgstr ""
-"Activate «Departure time» to plan a future trip. Select the day and depa"
-"rture time — the route will be calculated using the predicted traffic fo"
-"r that moment.\n\n• Press ⊕ next to CALCULATE ROUTE to save the complete"
-" plan\n• Plans include destinations, TODOs, departure time and route opt"
-"ions\n• They appear in the «Saved plans» section at the top of the panel"
-"\n• Tap a plan to load it, or the trash icon to delete it"
+"Activate «Departure time» to plan a future trip. Select the day and "
+"departure time — the route will be calculated using the predicted traffic "
+"for that moment.\n"
+"\n"
+"• Press ⊕ next to CALCULATE ROUTE to save the complete plan\n"
+"• Plans include destinations, TODOs, departure time and route options\n"
+"• They appear in the «Saved plans» section at the top of the panel\n"
+"• Tap a plan to load it, or the trash icon to delete it"
 
 #: qml/TourOverlay.qml:57
 msgid "Selección de ruta y alternativas"
@@ -2718,12 +3033,13 @@ msgid ""
 "• Toca una alternativa para verla; confirma para iniciar la navegación\n"
 "• También puedes ver la lista completa de instrucciones antes de salir"
 msgstr ""
-"Navius requests up to 3 route alternatives from Valhalla. After calculat"
-"ing, the selection panel appears:\n\n• Each alternative shows distance, "
-"time and route on the map\n• Choose the vehicle type: car, motorcycle, b"
-"icycle, on foot and more\n• Tap an alternative to view it; confirm to st"
-"art navigation\n• You can also view the complete list of instructions be"
-"fore leaving"
+"Navius requests up to 3 route alternatives from Valhalla. After calculating, "
+"the selection panel appears:\n"
+"\n"
+"• Each alternative shows distance, time and route on the map\n"
+"• Choose the vehicle type: car, motorcycle, bicycle, on foot and more\n"
+"• Tap an alternative to view it; confirm to start navigation\n"
+"• You can also view the complete list of instructions before leaving"
 
 #: qml/TourOverlay.qml:62
 msgid "Navegación turn-by-turn"
@@ -2742,11 +3058,15 @@ msgid ""
 "Las instrucciones se anuncian por voz con antelación suficiente para "
 "reaccionar a tiempo."
 msgstr ""
-"During navigation, the top bar shows:\n\n• The current instruction with "
-"maneuver icon\n• Distance to the next turn\n• Name of the current and ne"
-"xt street\n• Estimated arrival time (ETA)\n• Your current speed and the "
-"segment speed limit\n\nInstructions are announced by voice with sufficie"
-"nt advance to react in time."
+"During navigation, the top bar shows:\n"
+"\n"
+"• The current instruction with maneuver icon\n"
+"• Distance to the next turn\n"
+"• Name of the current and next street\n"
+"• Estimated arrival time (ETA)\n"
+"• Your current speed and the segment speed limit\n"
+"\n"
+"Instructions are announced by voice with sufficient advance to react in time."
 
 #: qml/TourOverlay.qml:67
 msgid "Alertas comunitarias"
@@ -2765,12 +3085,14 @@ msgid ""
 "\n"
 "Requiere cuenta Navius activa."
 msgstr ""
-"Other Navius drivers report incidents in real time that appear on your m"
-"ap.\n\n• Accidents, mobile radar, police, traffic, hazards, roadworks…\n"
-"• Tap the triangular warning button on the map to report\n• Active alert"
-"s on your route are shown with a sound notification\n• Confirm or deny a"
-"lerts from other users with the vote buttons\n\nRequires an active Naviu"
-"s account."
+"Other Navius drivers report incidents in real time that appear on your map.\n"
+"\n"
+"• Accidents, mobile radar, police, traffic, hazards, roadworks…\n"
+"• Tap the triangular warning button on the map to report\n"
+"• Active alerts on your route are shown with a sound notification\n"
+"• Confirm or deny alerts from other users with the vote buttons\n"
+"\n"
+"Requires an active Navius account."
 
 #: qml/TourOverlay.qml:73
 msgid ""
@@ -2785,12 +3107,16 @@ msgid ""
 "\n"
 "Requiere cuenta Navius activa."
 msgstr ""
-"Share your position and route in real time with anyone, without them nee"
-"ding to have Navius installed.\n\n• Menu ≡ → Share trip → Create link\n•"
-" Copy the link and share it by your preferred means\n• The follower sees"
-" your position updated every 5 seconds in their browser\n• The link is v"
-"alid for 24 hours\n• Stop sharing from the same menu at any time\n\nRequ"
-"ires an active Navius account."
+"Share your position and route in real time with anyone, without them needing "
+"to have Navius installed.\n"
+"\n"
+"• Menu ≡ → Share trip → Create link\n"
+"• Copy the link and share it by your preferred means\n"
+"• The follower sees your position updated every 5 seconds in their browser\n"
+"• The link is valid for 24 hours\n"
+"• Stop sharing from the same menu at any time\n"
+"\n"
+"Requires an active Navius account."
 
 #: qml/TourOverlay.qml:77
 msgid "Instrucciones de voz (TTS)"
@@ -2807,11 +3133,14 @@ msgid ""
 "Piper pre-genera los WAVs de las próximas instrucciones en segundo plano "
 "para que la voz suene sin retraso perceptible."
 msgstr ""
-"The voice uses the engine selected in Settings → Voice:\n\n• Piper (neur"
-"al): the most natural, ~300 ms latency, downloads .onnx voices\n• Mimic "
-"HTS: built-in Spanish, ~100 ms, good quality\n• PicoTTS: fallback engine"
-", ~50 ms, basic quality\n\nPiper pre-generates WAVs of the upcoming inst"
-"ructions in the background so the voice plays without noticeable delay."
+"The voice uses the engine selected in Settings → Voice:\n"
+"\n"
+"• Piper (neural): the most natural, ~300 ms latency, downloads .onnx voices\n"
+"• Mimic HTS: built-in Spanish, ~100 ms, good quality\n"
+"• PicoTTS: fallback engine, ~50 ms, basic quality\n"
+"\n"
+"Piper pre-generates WAVs of the upcoming instructions in the background so "
+"the voice plays without noticeable delay."
 
 #: qml/TourOverlay.qml:82
 msgid "Reproductor de música"
@@ -2828,11 +3157,14 @@ msgid ""
 "• La música baja automáticamente cuando el navegador habla (ducking)\n"
 "  y se restaura 600 ms después"
 msgstr ""
-"Navius includes an integrated music player. Import tracks via Content Hu"
-"b — Menu ≡ → Music → Add music.\n\n• Tap a track to play\n• Supports mp3"
-", ogg, flac, m4a, opus, wav and more\n• The compact widget remains visib"
-"le above the status bar\n• Music lowers automatically when the navigator"
-" speaks (ducking)\n  and restores 600 ms later"
+"Navius includes an integrated music player. Import tracks via Content Hub — "
+"Menu ≡ → Music → Add music.\n"
+"\n"
+"• Tap a track to play\n"
+"• Supports mp3, ogg, flac, m4a, opus, wav and more\n"
+"• The compact widget remains visible above the status bar\n"
+"• Music lowers automatically when the navigator speaks (ducking)\n"
+"  and restores 600 ms later"
 
 #: qml/TourOverlay.qml:87
 msgid "Velocímetro y límites de velocidad"
@@ -2847,10 +3179,12 @@ msgid ""
 "Ajustes)\n"
 "• Los límites provienen de los datos OSM con el estándar Legal Default Speeds"
 msgstr ""
-"The circular speedometer shows your speed in real time.\n\n• The speed l"
-"imit of the current segment appears in the navigation bar\n• If you exce"
-"ed the limit, the indicator changes color (configurable in Settings)\n• "
-"Limits come from OSM data with the Legal Default Speeds standard"
+"The circular speedometer shows your speed in real time.\n"
+"\n"
+"• The speed limit of the current segment appears in the navigation bar\n"
+"• If you exceed the limit, the indicator changes color (configurable in "
+"Settings)\n"
+"• Limits come from OSM data with the Legal Default Speeds standard"
 
 #: qml/TourOverlay.qml:93
 msgid ""
@@ -2864,11 +3198,15 @@ msgid ""
 "Útil para diagnosticar problemas de recepción GPS o comparar señal en "
 "distintas ubicaciones."
 msgstr ""
-"The satellite view shows in real time:\n\n• Position of each satellite i"
-"n the sky (azimuthal polar view)\n• Signal strength (SNR) of each satell"
-"ite in use\n• Number of visible and in-use satellites\n• GPS fix status "
-"(no fix / 2D fix / 3D fix)\n\nUseful for diagnosing GPS reception proble"
-"ms or comparing signal in different locations."
+"The satellite view shows in real time:\n"
+"\n"
+"• Position of each satellite in the sky (azimuthal polar view)\n"
+"• Signal strength (SNR) of each satellite in use\n"
+"• Number of visible and in-use satellites\n"
+"• GPS fix status (no fix / 2D fix / 3D fix)\n"
+"\n"
+"Useful for diagnosing GPS reception problems or comparing signal in "
+"different locations."
 
 #: qml/TourOverlay.qml:97
 msgid "Mensajes del servidor"
@@ -2886,11 +3224,14 @@ msgid ""
 "\n"
 "Requiere cuenta Navius activa."
 msgstr ""
-"The Navius server can send you messages: notices, news or notifications."
-"\n\n• Menu ≡ → Messages to view your inbox\n• The counter next to the ic"
-"on indicates unread messages\n• New messages show a notification banner"
-"\n• Some messages include a Navigate button with a direct destination\n"
-"\nRequires an active Navius account."
+"The Navius server can send you messages: notices, news or notifications.\n"
+"\n"
+"• Menu ≡ → Messages to view your inbox\n"
+"• The counter next to the icon indicates unread messages\n"
+"• New messages show a notification banner\n"
+"• Some messages include a Navigate button with a direct destination\n"
+"\n"
+"Requires an active Navius account."
 
 #: qml/TourOverlay.qml:103
 msgid ""
@@ -2902,11 +3243,13 @@ msgid ""
 "• La simulación reproduce el track como si fuera un viaje real:\n"
 "  todas las funciones de navegación funcionan sobre el track grabado"
 msgstr ""
-"Navius can record your GPS journey in real time.\n\n• Activate «Record t"
-"rack» in Settings → Navigation\n• Recorded tracks appear in Settings → N"
-"avigation → Recorded tracks\n• Options: view on map, export to GPX, simu"
-"late or delete\n• Simulation plays the track as if it were a real trip:"
-"\n  all navigation functions work on the recorded track"
+"Navius can record your GPS journey in real time.\n"
+"\n"
+"• Activate «Record track» in Settings → Navigation\n"
+"• Recorded tracks appear in Settings → Navigation → Recorded tracks\n"
+"• Options: view on map, export to GPX, simulate or delete\n"
+"• Simulation plays the track as if it were a real trip:\n"
+"  all navigation functions work on the recorded track"
 
 #: qml/TourOverlay.qml:107
 msgid "Servidor oficial Valhalla"
@@ -2930,15 +3273,19 @@ msgid ""
 "rutas y buscar lugares sin conexión a internet, directamente en el "
 "dispositivo."
 msgstr ""
-"Navius includes the valhalla.egpsistemas.com server configured by defaul"
-"t.\n\n• Worldwide coverage: full planet (OpenStreetMap)\n• Predicted tra"
-"ffic by time of day and day of week across the entire road network\n• Al"
-"l vehicle types: car, motorcycle, truck, bicycle, on foot…\n• Route alte"
-"rnatives, no tolls, no motorways, no ferries\n• High availability, no us"
-"age limit for Navius users\n\nYou can also configure your own server in "
-"Settings → Valhalla Server.\n\n🗺 Offline maps: install OSM Scout Server "
-"on Ubuntu Touch to calculate routes and search for places without intern"
-"et connection, directly on the device."
+"Navius includes the valhalla.egpsistemas.com server configured by default.\n"
+"\n"
+"• Worldwide coverage: full planet (OpenStreetMap)\n"
+"• Predicted traffic by time of day and day of week across the entire road "
+"network\n"
+"• All vehicle types: car, motorcycle, truck, bicycle, on foot…\n"
+"• Route alternatives, no tolls, no motorways, no ferries\n"
+"• High availability, no usage limit for Navius users\n"
+"\n"
+"You can also configure your own server in Settings → Valhalla Server.\n"
+"\n"
+"🗺 Offline maps: install OSM Scout Server on Ubuntu Touch to calculate routes "
+"and search for places without internet connection, directly on the device."
 
 #: qml/TourOverlay.qml:113
 msgid ""
@@ -2953,13 +3300,16 @@ msgid ""
 "\n"
 "Tus ajustes se sincronizan automáticamente si tienes cuenta Navius activa."
 msgstr ""
-"The Settings panel organizes configuration into sections:\n\n• Quick set"
-"tings: day/night mode, auto zoom, map orientation\n• General: GPS interp"
-"olation, dead-reckoning, speed alerts\n• Valhalla Server: server URL, lo"
-"cal server detection\n• Navigation: vehicle type, parking, track recordi"
-"ng\n• Voice: TTS engine, language, available voices, voice test\n• Help:"
-" this tour, user manual, app information\n\nYour settings sync automatic"
-"ally if you have an active Navius account."
+"The Settings panel organizes configuration into sections:\n"
+"\n"
+"• Quick settings: day/night mode, auto zoom, map orientation\n"
+"• General: GPS interpolation, dead-reckoning, speed alerts\n"
+"• Valhalla Server: server URL, local server detection\n"
+"• Navigation: vehicle type, parking, track recording\n"
+"• Voice: TTS engine, language, available voices, voice test\n"
+"• Help: this tour, user manual, app information\n"
+"\n"
+"Your settings sync automatically if you have an active Navius account."
 
 #: qml/TourOverlay.qml:117
 msgid "¡Listo para navegar!"
@@ -2980,12 +3330,18 @@ msgid ""
 "Puedes volver a este tour en cualquier momento desde\n"
 "Ajustes → Ayuda → Abrir asistente."
 msgstr ""
-"You now know Navius. Here is a quick summary:\n\n① Tap «Start navigation"
-"» to search for a destination\n② Choose route and tap Start\n③ Follow th"
-"e voice instructions\n④ Report alerts to other drivers\n⑤ Upon arrival, "
-"mark the completed TODOs\n\nMore features: music 🎵 · share trip 📡 · mess"
-"ages ✉️ · tracks 📍\n\nYou can return to this tour at any time from\nSett"
-"ings → Help → Open assistant."
+"You now know Navius. Here is a quick summary:\n"
+"\n"
+"① Tap «Start navigation» to search for a destination\n"
+"② Choose route and tap Start\n"
+"③ Follow the voice instructions\n"
+"④ Report alerts to other drivers\n"
+"⑤ Upon arrival, mark the completed TODOs\n"
+"\n"
+"More features: music 🎵 · share trip 📡 · messages ✉️ · tracks 📍\n"
+"\n"
+"You can return to this tour at any time from\n"
+"Settings → Help → Open assistant."
 
 #: qml/TourOverlay.qml:137
 msgid "Descarga una voz Piper"
@@ -3001,10 +3357,12 @@ msgid ""
 "\n"
 "Pulsa «Gestionar voces» para descargar una voz Piper."
 msgstr ""
-"Navius uses the Piper engine for high quality voice.\n\nNo Piper voice i"
-"s installed for your language. Without it, navigation instructions will "
-"use PicoTTS or espeak-ng, which sound less natural.\n\nPress «Manage voi"
-"ces» to download a Piper voice."
+"Navius uses the Piper engine for high quality voice.\n"
+"\n"
+"No Piper voice is installed for your language. Without it, navigation "
+"instructions will use PicoTTS or espeak-ng, which sound less natural.\n"
+"\n"
+"Press «Manage voices» to download a Piper voice."
 
 #: qml/TourOverlay.qml:267
 msgid "No mostrar al inicio"
@@ -3043,311 +3401,3 @@ msgstr "Use this destination"
 
 #~ msgid "Rev ON"
 #~ msgstr "Rev ON"
-
-#: qml/Main.qml qml/PreferencesPanel.qml qml/VehicleSetupDialog.qml
-msgid "Coche"
-msgstr "Car"
-
-#: qml/Main.qml qml/PreferencesPanel.qml qml/VehicleSetupDialog.qml
-msgid "Moto"
-msgstr "Motorcycle"
-
-#: qml/Main.qml qml/PreferencesPanel.qml qml/VehicleSetupDialog.qml
-msgid "Scooter"
-msgstr "Scooter"
-
-#: qml/Main.qml qml/PreferencesPanel.qml qml/VehicleSetupDialog.qml
-msgid "Camión"
-msgstr "Truck"
-
-#: qml/Main.qml qml/PreferencesPanel.qml qml/VehicleSetupDialog.qml
-msgid "Bicicleta"
-msgstr "Bicycle"
-
-#: qml/(referencia desconocida)
-msgid "Accidente"
-msgstr "Accident"
-
-#: qml/(referencia desconocida)
-msgid "Asistencia"
-msgstr "Assistance"
-
-#: qml/(referencia desconocida)
-msgid "Bache"
-msgstr "Pothole"
-
-#: qml/(referencia desconocida)
-msgid "Cacheando mapa… "
-msgstr "Caching map… "
-
-#: qml/(referencia desconocida)
-msgid "Cacheando mapa… 0%"
-msgstr "Caching map… 0%"
-
-#: qml/(referencia desconocida)
-msgid "Cacheando mapa… detalle"
-msgstr "Caching map… detail"
-
-#: qml/(referencia desconocida)
-msgid "Caché de mapas eliminada"
-msgstr "Map cache cleared"
-
-#: qml/(referencia desconocida)
-msgid "Carril"
-msgstr "Lane"
-
-#: qml/(referencia desconocida)
-msgid "Carril bloq."
-msgstr "Lane blocked"
-
-#: qml/(referencia desconocida)
-msgid "Central"
-msgstr "Center"
-
-#: qml/(referencia desconocida)
-msgid "Coche en arcén"
-msgstr "Car on shoulder"
-
-#: qml/(referencia desconocida)
-msgid "Col. múltiple"
-msgstr "Pileup"
-
-#: qml/(referencia desconocida)
-msgid "Compañeros"
-msgstr "Companions"
-
-#: qml/(referencia desconocida)
-msgid "Cortada"
-msgstr "Closed"
-
-#: qml/(referencia desconocida)
-msgid "Cámara móvil"
-msgstr "Mobile speed camera"
-
-#: qml/(referencia desconocida)
-msgid "Denso"
-msgstr "Heavy"
-
-#: qml/(referencia desconocida)
-msgid "Derecho"
-msgstr "Right"
-
-#: qml/(referencia desconocida)
-msgid "Detenido"
-msgstr "Stopped"
-
-#: qml/(referencia desconocida)
-msgid "Emergencia"
-msgstr "Emergency"
-
-#: qml/(referencia desconocida)
-msgid "Error al cargar configuración del servidor: "
-msgstr "Error loading server settings: "
-
-#: qml/(referencia desconocida)
-msgid "Error mapa"
-msgstr "Map error"
-
-#: qml/(referencia desconocida)
-msgid "GLONASS en uso"
-msgstr "GLONASS in use"
-
-#: qml/(referencia desconocida)
-msgid "GPS en uso"
-msgstr "GPS in use"
-
-#: qml/(referencia desconocida)
-msgid "Hielo"
-msgstr "Ice"
-
-#: qml/(referencia desconocida)
-msgid "Inundación"
-msgstr "Flooding"
-
-#: qml/(referencia desconocida)
-msgid "Izquierdo"
-msgstr "Left"
-
-#: qml/(referencia desconocida)
-msgid "Latitud  (ej. 40.322130)"
-msgstr "Latitude  (e.g. 40.322130)"
-
-#: qml/(referencia desconocida)
-msgid "Longitud  (ej. -3.515801)"
-msgstr "Longitude  (e.g. -3.515801)"
-
-#: qml/(referencia desconocida)
-msgid "Lugar"
-msgstr "Place"
-
-#: qml/(referencia desconocida)
-msgid "Mal tiempo"
-msgstr "Bad weather"
-
-#: qml/(referencia desconocida)
-msgid "Mantener la local"
-msgstr "Keep local"
-
-#: qml/(referencia desconocida)
-msgid "Mapa"
-msgstr "Map"
-
-#: qml/(referencia desconocida)
-msgid "Mapa 3D"
-msgstr "3D map"
-
-#: qml/(referencia desconocida)
-msgid "Mapa online: Mapbox"
-msgstr "Online map: Mapbox"
-
-#: qml/(referencia desconocida)
-msgid "Mapa online: OSM Scout"
-msgstr "Online map: OSM Scout"
-
-#: qml/(referencia desconocida)
-msgid "Mapa online: OSM Scout (no disponible · usando Mapbox)"
-msgstr "Online map: OSM Scout (unavailable · using Mapbox)"
-
-#: qml/(referencia desconocida)
-msgid "Mi vehículo"
-msgstr "My vehicle"
-
-#: qml/(referencia desconocida)
-msgid "Niebla"
-msgstr "Fog"
-
-#: qml/(referencia desconocida)
-msgid "Nieve"
-msgstr "Snow"
-
-#: qml/(referencia desconocida)
-msgid "No en uso"
-msgstr "Not in use"
-
-#: qml/(referencia desconocida)
-msgid "No se pudo calcular la ruta al aparcamiento"
-msgstr "Could not calculate route to parking spot"
-
-#: qml/(referencia desconocida)
-msgid "No uso"
-msgstr "Not used"
-
-#: qml/(referencia desconocida)
-msgid "OSM Scout no disponible · usando "
-msgstr "OSM Scout unavailable · using "
-
-#: qml/(referencia desconocida)
-msgid "OSM Scout · rutas y mapas offline"
-msgstr "OSM Scout · offline routes and maps"
-
-#: qml/(referencia desconocida)
-msgid "Obras"
-msgstr "Roadwork"
-
-#: qml/(referencia desconocida)
-msgid "Oculto"
-msgstr "Hidden"
-
-#: qml/(referencia desconocida)
-msgid "Peligro"
-msgstr "Hazard"
-
-#: qml/(referencia desconocida)
-msgid "Policía"
-msgstr "Police"
-
-#: qml/(referencia desconocida)
-msgid "Reproducción terminada"
-msgstr "Playback finished"
-
-#: qml/(referencia desconocida)
-msgid "Resbaladiza"
-msgstr "Slippery"
-
-#: qml/(referencia desconocida)
-msgid "Semáforo roto"
-msgstr "Broken traffic light"
-
-#: qml/(referencia desconocida)
-msgid "Servidor: "
-msgstr "Server: "
-
-#: qml/(referencia desconocida)
-msgid "Sin conexión: no se pudo cargar la configuración del servidor"
-msgstr "Offline: could not load server settings"
-
-#: qml/(referencia desconocida)
-msgid "Sin internet: caché de tiles"
-msgstr "No internet: tile cache"
-
-#: qml/(referencia desconocida)
-msgid "Sin internet: fallback OSM Scout (no disponible)"
-msgstr "No internet: OSM Scout fallback (unavailable)"
-
-#: qml/(referencia desconocida)
-msgid "Sin internet: fallback a OSM Scout"
-msgstr "No internet: falling back to OSM Scout"
-
-#: qml/(referencia desconocida)
-msgid "Tráfico"
-msgstr "Traffic"
-
-#: qml/(referencia desconocida)
-msgid "Usar del servidor"
-msgstr "Use server's"
-
-#: qml/(referencia desconocida)
-msgid "⚙  Configuración en el servidor"
-msgstr "⚙  Settings on the server"
-
-#: qml/(referencia desconocida)
-msgid "✓ Configuración del servidor aplicada"
-msgstr "✓ Server settings applied"
-
-#: qml/(referencia desconocida)
-msgid "✓ Configuración guardada en el servidor"
-msgstr "✓ Settings saved to server"
-
-#: qml/(referencia desconocida)
-msgid "🅿 Aparcamiento guardado"
-msgstr "🅿 Parking spot saved"
-
-#: qml/(referencia desconocida)
-msgid "🅿 Aparcamiento guardado · "
-msgstr "🅿 Parking spot saved · "
-
-#: qml/(referencia desconocida)
-msgid "🅿 ¿Guardar aparcamiento aquí?"
-msgstr "🅿 Save parking spot here?"
-
-#: qml/(referencia desconocida)
-msgid "👍  Confirmar"
-msgstr "👍  Confirm"
-
-#: qml/(referencia desconocida)
-msgid "👎  Desmentir"
-msgstr "👎  Not there"
-
-#: qml/(referencia desconocida)
-msgid "📍 Establecer posición GPS"
-msgstr "📍 Set GPS position"
-
-#: qml/(referencia desconocida)
-msgid "🗑  Cancelar mi alerta"
-msgstr "🗑  Cancel my alert"
-
-#: qml/(referencia desconocida)
-msgid "🗑 Aparcamiento eliminado · "
-msgstr "🗑 Parking spot deleted · "
-
-#: qml/(referencia desconocida)
-msgid "🚨  Añadir alerta aquí"
-msgstr "🚨  Add alert here"
-
-#: qml/GpsSource.qml
-msgid "GPS impreciso. Simulando trayecto."
-msgstr "GPS inaccurate. Simulating route."
-
-#: qml/Main.qml
-msgid "GPS recuperado"
-msgstr "GPS recovered"
