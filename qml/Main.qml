@@ -37,6 +37,7 @@ ApplicationWindow {
     // Modo silencio = mute total: ningún sonido (voz ni pitidos) pase lo que pase.
     Binding { target: navTts; property: "muted"; value: root._soundCap === "silencio" }
     NavTracker     { id: navTracker }
+    NavTileCache   { id: tileCache  }
 
     ScreenSaver {
         screenSaverEnabled: !appSettings.inhibitSuspend
@@ -154,6 +155,7 @@ ApplicationWindow {
         gpsFailTicks:    appSettings.gpsFailTicks
         defaultLat:      appSettings.hasLastPos ? appSettings.lastLat : 40.4168
         defaultLon:      appSettings.hasLastPos ? appSettings.lastLon : -3.7038
+        tileCache:       tileCache
     }
 
     Settings {

@@ -194,6 +194,12 @@ Item {
     property real _drSpeedMs:   0      // velocidad al entrar en DR (m/s)
     property var  _drRecovFix:  null   // {lat,lon,ms} último candidato de recuperación
 
+    // ── DR sin ruta (tile caché como shape temporal) ──────────────────────────
+    property var  tileCache:    null   // NavTileCache — conectado desde Main.qml
+    property var  _drNrShape:   null   // [[lon,lat]] shape temporal (DR sin ruta)
+    property int  _drNrIdx:     0
+    property real _drNrFrac:    0.0
+
     // ── Dirección inversa (solo simMode+debugMode) ────────────────────────────
     property var  revRoute:    null  // [{lat,lon,spd}] ruta inversa ~100 m
     property var  revShape:    null  // [[lon,lat],...] formato NavBar, generado al iniciar revMode
@@ -294,14 +300,18 @@ Item {
         // ── Gestión de modo DR ────────────────────────────────────────────────
         if (_isBad) {
             _drBadCount++; _drGoodCount = 0; _drRecovFix = null
-            if (!drActive && _drBadCount >= 1
-                    && routeShape && routeShape.length > 1
-                    && _lastRealTickPos !== null && _speedMs > 1.0) {
-                drActive = true
-                _drSpeedMs = _speedMs
+            if (!drActive && _drBadCount >= 1 && _lastRealTickPos !== null && _speedMs > 1.0) {
+                if (routeShape && routeShape.length > 1) {
+                    drActive = true; _drSpeedMs = _speedMs
+                } else {
+                    var _nrs = _buildDrNrShape(_lastRealTickPos.lat, _lastRealTickPos.lon)
+                    if (_nrs) {
+                        _drNrShape = _nrs.coords; _drNrIdx = _nrs.idx; _drNrFrac = _nrs.frac
+                        drActive   = true; _drSpeedMs = _speedMs
+                    }
+                }
             }
             if (drActive) { _drSimulateTick(ms); return }
-            // Sin ruta o parado: no hay DR, usar fix malo tal cual (comportamiento anterior)
         } else if (drActive) {
             // Recuperación: esperar 3 fixes buenos consecutivos sin salto entre ellos
             var _recovOk = true
@@ -318,6 +328,7 @@ Item {
                 // 3 fixes buenos → salir de DR
                 drActive = false; _drBadCount = 0; _drGoodCount = 0; _drRecovFix = null
                 _p0 = null; _p1 = null  // fixes anteriores al DR no son válidos para v/a
+                _drNrShape = null
             } else {
                 _drGoodCount = 0; _drRecovFix = null
                 _drSimulateTick(ms); return
@@ -513,16 +524,23 @@ Item {
         }
         if (_isBadSim) {
             _drBadCount++; _drGoodCount = 0
-            if (!drActive && _drBadCount >= 1
-                    && routeShape && routeShape.length > 1
-                    && _lastRealTickPos !== null && _speedMs > 1.0) {
-                drActive = true; _drSpeedMs = _speedMs
+            if (!drActive && _drBadCount >= 1 && _lastRealTickPos !== null && _speedMs > 1.0) {
+                if (routeShape && routeShape.length > 1) {
+                    drActive = true; _drSpeedMs = _speedMs
+                } else {
+                    var _nrsS = _buildDrNrShape(_lastRealTickPos.lat, _lastRealTickPos.lon)
+                    if (_nrsS) {
+                        _drNrShape = _nrsS.coords; _drNrIdx = _nrsS.idx; _drNrFrac = _nrsS.frac
+                        drActive   = true; _drSpeedMs = _speedMs
+                    }
+                }
             }
             if (drActive) { _drSimulateTick(now); return }
         } else if (drActive) {
             _drGoodCount++
             if (_drGoodCount < 3) { _drSimulateTick(now); return }
             drActive = false; _drBadCount = 0; _drGoodCount = 0; _drRecovFix = null
+            _drNrShape = null
         } else {
             _drBadCount = 0
         }
@@ -1376,10 +1394,8 @@ Item {
         return { lat: pos.lat, lon: pos.lon, idx: pos.idx, frac: pos.frac, headingRad: hdg }
     }
 
-    // Avanza distM metros desde (fromIdx, fromFrac) siguiendo routeShape.
-    // Devuelve {lat, lon, idx, frac}. Sin efectos secundarios.
-    function _walkShape(fromIdx, fromFrac, distM) {
-        var shape = routeShape
+    // Avanza distM metros desde (fromIdx, fromFrac) siguiendo cualquier shape [[lon,lat]].
+    function _walkOn(shape, fromIdx, fromFrac, distM) {
         var si = fromIdx, sf = fromFrac, rem = distM
         while (rem > 0.001 && si < shape.length - 1) {
             var sLen = _haversineM(shape[si][1], shape[si][0], shape[si+1][1], shape[si+1][0])
@@ -1395,6 +1411,88 @@ Item {
         }
         var last = shape[Math.min(si, shape.length - 1)]
         return { lat: last[1], lon: last[0], idx: Math.min(si, shape.length - 1), frac: 0 }
+    }
+
+    function _walkShape(fromIdx, fromFrac, distM) {
+        return _walkOn(routeShape, fromIdx, fromFrac, distM)
+    }
+
+    // Proyecta (lat, lon) sobre el segmento más cercano de shape [[lon,lat]].
+    // Devuelve {idx, frac, distM}.
+    function _snapToShape(shape, lat, lon) {
+        if (!shape || shape.length < 2) return null
+        var bestDist = 1e9, bestIdx = 0, bestFrac = 0
+        for (var i = 0; i < shape.length - 1; i++) {
+            var la1 = shape[i][1],   lo1 = shape[i][0]
+            var la2 = shape[i+1][1], lo2 = shape[i+1][0]
+            var dx = lo2 - lo1, dy = la2 - la1
+            var denom = dx*dx + dy*dy
+            if (denom < 1e-18) continue
+            var px = lon - lo1, py = lat - la1
+            var t = Math.max(0, Math.min(1, (px*dx + py*dy) / denom))
+            var pLat = la1 + t*dy, pLon = lo1 + t*dx
+            var d = _haversineM(lat, lon, pLat, pLon)
+            if (d < bestDist) { bestDist = d; bestIdx = i; bestFrac = t }
+        }
+        return { idx: bestIdx, frac: bestFrac, distM: bestDist }
+    }
+
+    // Diferencia angular en [-π, π].
+    function _angleDiff(a, b) {
+        var d = a - b
+        while (d >  Math.PI) d -= 2 * Math.PI
+        while (d < -Math.PI) d += 2 * Math.PI
+        return d
+    }
+
+    // Construye un shape [[lon,lat]] desde el tile caché para DR sin ruta.
+    // Elige la vía más cercana y mejor alineada con el heading actual.
+    // Devuelve {coords, idx, frac} o null si no hay tiles cargados o vías válidas.
+    function _buildDrNrShape(lat, lon) {
+        if (!tileCache) return null
+        var raw = tileCache.roads_near(lat, lon)
+        var roads = null
+        try { roads = JSON.parse(raw) } catch(e) { return null }
+        if (!roads || roads.length === 0) return null
+
+        var bestShape = null, bestIdx = 0, bestFrac = 0.0, bestScore = 1e9
+
+        for (var i = 0; i < roads.length; i++) {
+            var r = roads[i]
+            if (!r.coords || r.coords.length < 2) continue
+
+            // Rust devuelve coords como [[lat,lon]]; routeShape usa [[lon,lat]]
+            var shape = []
+            for (var j = 0; j < r.coords.length; j++)
+                shape.push([r.coords[j][1], r.coords[j][0]])
+
+            var snap = _snapToShape(shape, lat, lon)
+            if (!snap || snap.distM > 100) continue
+
+            var si = snap.idx
+            var roadHdg = _bearing(shape[si][1], shape[si][0],
+                                   shape[Math.min(si+1, shape.length-1)][1],
+                                   shape[Math.min(si+1, shape.length-1)][0])
+
+            var hdgDiff    = Math.abs(_angleDiff(roadHdg,           _headRad))
+            var hdgDiffRev = Math.abs(_angleDiff(roadHdg + Math.PI, _headRad))
+            var minDiff    = Math.min(hdgDiff, hdgDiffRev)
+            if (minDiff > 1.309) continue  // > 75°: vía perpendicular, descartar
+
+            // Score: distancia + penalización angular (1 rad ≈ 20 m equivalente)
+            var score = snap.distM + minDiff * 20
+            if (score < bestScore) {
+                bestScore = score
+                var reversed = hdgDiffRev < hdgDiff
+                if (reversed) {
+                    shape = shape.slice().reverse()
+                    snap  = _snapToShape(shape, lat, lon)
+                }
+                bestShape = shape; bestIdx = snap.idx; bestFrac = snap.frac
+            }
+        }
+
+        return bestShape ? { coords: bestShape, idx: bestIdx, frac: bestFrac } : null
     }
 
     function _haversineM(la1, lo1, la2, lo2) {
@@ -1414,20 +1512,24 @@ Item {
                           Math.cos(f1)*Math.sin(f2) - Math.sin(f1)*Math.cos(f2)*Math.cos(dl))
     }
 
-    // Filtra _headRateRads: requiere ≥2 ticks consecutivos girando; aplica solo 50%.
-    // Emite un tick sintético source="dr" avanzando por el shape con la velocidad
-    // del último fix real corregida por ratio Valhalla. Actualiza _lastRealTickPos
-    // y _realTickMs para que el interpTimer siga a 20 Hz sin cambios.
+    // Emite un tick sintético source="dr" avanzando por la ruta activa o, si no hay
+    // ruta, por el shape temporal construido desde el tile caché (_drNrShape).
+    // Actualiza _lastRealTickPos y _realTickMs para que el interpTimer siga a 20 Hz.
     function _drSimulateTick(ms) {
-        if (!_lastRealTickPos || !routeShape || routeShape.length < 2) {
-            drActive = false; return
-        }
+        // Elegir shape: ruta Valhalla si existe; shape de tile caché en caso contrario
+        var useNr  = _drNrShape && _drNrShape.length > 1 && (!routeShape || routeShape.length < 2)
+        var shape  = useNr ? _drNrShape : routeShape
+        var idx    = useNr ? _drNrIdx   : (_lastRealTickPos ? _lastRealTickPos.idx  : 0)
+        var frac   = useNr ? _drNrFrac  : (_lastRealTickPos ? _lastRealTickPos.frac : 0.0)
+
+        if (!shape || shape.length < 2) { drActive = false; _drNrShape = null; return }
+
         var dt = (_realTickMs > 0) ? (ms - _realTickMs) / 1000.0 : 1.0
         dt = Math.max(0.1, Math.min(5.0, dt))
 
         var spd = _drSpeedMs
-        if (interpUseVhRatio && routeShapeSpeedKmh
-                && _lastRealTickPos.idx < routeShapeSpeedKmh.length) {
+        if (!useNr && interpUseVhRatio && routeShapeSpeedKmh
+                && _lastRealTickPos && _lastRealTickPos.idx < routeShapeSpeedKmh.length) {
             var vVh = routeShapeSpeedKmh[_lastRealTickPos.idx] / 3.6
             if (vVh > 0.1 && _drSpeedMs > 0.1) {
                 var ratio = Math.max(0.1, Math.min(3.0, _drSpeedMs / vVh))
@@ -1435,17 +1537,20 @@ Item {
             }
         }
 
-        var pos = _walkShape(_lastRealTickPos.idx, _lastRealTickPos.frac, spd * dt)
-        if (!pos) { drActive = false; return }
+        var pos = _walkOn(shape, idx, frac, spd * dt)
+        if (!pos) { drActive = false; _drNrShape = null; return }
 
-        var n   = routeShape.length
-        var hdg = _bearing(routeShape[pos.idx][1], routeShape[pos.idx][0],
-                           routeShape[Math.min(pos.idx + 1, n - 1)][1],
-                           routeShape[Math.min(pos.idx + 1, n - 1)][0])
+        var n   = shape.length
+        var hdg = _bearing(shape[pos.idx][1], shape[pos.idx][0],
+                           shape[Math.min(pos.idx + 1, n - 1)][1],
+                           shape[Math.min(pos.idx + 1, n - 1)][0])
         _speedMs     = spd
         realSpeedKmh = spd * 3.6
         _headRad     = hdg
         _realTickMs  = ms
+
+        if (useNr) { _drNrIdx = pos.idx; _drNrFrac = pos.frac }
+
         _emit(pos.lat, pos.lon, spd * 3.6, hdg, _hasFix, true, ms, "dr")
     }
 
