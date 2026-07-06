@@ -364,6 +364,8 @@ Item {
                 // o d/dt de posiciones según preferencia del usuario
                 _speedMs = (useHardwareSpeed && hwSpeedKmh >= 0) ? hwSpeedKmh / 3.6 : dtSpeed
                 _headRad = _bearing(_p1.lat, _p1.lon, _p2.lat, _p2.lon)
+                // Alimentar el IMU con el heading GPS para auto-calibrar gyroScale/yawSign
+                if (imu && _speedMs > 2.0) imu.feedGpsHeading(_headRad)
             }
         }
         if (_p0 !== null && _p1 !== null) {

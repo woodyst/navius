@@ -38,7 +38,7 @@ ApplicationWindow {
     Binding { target: navTts; property: "muted"; value: root._soundCap === "silencio" }
     NavTracker     { id: navTracker }
     NavTileCache   { id: tileCache  }
-    NavImu         { id: navImu     }
+    NavImu         { id: navImu; gpsActive: true }
 
     ScreenSaver {
         screenSaverEnabled: !appSettings.inhibitSuspend

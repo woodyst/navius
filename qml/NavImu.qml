@@ -26,7 +26,10 @@ Item {
     height:  0
 
     // ── API pública ──────────────────────────────────────────────────────────
-    property bool active:        false   // activa sensores
+    // active: true durante DR (start/stop). Los sensores también corren mientras
+    // gpsActive=true para calibrar gyroScale/yawSign con GPS antes del primer DR.
+    property bool active:        false   // true = sensores activos (DR o calibración GPS)
+    property bool gpsActive:     false   // poner a true al arrancar para pre-calibrar
     property bool calibrated:    false   // true tras CALIB_N muestras de accel
     property real calibProgress: 0.0    // 0.0 → 1.0
 
@@ -67,23 +70,82 @@ Item {
     }
 
     // ── Parámetros del filtro ────────────────────────────────────────────────
-    // Muestras de acelerómetro para calibrar el vector de gravedad inicial.
-    readonly property int  CALIB_N:     80      // ~1.6 s a 50 Hz
+    readonly property int  CALIB_N:  80      // muestras accel para calibrar (~1.6 s a 50 Hz)
+    readonly property real KP:       2.0     // ganancia proporcional Mahony
+    readonly property real KI:       0.005   // ganancia integral Mahony
 
-    // Ganancias Mahony: KP corrige tilt rápido, KI elimina deriva lenta.
-    readonly property real KP:          2.0
-    readonly property real KI:          0.005
+    // GYRO_SCALE y YAW_SIGN se auto-detectan con feedGpsHeading() durante marcha normal.
+    // Valores iniciales seguros; sobrescritos en cuanto hay suficientes datos GPS.
+    //   GYRO_SCALE: 1.0 = rad/s (Android HAL / Ubuntu Touch)
+    //               Math.PI/180 = deg/s (QtSensors desktop estándar)
+    //   YAW_SIGN:   +1 si girar a la derecha incrementa headingRad; −1 en caso contrario.
+    property real gyroScale:  1.0
+    property real yawSign:    1.0
 
-    // Escala del giroscopio a rad/s.
-    //   Math.PI / 180  si el sensor reporta en grados/s (QtSensors estándar en desktop)
-    //   1.0            si reporta en rad/s (Android HAL vía Ubuntu Touch)
-    // Verificar con una vuelta de 90° a mano: si headingRad cambia ~1.57 rad → correcto.
-    readonly property real GYRO_SCALE:  Math.PI / 180.0
+    // ── Debug / diagnóstico ───────────────────────────────────────────────────
+    // rawGz: último valor crudo del eje Z del giroscopio (unidades del sensor).
+    // Observar en reposo (≈0) y al girar lentamente (~1 rad/s o ~57 deg/s).
+    // Si rawGz ≈ 1 al girar 1 rad/s → gyroScale=1.0. Si ≈57 → gyroScale=Math.PI/180.
+    property real rawGz:         0.0
+    property real yawDeltaDeg:   0.0    // Δheading acumulado desde start(), en grados (más legible)
 
-    // Signo del yaw: +1 si girar a la derecha aumenta headingRad; -1 si no.
-    // En la convención de navegación (Norte=0, Este=π/2), girar a la derecha debe
-    // incrementar headingRad. Ajustar según pruebas en dispositivo.
-    readonly property real YAW_SIGN:    1.0
+    // ── Auto-calibración con GPS ──────────────────────────────────────────────
+    // Llamar feedGpsHeading(hdgRad) en cada tick GPS bueno mientras el vehículo gira.
+    // Tras GPS_CALIB_N muestras válidas, gyroScale y yawSign quedan fijados automáticamente.
+    readonly property int  GPS_CALIB_N:       20    // muestras para estimar la escala
+    readonly property real GPS_CALIB_MIN_DH:  0.05  // rad mínimo de cambio entre muestras
+    property bool   gpsScaleCalibrated: false
+    property real   _gpsHdgPrev:        -999.0
+    property real   _gpsYawAccum:       0.0     // Σ Δheading GPS (rad)
+    property real   _imuYawAccum:       0.0     // Σ Δheading IMU sin escalar (rad)
+    property int    _gpsCalibN:         0
+
+    // Llamar desde GpsSource en cada tick GPS real bueno (fuera de DR) para auto-calibrar.
+    // hdgRad: heading GPS del tick actual.
+    function feedGpsHeading(hdgRad) {
+        if (gpsScaleCalibrated || !calibrated) return
+
+        if (_gpsHdgPrev < -998.0) { _gpsHdgPrev = hdgRad; return }
+
+        // Δheading GPS entre ticks consecutivos (corregido por wrap-around)
+        var dGps = hdgRad - _gpsHdgPrev
+        while (dGps >  Math.PI) dGps -= 2*Math.PI
+        while (dGps < -Math.PI) dGps += 2*Math.PI
+        _gpsHdgPrev = hdgRad
+
+        // Solo acumular si hay un giro perceptible (evita ruido en línea recta)
+        if (Math.abs(dGps) < GPS_CALIB_MIN_DH) return
+
+        _gpsYawAccum += dGps
+        _imuYawAccum += _rawGzAccum    // Σ(gzRaw·dt) en unidades del sensor
+        _rawGzAccum   = 0.0
+        _gpsCalibN++
+
+        if (_gpsCalibN >= GPS_CALIB_N && Math.abs(_imuYawAccum) > 0.01) {
+            // Ratio GPS/IMU → escala correcta para gyroScale
+            var ratio = _gpsYawAccum / _imuYawAccum
+            gyroScale = gyroScale * Math.abs(ratio)   // ajustar escala
+            yawSign   = ratio > 0 ? 1.0 : -1.0        // ajustar signo
+            gpsScaleCalibrated = true
+            console.log("[NavImu] GPS calib: gyroScale=", gyroScale.toFixed(5),
+                        " yawSign=", yawSign, " tras", _gpsCalibN, "muestras")
+        }
+    }
+
+    // Resetea los acumuladores de calibración GPS (útil al cambiar de vehículo/orientación)
+    function resetGpsCalib() {
+        gpsScaleCalibrated = false
+        _gpsHdgPrev  = -999.0
+        _gpsYawAccum = 0.0
+        _imuYawAccum = 0.0
+        _rawGzAccum  = 0.0
+        _gpsCalibN   = 0
+    }
+
+    // Integral cruda de gzRaw×dt desde el último feedGpsHeading(): Σ(gzRaw·dt).
+    // En unidades del sensor × s (rad si rad/s, grados si deg/s).
+    // La ratio GPS/IMU da la escala correcta para gyroScale.
+    property real _rawGzAccum: 0.0
 
     // ── Estado interno ───────────────────────────────────────────────────────
     property var  _q:      [1.0, 0.0, 0.0, 0.0]   // cuaternión actitud [w,x,y,z]
@@ -107,14 +169,14 @@ Item {
     // ── Sensores ─────────────────────────────────────────────────────────────
     Accelerometer {
         id: accelSensor
-        active:   root.active
+        active:   root.active || root.gpsActive
         dataRate: 50
         onReadingChanged: root._onAccelReading(reading.x, reading.y, reading.z, reading.timestamp)
     }
 
     Gyroscope {
         id: gyroSensor
-        active:   root.active
+        active:   root.active || root.gpsActive
         dataRate: 50
         onReadingChanged: root._onGyroReading(reading.x, reading.y, reading.z, reading.timestamp)
     }
@@ -135,15 +197,17 @@ Item {
     }
 
     function _onGyroReading(gxRaw, gyRaw, gzRaw, ts) {
+        rawGz = gzRaw   // exponer valor crudo para diagnóstico
+
         // ts en µs; convertir a ms para dt en segundos
         var tsMs = (ts > 0) ? ts / 1000.0 : Date.now()
         var dt   = (_lastTs >= 0) ? (tsMs - _lastTs) / 1000.0 : 0.0
         _lastTs  = tsMs
         if (!calibrated || dt <= 0.0 || dt > 0.5) return
 
-        var gx = gxRaw * GYRO_SCALE
-        var gy = gyRaw * GYRO_SCALE
-        var gz = gzRaw * GYRO_SCALE
+        var gx = gxRaw * gyroScale
+        var gy = gyRaw * gyroScale
+        var gz = gzRaw * gyroScale
 
         // ── Corrección Mahony ─────────────────────────────────────────────────
         // Normalizar lectura del acelerómetro (gravedad medida en frame dispositivo)
@@ -185,10 +249,14 @@ Item {
         //   yaw = atan2(2(qw·qz + qx·qy),  1 − 2(qy² + qz²))
         // Este yaw es relativo al frame inicial (q=[1,0,0,0] → yaw=0),
         // por lo que representa el ΔyawDesde activación.
+        // Acumular integral cruda (sin escala) para auto-calibración GPS
+        _rawGzAccum += gzRaw * dt
+
         var q = _q
         var yawDelta = Math.atan2(2.0*(q[0]*q[3] + q[1]*q[2]),
                                   1.0 - 2.0*(q[2]*q[2] + q[3]*q[3]))
-        headingRad = _normAngle(_yaw0 + YAW_SIGN * yawDelta)
+        yawDeltaDeg = yawDelta * yawSign * (180.0 / Math.PI)
+        headingRad  = _normAngle(_yaw0 + yawSign * yawDelta)
     }
 
     // ── Aritmética de cuaterniones ───────────────────────────────────────────
