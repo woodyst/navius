@@ -38,6 +38,7 @@ ApplicationWindow {
     Binding { target: navTts; property: "muted"; value: root._soundCap === "silencio" }
     NavTracker     { id: navTracker }
     NavTileCache   { id: tileCache  }
+    NavImu         { id: navImu     }
 
     ScreenSaver {
         screenSaverEnabled: !appSettings.inhibitSuspend
@@ -156,6 +157,7 @@ ApplicationWindow {
         defaultLat:      appSettings.hasLastPos ? appSettings.lastLat : 40.4168
         defaultLon:      appSettings.hasLastPos ? appSettings.lastLon : -3.7038
         tileCache:       tileCache
+        imu:             navImu
     }
 
     Settings {

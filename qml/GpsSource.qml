@@ -200,6 +200,12 @@ Item {
     property int  _drNrIdx:     0
     property real _drNrFrac:    0.0
 
+    // ── DR por IMU (giroscopio + acelerómetro, estimación libre) ──────────────
+    // Nivel prioritario: cuando imu.calibrated es true, la posición DR se obtiene
+    // integrando imu.headingRad × _drSpeedMs en lugar de seguir un shape.
+    // Funciona tanto si hay routeShape como si no.
+    property var  imu:          null   // NavImu — conectado desde Main.qml
+
     // ── Dirección inversa (solo simMode+debugMode) ────────────────────────────
     property var  revRoute:    null  // [{lat,lon,spd}] ruta inversa ~100 m
     property var  revShape:    null  // [[lon,lat],...] formato NavBar, generado al iniciar revMode
@@ -308,8 +314,12 @@ Item {
                     if (_nrs) {
                         _drNrShape = _nrs.coords; _drNrIdx = _nrs.idx; _drNrFrac = _nrs.frac
                         drActive   = true; _drSpeedMs = _speedMs
+                    } else {
+                        drActive = true; _drSpeedMs = _speedMs  // fallback: IMU libre
                     }
                 }
+                if (drActive && imu)
+                    imu.start(_headRad, _lastRealTickPos.lat, _lastRealTickPos.lon)
             }
             if (drActive) { _drSimulateTick(ms); return }
         } else if (drActive) {
@@ -329,6 +339,7 @@ Item {
                 drActive = false; _drBadCount = 0; _drGoodCount = 0; _drRecovFix = null
                 _p0 = null; _p1 = null  // fixes anteriores al DR no son válidos para v/a
                 _drNrShape = null
+                if (imu) imu.stop()
             } else {
                 _drGoodCount = 0; _drRecovFix = null
                 _drSimulateTick(ms); return
@@ -532,8 +543,12 @@ Item {
                     if (_nrsS) {
                         _drNrShape = _nrsS.coords; _drNrIdx = _nrsS.idx; _drNrFrac = _nrsS.frac
                         drActive   = true; _drSpeedMs = _speedMs
+                    } else {
+                        drActive = true; _drSpeedMs = _speedMs
                     }
                 }
+                if (drActive && imu)
+                    imu.start(_headRad, _lastRealTickPos.lat, _lastRealTickPos.lon)
             }
             if (drActive) { _drSimulateTick(now); return }
         } else if (drActive) {
@@ -541,6 +556,7 @@ Item {
             if (_drGoodCount < 3) { _drSimulateTick(now); return }
             drActive = false; _drBadCount = 0; _drGoodCount = 0; _drRecovFix = null
             _drNrShape = null
+            if (imu) imu.stop()
         } else {
             _drBadCount = 0
         }
@@ -1512,11 +1528,30 @@ Item {
                           Math.cos(f1)*Math.sin(f2) - Math.sin(f1)*Math.cos(f2)*Math.cos(dl))
     }
 
-    // Emite un tick sintético source="dr" avanzando por la ruta activa o, si no hay
-    // ruta, por el shape temporal construido desde el tile caché (_drNrShape).
+    // Emite un tick sintético source="dr". Tres modos en orden de prioridad:
+    //   1. IMU calibrado (imu.calibrated)  → heading del cuaternión, posición integrada
+    //   2. Shape de ruta Valhalla          → walkOn(routeShape)
+    //   3. Shape de tile caché (_drNrShape)→ walkOn(_drNrShape)
     // Actualiza _lastRealTickPos y _realTickMs para que el interpTimer siga a 20 Hz.
     function _drSimulateTick(ms) {
-        // Elegir shape: ruta Valhalla si existe; shape de tile caché en caso contrario
+        var dt = (_realTickMs > 0) ? (ms - _realTickMs) / 1000.0 : 1.0
+        dt = Math.max(0.1, Math.min(5.0, dt))
+
+        var spd = _drSpeedMs
+
+        // ── Modo 1: IMU (heading libre por cuaternión + posición integrada) ────
+        if (imu && imu.calibrated) {
+            imu.advance(spd, dt)
+            var hdgI = imu.headingRad
+            _speedMs     = spd
+            realSpeedKmh = spd * 3.6
+            _headRad     = hdgI
+            _realTickMs  = ms
+            _emit(imu.imuLat, imu.imuLon, spd * 3.6, hdgI, _hasFix, true, ms, "dr")
+            return
+        }
+
+        // ── Modo 2 y 3: shape de ruta o tile caché ───────────────────────────
         var useNr  = _drNrShape && _drNrShape.length > 1 && (!routeShape || routeShape.length < 2)
         var shape  = useNr ? _drNrShape : routeShape
         var idx    = useNr ? _drNrIdx   : (_lastRealTickPos ? _lastRealTickPos.idx  : 0)
@@ -1524,10 +1559,6 @@ Item {
 
         if (!shape || shape.length < 2) { drActive = false; _drNrShape = null; return }
 
-        var dt = (_realTickMs > 0) ? (ms - _realTickMs) / 1000.0 : 1.0
-        dt = Math.max(0.1, Math.min(5.0, dt))
-
-        var spd = _drSpeedMs
         if (!useNr && interpUseVhRatio && routeShapeSpeedKmh
                 && _lastRealTickPos && _lastRealTickPos.idx < routeShapeSpeedKmh.length) {
             var vVh = routeShapeSpeedKmh[_lastRealTickPos.idx] / 3.6

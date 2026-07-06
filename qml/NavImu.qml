@@ -1,0 +1,217 @@
+// NavImu.qml — Estimador de actitud y posición por IMU (giroscopio + acelerómetro)
+//
+// Implementa el filtro complementario de Mahony sobre el grupo SO(3):
+//   - Cuaternión de actitud integrado con lecturas del giroscopio
+//   - Corrección de inclinación (roll/pitch) vía acelerómetro (gravedad)
+//   - Extracción de yaw como cambio de heading en el frame mundo
+//   - Integración de posición: heading_IMU × velocidad_GPS → lat/lon
+//
+// Uso:
+//   imu.start(headingRad, lat, lon)   // al activar DR (heading GPS inicial)
+//   imu.stop()                         // al salir de DR
+//   imu.advance(speedMs, dt)           // en cada tick DR para avanzar posición
+//   imu.headingRad / imuLat / imuLon  // resultados
+//
+// El heading estimado es relativo al frame del dispositivo al inicio de la calibración.
+// La escala y signo del giroscopio (GYRO_SCALE, YAW_SIGN) pueden necesitar ajuste
+// según la plataforma y orientación física del dispositivo en el vehículo.
+
+import QtQuick 2.7
+import QtSensors 5.9
+
+Item {
+    id: root
+    visible: false
+    width:   0
+    height:  0
+
+    // ── API pública ──────────────────────────────────────────────────────────
+    property bool active:        false   // activa sensores
+    property bool calibrated:    false   // true tras CALIB_N muestras de accel
+    property real calibProgress: 0.0    // 0.0 → 1.0
+
+    property real headingRad:    0.0    // heading estimado (rad; convenio _headRad)
+    property real imuLat:        0.0    // latitud DR estimada
+    property real imuLon:        0.0    // longitud DR estimada
+
+    // start(): inicializa el estado y activa los sensores.
+    // initHeadRad: heading GPS en el momento de activar DR (rad).
+    function start(initHeadRad, lat, lon) {
+        _yaw0      = initHeadRad
+        headingRad = initHeadRad
+        imuLat     = lat
+        imuLon     = lon
+        _q         = [1.0, 0.0, 0.0, 0.0]
+        _eInt      = [0.0, 0.0, 0.0]
+        _lastTs    = -1.0
+        _lastAx = 0.0; _lastAy = 0.0; _lastAz = 9.8
+        calibrated    = false
+        calibProgress = 0.0
+        _calibN   = 0
+        _calibAx  = 0.0; _calibAy  = 0.0; _calibAz  = 0.0
+        active    = true
+    }
+
+    function stop() { active = false }
+
+    // advance(): avanza la posición DR con el heading IMU actual y la velocidad dada.
+    // Llamar desde _drSimulateTick en cada tick DR real (no interpolado).
+    function advance(speedMs, dt) {
+        if (!calibrated || speedMs < 0.05 || dt <= 0.0 || dt > 1.0) return
+        var R   = 6371000.0
+        var hdg = headingRad
+        var dlat = speedMs * dt * Math.cos(hdg) / R * (180.0 / Math.PI)
+        var dlon = speedMs * dt * Math.sin(hdg) / (R * Math.cos(imuLat * Math.PI / 180.0)) * (180.0 / Math.PI)
+        imuLat += dlat
+        imuLon += dlon
+    }
+
+    // ── Parámetros del filtro ────────────────────────────────────────────────
+    // Muestras de acelerómetro para calibrar el vector de gravedad inicial.
+    readonly property int  CALIB_N:     80      // ~1.6 s a 50 Hz
+
+    // Ganancias Mahony: KP corrige tilt rápido, KI elimina deriva lenta.
+    readonly property real KP:          2.0
+    readonly property real KI:          0.005
+
+    // Escala del giroscopio a rad/s.
+    //   Math.PI / 180  si el sensor reporta en grados/s (QtSensors estándar en desktop)
+    //   1.0            si reporta en rad/s (Android HAL vía Ubuntu Touch)
+    // Verificar con una vuelta de 90° a mano: si headingRad cambia ~1.57 rad → correcto.
+    readonly property real GYRO_SCALE:  Math.PI / 180.0
+
+    // Signo del yaw: +1 si girar a la derecha aumenta headingRad; -1 si no.
+    // En la convención de navegación (Norte=0, Este=π/2), girar a la derecha debe
+    // incrementar headingRad. Ajustar según pruebas en dispositivo.
+    readonly property real YAW_SIGN:    1.0
+
+    // ── Estado interno ───────────────────────────────────────────────────────
+    property var  _q:      [1.0, 0.0, 0.0, 0.0]   // cuaternión actitud [w,x,y,z]
+    property var  _eInt:   [0.0, 0.0, 0.0]         // integral del error Mahony
+    property real _yaw0:   0.0                      // heading GPS al inicio
+
+    // Timestamp de la última lectura del giroscopio (ms; −1 = no inicializado)
+    property real _lastTs: -1.0
+
+    // Última lectura del acelerómetro (m/s²), actualizada en cada callback
+    property real _lastAx: 0.0
+    property real _lastAy: 0.0
+    property real _lastAz: 9.8
+
+    // Acumuladores de calibración
+    property int  _calibN:  0
+    property real _calibAx: 0.0
+    property real _calibAy: 0.0
+    property real _calibAz: 0.0
+
+    // ── Sensores ─────────────────────────────────────────────────────────────
+    Accelerometer {
+        id: accelSensor
+        active:   root.active
+        dataRate: 50
+        onReadingChanged: root._onAccelReading(reading.x, reading.y, reading.z, reading.timestamp)
+    }
+
+    Gyroscope {
+        id: gyroSensor
+        active:   root.active
+        dataRate: 50
+        onReadingChanged: root._onGyroReading(reading.x, reading.y, reading.z, reading.timestamp)
+    }
+
+    // ── Callbacks de sensor ──────────────────────────────────────────────────
+
+    function _onAccelReading(ax, ay, az, ts) {
+        _lastAx = ax; _lastAy = ay; _lastAz = az
+        if (calibrated) return
+
+        // Fase de calibración: promediar lecturas en reposo para fijar vector gravedad inicial.
+        // El filtro Mahony usará el acelerómetro dinámicamente para corregir la inclinación,
+        // pero la calibración sirve como punto de referencia del estado [1,0,0,0].
+        _calibAx += ax; _calibAy += ay; _calibAz += az
+        _calibN++
+        calibProgress = Math.min(1.0, _calibN / CALIB_N)
+        if (_calibN >= CALIB_N) calibrated = true
+    }
+
+    function _onGyroReading(gxRaw, gyRaw, gzRaw, ts) {
+        // ts en µs; convertir a ms para dt en segundos
+        var tsMs = (ts > 0) ? ts / 1000.0 : Date.now()
+        var dt   = (_lastTs >= 0) ? (tsMs - _lastTs) / 1000.0 : 0.0
+        _lastTs  = tsMs
+        if (!calibrated || dt <= 0.0 || dt > 0.5) return
+
+        var gx = gxRaw * GYRO_SCALE
+        var gy = gyRaw * GYRO_SCALE
+        var gz = gzRaw * GYRO_SCALE
+
+        // ── Corrección Mahony ─────────────────────────────────────────────────
+        // Normalizar lectura del acelerómetro (gravedad medida en frame dispositivo)
+        var ax = _lastAx, ay = _lastAy, az = _lastAz
+        var alen = Math.sqrt(ax*ax + ay*ay + az*az)
+        if (alen > 0.1) {
+            ax /= alen; ay /= alen; az /= alen
+
+            // Gravedad estimada en frame dispositivo a partir del cuaternión actual.
+            // Corresponde al eje Z del mundo (arriba) rotado al frame del dispositivo:
+            //   v = q^{-1} · [0,0,1] · q
+            var qw=_q[0], qx=_q[1], qy=_q[2], qz=_q[3]
+            var vx =  2.0*(qx*qz - qw*qy)
+            var vy =  2.0*(qy*qz + qw*qx)
+            var vz =  qw*qw - qx*qx - qy*qy + qz*qz
+
+            // Error = cross(gravedad_medida, gravedad_estimada)
+            // Un error no nulo indica que el cuaternión está mal alineado con la gravedad.
+            var ex = ay*vz - az*vy
+            var ey = az*vx - ax*vz
+            var ez = ax*vy - ay*vx
+
+            // Acumular integral del error (reduce deriva lenta del giroscopio)
+            _eInt = [_eInt[0] + ex*dt, _eInt[1] + ey*dt, _eInt[2] + ez*dt]
+
+            // Aplicar feedback proporcional + integral al giroscopio corregido
+            gx += KP*ex + KI*_eInt[0]
+            gy += KP*ey + KI*_eInt[1]
+            gz += KP*ez + KI*_eInt[2]
+        }
+
+        // ── Integración del cuaternión ────────────────────────────────────────
+        // Aproximación de ángulo pequeño: dq ≈ [1, ω·dt/2] para |ω·dt| << 1
+        var h = dt * 0.5
+        _q = _qNorm(_qMul(_q, [1.0, gx*h, gy*h, gz*h]))
+
+        // ── Extracción de yaw (rotación alrededor del eje Z del mundo) ─────────
+        // Ángulo de Euler yaw en convenio ZYX a partir del cuaternión:
+        //   yaw = atan2(2(qw·qz + qx·qy),  1 − 2(qy² + qz²))
+        // Este yaw es relativo al frame inicial (q=[1,0,0,0] → yaw=0),
+        // por lo que representa el ΔyawDesde activación.
+        var q = _q
+        var yawDelta = Math.atan2(2.0*(q[0]*q[3] + q[1]*q[2]),
+                                  1.0 - 2.0*(q[2]*q[2] + q[3]*q[3]))
+        headingRad = _normAngle(_yaw0 + YAW_SIGN * yawDelta)
+    }
+
+    // ── Aritmética de cuaterniones ───────────────────────────────────────────
+
+    // Producto de cuaterniones Hamilton: a ⊗ b
+    function _qMul(a, b) {
+        return [
+            a[0]*b[0] - a[1]*b[1] - a[2]*b[2] - a[3]*b[3],
+            a[0]*b[1] + a[1]*b[0] + a[2]*b[3] - a[3]*b[2],
+            a[0]*b[2] - a[1]*b[3] + a[2]*b[0] + a[3]*b[1],
+            a[0]*b[3] + a[1]*b[2] - a[2]*b[1] + a[3]*b[0]
+        ]
+    }
+
+    // Normalización del cuaternión (mantiene |q|=1 para evitar deriva numérica)
+    function _qNorm(q) {
+        var n = Math.sqrt(q[0]*q[0] + q[1]*q[1] + q[2]*q[2] + q[3]*q[3])
+        return n > 1e-10 ? [q[0]/n, q[1]/n, q[2]/n, q[3]/n] : [1.0, 0.0, 0.0, 0.0]
+    }
+
+    function _normAngle(a) {
+        while (a >  Math.PI) a -= 2.0 * Math.PI
+        while (a < -Math.PI) a += 2.0 * Math.PI
+        return a
+    }
+}
