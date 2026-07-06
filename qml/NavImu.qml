@@ -70,15 +70,15 @@ Item {
     }
 
     // ── Parámetros del filtro ────────────────────────────────────────────────
-    readonly property int  CALIB_N:  80      // muestras accel para calibrar (~1.6 s a 50 Hz)
-    readonly property real KP:       2.0     // ganancia proporcional Mahony
-    readonly property real KI:       0.005   // ganancia integral Mahony
+    readonly property int  calibN:  80      // muestras accel para calibrar (~1.6 s a 50 Hz)
+    readonly property real mahonyKp: 2.0    // ganancia proporcional Mahony
+    readonly property real mahonyKi: 0.005  // ganancia integral Mahony
 
-    // GYRO_SCALE y YAW_SIGN se auto-detectan con feedGpsHeading() durante marcha normal.
+    // gyroScale y yawSign se auto-detectan con feedGpsHeading() durante marcha normal.
     // Valores iniciales seguros; sobrescritos en cuanto hay suficientes datos GPS.
-    //   GYRO_SCALE: 1.0 = rad/s (Android HAL / Ubuntu Touch)
-    //               Math.PI/180 = deg/s (QtSensors desktop estándar)
-    //   YAW_SIGN:   +1 si girar a la derecha incrementa headingRad; −1 en caso contrario.
+    //   gyroScale: 1.0 = rad/s (Android HAL / Ubuntu Touch)
+    //              Math.PI/180 = deg/s (QtSensors desktop estándar)
+    //   yawSign:   +1 si girar a la derecha incrementa headingRad; −1 en caso contrario.
     property real gyroScale:  1.0
     property real yawSign:    1.0
 
@@ -92,9 +92,9 @@ Item {
 
     // ── Auto-calibración con GPS ──────────────────────────────────────────────
     // Llamar feedGpsHeading(hdgRad) en cada tick GPS bueno mientras el vehículo gira.
-    // Tras GPS_CALIB_N muestras válidas, gyroScale y yawSign quedan fijados automáticamente.
-    readonly property int  GPS_CALIB_N:       20    // muestras para estimar la escala
-    readonly property real GPS_CALIB_MIN_DH:  0.05  // rad mínimo de cambio entre muestras
+    // Tras gpsCalibN muestras válidas, gyroScale y yawSign quedan fijados automáticamente.
+    readonly property int  gpsCalibTarget:    20    // muestras para estimar la escala
+    readonly property real gpsCalibMinDh:   0.05  // rad mínimo de cambio entre muestras
     property bool   gpsScaleCalibrated: false
     property real   _gpsHdgPrev:        -999.0
     property real   _gpsYawAccum:       0.0     // Σ Δheading GPS (rad)
@@ -115,14 +115,14 @@ Item {
         _gpsHdgPrev = hdgRad
 
         // Solo acumular si hay un giro perceptible (evita ruido en línea recta)
-        if (Math.abs(dGps) < GPS_CALIB_MIN_DH) return
+        if (Math.abs(dGps) < gpsCalibMinDh) return
 
         _gpsYawAccum += dGps
         _imuYawAccum += _rawGzAccum    // Σ(gzRaw·dt) en unidades del sensor
         _rawGzAccum   = 0.0
         _gpsCalibN++
 
-        if (_gpsCalibN >= GPS_CALIB_N && Math.abs(_imuYawAccum) > 0.01) {
+        if (_gpsCalibN >= gpsCalibTarget && Math.abs(_imuYawAccum) > 0.01) {
             // Ratio GPS/IMU → escala correcta para gyroScale
             var ratio = _gpsYawAccum / _imuYawAccum
             gyroScale = gyroScale * Math.abs(ratio)   // ajustar escala
@@ -194,8 +194,8 @@ Item {
         // pero la calibración sirve como punto de referencia del estado [1,0,0,0].
         _calibAx += ax; _calibAy += ay; _calibAz += az
         _calibN++
-        calibProgress = Math.min(1.0, _calibN / CALIB_N)
-        if (_calibN >= CALIB_N) calibrated = true
+        calibProgress = Math.min(1.0, _calibN / calibN)
+        if (_calibN >= calibN) calibrated = true
     }
 
     function _onGyroReading(gxRaw, gyRaw, gzRaw, ts) {
@@ -236,9 +236,9 @@ Item {
             _eInt = [_eInt[0] + ex*dt, _eInt[1] + ey*dt, _eInt[2] + ez*dt]
 
             // Aplicar feedback proporcional + integral al giroscopio corregido
-            gx += KP*ex + KI*_eInt[0]
-            gy += KP*ey + KI*_eInt[1]
-            gz += KP*ez + KI*_eInt[2]
+            gx += mahonyKp*ex + mahonyKi*_eInt[0]
+            gy += mahonyKp*ey + mahonyKi*_eInt[1]
+            gz += mahonyKp*ez + mahonyKi*_eInt[2]
         }
 
         // ── Integración del cuaternión ────────────────────────────────────────

@@ -5068,8 +5068,8 @@ ApplicationWindow {
                 spacing: units.gu(0.1)
                 Label {
                     text: navImu.gpsScaleCalibrated
-                          ? "✓ GPS calib  " + navImu._gpsCalibN + "/" + navImu.GPS_CALIB_N
-                          : "· GPS calib  " + navImu._gpsCalibN + "/" + navImu.GPS_CALIB_N
+                          ? "✓ GPS calib  " + navImu._gpsCalibN + "/" + navImu.gpsCalibTarget
+                          : "· GPS calib  " + navImu._gpsCalibN + "/" + navImu.gpsCalibTarget
                     color: navImu.gpsScaleCalibrated ? "#00E676" : "#90A4AE"
                     font.pixelSize: units.gu(1.1 * appSettings.textScale)
                     width: parent.width; elide: Text.ElideRight
