@@ -214,6 +214,7 @@ ApplicationWindow {
         property bool   showSimScrubber: true  // muestra el desplegable de posición GPS simulada
         property bool   showVSimDebug:        false // muestra el panel debug de velocidades
         property bool   showGpsSmoothDebug:   false // muestra panel de funciones de suavizado GPS
+        property bool   showImuDebug:         false // muestra panel de debug IMU (NavImu)
         property bool   showBisectorDebug:    false // muestra líneas bisector giro mapa en el mapa
         property bool   showSlDebug:     false // muestra el overlay de límites de velocidad por tramo
         property int    speedAlertPct:      2    // % sobre el límite que activa la alerta
@@ -4995,6 +4996,165 @@ ApplicationWindow {
         }
     }
 
+    // ── Panel debug: IMU (NavImu — cuaternión, calibración, heading) ─────────
+    Column {
+        id: imuDebugPanel
+        visible: appSettings.debugMode && appSettings.showImuDebug
+                 && !prefsPanel.visible && !satPanel.visible
+                 && !searchPanel.visible && !routeSelectPanel.visible && !routeViewPanel.visible
+        anchors {
+            right:        parent.right
+            rightMargin:  units.gu(0.5)
+            bottom:       mapBottomAnchor.bottom
+            bottomMargin: units.gu(0.5)
+        }
+        width: units.gu(13); spacing: units.gu(0.3); z: 11
+
+        // ── Cabecera ──────────────────────────────────────────────────────
+        Rectangle {
+            width: parent.width; height: units.gu(3)
+            radius: units.gu(0.5); color: "#DD0D1B2B"
+            border.color: "#29B6F6"; border.width: units.gu(0.15)
+            Label {
+                anchors.centerIn: parent
+                text: "🧭 IMU DEBUG"
+                color: "#29B6F6"
+                font.pixelSize: units.gu(1.3 * appSettings.textScale)
+                font.bold: true
+            }
+        }
+
+        // ── Calibración acelerómetro ──────────────────────────────────────
+        Rectangle {
+            width: parent.width; height: units.gu(4.5)
+            radius: units.gu(0.5); color: "#CC0D1B2B"
+            border.color: navImu.calibrated ? "#00E676" : "#FF7043"
+            border.width: units.gu(0.15)
+            Column {
+                anchors { left: parent.left; right: parent.right; verticalCenter: parent.verticalCenter
+                          leftMargin: units.gu(0.6); rightMargin: units.gu(0.6) }
+                spacing: units.gu(0.2)
+                Label {
+                    text: navImu.calibrated
+                          ? "✓ Accel OK   |a|=" + navImu.accelMag.toFixed(2) + " m/s²"
+                          : "⏳ Calibrando accel  " + Math.round(navImu.calibProgress * 100) + "%"
+                    color: navImu.calibrated ? "#00E676" : "#FFB300"
+                    font.pixelSize: units.gu(1.1 * appSettings.textScale)
+                    width: parent.width; elide: Text.ElideRight
+                }
+                // Barra de progreso
+                Rectangle {
+                    visible: !navImu.calibrated
+                    width: parent.width; height: units.gu(0.5); radius: units.gu(0.25)
+                    color: "#1A2A3A"
+                    Rectangle {
+                        width: parent.width * navImu.calibProgress
+                        height: parent.height; radius: parent.radius
+                        color: "#FFB300"
+                    }
+                }
+            }
+        }
+
+        // ── Calibración GPS (gyroScale / yawSign) ─────────────────────────
+        Rectangle {
+            width: parent.width; height: units.gu(4.5)
+            radius: units.gu(0.5); color: "#CC0D1B2B"
+            border.color: navImu.gpsScaleCalibrated ? "#00E676" : "#546E7A"
+            border.width: units.gu(0.15)
+            Column {
+                anchors { left: parent.left; right: parent.right; verticalCenter: parent.verticalCenter
+                          leftMargin: units.gu(0.6); rightMargin: units.gu(0.6) }
+                spacing: units.gu(0.1)
+                Label {
+                    text: navImu.gpsScaleCalibrated
+                          ? "✓ GPS calib  " + navImu._gpsCalibN + "/" + navImu.GPS_CALIB_N
+                          : "· GPS calib  " + navImu._gpsCalibN + "/" + navImu.GPS_CALIB_N
+                    color: navImu.gpsScaleCalibrated ? "#00E676" : "#90A4AE"
+                    font.pixelSize: units.gu(1.1 * appSettings.textScale)
+                    width: parent.width; elide: Text.ElideRight
+                }
+                Label {
+                    text: "scale=" + navImu.gyroScale.toFixed(5)
+                          + (navImu.gyroScale > 0.5 ? "  rad/s" : "  deg→r")
+                          + "  sign=" + (navImu.yawSign > 0 ? "+1" : "-1")
+                    color: "#78909C"
+                    font.pixelSize: units.gu(1.0 * appSettings.textScale)
+                    width: parent.width; elide: Text.ElideRight
+                }
+            }
+        }
+
+        // ── Valores en tiempo real ────────────────────────────────────────
+        Rectangle {
+            width: parent.width; height: units.gu(5.5)
+            radius: units.gu(0.5); color: "#CC0D1B2B"
+            border.color: "#37474F"; border.width: units.gu(0.15)
+            Column {
+                anchors { left: parent.left; right: parent.right; verticalCenter: parent.verticalCenter
+                          leftMargin: units.gu(0.6); rightMargin: units.gu(0.6) }
+                spacing: units.gu(0.15)
+                Label {
+                    text: "rawGz   " + navImu.rawGz.toFixed(4)
+                          + (navImu.gyroScale > 0.5 ? " r/s" : " °/s")
+                    color: "#CE93D8"; font.pixelSize: units.gu(1.1 * appSettings.textScale)
+                    width: parent.width; elide: Text.ElideRight
+                }
+                Label {
+                    text: "Δheading  " + (navImu.yawDeltaDeg >= 0 ? "+" : "")
+                          + navImu.yawDeltaDeg.toFixed(1) + "°"
+                    color: "#CE93D8"; font.pixelSize: units.gu(1.1 * appSettings.textScale)
+                    width: parent.width; elide: Text.ElideRight
+                }
+                Label {
+                    text: "heading  " + (navImu.headingRad * 180 / Math.PI).toFixed(1) + "°"
+                    color: "#29B6F6"; font.pixelSize: units.gu(1.1 * appSettings.textScale)
+                    width: parent.width; elide: Text.ElideRight
+                }
+            }
+        }
+
+        // ── Posición DR estimada (solo cuando DR activo) ──────────────────
+        Rectangle {
+            visible: gpsSource.drActive
+            width: parent.width; height: visible ? units.gu(5) : 0
+            radius: units.gu(0.5); color: "#CC1A0D0D"
+            border.color: "#FF8A65"; border.width: units.gu(0.15)
+            Column {
+                anchors { left: parent.left; right: parent.right; verticalCenter: parent.verticalCenter
+                          leftMargin: units.gu(0.6) }
+                spacing: units.gu(0.15)
+                Label {
+                    text: "DR lat  " + navImu.imuLat.toFixed(6)
+                    color: "#FF8A65"; font.pixelSize: units.gu(1.1 * appSettings.textScale)
+                    width: parent.width; elide: Text.ElideRight
+                }
+                Label {
+                    text: "DR lon  " + navImu.imuLon.toFixed(6)
+                    color: "#FF8A65"; font.pixelSize: units.gu(1.1 * appSettings.textScale)
+                    width: parent.width; elide: Text.ElideRight
+                }
+            }
+        }
+
+        // ── Botón reset calibración GPS ───────────────────────────────────
+        Rectangle {
+            width: parent.width; height: units.gu(3.5)
+            radius: units.gu(0.5); color: "#CC1A1A2A"
+            border.color: "#546E7A"; border.width: units.gu(0.15)
+            Label {
+                anchors.centerIn: parent
+                text: "↺  Reset calib GPS"
+                color: "#90A4AE"
+                font.pixelSize: units.gu(1.1 * appSettings.textScale)
+            }
+            MouseArea {
+                anchors.fill: parent
+                onClicked: { navImu.resetGpsCalib(); console.log("[debug] IMU GPS calib reset") }
+            }
+        }
+    }
+
     // ── Panel de control manual del vehículo ─────────────────────────────────
     Item {
         id: driveCtrlPanel
@@ -6810,6 +6970,23 @@ ApplicationWindow {
                 font.bold: appSettings.showGpsSmoothDebug
             }
             MouseArea { anchors.fill: parent; onClicked: appSettings.showGpsSmoothDebug = !appSettings.showGpsSmoothDebug }
+        }
+
+        // IMU debug
+        Rectangle {
+            visible: appSettings.debugMode
+            width: root._menuItemW; height: root._menuItemH
+            radius: units.gu(1); color: root._uiBtnBg
+            border.color: appSettings.showImuDebug ? "#CE93D8" : root._uiBorder
+            border.width: units.gu(0.15)
+            Label {
+                anchors.centerIn: parent
+                text: "🧭 " + i18n.tr("IMU debug")
+                color: appSettings.showImuDebug ? "#CE93D8" : root._uiFg
+                font.pixelSize: root._menuItemH * 0.375
+                font.bold: appSettings.showImuDebug
+            }
+            MouseArea { anchors.fill: parent; onClicked: appSettings.showImuDebug = !appSettings.showImuDebug }
         }
 
         // Bisector debug

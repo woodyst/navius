@@ -88,6 +88,7 @@ Item {
     // Si rawGz ≈ 1 al girar 1 rad/s → gyroScale=1.0. Si ≈57 → gyroScale=Math.PI/180.
     property real rawGz:         0.0
     property real yawDeltaDeg:   0.0    // Δheading acumulado desde start(), en grados (más legible)
+    property real accelMag:      0.0    // |acelerómetro| en m/s² (en reposo ≈ 9.8)
 
     // ── Auto-calibración con GPS ──────────────────────────────────────────────
     // Llamar feedGpsHeading(hdgRad) en cada tick GPS bueno mientras el vehículo gira.
@@ -185,6 +186,7 @@ Item {
 
     function _onAccelReading(ax, ay, az, ts) {
         _lastAx = ax; _lastAy = ay; _lastAz = az
+        accelMag = Math.sqrt(ax*ax + ay*ay + az*az)
         if (calibrated) return
 
         // Fase de calibración: promediar lecturas en reposo para fijar vector gravedad inicial.
