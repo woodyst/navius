@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: navius.woodyst\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-28 00:02+0200\n"
+"POT-Creation-Date: 2026-07-07 21:51+0200\n"
 "PO-Revision-Date: 2026-05-24 00:00+0000\n"
 "Last-Translator: Claude\n"
 "Language-Team: Русский\n"
@@ -25,7 +25,7 @@ msgstr "🔴 Трансляция"
 msgid "Generando enlace…"
 msgstr "Генерация ссылки…"
 
-#: qml/TripSharePanel.qml:53 qml/HelpPanel.qml:164 qml/Main.qml:6437
+#: qml/TripSharePanel.qml:53 qml/HelpPanel.qml:164 qml/Main.qml:6456
 #: qml/TourOverlay.qml:72
 msgid "Compartir viaje"
 msgstr "Поделиться поездкой"
@@ -66,7 +66,7 @@ msgstr "Создать ссылку"
 msgid "Detener"
 msgstr "Остановить"
 
-#: qml/TripSharePanel.qml:187 qml/Main.qml:7497 qml/Main.qml:7958
+#: qml/TripSharePanel.qml:187 qml/Main.qml:7516 qml/Main.qml:7977
 #: qml/LoginPanel.qml:145 qml/AboutDialog.qml:253 qml/ParkingDialog.qml:162
 #: qml/TourOverlay.qml:314
 #, fuzzy
@@ -120,7 +120,9 @@ msgstr "Запись маршрутов"
 
 #: qml/HelpPanel.qml:65
 msgid "Cambia entre Norte arriba y Rumbo arriba en Ajustes → Ajustes rápidos."
-msgstr "Переключение между «Север вверху» и «Курс вверху» в Настройки → Быстрые настройки."
+msgstr ""
+"Переключение между «Север вверху» и «Курс вверху» в Настройки → Быстрые "
+"настройки."
 
 #: qml/HelpPanel.qml:66
 #, fuzzy
@@ -282,7 +284,8 @@ msgstr "Удалить"
 
 #: qml/HelpPanel.qml:109
 msgid "Toca el icono de papelera junto al plan para borrarlo definitivamente."
-msgstr "Нажмите на значок корзины рядом с планом, чтобы удалить его окончательно."
+msgstr ""
+"Нажмите на значок корзины рядом с планом, чтобы удалить его окончательно."
 
 #: qml/HelpPanel.qml:114 qml/SearchPanel.qml:714 qml/PreferencesPanel.qml:1321
 msgid "Navegación"
@@ -560,7 +563,7 @@ msgid ""
 "automáticamente en Ajustes → Servidor Valhalla → Detectar servidor local."
 msgstr ""
 
-#: qml/HelpPanel.qml:196 qml/Main.qml:6615 qml/PreferencesPanel.qml:137
+#: qml/HelpPanel.qml:196 qml/Main.qml:6634 qml/PreferencesPanel.qml:137
 #: qml/TourOverlay.qml:112
 msgid "Ajustes"
 msgstr "Настройки"
@@ -1013,7 +1016,7 @@ msgstr "Рядом со мной"
 msgid "Gasolina"
 msgstr "АЗС"
 
-#: qml/SearchPanel.qml:1830 qml/InstructionListPanel.qml:344 qml/Main.qml:6494
+#: qml/SearchPanel.qml:1830 qml/InstructionListPanel.qml:344 qml/Main.qml:6513
 msgid "Parking"
 msgstr "Парковка"
 
@@ -1053,7 +1056,7 @@ msgstr "Недавние пункты"
 msgid "Rutas disponibles"
 msgstr "Доступные маршруты"
 
-#: qml/SearchPanel.qml:2044 qml/RouteSelectPanel.qml:170 qml/Main.qml:8638
+#: qml/SearchPanel.qml:2044 qml/RouteSelectPanel.qml:170 qml/Main.qml:8657
 msgid "Ruta más rápida"
 msgstr "Быстрый маршрут"
 
@@ -1123,7 +1126,7 @@ msgstr "Тип"
 msgid "Crear"
 msgstr "Создать"
 
-#: qml/SharedLocationDialog.qml:61 qml/Main.qml:9275
+#: qml/SharedLocationDialog.qml:61 qml/Main.qml:9294
 msgid "Ubicación compartida"
 msgstr "Общее местоположение"
 
@@ -1193,7 +1196,7 @@ msgstr "Ожидает сборки (clickable build)"
 msgid "Alta calidad (neuronal)"
 msgstr "Высокое качество (нейронное)"
 
-#: qml/MediaPanel.qml:222 qml/Main.qml:6600
+#: qml/MediaPanel.qml:222 qml/Main.qml:6619
 msgid "Música"
 msgstr "Музыка"
 
@@ -1208,7 +1211,8 @@ msgstr "Библиотека пуста"
 
 #: qml/MediaPanel.qml:303
 msgid "Pulsa «＋ Añadir» para importar música desde el gestor de archivos."
-msgstr "Нажмите «＋ Добавить», чтобы импортировать музыку из файлового менеджера."
+msgstr ""
+"Нажмите «＋ Добавить», чтобы импортировать музыку из файлового менеджера."
 
 #: qml/MediaPanel.qml:356
 #, fuzzy
@@ -1265,7 +1269,7 @@ msgstr "Открыть ссылку"
 msgid "Ir a"
 msgstr "Перейти к"
 
-#: qml/MsgDetailPopup.qml:175 qml/Main.qml:7231 qml/MessagesPanel.qml:351
+#: qml/MsgDetailPopup.qml:175 qml/Main.qml:7250 qml/MessagesPanel.qml:351
 msgid "Añadir destino"
 msgstr "Добавить пункт"
 
@@ -1350,315 +1354,317 @@ msgstr "Нет соединения с сервером"
 msgid "Error del servidor (%1)"
 msgstr "Ошибка сети: "
 
-#: qml/Main.qml:4666
+#: qml/Main.qml:4672
 msgid "Rumbo"
 msgstr "Курс"
 
-#: qml/Main.qml:4684
+#: qml/Main.qml:4690
 msgid "km/h ◄"
 msgstr "км/ч ◄"
 
-#: qml/Main.qml:4684
+#: qml/Main.qml:4690
 msgid "km/h"
 msgstr "км/ч"
 
-#: qml/Main.qml:4723
+#: qml/Main.qml:4729
 msgid "Fallo GPS ON"
 msgstr "Сбой GPS ВКЛ"
 
-#: qml/Main.qml:4723 qml/Main.qml:6741
+#: qml/Main.qml:4729 qml/Main.qml:6760
 msgid "Fallo GPS"
 msgstr "Сбой GPS"
 
-#: qml/Main.qml:4750
+#: qml/Main.qml:4756
 msgid "Rev."
 msgstr "Реверс"
 
-#: qml/Main.qml:4839
+#: qml/Main.qml:4845
 msgid "Ctrl ON"
 msgstr "Упр. ВКЛ"
 
-#: qml/Main.qml:4839
+#: qml/Main.qml:4845
 msgid "Ctrl"
 msgstr "Упр."
 
-#: qml/Main.qml:4887
+#: qml/Main.qml:4893
 #, fuzzy
 msgid "Con ruta"
 msgstr "По маршруту"
 
-#: qml/Main.qml:4926
+#: qml/Main.qml:4932
 msgid "Hdg blend"
 msgstr "Hdg blend"
 
-#: qml/Main.qml:4937
+#: qml/Main.qml:4943
 #, fuzzy
 msgid "Sin ruta"
 msgstr "По маршруту"
 
-#: qml/Main.qml:4951
+#: qml/Main.qml:4957
 msgid "Hdg accel"
 msgstr "Hdg accel"
 
-#: qml/Main.qml:4967
+#: qml/Main.qml:4973
 msgid "Pos sin nav"
 msgstr "Pos sin nav"
 
-#: qml/Main.qml:5077
+#: qml/Main.qml:5083
 msgid "Seguir ruta"
 msgstr "Следовать по маршруту"
 
-#: qml/Main.qml:5104
+#: qml/Main.qml:5110
 msgid "SIMULACIÓN GPS"
 msgstr "СИМУЛЯЦИЯ GPS"
 
-#: qml/Main.qml:5133
+#: qml/Main.qml:5139
 #, fuzzy
 msgid "OSM Scout Server  ·  límites de velocidad por tramo"
 msgstr "Оверлей ограничений скорости"
 
-#: qml/Main.qml:5650 qml/Main.qml:5672
+#: qml/Main.qml:5656 qml/Main.qml:5678
 #, fuzzy
 msgid "Alerta"
 msgstr "Добавить предупреждение"
 
-#: qml/Main.qml:5700 qml/PreferencesPanel.qml:24 qml/PreferencesPanel.qml:329
+#: qml/Main.qml:5706 qml/PreferencesPanel.qml:24 qml/PreferencesPanel.qml:329
 msgid "Auto"
 msgstr "Авто"
 
-#: qml/Main.qml:6336
+#: qml/Main.qml:6355
 msgid "Silenciado"
 msgstr "Без звука"
 
-#: qml/Main.qml:6337
+#: qml/Main.qml:6356
 msgid "Indicaciones y alertas por voz"
 msgstr "Указания и оповещения голосом"
 
-#: qml/Main.qml:6338
+#: qml/Main.qml:6357
 msgid "Indicaciones voz, alertas pitido"
 msgstr "Указания голосом, сигнал для оповещений"
 
-#: qml/Main.qml:6339
+#: qml/Main.qml:6358
 msgid "Solo indicaciones por voz"
 msgstr "Только указания голосом"
 
-#: qml/Main.qml:6340
+#: qml/Main.qml:6359
 msgid "Indicaciones pitido, alertas voz"
 msgstr "Указания сигналом, оповещения голосом"
 
-#: qml/Main.qml:6341 qml/Main.qml:6405
+#: qml/Main.qml:6360 qml/Main.qml:6424
 msgid "Solo pitidos"
 msgstr "Только сигналы"
 
-#: qml/Main.qml:6342
+#: qml/Main.qml:6361
 msgid "Solo indicaciones (pitido)"
 msgstr "Только указания (сигнал)"
 
-#: qml/Main.qml:6343
+#: qml/Main.qml:6362
 msgid "Solo alertas por voz"
 msgstr "Только оповещения голосом"
 
-#: qml/Main.qml:6344
+#: qml/Main.qml:6363
 msgid "Solo alertas (pitido)"
 msgstr "Только оповещения (сигнал)"
 
-#: qml/Main.qml:6403
+#: qml/Main.qml:6422
 #, fuzzy
 msgid "Voz + alertas"
 msgstr "Звук оповещений"
 
-#: qml/Main.qml:6404
+#: qml/Main.qml:6423
 #, fuzzy
 msgid "Solo alertas"
 msgstr "Звук оповещений"
 
-#: qml/Main.qml:6405
+#: qml/Main.qml:6424
 #, fuzzy
 msgid "Silencio"
 msgstr "Без звука"
 
-#: qml/Main.qml:6437
+#: qml/Main.qml:6456
 #, fuzzy
 msgid "Compartiendo"
 msgstr "Трансляция"
 
-#: qml/Main.qml:6462
+#: qml/Main.qml:6481
 msgid "Prev. Ruta"
 msgstr "Предпросмотр"
 
-#: qml/Main.qml:6477
+#: qml/Main.qml:6496
 msgid "Tareas"
 msgstr "Задачи"
 
-#: qml/Main.qml:6521
+#: qml/Main.qml:6540
 msgid "Borrar aparcamiento"
 msgstr "Удалить парковку"
 
-#: qml/Main.qml:6549
+#: qml/Main.qml:6568
 msgid "Ver vehículo"
 msgstr "К автомобилю"
 
-#: qml/Main.qml:6582 qml/ParkingDialog.qml:61
+#: qml/Main.qml:6601 qml/ParkingDialog.qml:61
 msgid "Ir al aparcamiento"
 msgstr "К парковке"
 
-#: qml/Main.qml:6632 qml/LoginPanel.qml:104
+#: qml/Main.qml:6651 qml/LoginPanel.qml:104
 msgid "Mi cuenta"
 msgstr "Мой аккаунт"
 
-#: qml/Main.qml:6632
+#: qml/Main.qml:6651
 msgid "Login"
 msgstr "Войти"
 
-#: qml/Main.qml:6648 qml/MessagesPanel.qml:106
+#: qml/Main.qml:6667 qml/MessagesPanel.qml:106
 msgid "Mensajes"
 msgstr "Сообщения"
 
-#: qml/Main.qml:6678
+#: qml/Main.qml:6697
 msgid "Bloq. Mapa"
 msgstr "Блок. карты"
 
-#: qml/Main.qml:6695 qml/PreferencesPanel.qml:3021
+#: qml/Main.qml:6714 qml/PreferencesPanel.qml:3021
 msgid "Debug"
 msgstr "Debug"
 
-#: qml/Main.qml:6710
+#: qml/Main.qml:6729
 msgid "Sim GPS"
 msgstr "Sim GPS"
 
-#: qml/Main.qml:6741
+#: qml/Main.qml:6760
 msgid "GPS on"
 msgstr "GPS вкл"
 
-#: qml/Main.qml:6756
+#: qml/Main.qml:6775
 msgid "Reanudar"
 msgstr "Возобновить"
 
-#: qml/Main.qml:6756
+#: qml/Main.qml:6775
 msgid "Pausar sim"
 msgstr "Пауза sim"
 
-#: qml/Main.qml:6772 qml/PreferencesPanel.qml:1776
+#: qml/Main.qml:6791 qml/PreferencesPanel.qml:1776
 msgid "Suavizado GPS"
 msgstr "Сглаживание GPS"
 
-#: qml/Main.qml:6789
+#: qml/Main.qml:6808
 msgid "Bisector"
 msgstr "Bisector"
 
-#: qml/Main.qml:6806
+#: qml/Main.qml:6825
 msgid "POIs debug"
 msgstr "POIs debug"
 
-#: qml/Main.qml:6836
+#: qml/Main.qml:6855
 msgid "Donar"
 msgstr "Пожертвовать"
 
-#: qml/Main.qml:7043
+#: qml/Main.qml:7062
 msgid "INICIO"
 msgstr "НАЧАЛО"
 
-#: qml/Main.qml:7080
+#: qml/Main.qml:7099
 msgid "FIN"
 msgstr "КОНЕЦ"
 
-#: qml/Main.qml:7211
+#: qml/Main.qml:7230
 #, fuzzy
 msgid "Inicio sim"
 msgstr "Войти"
 
-#: qml/Main.qml:7561
+#: qml/Main.qml:7580
 msgid "Satélites"
 msgstr "Спутники"
 
-#: qml/Main.qml:7929
+#: qml/Main.qml:7948
 #, fuzzy
 msgid "Límite comunitario"
 msgstr "Совместная навигация"
 
-#: qml/Main.qml:7936
+#: qml/Main.qml:7955
 msgid "Eliminar este límite"
 msgstr "Удалить это ограничение"
 
-#: qml/Main.qml:8003
+#: qml/Main.qml:8022
 #, fuzzy
 msgid "Límite de velocidad aquí"
 msgstr "Оверлей ограничений скорости"
 
-#: qml/Main.qml:8118
+#: qml/Main.qml:8137
 msgid "Tienes cambios locales no sincronizados. ¿Cuál configuración usar?"
-msgstr "У вас есть несинхронизированные локальные изменения. Какую конфигурацию использовать?"
+msgstr ""
+"У вас есть несинхронизированные локальные изменения. Какую конфигурацию "
+"использовать?"
 
-#: qml/Main.qml:8372
+#: qml/Main.qml:8391
 msgid "Mapas: servidor no disponible · usando OSM Scout"
 msgstr "Карты: сервер недоступен · используется OSM Scout"
 
-#: qml/Main.qml:8374
+#: qml/Main.qml:8393
 msgid "Mapas: servidor no disponible · usando servidor público"
 msgstr "Карты: сервер недоступен · используется публичный сервер"
 
-#: qml/Main.qml:8394
+#: qml/Main.qml:8413
 msgid "Servidor de mapas recuperado · restaurando"
 msgstr "Сервер карт восстановлен · восстанавливаем"
 
-#: qml/Main.qml:8412 qml/Main.qml:8420
+#: qml/Main.qml:8431 qml/Main.qml:8439
 msgid "Sin internet · usando OSM Scout Server"
 msgstr "Нет интернета · используется OSM Scout Server"
 
-#: qml/Main.qml:8436 qml/Main.qml:8441
+#: qml/Main.qml:8455 qml/Main.qml:8460
 msgid "Conexión restaurada · volviendo a mapas online"
 msgstr "Соединение восстановлено · переключение на онлайн-карты"
 
-#: qml/Main.qml:8603
+#: qml/Main.qml:8622
 msgid "Tienes un mensaje nuevo"
 msgstr "У вас новое сообщение"
 
-#: qml/Main.qml:8604
+#: qml/Main.qml:8623
 msgid "Tienes %1 mensajes nuevos"
 msgstr "У вас %1 новых сообщений"
 
-#: qml/Main.qml:8642
+#: qml/Main.qml:8661
 msgid "Ahorra"
 msgstr "Экономия"
 
-#: qml/Main.qml:8652
+#: qml/Main.qml:8671
 msgid "Revisar"
 msgstr "Проверить"
 
-#: qml/Main.qml:8661
+#: qml/Main.qml:8680
 msgid "Ignorar"
 msgstr "Игнорировать"
 
-#: qml/Main.qml:8717
+#: qml/Main.qml:8736
 msgid "Pre-procesando motor TTS"
 msgstr "Подготовка движка TTS"
 
-#: qml/Main.qml:8720
+#: qml/Main.qml:8739
 msgid "Cargando mapa…"
 msgstr "Загрузка карты…"
 
-#: qml/Main.qml:9493
+#: qml/Main.qml:9512
 msgid "¿Has llegado a"
 msgstr "Вы прибыли в"
 
-#: qml/Main.qml:9494
+#: qml/Main.qml:9513
 #, fuzzy
 msgid "el destino"
 msgstr "Этот пункт"
 
-#: qml/Main.qml:9503
+#: qml/Main.qml:9522
 msgid "Sí, he llegado"
 msgstr "Да, я прибыл"
 
-#: qml/Main.qml:9514
+#: qml/Main.qml:9533
 msgid "Todavía no"
 msgstr "Ещё нет"
 
-#: qml/Main.qml:9546
+#: qml/Main.qml:9565
 msgid "Tareas pendientes"
 msgstr "Ожидающие задачи"
 
-#: qml/Main.qml:9555
+#: qml/Main.qml:9574
 msgid "Abrir"
 msgstr "Открыть"
 
@@ -1675,35 +1681,35 @@ msgstr "Отправить"
 msgid "Al otro lado"
 msgstr "Встречная полоса"
 
-#: qml/NavBar.qml:693
+#: qml/NavBar.qml:729
 msgid "SENTIDO CONTRARIO"
 msgstr "ВСТРЕЧНОЕ НАПРАВЛЕНИЕ"
 
-#: qml/NavBar.qml:790
+#: qml/NavBar.qml:826
 msgid "Reiniciar navegación"
 msgstr "Перезапустить навигацию"
 
-#: qml/NavBar.qml:816
+#: qml/NavBar.qml:852
 msgid "Iniciar navegación"
 msgstr "Начать навигацию"
 
-#: qml/NavBar.qml:821 qml/SpeedView.qml:61
+#: qml/NavBar.qml:857 qml/SpeedView.qml:61
 msgid "Buscando GPS…"
 msgstr "Поиск GPS…"
 
-#: qml/NavBar.qml:891
+#: qml/NavBar.qml:927
 msgid "Recalculando ruta…"
 msgstr "Пересчёт маршрута…"
 
-#: qml/NavBar.qml:892
+#: qml/NavBar.qml:928
 msgid "Fuera de ruta"
 msgstr "Вне маршрута"
 
-#: qml/NavBar.qml:921
+#: qml/NavBar.qml:957
 msgid "Ruta pausada"
 msgstr "Маршрут на паузе"
 
-#: qml/NavBar.qml:1024
+#: qml/NavBar.qml:1060
 msgid "Parar"
 msgstr "Стоп"
 
@@ -2185,7 +2191,8 @@ msgstr "Максимальный угол прогнозируемого пов�
 
 #: qml/PreferencesPanel.qml:1651
 msgid "Máximo desvío angular del mapa respecto al heading real en modo giro"
-msgstr "Максимальное угловое отклонение карты от реального курса в режиме поворота"
+msgstr ""
+"Максимальное угловое отклонение карты от реального курса в режиме поворота"
 
 #: qml/PreferencesPanel.qml:1676
 #, fuzzy
@@ -2244,7 +2251,9 @@ msgstr "Показывать ограничение скорости"
 
 #: qml/PreferencesPanel.qml:1885
 msgid "Fuente no fiable (OSM/Valhalla). Solo activa si hay radar comunitario"
-msgstr "Ненадёжный источник (OSM/Valhalla). Активировать только при наличии общественных камер"
+msgstr ""
+"Ненадёжный источник (OSM/Valhalla). Активировать только при наличии "
+"общественных камер"
 
 #: qml/PreferencesPanel.qml:1911
 msgid ""
