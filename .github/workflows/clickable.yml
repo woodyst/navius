@@ -25,8 +25,9 @@ jobs:
 
       - name: Publish to OpenStore
         if: startsWith(github.ref, 'refs/tags/')
-        env:
-          OPENSTORE_KEY: ${{ secrets.OPENSTORE_KEY }}
-        run: |
-          CHANGELOG=$(git tag -l --format='%(contents)' ${{ github.ref_name }})
-          clickable publish "${CHANGELOG}" --apikey ${OPENSTORE_KEY}
+        uses: tuxecure/clickable@v1
+        with:
+          image: clickable/ci-20.04-arm64
+          run: |
+            CHANGELOG=$(git tag -l --format='%(contents)' ${{ github.ref_name }})
+            clickable publish "${CHANGELOG}" --apikey ${{ secrets.OPENSTORE_KEY }}
