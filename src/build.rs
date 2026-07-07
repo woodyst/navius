@@ -186,6 +186,13 @@ fn main() {
         .flag("-Wno-deprecated-copy")
         .compile("location_props");
 
+    cc::Build::new()
+        .file("src/nav_power.cpp")
+        .include(qt_include_path.trim())
+        .flag("-std=c++14")
+        .flag("-Wno-deprecated-copy")
+        .compile("nav_power");
+
     let macos_lib_search = if cfg!(target_os = "macos") { "=framework" } else { "" };
     let lib_framework    = if cfg!(target_os = "macos") { ""           } else { "5" };
     let qt_library_path  = qt_library_path.trim();
