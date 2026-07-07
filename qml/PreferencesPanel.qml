@@ -388,11 +388,11 @@ Rectangle {
                 property bool _addMode: false
                 property int  _newTypeIdx: 0
                 readonly property var _typeList: [
-                    { label: "Coche",     value: "auto"          },
-                    { label: "Moto",      value: "motorcycle"    },
-                    { label: "Scooter",   value: "motor_scooter" },
-                    { label: "Camión",    value: "truck"         },
-                    { label: "Bicicleta", value: "bicycle"       }
+                    { label: i18n.tr("Coche"),     value: "auto"          },
+                    { label: i18n.tr("Moto"),      value: "motorcycle"    },
+                    { label: i18n.tr("Scooter"),   value: "motor_scooter" },
+                    { label: i18n.tr("Camión"),    value: "truck"         },
+                    { label: i18n.tr("Bicicleta"), value: "bicycle"       }
                 ]
 
                 Column {
