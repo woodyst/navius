@@ -1,0 +1,32 @@
+name: Build & Publish
+
+on:
+  push:
+    tags: ['*']
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build
+        uses: tuxecure/clickable@v1
+        with:
+          image: clickable/ci-20.04-arm64
+          run: clickable build
+
+      - name: Upload click
+        uses: actions/upload-artifact@v4
+        with:
+          name: navius-${{ github.ref_name }}
+          path: "build/*/app/*.click"
+
+      - name: Publish to OpenStore
+        if: startsWith(github.ref, 'refs/tags/')
+        env:
+          OPENSTORE_KEY: ${{ secrets.OPENSTORE_KEY }}
+        run: |
+          CHANGELOG=$(git tag -l --format='%(contents)' ${{ github.ref_name }})
+          clickable publish "${CHANGELOG}" --apikey ${OPENSTORE_KEY}
