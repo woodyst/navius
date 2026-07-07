@@ -11,6 +11,21 @@ GPS navigator for Ubuntu Touch. Rust + QML, packaged as Click.
 
 ---
 
+## Navius account and privacy
+
+Navius works fully offline without an account. Creating an account is optional and enables community features (alerts, traffic prediction, nearby ads).
+
+**When you are logged in:**
+
+- The app sends your route position to the server for traffic prediction using the Valhalla routing engine.
+- Ads may appear along the road based on your location.
+
+**If you do not want to send any data, simply do not create or use a Navius account.**
+
+You can use any public Valhalla server or run your own with [OSM Scout Server](https://rinigus.github.io/osmscout-server/).
+
+---
+
 ## Features
 
 - Turn-by-turn navigation with voice instructions (TTS)
@@ -275,20 +290,6 @@ navius/
 ├── navius.apparmor              # AppArmor permissions
 └── Cargo.toml                   # Rust dependencies
 ```
-
----
-
-## Navius account and privacy
-
-Navius works fully offline without an account. Creating an account is optional and enables community features (alerts, traffic prediction, nearby ads).
-
-**When you are logged in:**
-
-- The app sends your route position to the server for traffic prediction using the Valhalla routing engine.
-- Ads may appear along the road based on your location.
-**If you do not want to send any data, simply do not create or use a Navius account.**
-
-You can use any public Valhalla server or run your own with [OSM Scout Server](https://rinigus.github.io/osmscout-server/).
 
 ---
 
