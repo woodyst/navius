@@ -1,4 +1,4 @@
 {
-    "policy_groups": ["location", "networking", "connectivity", "audio", "content_exchange", "webview", "sensors"],
+    "policy_groups": ["location", "networking", "connectivity", "audio", "content_exchange", "webview", "sensors", "keep-display-on"],
     "policy_version": 20.04
 }
