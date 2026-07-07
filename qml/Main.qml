@@ -11,7 +11,6 @@ import QtQuick.Controls 2.2
 import QtQuick.Window 2.2
 import QtPositioning 5.4
 import Qt.labs.settings 1.0
-import QtSystemInfo 5.5
 import Lomiri.Components 1.3
 import Lomiri.Content 1.3
 import MapboxMap 1.0
@@ -40,8 +39,9 @@ ApplicationWindow {
     NavTileCache   { id: tileCache  }
     NavImu         { id: navImu; gpsActive: true }
 
-    ScreenSaver {
-        screenSaverEnabled: !appSettings.inhibitSuspend
+    NavPower {
+        id: navPower
+        inhibit: appSettings.inhibitSuspend && Qt.application.state === Qt.ApplicationActive
     }
     Timer {
         id: navTrackerPollTimer
