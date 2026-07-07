@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-07 22:15+0200\n"
+"POT-Creation-Date: 2026-07-08 00:01+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1044,6 +1044,26 @@ msgstr ""
 msgid "Editar ruta"
 msgstr ""
 
+#: qml/VehicleSetupDialog.qml:51 qml/Main.qml:2240 qml/PreferencesPanel.qml:391
+msgid "Coche"
+msgstr ""
+
+#: qml/VehicleSetupDialog.qml:52 qml/Main.qml:2241 qml/PreferencesPanel.qml:392
+msgid "Moto"
+msgstr ""
+
+#: qml/VehicleSetupDialog.qml:53 qml/Main.qml:2242 qml/PreferencesPanel.qml:393
+msgid "Scooter"
+msgstr ""
+
+#: qml/VehicleSetupDialog.qml:54 qml/Main.qml:2243 qml/PreferencesPanel.qml:394
+msgid "Camión"
+msgstr ""
+
+#: qml/VehicleSetupDialog.qml:55 qml/Main.qml:2244 qml/PreferencesPanel.qml:395
+msgid "Bicicleta"
+msgstr ""
+
 #: qml/VehicleSetupDialog.qml:82 qml/TourOverlay.qml:27
 msgid "Bienvenido a Navius"
 msgstr ""
@@ -1306,26 +1326,6 @@ msgstr ""
 
 #: qml/Main.qml:2210 qml/Main.qml:2245 qml/ParkingDialog.qml:111
 msgid "A pie"
-msgstr ""
-
-#: qml/Main.qml:2240
-msgid "Coche"
-msgstr ""
-
-#: qml/Main.qml:2241
-msgid "Moto"
-msgstr ""
-
-#: qml/Main.qml:2242
-msgid "Scooter"
-msgstr ""
-
-#: qml/Main.qml:2243
-msgid "Camión"
-msgstr ""
-
-#: qml/Main.qml:2244
-msgid "Bicicleta"
 msgstr ""
 
 #: qml/Main.qml:2272

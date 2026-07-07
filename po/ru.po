@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: navius.woodyst\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-07 22:14+0200\n"
+"POT-Creation-Date: 2026-07-08 00:01+0200\n"
 "PO-Revision-Date: 2026-05-24 00:00+0000\n"
 "Last-Translator: Claude\n"
 "Language-Team: Русский\n"
@@ -1182,6 +1182,26 @@ msgstr "Задачи на этой остановке"
 msgid "Editar ruta"
 msgstr "Изменить маршрут"
 
+#: qml/VehicleSetupDialog.qml:51 qml/Main.qml:2240 qml/PreferencesPanel.qml:391
+msgid "Coche"
+msgstr "Автомобиль"
+
+#: qml/VehicleSetupDialog.qml:52 qml/Main.qml:2241 qml/PreferencesPanel.qml:392
+msgid "Moto"
+msgstr "Мотоцикл"
+
+#: qml/VehicleSetupDialog.qml:53 qml/Main.qml:2242 qml/PreferencesPanel.qml:393
+msgid "Scooter"
+msgstr "Скутер"
+
+#: qml/VehicleSetupDialog.qml:54 qml/Main.qml:2243 qml/PreferencesPanel.qml:394
+msgid "Camión"
+msgstr "Грузовик"
+
+#: qml/VehicleSetupDialog.qml:55 qml/Main.qml:2244 qml/PreferencesPanel.qml:395
+msgid "Bicicleta"
+msgstr "Велосипед"
+
 #: qml/VehicleSetupDialog.qml:82 qml/TourOverlay.qml:27
 msgid "Bienvenido a Navius"
 msgstr "Добро пожаловать в Navius"
@@ -1454,26 +1474,6 @@ msgstr "Ошибка сервера (%1)"
 #: qml/Main.qml:2210 qml/Main.qml:2245 qml/ParkingDialog.qml:111
 msgid "A pie"
 msgstr "Пешком"
-
-#: qml/Main.qml:2240
-msgid "Coche"
-msgstr "Автомобиль"
-
-#: qml/Main.qml:2241
-msgid "Moto"
-msgstr "Мотоцикл"
-
-#: qml/Main.qml:2242
-msgid "Scooter"
-msgstr "Скутер"
-
-#: qml/Main.qml:2243
-msgid "Camión"
-msgstr "Грузовик"
-
-#: qml/Main.qml:2244
-msgid "Bicicleta"
-msgstr "Велосипед"
 
 #: qml/Main.qml:2272
 msgid "No se pudo calcular la ruta al aparcamiento"
