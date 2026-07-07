@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: navius.woodyst\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-05 21:33+0000\n"
+"POT-Creation-Date: 2026-07-07 20:15+0000\n"
 "PO-Revision-Date: 2026-05-24 00:00+0000\n"
 "Last-Translator: Claude\n"
 "Language-Team: العربية\n"
@@ -24,7 +24,7 @@ msgstr "🔴 جاري المشاركة"
 msgid "Generando enlace…"
 msgstr "جارٍ إنشاء الرابط…"
 
-#: qml/TripSharePanel.qml:53 qml/HelpPanel.qml:164 qml/Main.qml:6470
+#: qml/TripSharePanel.qml:53 qml/HelpPanel.qml:164 qml/Main.qml:6634
 #: qml/TourOverlay.qml:72
 msgid "Compartir viaje"
 msgstr "مشاركة الرحلة"
@@ -60,8 +60,8 @@ msgstr "إنشاء رابط"
 msgid "Detener"
 msgstr "إيقاف"
 
-#: qml/TripSharePanel.qml:187 qml/Main.qml:7530 qml/Main.qml:7991
-#: qml/LoginPanel.qml:145 qml/AboutDialog.qml:253 qml/ParkingDialog.qml:162
+#: qml/TripSharePanel.qml:187 qml/Main.qml:7711 qml/Main.qml:8172
+#: qml/LoginPanel.qml:148 qml/AboutDialog.qml:253 qml/ParkingDialog.qml:162
 #: qml/TourOverlay.qml:314
 msgid "Cerrar"
 msgstr "إغلاق"
@@ -603,7 +603,7 @@ msgstr ""
 "الأماكن بالكامل دون اتصال. يكتشفه Navius تلقائياً في الإعدادات ← خادم "
 "Valhalla ← اكتشاف خادم محلي."
 
-#: qml/HelpPanel.qml:196 qml/Main.qml:6648 qml/PreferencesPanel.qml:137
+#: qml/HelpPanel.qml:196 qml/Main.qml:6812 qml/PreferencesPanel.qml:137
 #: qml/TourOverlay.qml:112
 msgid "Ajustes"
 msgstr "الإعدادات"
@@ -771,7 +771,7 @@ msgstr "إعادة المحاولة"
 
 #: qml/ServerFallbackDialog.qml:143 qml/SearchPanel.qml:2148
 #: qml/VehicleSetupDialog.qml:160 qml/SharedLocationDialog.qml:163
-#: qml/Main.qml:8080 qml/AlertasOverlay.qml:410 qml/LoginPanel.qml:345
+#: qml/Main.qml:8261 qml/AlertasOverlay.qml:410 qml/LoginPanel.qml:379
 #: qml/PreferencesPanel.qml:419 qml/PreferencesPanel.qml:931
 #: qml/PreferencesPanel.qml:2179
 msgid "Cancelar"
@@ -1067,7 +1067,7 @@ msgstr "قريب مني"
 msgid "Gasolina"
 msgstr "وقود"
 
-#: qml/SearchPanel.qml:1830 qml/InstructionListPanel.qml:344 qml/Main.qml:6527
+#: qml/SearchPanel.qml:1830 qml/InstructionListPanel.qml:344 qml/Main.qml:6691
 msgid "Parking"
 msgstr "موقف"
 
@@ -1107,7 +1107,7 @@ msgstr "الوجهات الأخيرة"
 msgid "Rutas disponibles"
 msgstr "المسارات المتاحة"
 
-#: qml/SearchPanel.qml:2044 qml/RouteSelectPanel.qml:170 qml/Main.qml:8671
+#: qml/SearchPanel.qml:2044 qml/RouteSelectPanel.qml:170 qml/Main.qml:8859
 msgid "Ruta más rápida"
 msgstr "أسرع مسار"
 
@@ -1123,7 +1123,7 @@ msgstr "حفظ في المفضلة"
 msgid "Nombre del favorito"
 msgstr "اسم المفضلة"
 
-#: qml/SearchPanel.qml:2159 qml/Main.qml:9640 qml/PreferencesPanel.qml:941
+#: qml/SearchPanel.qml:2159 qml/Main.qml:9828 qml/PreferencesPanel.qml:941
 msgid "Guardar"
 msgstr "حفظ"
 
@@ -1146,26 +1146,6 @@ msgstr "المهام في هذه المحطة"
 #: qml/InstructionListPanel.qml:396
 msgid "Editar ruta"
 msgstr "تعديل المسار"
-
-#: qml/VehicleSetupDialog.qml:51 qml/Main.qml:2235 qml/PreferencesPanel.qml:391
-msgid "Coche"
-msgstr "سيارة"
-
-#: qml/VehicleSetupDialog.qml:52 qml/Main.qml:2236 qml/PreferencesPanel.qml:392
-msgid "Moto"
-msgstr "دراجة نارية"
-
-#: qml/VehicleSetupDialog.qml:53 qml/Main.qml:2237 qml/PreferencesPanel.qml:393
-msgid "Scooter"
-msgstr "سكوتر"
-
-#: qml/VehicleSetupDialog.qml:54 qml/Main.qml:2238 qml/PreferencesPanel.qml:394
-msgid "Camión"
-msgstr "شاحنة"
-
-#: qml/VehicleSetupDialog.qml:55 qml/Main.qml:2239 qml/PreferencesPanel.qml:395
-msgid "Bicicleta"
-msgstr "دراجة هوائية"
 
 #: qml/VehicleSetupDialog.qml:82 qml/TourOverlay.qml:27
 msgid "Bienvenido a Navius"
@@ -1195,7 +1175,7 @@ msgstr "النوع"
 msgid "Crear"
 msgstr "إنشاء"
 
-#: qml/SharedLocationDialog.qml:61 qml/Main.qml:9310
+#: qml/SharedLocationDialog.qml:61 qml/Main.qml:9498
 msgid "Ubicación compartida"
 msgstr "موقع مشترك"
 
@@ -1263,7 +1243,7 @@ msgstr "في انتظار البناء (clickable build)"
 msgid "Alta calidad (neuronal)"
 msgstr "جودة عالية (عصبي)"
 
-#: qml/MediaPanel.qml:222 qml/Main.qml:6633
+#: qml/MediaPanel.qml:222 qml/Main.qml:6797
 msgid "Música"
 msgstr "الموسيقى"
 
@@ -1338,7 +1318,7 @@ msgstr "فتح الرابط"
 msgid "Ir a"
 msgstr "الذهاب إلى"
 
-#: qml/MsgDetailPopup.qml:175 qml/Main.qml:7264 qml/MessagesPanel.qml:351
+#: qml/MsgDetailPopup.qml:175 qml/Main.qml:7445 qml/MessagesPanel.qml:351
 msgid "Añadir destino"
 msgstr "إضافة وجهة"
 
@@ -1406,601 +1386,506 @@ msgstr "مكتملة"
 msgid "Sin historial de tareas"
 msgstr "لا يوجد سجل مهام"
 
-#: qml/Main.qml:1333
+#: qml/Main.qml:1338
 msgid "✓ Configuración guardada en el servidor"
 msgstr "✓ تم حفظ الإعدادات على الخادم"
 
-#: qml/Main.qml:1352
+#: qml/Main.qml:1357
 msgid "Sin conexión: no se pudo cargar la configuración del servidor"
 msgstr "بلا اتصال: تعذّر تحميل إعدادات الخادم"
 
-#: qml/Main.qml:1354
+#: qml/Main.qml:1359
 msgid "Error al cargar configuración del servidor: "
 msgstr "خطأ في تحميل إعدادات الخادم: "
 
-#: qml/Main.qml:1453
+#: qml/Main.qml:1458
 msgid "Error al procesar la respuesta del servidor"
 msgstr "خطأ في معالجة استجابة الخادم"
 
-#: qml/Main.qml:1462
+#: qml/Main.qml:1467
 msgid "Sesión no válida — vuelve a iniciar sesión"
 msgstr "الجلسة غير صالحة — يرجى تسجيل الدخول مجدداً"
 
-#: qml/Main.qml:1467
+#: qml/Main.qml:1472
 msgid "Sin conexión con el servidor"
 msgstr "لا يوجد اتصال بالخادم"
 
-#: qml/Main.qml:1470
+#: qml/Main.qml:1475
 msgid "Error del servidor (%1)"
 msgstr "خطأ في الخادم (%1)"
 
-#: qml/Main.qml:2205 qml/Main.qml:2240 qml/ParkingDialog.qml:111
+#: qml/Main.qml:2210 qml/Main.qml:2245 qml/ParkingDialog.qml:111
 msgid "A pie"
 msgstr "سيرًا"
 
-#: qml/Main.qml:2267
+#: qml/Main.qml:2240
+msgid "Coche"
+msgstr "سيارة"
+
+#: qml/Main.qml:2241
+msgid "Moto"
+msgstr "دراجة نارية"
+
+#: qml/Main.qml:2242
+msgid "Scooter"
+msgstr "سكوتر"
+
+#: qml/Main.qml:2243
+msgid "Camión"
+msgstr "شاحنة"
+
+#: qml/Main.qml:2244
+msgid "Bicicleta"
+msgstr "دراجة هوائية"
+
+#: qml/Main.qml:2272
 msgid "No se pudo calcular la ruta al aparcamiento"
 msgstr "تعذّر حساب المسار إلى موقف السيارة"
 
-#: qml/Main.qml:2408 qml/Main.qml:7698 qml/Main.qml:8368
+#: qml/Main.qml:2413 qml/Main.qml:7879 qml/Main.qml:8556
 msgid "OSM Scout · rutas y mapas offline"
 msgstr "OSM Scout · مسارات وخرائط دون اتصال"
 
-#: qml/Main.qml:2420
+#: qml/Main.qml:2425
 msgid "Servidor: "
 msgstr "الخادم: "
 
-#: qml/Main.qml:2986
+#: qml/Main.qml:2991
 msgid "Reproducción terminada"
 msgstr "انتهى التشغيل"
 
-#: qml/Main.qml:4171
+#: qml/Main.qml:4176
 msgid "GPS recuperado"
 msgstr "تم استعادة GPS"
 
-#: qml/Main.qml:4686
+#: qml/Main.qml:4691
 msgid "Rumbo"
 msgstr "الاتجاه"
 
-#: qml/Main.qml:4704
+#: qml/Main.qml:4709
 msgid "km/h ◄"
 msgstr "km/h ◄"
 
-#: qml/Main.qml:4704
+#: qml/Main.qml:4709
 msgid "km/h"
 msgstr "km/h"
 
-#: qml/Main.qml:4743
+#: qml/Main.qml:4748
 msgid "Fallo GPS ON"
 msgstr "خطأ GPS مفعّل"
 
-#: qml/Main.qml:4743 qml/Main.qml:6774
+#: qml/Main.qml:4748 qml/Main.qml:6938
 msgid "Fallo GPS"
 msgstr "خطأ GPS"
 
-#: qml/Main.qml:4770
+#: qml/Main.qml:4775
 msgid "Rev."
 msgstr "عكس"
 
-#: qml/Main.qml:4859
+#: qml/Main.qml:4864
 msgid "Ctrl ON"
 msgstr "تحكم مفعّل"
 
-#: qml/Main.qml:4859
+#: qml/Main.qml:4864
 msgid "Ctrl"
 msgstr "تحكم"
 
-#: qml/Main.qml:4907
+#: qml/Main.qml:4912
 msgid "Con ruta"
 msgstr "مع مسار"
 
-#: qml/Main.qml:4946
+#: qml/Main.qml:4951
 msgid "Hdg blend"
 msgstr "Hdg blend"
 
-#: qml/Main.qml:4957
+#: qml/Main.qml:4962
 msgid "Sin ruta"
 msgstr "بلا مسار"
 
-#: qml/Main.qml:4971
+#: qml/Main.qml:4976
 msgid "Hdg accel"
 msgstr "Hdg accel"
 
-#: qml/Main.qml:4987
+#: qml/Main.qml:4992
 msgid "Pos sin nav"
 msgstr "Pos sin nav"
 
-#: qml/Main.qml:5097
+#: qml/Main.qml:5261
 msgid "Seguir ruta"
 msgstr "متابعة المسار"
 
-#: qml/Main.qml:5124
+#: qml/Main.qml:5288
 msgid "SIMULACIÓN GPS"
 msgstr "محاكاة GPS"
 
-#: qml/Main.qml:5153
+#: qml/Main.qml:5317
 msgid "OSM Scout Server  ·  límites de velocidad por tramo"
 msgstr "OSM Scout Server  ·  حدود السرعة لكل قطعة"
 
-#: qml/Main.qml:5428
+#: qml/Main.qml:5592
 msgid "Mapa 3D"
 msgstr "خريطة ثلاثية الأبعاد"
 
-#: qml/Main.qml:5429
+#: qml/Main.qml:5593
 msgid "Mapa"
 msgstr "خريطة"
 
-#: qml/Main.qml:5430 qml/PreferencesPanel.qml:25
+#: qml/Main.qml:5594 qml/PreferencesPanel.qml:25
 msgid "Satélite"
 msgstr "قمر صناعي"
 
-#: qml/Main.qml:5431 qml/PreferencesPanel.qml:29
+#: qml/Main.qml:5595 qml/PreferencesPanel.qml:29
 msgid "Claro"
 msgstr "فاتح"
 
-#: qml/Main.qml:5432 qml/PreferencesPanel.qml:29
+#: qml/Main.qml:5596 qml/PreferencesPanel.qml:29
 msgid "Vivo"
 msgstr "زاهي"
 
-#: qml/Main.qml:5434 qml/PreferencesPanel.qml:30 qml/PreferencesPanel.qml:329
+#: qml/Main.qml:5598 qml/PreferencesPanel.qml:30 qml/PreferencesPanel.qml:329
 msgid "Noche"
 msgstr "ليلي"
 
-#: qml/Main.qml:5670 qml/Main.qml:5692
+#: qml/Main.qml:5834 qml/Main.qml:5856
 msgid "Alerta"
 msgstr "تنبيه"
 
-#: qml/Main.qml:5720 qml/PreferencesPanel.qml:24 qml/PreferencesPanel.qml:329
+#: qml/Main.qml:5884 qml/PreferencesPanel.qml:24 qml/PreferencesPanel.qml:329
 msgid "Auto"
 msgstr "تلقائي"
 
-#: qml/Main.qml:6369
+#: qml/Main.qml:6533
 msgid "Silenciado"
 msgstr "صامت"
 
-#: qml/Main.qml:6370
+#: qml/Main.qml:6534
 msgid "Indicaciones y alertas por voz"
 msgstr "التعليمات والتنبيهات صوتياً"
 
-#: qml/Main.qml:6371
+#: qml/Main.qml:6535
 msgid "Indicaciones voz, alertas pitido"
 msgstr "تعليمات صوتية، تنبيهات نغمة"
 
-#: qml/Main.qml:6372
+#: qml/Main.qml:6536
 msgid "Solo indicaciones por voz"
 msgstr "التعليمات الصوتية فقط"
 
-#: qml/Main.qml:6373
+#: qml/Main.qml:6537
 msgid "Indicaciones pitido, alertas voz"
 msgstr "تعليمات نغمة، تنبيهات صوتية"
 
-#: qml/Main.qml:6374 qml/Main.qml:6438
+#: qml/Main.qml:6538 qml/Main.qml:6602
 msgid "Solo pitidos"
 msgstr "نغمات فقط"
 
-#: qml/Main.qml:6375
+#: qml/Main.qml:6539
 msgid "Solo indicaciones (pitido)"
 msgstr "التعليمات فقط (نغمة)"
 
-#: qml/Main.qml:6376
+#: qml/Main.qml:6540
 msgid "Solo alertas por voz"
 msgstr "التنبيهات الصوتية فقط"
 
-#: qml/Main.qml:6377
+#: qml/Main.qml:6541
 msgid "Solo alertas (pitido)"
 msgstr "التنبيهات فقط (نغمة)"
 
-#: qml/Main.qml:6436
+#: qml/Main.qml:6600
 msgid "Voz + alertas"
 msgstr "صوت + تنبيهات"
 
-#: qml/Main.qml:6437
+#: qml/Main.qml:6601
 msgid "Solo alertas"
 msgstr "تنبيهات فقط"
 
-#: qml/Main.qml:6438
+#: qml/Main.qml:6602
 msgid "Silencio"
 msgstr "صمت"
 
-#: qml/Main.qml:6470
+#: qml/Main.qml:6634
 msgid "Compartiendo"
 msgstr "جارٍ المشاركة"
 
-#: qml/Main.qml:6495
+#: qml/Main.qml:6659
 msgid "Prev. Ruta"
 msgstr "معاينة المسار"
 
-#: qml/Main.qml:6510
+#: qml/Main.qml:6674
 msgid "Tareas"
 msgstr "المهام"
 
-#: qml/Main.qml:6537
+#: qml/Main.qml:6701
 msgid "🅿 Aparcamiento guardado · "
 msgstr "🅿 تم حفظ موقف السيارة · "
 
-#: qml/Main.qml:6554
+#: qml/Main.qml:6718
 msgid "Borrar aparcamiento"
 msgstr "حذف موقف السيارة"
 
-#: qml/Main.qml:6565
+#: qml/Main.qml:6729
 msgid "🗑 Aparcamiento eliminado · "
 msgstr "🗑 تم حذف موقف السيارة · "
 
-#: qml/Main.qml:6582
+#: qml/Main.qml:6746
 msgid "Ver vehículo"
 msgstr "عرض المركبة"
 
-#: qml/Main.qml:6615 qml/ParkingDialog.qml:61
+#: qml/Main.qml:6779 qml/ParkingDialog.qml:61
 msgid "Ir al aparcamiento"
 msgstr "الذهاب إلى الموقف"
 
-#: qml/Main.qml:6665 qml/LoginPanel.qml:104
+#: qml/Main.qml:6829 qml/LoginPanel.qml:107
 msgid "Mi cuenta"
 msgstr "حسابي"
 
-#: qml/Main.qml:6665
+#: qml/Main.qml:6829
 msgid "Login"
 msgstr "تسجيل الدخول"
 
-#: qml/Main.qml:6681 qml/MessagesPanel.qml:106
+#: qml/Main.qml:6845 qml/MessagesPanel.qml:106
 msgid "Mensajes"
 msgstr "الرسائل"
 
-#: qml/Main.qml:6711
+#: qml/Main.qml:6875
 msgid "Bloq. Mapa"
 msgstr "تثبيت الخريطة"
 
-#: qml/Main.qml:6728 qml/PreferencesPanel.qml:3021
+#: qml/Main.qml:6892 qml/PreferencesPanel.qml:3021
 msgid "Debug"
 msgstr "Debug"
 
-#: qml/Main.qml:6743
+#: qml/Main.qml:6907
 msgid "Sim GPS"
 msgstr "محاكاة GPS"
 
-#: qml/Main.qml:6774
+#: qml/Main.qml:6938
 msgid "GPS on"
 msgstr "GPS مفعّل"
 
-#: qml/Main.qml:6789
+#: qml/Main.qml:6953
 msgid "Reanudar"
 msgstr "استئناف"
 
-#: qml/Main.qml:6789
+#: qml/Main.qml:6953
 msgid "Pausar sim"
 msgstr "إيقاف مؤقت"
 
-#: qml/Main.qml:6805 qml/PreferencesPanel.qml:1776
+#: qml/Main.qml:6969 qml/PreferencesPanel.qml:1776
 msgid "Suavizado GPS"
 msgstr "تمهيد GPS"
 
-#: qml/Main.qml:6822
+#: qml/Main.qml:6986
+#, fuzzy
+msgid "IMU debug"
+msgstr "POIs debug"
+
+#: qml/Main.qml:7003
 msgid "Bisector"
 msgstr "Bisector"
 
-#: qml/Main.qml:6839
+#: qml/Main.qml:7020
 msgid "POIs debug"
 msgstr "POIs debug"
 
-#: qml/Main.qml:6869
+#: qml/Main.qml:7050
 msgid "Donar"
 msgstr "تبرع"
 
-#: qml/Main.qml:7076
+#: qml/Main.qml:7257
 msgid "INICIO"
 msgstr "البداية"
 
-#: qml/Main.qml:7113
+#: qml/Main.qml:7294
 msgid "FIN"
 msgstr "النهاية"
 
-#: qml/Main.qml:7244
+#: qml/Main.qml:7425
 msgid "Inicio sim"
 msgstr "بدء المحاكاة"
 
-#: qml/Main.qml:7308
+#: qml/Main.qml:7489
 msgid "🚨  Añadir alerta aquí"
 msgstr "🚨  إضافة تنبيه هنا"
 
-#: qml/Main.qml:7337
+#: qml/Main.qml:7518
 msgid "📍 Establecer posición GPS"
 msgstr "📍 تعيين موقع GPS"
 
-#: qml/Main.qml:7462
+#: qml/Main.qml:7643
 msgid "👍  Confirmar"
 msgstr "👍  تأكيد"
 
-#: qml/Main.qml:7485
+#: qml/Main.qml:7666
 msgid "👎  Desmentir"
 msgstr "👎  نفي"
 
-#: qml/Main.qml:7510
+#: qml/Main.qml:7691
 msgid "🗑  Cancelar mi alerta"
 msgstr "🗑  إلغاء تنبيهي"
 
-#: qml/Main.qml:7594
+#: qml/Main.qml:7775
 msgid "Satélites"
 msgstr "الأقمار الصناعية"
 
-#: qml/Main.qml:7701
+#: qml/Main.qml:7882
 msgid "OSM Scout no disponible · usando "
 msgstr "OSM Scout غير متوفر · يُستخدم "
 
-#: qml/Main.qml:7759
+#: qml/Main.qml:7940
 msgid "Caché de mapas eliminada"
 msgstr "تم حذف ذاكرة التخزين المؤقت للخرائط"
 
-#: qml/Main.qml:7962
+#: qml/Main.qml:8143
 msgid "Límite comunitario"
 msgstr "حد المجتمع"
 
-#: qml/Main.qml:7969
+#: qml/Main.qml:8150
 msgid "Eliminar este límite"
 msgstr "حذف هذا الحد"
 
-#: qml/Main.qml:8036
+#: qml/Main.qml:8217
 msgid "Límite de velocidad aquí"
 msgstr "حد السرعة هنا"
 
-#: qml/Main.qml:8135
+#: qml/Main.qml:8323
 msgid "⚙  Configuración en el servidor"
 msgstr "⚙  الإعدادات على الخادم"
 
-#: qml/Main.qml:8151
+#: qml/Main.qml:8339
 msgid "Tienes cambios locales no sincronizados. ¿Cuál configuración usar?"
 msgstr "لديك تغييرات محلية غير متزامنة. أي إعداد تريد استخدامه؟"
 
-#: qml/Main.qml:8163
+#: qml/Main.qml:8351
 msgid "Usar del servidor"
 msgstr "استخدام إعدادات الخادم"
 
-#: qml/Main.qml:8173
+#: qml/Main.qml:8361
 msgid "✓ Configuración del servidor aplicada"
 msgstr "✓ تم تطبيق إعدادات الخادم"
 
-#: qml/Main.qml:8182
+#: qml/Main.qml:8370
 msgid "Mantener la local"
 msgstr "الاحتفاظ بالإعدادات المحلية"
 
-#: qml/Main.qml:8285
+#: qml/Main.qml:8473
 msgid "Cacheando mapa… detalle"
 msgstr "جارٍ تخزين الخريطة مؤقتًا… التفاصيل"
 
-#: qml/Main.qml:8305
+#: qml/Main.qml:8493
 msgid "Cacheando mapa… "
 msgstr "جارٍ تخزين الخريطة مؤقتًا… "
 
-#: qml/Main.qml:8335
+#: qml/Main.qml:8523
 msgid "Mapa online: OSM Scout"
 msgstr "خريطة عبر الإنترنت: OSM Scout"
 
-#: qml/Main.qml:8337
+#: qml/Main.qml:8525
 msgid "Mapa online: OSM Scout (no disponible · usando Mapbox)"
 msgstr "خريطة عبر الإنترنت: OSM Scout (غير متوفر · يُستخدم Mapbox)"
 
-#: qml/Main.qml:8339
+#: qml/Main.qml:8527
 msgid "Mapa online: Mapbox"
 msgstr "خريطة عبر الإنترنت: Mapbox"
 
-#: qml/Main.qml:8344
+#: qml/Main.qml:8532
 msgid "Sin internet: fallback a OSM Scout"
 msgstr "بلا إنترنت: الرجوع إلى OSM Scout"
 
-#: qml/Main.qml:8346
+#: qml/Main.qml:8534
 msgid "Sin internet: fallback OSM Scout (no disponible)"
 msgstr "بلا إنترنت: الرجوع إلى OSM Scout (غير متوفر)"
 
-#: qml/Main.qml:8348
+#: qml/Main.qml:8536
 msgid "Sin internet: caché de tiles"
 msgstr "بلا إنترنت: ذاكرة التخزين المؤقت للبلاطات"
 
-#: qml/Main.qml:8405
+#: qml/Main.qml:8593
 msgid "Mapas: servidor no disponible · usando OSM Scout"
 msgstr "الخرائط: الخادم غير متاح · باستخدام OSM Scout"
 
-#: qml/Main.qml:8407
+#: qml/Main.qml:8595
 msgid "Mapas: servidor no disponible · usando servidor público"
 msgstr "الخرائط: الخادم غير متاح · باستخدام خادم عام"
 
-#: qml/Main.qml:8427
+#: qml/Main.qml:8615
 msgid "Servidor de mapas recuperado · restaurando"
 msgstr "خادم الخرائط استُعيد · جارٍ الاستعادة"
 
-#: qml/Main.qml:8445 qml/Main.qml:8453
+#: qml/Main.qml:8633 qml/Main.qml:8641
 msgid "Sin internet · usando OSM Scout Server"
 msgstr "بلا إنترنت · باستخدام OSM Scout Server"
 
-#: qml/Main.qml:8469 qml/Main.qml:8474
+#: qml/Main.qml:8657 qml/Main.qml:8662
 msgid "Conexión restaurada · volviendo a mapas online"
 msgstr "الاتصال استُعيد · العودة إلى خرائط الإنترنت"
 
-#: qml/Main.qml:8533
+#: qml/Main.qml:8721
 msgid "Cacheando mapa… 0%"
 msgstr "جارٍ تخزين الخريطة مؤقتًا… 0%"
 
-#: qml/Main.qml:8636
+#: qml/Main.qml:8824
 msgid "Tienes un mensaje nuevo"
 msgstr "لديك رسالة جديدة"
 
-#: qml/Main.qml:8637
+#: qml/Main.qml:8825
 msgid "Tienes %1 mensajes nuevos"
 msgstr "لديك %1 رسائل جديدة"
 
-#: qml/Main.qml:8675
+#: qml/Main.qml:8863
 msgid "Ahorra"
 msgstr "توفير الوقت"
 
-#: qml/Main.qml:8685
+#: qml/Main.qml:8873
 msgid "Revisar"
 msgstr "مراجعة"
 
-#: qml/Main.qml:8694
+#: qml/Main.qml:8882
 msgid "Ignorar"
 msgstr "تجاهل"
 
-#: qml/Main.qml:8750
+#: qml/Main.qml:8938
 msgid "Pre-procesando motor TTS"
 msgstr "جارٍ تهيئة محرك TTS"
 
-#: qml/Main.qml:8751
+#: qml/Main.qml:8939
 msgid "GPS impreciso. Simulando trayecto."
 msgstr "GPS غير دقيق. محاكاة المسار."
 
-#: qml/Main.qml:8754
+#: qml/Main.qml:8942
 msgid "Cargando mapa…"
 msgstr "جارٍ تحميل الخريطة…"
 
-#: qml/Main.qml:9528
+#: qml/Main.qml:9716
 msgid "¿Has llegado a"
 msgstr "هل وصلت إلى"
 
-#: qml/Main.qml:9529
+#: qml/Main.qml:9717
 msgid "el destino"
 msgstr "الوجهة"
 
-#: qml/Main.qml:9538
+#: qml/Main.qml:9726
 msgid "Sí, he llegado"
 msgstr "نعم، لقد وصلت"
 
-#: qml/Main.qml:9549
+#: qml/Main.qml:9737
 msgid "Todavía no"
 msgstr "ليس بعد"
 
-#: qml/Main.qml:9581
+#: qml/Main.qml:9769
 msgid "Tareas pendientes"
 msgstr "المهام المعلقة"
 
-#: qml/Main.qml:9590
+#: qml/Main.qml:9778
 msgid "Abrir"
 msgstr "فتح"
 
-#: qml/Main.qml:9631
+#: qml/Main.qml:9819
 msgid "🅿 ¿Guardar aparcamiento aquí?"
 msgstr "🅿 هل تريد حفظ موقف السيارة هنا؟"
 
-#: qml/Main.qml:9649
+#: qml/Main.qml:9837
 msgid "🅿 Aparcamiento guardado"
 msgstr "🅿 تم حفظ موقف السيارة"
-
-#: qml/AlertasOverlay.qml:97 qml/AlertasOverlay.qml:99
-msgid "Tráfico"
-msgstr "حركة المرور"
-
-#: qml/AlertasOverlay.qml:100
-msgid "Denso"
-msgstr "كثيف"
-
-#: qml/AlertasOverlay.qml:101
-msgid "Detenido"
-msgstr "متوقف"
-
-#: qml/AlertasOverlay.qml:104 qml/AlertasOverlay.qml:106
-msgid "Policía"
-msgstr "شرطة"
-
-#: qml/AlertasOverlay.qml:107
-msgid "Cámara móvil"
-msgstr "كاميرا متنقلة"
-
-#: qml/AlertasOverlay.qml:108
-msgid "Oculto"
-msgstr "مخفي"
-
-#: qml/AlertasOverlay.qml:111 qml/AlertasOverlay.qml:113
-msgid "Accidente"
-msgstr "حادث"
-
-#: qml/AlertasOverlay.qml:114
-msgid "Col. múltiple"
-msgstr "تصادم متعدد"
-
-#: qml/AlertasOverlay.qml:117 qml/AlertasOverlay.qml:119
-msgid "Peligro"
-msgstr "خطر"
-
-#: qml/AlertasOverlay.qml:120
-msgid "Obras"
-msgstr "أشغال طرق"
-
-#: qml/AlertasOverlay.qml:121
-msgid "Coche en arcén"
-msgstr "سيارة على كتف الطريق"
-
-#: qml/AlertasOverlay.qml:122
-msgid "Semáforo roto"
-msgstr "إشارة مرور معطلة"
-
-#: qml/AlertasOverlay.qml:123
-msgid "Bache"
-msgstr "حفرة"
-
-#: qml/AlertasOverlay.qml:126
-msgid "Cortada"
-msgstr "مقطوعة"
-
-#: qml/AlertasOverlay.qml:127
-msgid "Carril"
-msgstr "حارة"
-
-#: qml/AlertasOverlay.qml:129
-msgid "Carril bloq."
-msgstr "حارة مغلقة"
-
-#: qml/AlertasOverlay.qml:130
-msgid "Izquierdo"
-msgstr "اليسار"
-
-#: qml/AlertasOverlay.qml:131
-msgid "Derecho"
-msgstr "اليمين"
-
-#: qml/AlertasOverlay.qml:132
-msgid "Central"
-msgstr "الوسط"
-
-#: qml/AlertasOverlay.qml:135
-msgid "Error mapa"
-msgstr "خطأ في الخريطة"
-
-#: qml/AlertasOverlay.qml:136 qml/AlertasOverlay.qml:138
-msgid "Mal tiempo"
-msgstr "طقس سيئ"
-
-#: qml/AlertasOverlay.qml:139
-msgid "Resbaladiza"
-msgstr "زلقة"
-
-#: qml/AlertasOverlay.qml:140
-msgid "Inundación"
-msgstr "فيضان"
-
-#: qml/AlertasOverlay.qml:141
-msgid "Nieve"
-msgstr "ثلج"
-
-#: qml/AlertasOverlay.qml:142
-msgid "Niebla"
-msgstr "ضباب"
-
-#: qml/AlertasOverlay.qml:143
-msgid "Hielo"
-msgstr "جليد"
-
-#: qml/AlertasOverlay.qml:146
-msgid "Asistencia"
-msgstr "مساعدة"
-
-#: qml/AlertasOverlay.qml:148
-msgid "Compañeros"
-msgstr "الزملاء"
-
-#: qml/AlertasOverlay.qml:149
-msgid "Emergencia"
-msgstr "طوارئ"
-
-#: qml/AlertasOverlay.qml:152
-msgid "Lugar"
-msgstr "مكان"
 
 #: qml/AlertasOverlay.qml:249
 msgid "Añadir alerta"
@@ -2046,45 +1931,51 @@ msgstr "المسار متوقف"
 msgid "Parar"
 msgstr "إيقاف"
 
-#: qml/LoginPanel.qml:104 qml/LoginPanel.qml:330
+#: qml/LoginPanel.qml:107 qml/LoginPanel.qml:364
 msgid "Crear cuenta"
 msgstr "إنشاء حساب"
 
-#: qml/LoginPanel.qml:104
+#: qml/LoginPanel.qml:107
 msgid "Iniciar sesión"
 msgstr "تسجيل الدخول"
 
-#: qml/LoginPanel.qml:134 qml/PreferencesPanel.qml:2859
+#: qml/LoginPanel.qml:137 qml/PreferencesPanel.qml:2859
 msgid "Cerrar sesión"
 msgstr "تسجيل الخروج"
 
-#: qml/LoginPanel.qml:167 qml/LoginPanel.qml:330
+#: qml/LoginPanel.qml:170 qml/LoginPanel.qml:364
 msgid "Entrar"
 msgstr "دخول"
 
-#: qml/LoginPanel.qml:178
+#: qml/LoginPanel.qml:181
 msgid "Registro"
 msgstr "التسجيل"
 
-#: qml/LoginPanel.qml:187
+#: qml/LoginPanel.qml:190
 msgid "Email"
 msgstr "البريد الإلكتروني"
 
-#: qml/LoginPanel.qml:210
+#: qml/LoginPanel.qml:213
 msgid "Contraseña"
 msgstr "كلمة المرور"
 
-#: qml/LoginPanel.qml:235
+#: qml/LoginPanel.qml:238
 msgid "Confirmar contraseña"
 msgstr "تأكيد كلمة المرور"
 
-#: qml/LoginPanel.qml:276
+#: qml/LoginPanel.qml:279
 msgid "Recordar sesión"
 msgstr "تذكرني"
 
-#: qml/LoginPanel.qml:304
+#: qml/LoginPanel.qml:307
 msgid "Reenviar email de verificación"
 msgstr "إعادة إرسال بريد التحقق"
+
+#: qml/LoginPanel.qml:347
+msgid ""
+"Acepto que mi ubicación se use para mostrar anuncios cercanos, alertas "
+"comunitarias y estadísticas de uso mientras tengo sesión iniciada."
+msgstr ""
 
 #: qml/AboutDialog.qml:68
 msgid "Servidor oficial de rutas"
@@ -2226,22 +2117,6 @@ msgstr ""
 msgid "Pulsa Iniciar para activar el GPS"
 msgstr "اضغط ابدأ لتفعيل GPS"
 
-#: qml/SatelliteView.qml:262
-msgid "GPS en uso"
-msgstr "GPS قيد الاستخدام"
-
-#: qml/SatelliteView.qml:263
-msgid "GLONASS en uso"
-msgstr "GLONASS قيد الاستخدام"
-
-#: qml/SatelliteView.qml:264
-msgid "No en uso"
-msgstr "غير مستخدم"
-
-#: qml/SatelliteView.qml:370
-msgid "No uso"
-msgstr "لا يُستخدم"
-
 #: qml/SatelliteView.qml:417
 msgid "Sin satélites visibles"
 msgstr "لا توجد أقمار مرئية"
@@ -2312,10 +2187,6 @@ msgstr "نعم"
 #: qml/PreferencesPanel.qml:1383
 msgid "No"
 msgstr "لا"
-
-#: qml/PreferencesPanel.qml:552
-msgid "Mi vehículo"
-msgstr "مركبتي"
 
 #: qml/PreferencesPanel.qml:583
 msgid "Crear vehículo"
@@ -2783,14 +2654,6 @@ msgstr "إيقاف"
 #: qml/PreferencesPanel.qml:3301
 msgid "Posición manual"
 msgstr "موقع يدوي"
-
-#: qml/PreferencesPanel.qml:3311
-msgid "Latitud  (ej. 40.322130)"
-msgstr "خط العرض  (مثال: 40.322130)"
-
-#: qml/PreferencesPanel.qml:3318
-msgid "Longitud  (ej. -3.515801)"
-msgstr "خط الطول  (مثال: -3.515801)"
 
 #: qml/PreferencesPanel.qml:3327
 msgid "Fijar"
@@ -3365,6 +3228,117 @@ msgstr "جارٍ اكتشاف الإحداثيات…"
 #: qml/GoogleMapsPanel.qml:293
 msgid "Usar este destino"
 msgstr "استخدام هذه الوجهة"
+
+#~ msgid "Tráfico"
+#~ msgstr "حركة المرور"
+
+#~ msgid "Denso"
+#~ msgstr "كثيف"
+
+#~ msgid "Detenido"
+#~ msgstr "متوقف"
+
+#~ msgid "Policía"
+#~ msgstr "شرطة"
+
+#~ msgid "Cámara móvil"
+#~ msgstr "كاميرا متنقلة"
+
+#~ msgid "Oculto"
+#~ msgstr "مخفي"
+
+#~ msgid "Accidente"
+#~ msgstr "حادث"
+
+#~ msgid "Col. múltiple"
+#~ msgstr "تصادم متعدد"
+
+#~ msgid "Peligro"
+#~ msgstr "خطر"
+
+#~ msgid "Obras"
+#~ msgstr "أشغال طرق"
+
+#~ msgid "Coche en arcén"
+#~ msgstr "سيارة على كتف الطريق"
+
+#~ msgid "Semáforo roto"
+#~ msgstr "إشارة مرور معطلة"
+
+#~ msgid "Bache"
+#~ msgstr "حفرة"
+
+#~ msgid "Cortada"
+#~ msgstr "مقطوعة"
+
+#~ msgid "Carril"
+#~ msgstr "حارة"
+
+#~ msgid "Carril bloq."
+#~ msgstr "حارة مغلقة"
+
+#~ msgid "Izquierdo"
+#~ msgstr "اليسار"
+
+#~ msgid "Derecho"
+#~ msgstr "اليمين"
+
+#~ msgid "Central"
+#~ msgstr "الوسط"
+
+#~ msgid "Error mapa"
+#~ msgstr "خطأ في الخريطة"
+
+#~ msgid "Mal tiempo"
+#~ msgstr "طقس سيئ"
+
+#~ msgid "Resbaladiza"
+#~ msgstr "زلقة"
+
+#~ msgid "Inundación"
+#~ msgstr "فيضان"
+
+#~ msgid "Nieve"
+#~ msgstr "ثلج"
+
+#~ msgid "Niebla"
+#~ msgstr "ضباب"
+
+#~ msgid "Hielo"
+#~ msgstr "جليد"
+
+#~ msgid "Asistencia"
+#~ msgstr "مساعدة"
+
+#~ msgid "Compañeros"
+#~ msgstr "الزملاء"
+
+#~ msgid "Emergencia"
+#~ msgstr "طوارئ"
+
+#~ msgid "Lugar"
+#~ msgstr "مكان"
+
+#~ msgid "GPS en uso"
+#~ msgstr "GPS قيد الاستخدام"
+
+#~ msgid "GLONASS en uso"
+#~ msgstr "GLONASS قيد الاستخدام"
+
+#~ msgid "No en uso"
+#~ msgstr "غير مستخدم"
+
+#~ msgid "No uso"
+#~ msgstr "لا يُستخدم"
+
+#~ msgid "Mi vehículo"
+#~ msgstr "مركبتي"
+
+#~ msgid "Latitud  (ej. 40.322130)"
+#~ msgstr "خط العرض  (مثال: 40.322130)"
+
+#~ msgid "Longitud  (ej. -3.515801)"
+#~ msgstr "خط الطول  (مثال: -3.515801)"
 
 #~ msgid "Giro"
 #~ msgstr "منعطف"

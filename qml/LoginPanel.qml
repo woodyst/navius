@@ -11,6 +11,7 @@ Item {
     visible: false
 
     signal loginOk()
+    signal logoutOk()
     signal cerrado()
 
     Settings {
@@ -33,6 +34,7 @@ Item {
     property bool _modoRegistro: false
     property bool _ocupado: false
     property bool _puedeReenviar: false
+    property bool _consentido: false
 
     readonly property string currentToken: authSettings.token
     readonly property string currentEmail: authSettings.email
@@ -45,6 +47,7 @@ Item {
         statusLbl.color    = "#EF5350"
         _ocupado           = false
         _puedeReenviar     = false
+        _consentido        = false
     }
 
     function _limpiarStatus() {
@@ -135,7 +138,7 @@ Item {
                     }
                     MouseArea {
                         id: logoutMa; anchors.fill: parent
-                        onClicked: { authSettings.token = ""; authSettings.email = "" }
+                        onClicked: { authSettings.token = ""; authSettings.email = ""; root.logoutOk() }
                     }
                 }
 
@@ -319,12 +322,43 @@ Item {
                 }
             }
 
+            // Checkbox de consentimiento de privacidad
+            Rectangle {
+                width: parent.width
+                height: consentRow.implicitHeight + units.gu(1)
+                color: "transparent"
+                Row {
+                    id: consentRow
+                    anchors { left: parent.left; right: parent.right; verticalCenter: parent.verticalCenter }
+                    spacing: units.gu(1.2)
+                    Rectangle {
+                        width: units.gu(3.2); height: units.gu(3.2); radius: units.gu(0.5)
+                        color: _consentido ? "#1976D2" : "#131F2E"
+                        border.color: _consentido ? "#29B6F6" : "#37474F"; border.width: 1
+                        anchors.top: consentLbl.top; anchors.topMargin: units.gu(0.2)
+                        Label {
+                            anchors.centerIn: parent; text: "✓"; color: "white"
+                            font.pixelSize: ts(2.2); visible: _consentido
+                        }
+                    }
+                    Label {
+                        id: consentLbl
+                        width: consentRow.width - units.gu(3.2) - units.gu(1.2)
+                        text: i18n.tr("Acepto que mi ubicación se use para mostrar anuncios cercanos, alertas comunitarias y estadísticas de uso mientras tengo sesión iniciada.")
+                        color: "#90A4AE"; font.pixelSize: ts(1.8)
+                        wrapMode: Text.WordWrap
+                    }
+                }
+                MouseArea { anchors.fill: parent; onClicked: _consentido = !_consentido }
+            }
+
             // Botón principal
             Rectangle {
                 width: parent.width; height: units.gu(7)
                 radius: units.gu(0.8)
-                color: _ocupado ? "#1A2535" : (submitMa.pressed ? "#1565C0" : "#1976D2")
-                border.color: "#29B6F6"
+                color: (!_consentido || _ocupado) ? "#1A2535" : (submitMa.pressed ? "#1565C0" : "#1976D2")
+                border.color: _consentido ? "#29B6F6" : "#37474F"
+                opacity: _consentido ? 1.0 : 0.5
                 Label {
                     anchors.centerIn: parent
                     text: _ocupado ? "..." : (_modoRegistro ? i18n.tr("Crear cuenta") : i18n.tr("Entrar"))
@@ -332,7 +366,7 @@ Item {
                 }
                 MouseArea {
                     id: submitMa; anchors.fill: parent
-                    enabled: !_ocupado
+                    enabled: !_ocupado && _consentido
                     onClicked: _submit()
                 }
             }
@@ -354,6 +388,7 @@ Item {
     }
 
     function _submit() {
+        if (!_consentido) return
         var email = emailField.text.trim()
         var pass  = passField.text
 

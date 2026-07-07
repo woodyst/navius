@@ -94,9 +94,10 @@ ApplicationWindow {
                 root._billboardFetchLng = 0
                 root._adShownTs = {}; appSettings.adShownJson = "{}"
                 var _p0 = pts[0], _pN = pts[pts.length - 1]
-                NavAlerts.obtenerBillboards(_p0.lat, _p0.lon, 30, function(ok, lista) {
-                    if (ok) { root._billboards = lista; alertCanvas.requestPaint() }
-                })
+                if (mainAuthSettings.token !== "")
+                    NavAlerts.obtenerBillboards(_p0.lat, _p0.lon, 30, mainAuthSettings.token, function(ok, lista) {
+                        if (ok) { root._billboards = lista; alertCanvas.requestPaint() }
+                    })
                 if (_savedRoute && _savedRoute.shape && _savedRoute.shape.length > 1) {
                     // Modo conducción: replay sobre la ruta Valhalla guardada (snap, bisector
                     // y cálculos como conducir). El track es la fuente de GPS.
@@ -1258,6 +1259,7 @@ ApplicationWindow {
     }
 
     function _fetchBillboards() {
+        if (mainAuthSettings.token === "") return
         var lat = (gpsSource.lat !== 0 || gpsSource.lon !== 0) ? gpsSource.lat : mapView._centerLat
         var lng = (gpsSource.lat !== 0 || gpsSource.lon !== 0) ? gpsSource.lon : mapView._centerLng
         // Al arranque, _centerLat/_centerLng pueden ser undefined (mapa sin posicionar aún)
@@ -8279,6 +8281,13 @@ ApplicationWindow {
             root._pullSettingsFromServer(function(serverData, updatedAt) {
                 settingsConflictDialog.show(serverData, updatedAt)
             })
+        }
+        onLogoutOk: {
+            mainAuthSettings.token = ""
+            mainAuthSettings.email = ""
+            root._billboards = []
+            root._billboardFetchLat = 0
+            root._billboardFetchLng = 0
         }
     }
 
