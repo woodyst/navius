@@ -644,3 +644,14 @@ Navius stores the following data **on the device only**:
 Place searches are sent to the **Photon/Komoot** geocoder (OpenStreetMap). Route calculations are sent to the configured Valhalla server.
 
 If you use your own Valhalla server, no data leaves the device.
+
+### Navius servers (optional)
+
+Using the Navius public servers (Valhalla, community alerts, road ads, trip sharing) is **entirely optional** and requires creating an account and accepting the [privacy policy](https://www.egpsistemas.com/site/navius-privacidad). When accepted, the app may send location data to the server solely for:
+
+- Calculating routes and predictive traffic (Valhalla)
+- Showing nearby community alerts
+- Showing geolocated ads along the route
+- Sharing your trip in real time (optional feature)
+
+This data is used **exclusively to provide the service**. It is never sold, redistributed to third parties, or used for any additional commercial purpose. You can withdraw consent at any time from **Settings → Privacy**, which immediately logs you out.

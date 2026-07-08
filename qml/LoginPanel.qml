@@ -13,6 +13,9 @@ Item {
     signal loginOk()
     signal logoutOk()
     signal cerrado()
+    signal privacyRequired()
+
+    property bool privacyAccepted: false
 
     Settings {
         id: authSettings
@@ -152,9 +155,27 @@ Item {
                 Item { width: 1; height: units.gu(0.5) }
             }
 
-            // ── Formulario (solo sin sesión) ──────────────────────────
+            // ── Aviso privacidad no aceptada ─────────────────────────
             Column {
-                visible: authSettings.token === ""
+                visible: authSettings.token === "" && !root.privacyAccepted
+                width: parent.width; spacing: units.gu(1.2)
+                Label {
+                    width: parent.width; wrapMode: Text.WordWrap
+                    text: i18n.tr("Para iniciar sesión debes aceptar la política de privacidad de Navius.")
+                    color: "#EF5350"; font.pixelSize: ts(2.0); horizontalAlignment: Text.AlignHCenter
+                }
+                Rectangle {
+                    width: parent.width; height: units.gu(6); radius: units.gu(0.8)
+                    color: privReqMa.pressed ? "#1565C0" : "#1976D2"; border.color: "#29B6F6"
+                    Label { anchors.centerIn: parent; text: i18n.tr("Ver política de privacidad"); color: "white"; font.pixelSize: ts(2.2); font.bold: true }
+                    MouseArea { id: privReqMa; anchors.fill: parent; onClicked: root.privacyRequired() }
+                }
+                Item { width: 1; height: units.gu(0.5) }
+            }
+
+            // ── Formulario (solo sin sesión y privacidad aceptada) ────
+            Column {
+                visible: authSettings.token === "" && root.privacyAccepted
                 width: parent.width; spacing: units.gu(1.2)
 
             // Selector Entrar / Registro

@@ -80,6 +80,7 @@ Rectangle {
         property bool voz:        false
         property bool media:      false
         property bool cuenta:     false
+        property bool privacidad: false
         property bool ayuda:      false
         property bool debug:      false
     }
@@ -92,6 +93,8 @@ Rectangle {
 
     signal helpRequested()
     signal loginRequested()
+    signal logoutRequested()
+    signal privacyBannerRequested()
 
     Settings {
         id: authSettings
@@ -2868,8 +2871,7 @@ Rectangle {
                     id: cuentaAccMa; anchors.fill: parent
                     onClicked: {
                         if (authSettings.token !== "") {
-                            authSettings.token = ""
-                            authSettings.email = ""
+                            panel.logoutRequested()
                         } else {
                             panel.loginRequested()
                         }
@@ -2877,6 +2879,103 @@ Rectangle {
                 }
             }
         } // Column cuenta
+
+        // ════════════════════════════════════════════════════════════════
+        // PRIVACIDAD
+        // ════════════════════════════════════════════════════════════════
+        Rectangle {
+            width: parent.width; height: units.gu(6)
+            color: pal.bgHeader; radius: units.gu(1)
+            Label {
+                anchors { left: parent.left; verticalCenter: parent.verticalCenter; leftMargin: units.gu(2) }
+                text: i18n.tr("Privacidad")
+                color: "#29B6F6"; font.pixelSize: ts(2.0); font.bold: true
+            }
+            Icon {
+                anchors { right: parent.right; rightMargin: units.gu(2); verticalCenter: parent.verticalCenter }
+                width: units.gu(2.5); height: units.gu(2.5)
+                name: secSettings.privacidad ? "go-up" : "go-down"
+                color: "#29B6F6"
+            }
+            MouseArea { anchors.fill: parent; onClicked: secSettings.privacidad = !secSettings.privacidad }
+        }
+
+        Column {
+            id: privacidadCol
+            visible: secSettings.privacidad
+            width: parent.width; spacing: 0
+
+            // Estado de consentimiento
+            Rectangle {
+                width: parent.width; height: units.gu(6.5)
+                color: pal.bgCard; radius: 0
+                Row {
+                    anchors { left: parent.left; right: parent.right; verticalCenter: parent.verticalCenter; margins: units.gu(2) }
+                    spacing: units.gu(1.5)
+                    Label {
+                        text: panel.cfg && panel.cfg.privacyAccepted ? "✅" : "⚠️"
+                        font.pixelSize: ts(2.4); anchors.verticalCenter: parent.verticalCenter
+                    }
+                    Label {
+                        text: panel.cfg && panel.cfg.privacyAccepted
+                              ? i18n.tr("Política de privacidad aceptada")
+                              : i18n.tr("Política de privacidad no aceptada")
+                        color: panel.cfg && panel.cfg.privacyAccepted ? "#66BB6A" : pal.fgSecondary
+                        font.pixelSize: ts(1.9); anchors.verticalCenter: parent.verticalCenter
+                    }
+                }
+            }
+
+            // Cambiar estado
+            Rectangle {
+                width: parent.width; height: units.gu(5.5); radius: units.gu(0.8)
+                color: privChgMa.pressed ? pal.bgInputAlt : pal.bgCard
+                border.color: panel.cfg && panel.cfg.privacyAccepted ? "#EF5350" : "#29B6F6"
+                Row {
+                    anchors { left: parent.left; verticalCenter: parent.verticalCenter; leftMargin: units.gu(2) }
+                    spacing: units.gu(1.5)
+                    Label { text: panel.cfg && panel.cfg.privacyAccepted ? "❌" : "✔"; font.pixelSize: ts(2.2); anchors.verticalCenter: parent.verticalCenter }
+                    Label {
+                        text: panel.cfg && panel.cfg.privacyAccepted
+                              ? i18n.tr("Retirar consentimiento")
+                              : i18n.tr("Aceptar política de privacidad")
+                        color: pal.fgPrimary; font.pixelSize: ts(1.9); anchors.verticalCenter: parent.verticalCenter
+                    }
+                }
+                MouseArea {
+                    id: privChgMa; anchors.fill: parent
+                    onClicked: {
+                        if (panel.cfg) {
+                            if (panel.cfg.privacyAccepted) {
+                                panel.cfg.privacyAccepted = false
+                                panel.logoutRequested()
+                            } else {
+                                panel.privacyBannerRequested()
+                            }
+                        }
+                    }
+                }
+            }
+
+            // Ver política de privacidad
+            Rectangle {
+                width: parent.width; height: units.gu(5.5); radius: units.gu(0.8)
+                color: privLinkMa.pressed ? pal.bgInputAlt : pal.bgCard
+                Row {
+                    anchors { left: parent.left; verticalCenter: parent.verticalCenter; leftMargin: units.gu(2) }
+                    spacing: units.gu(1.5)
+                    Label { text: "🔗"; font.pixelSize: ts(2.2); anchors.verticalCenter: parent.verticalCenter }
+                    Label {
+                        text: i18n.tr("Ver política de privacidad")
+                        color: "#29B6F6"; font.pixelSize: ts(1.9); anchors.verticalCenter: parent.verticalCenter
+                    }
+                }
+                MouseArea {
+                    id: privLinkMa; anchors.fill: parent
+                    onClicked: Qt.openUrlExternally("https://www.egpsistemas.com/site/navius/privacidad")
+                }
+            }
+        } // Column privacidad
 
         // ════════════════════════════════════════════════════════════════
         // AYUDA

@@ -54,7 +54,7 @@ ApplicationWindow {
     }
     Timer {
         id: msgPollTimer
-        interval: 60000; repeat: true; running: true
+        interval: 60000; repeat: true; running: mainAuthSettings.token !== "" && appSettings.privacyAccepted
         onTriggered: {
             var sinceId = deviceMsgSt.lastMsgId
             NavMessages.fetchMsgs(deviceMsgSt.deviceId, mainAuthSettings.token, sinceId,
@@ -94,7 +94,7 @@ ApplicationWindow {
                 root._billboardFetchLng = 0
                 root._adShownTs = {}; appSettings.adShownJson = "{}"
                 var _p0 = pts[0], _pN = pts[pts.length - 1]
-                if (mainAuthSettings.token !== "")
+                if (mainAuthSettings.token !== "" && appSettings.privacyAccepted)
                     NavAlerts.obtenerBillboards(_p0.lat, _p0.lon, 30, mainAuthSettings.token, function(ok, lista) {
                         if (ok) { root._billboards = lista; alertCanvas.requestPaint() }
                     })
@@ -272,6 +272,8 @@ ApplicationWindow {
         property real   duckVolume:          0.70   // volumen de música durante TTS (0.10 – 1.00)
         property string adShownJson:         "{}"   // {id: timestamp} cooldown de anuncios (persiste entre sesiones)
         property int    prefLevel:           0      // 0=Mínimo, 1=Medio, 2=Avanzado
+        property bool   privacyAccepted:    false  // usuario aceptó la política de privacidad
+        property bool   privacyShown:       false  // el banner de privacidad ya se mostró al menos una vez
     }
 
     // Detectar cambios en settings sincronizables → debounce → sync automático
@@ -1259,7 +1261,7 @@ ApplicationWindow {
     }
 
     function _fetchBillboards() {
-        if (mainAuthSettings.token === "") return
+        if (mainAuthSettings.token === "" || !appSettings.privacyAccepted) return
         var lat = (gpsSource.lat !== 0 || gpsSource.lon !== 0) ? gpsSource.lat : mapView._centerLat
         var lng = (gpsSource.lat !== 0 || gpsSource.lon !== 0) ? gpsSource.lon : mapView._centerLng
         // Al arranque, _centerLat/_centerLng pueden ser undefined (mapa sin posicionar aún)
@@ -1310,6 +1312,7 @@ ApplicationWindow {
 
     // Fetch de límites comunitarios del área (llamado al arrancar ruta y cada 5 min)
     function _fetchCommLimites() {
+        if (mainAuthSettings.token === "" || !appSettings.privacyAccepted) return
         var lat = activeModel.pos_lat, lon = activeModel.pos_lon
         if (!lat || !lon) return
         NavAlerts.obtenerLimites(lat, lon, function(ok, lista) {
@@ -1328,7 +1331,7 @@ ApplicationWindow {
 
     // Sube los settings locales al servidor; informa vía _statusQueue si hay error
     function _pushSettingsToServer(silent) {
-        if (mainAuthSettings.token === "") return
+        if (mainAuthSettings.token === "" || !appSettings.privacyAccepted) return
         var snap = NavSettings.snapshot(appSettings)
         NavSettings.putSettings(mainAuthSettings.token, snap, function(ok, errCode) {
             if (ok) {
@@ -1347,7 +1350,7 @@ ApplicationWindow {
 
     // Descarga los settings del servidor y los aplica; conflicto si hay cambios locales
     function _pullSettingsFromServer(onConflictCallback) {
-        if (mainAuthSettings.token === "") return
+        if (mainAuthSettings.token === "" || !appSettings.privacyAccepted) return
         NavSettings.getSettings(mainAuthSettings.token, function(ok, data, updatedAt, errCode) {
             if (!ok) {
                 if (errCode === "404")
@@ -1404,7 +1407,7 @@ ApplicationWindow {
     Timer {
         id: telemFlushTimer
         interval: 30000; repeat: true
-        running: mainAuthSettings.token !== "" && !appSettings.simMode && root._shareToken === ""
+        running: mainAuthSettings.token !== "" && appSettings.privacyAccepted && !appSettings.simMode && root._shareToken === ""
         onTriggered: root._flushTelemetria()
     }
 
@@ -1490,7 +1493,7 @@ ApplicationWindow {
     }
 
     function _flushTelemetria() {
-        if (root._telemBuf.length === 0) return
+        if (root._telemBuf.length === 0 || !appSettings.privacyAccepted) return
         var buf = root._telemBuf
         root._telemBuf       = []
         root._telemRealCount = 0
@@ -1707,7 +1710,7 @@ ApplicationWindow {
         if (!appSettings.simMode) appSettings.wasNavigating = true
 
         // Log de ruta en el servidor (solo con sesión activa y GPS real)
-        if (!appSettings.simMode && mainAuthSettings.token !== "" && routeData && routeData.shape) {
+        if (!appSettings.simMode && mainAuthSettings.token !== "" && appSettings.privacyAccepted && routeData && routeData.shape) {
             try {
                 NavAlerts.logRuta(mainAuthSettings.token, deviceMsgSt.deviceId,
                                   JSON.stringify(routeData.shape))
@@ -2309,10 +2312,14 @@ ApplicationWindow {
                 mainAuthSettings.token = ""
                 mainAuthSettings.email = ""
             }
-            if (appSettings.showChangesAtStartup &&
-                    mainWhatsNewSt.lastSeenVersion !== whatsNewDialog.currentVersion)
-                whatsNewDialog.show()
-            tourOverlay.checkShowAtStartup()
+            if (!appSettings.privacyShown || !appSettings.privacyAccepted) {
+                privacyBanner.show()
+            } else {
+                if (appSettings.showChangesAtStartup &&
+                        mainWhatsNewSt.lastSeenVersion !== whatsNewDialog.currentVersion)
+                    whatsNewDialog.show()
+                tourOverlay.checkShowAtStartup()
+            }
             root._checkVoiceAfterTour = tourOverlay.visible
             if (!tourOverlay.visible) {
                 var _tipLang = (appSettings.ttsLang && appSettings.ttsLang !== "system")
@@ -8027,6 +8034,17 @@ ApplicationWindow {
             prefsPanel.visible = false
             loginPanel.open()
         }
+        onLogoutRequested: {
+            mainAuthSettings.token = ""
+            mainAuthSettings.email = ""
+            root._billboards = []
+            root._billboardFetchLat = 0
+            root._billboardFetchLng = 0
+        }
+        onPrivacyBannerRequested: {
+            prefsPanel.visible = false
+            privacyBanner.show()
+        }
         onAboutRequested: {
             prefsPanel.visible = false
             aboutDialog.show()
@@ -8270,8 +8288,13 @@ ApplicationWindow {
     LoginPanel {
         id: loginPanel
         textScale: appSettings.textScale
+        privacyAccepted: appSettings.privacyAccepted
         anchors.fill: parent
         z: 201
+        onPrivacyRequired: {
+            loginPanel.visible = false
+            privacyBanner.show()
+        }
         onLoginOk: {
             mainAuthSettings.token = loginPanel.currentToken
             mainAuthSettings.email = loginPanel.currentEmail
@@ -8288,6 +8311,34 @@ ApplicationWindow {
             root._billboards = []
             root._billboardFetchLat = 0
             root._billboardFetchLng = 0
+        }
+    }
+
+    PrivacyBanner {
+        id: privacyBanner
+        textScale: appSettings.textScale
+        anchors.fill: parent
+        z: 210
+        onAccepted: {
+            appSettings.privacyAccepted = true
+            appSettings.privacyShown    = true
+            if (appSettings.showChangesAtStartup &&
+                    mainWhatsNewSt.lastSeenVersion !== whatsNewDialog.currentVersion)
+                whatsNewDialog.show()
+            tourOverlay.checkShowAtStartup()
+        }
+        onDismissed: {
+            appSettings.privacyAccepted = false
+            appSettings.privacyShown    = true
+            mainAuthSettings.token = ""
+            mainAuthSettings.email = ""
+            root._billboards = []
+            root._billboardFetchLat = 0
+            root._billboardFetchLng = 0
+            if (appSettings.showChangesAtStartup &&
+                    mainWhatsNewSt.lastSeenVersion !== whatsNewDialog.currentVersion)
+                whatsNewDialog.show()
+            tourOverlay.checkShowAtStartup()
         }
     }
 
