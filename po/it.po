@@ -2139,6 +2139,66 @@ msgstr "veicolo"
 msgid "Navegar"
 msgstr "Naviga"
 
+#: qml/PrivacyBanner.qml:52
+msgid "Privacidad y uso de datos"
+msgstr "Privacy e utilizzo dei dati"
+
+#: qml/PrivacyBanner.qml:62
+msgid ""
+"Navius puede usarse sin cuenta y sin enviar ningún dato. Si utilizas los "
+"servidores públicos de Navius (rutas, mapas, alertas, anuncios), la "
+"aplicación enviará datos de posicionamiento al servidor para:"
+msgstr ""
+"Navius può essere utilizzato senza account e senza inviare alcun dato. Se "
+"utilizzi i server pubblici di Navius (percorsi, mappe, avvisi, annunci), "
+"l'applicazione invierà dati di posizionamento al server per:"
+
+#: qml/PrivacyBanner.qml:70
+msgid "Calcular rutas y tráfico predictivo (Valhalla)"
+msgstr "Calcolare percorsi e traffico predittivo (Valhalla)"
+
+#: qml/PrivacyBanner.qml:71
+msgid "Mostrar alertas comunitarias (accidentes, obras, radares)"
+msgstr "Mostrare avvisi della comunità (incidenti, cantieri, autovelox)"
+
+#: qml/PrivacyBanner.qml:72
+msgid "Mostrar anuncios en ruta según tu ubicación"
+msgstr "Mostrare annunci lungo il percorso in base alla tua posizione"
+
+#: qml/PrivacyBanner.qml:73
+msgid "Compartir tu viaje en tiempo real (función opcional)"
+msgstr "Condividere il tuo viaggio in tempo reale (funzione opzionale)"
+
+#: qml/PrivacyBanner.qml:92
+msgid ""
+"Si no deseas compartir datos, puedes usar Navius con OSM Scout Server u "
+"otros servidores Valhalla públicos no operados por Navius. Sin aceptar no "
+"podrás iniciar sesión ni usar las funciones comunitarias."
+msgstr ""
+"Se non desideri condividere i dati, puoi utilizzare Navius con OSM Scout "
+"Server o altri server Valhalla pubblici non gestiti da Navius. Senza "
+"accettare non potrai accedere né utilizzare le funzioni della comunità."
+
+#: qml/PrivacyBanner.qml:116
+msgid ""
+"Acepto la política de privacidad de Navius y el uso de mis datos de posición "
+"para los servicios indicados."
+msgstr ""
+"Accetto la politica sulla privacy di Navius e l'utilizzo dei miei dati di "
+"posizione per i servizi indicati."
+
+#: qml/PrivacyBanner.qml:125
+msgid "Ver política de privacidad completa"
+msgstr "Visualizza la politica sulla privacy completa"
+
+#: qml/PrivacyBanner.qml:139
+msgid "Aceptar y continuar"
+msgstr "Accetta e continua"
+
+#: qml/PrivacyBanner.qml:155
+msgid "Continuar sin aceptar (sin funciones Navius)"
+msgstr "Continua senza accettare (senza funzioni Navius)"
+
 #: qml/SatelliteView.qml:144 qml/SatelliteView.qml:350
 msgid "Activo"
 msgstr "Attivo"

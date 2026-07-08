@@ -2134,6 +2134,68 @@ msgstr "ibilgailua"
 msgid "Navegar"
 msgstr "Nabigatzen hasi"
 
+#: qml/PrivacyBanner.qml:52
+msgid "Privacidad y uso de datos"
+msgstr "Pribatutasuna eta datuen erabilera"
+
+#: qml/PrivacyBanner.qml:62
+msgid ""
+"Navius puede usarse sin cuenta y sin enviar ningún dato. Si utilizas los "
+"servidores públicos de Navius (rutas, mapas, alertas, anuncios), la "
+"aplicación enviará datos de posicionamiento al servidor para:"
+msgstr ""
+"Navius konturik gabe eta daturik bidali gabe erabil daiteke. Naviusen "
+"zerbitzari publikoak erabiltzen badituzu (ibilbideak, mapak, alertak, "
+"iragarkiak), aplikazioak kokapen-datuak bidaliko dizkio zerbitzariari "
+"honako helburuetarako:"
+
+#: qml/PrivacyBanner.qml:70
+msgid "Calcular rutas y tráfico predictivo (Valhalla)"
+msgstr "Ibilbideak eta trafiko prediktiboa kalkulatzeko (Valhalla)"
+
+#: qml/PrivacyBanner.qml:71
+msgid "Mostrar alertas comunitarias (accidentes, obras, radares)"
+msgstr "Komunitate-alertak erakusteko (istripuak, obrak, radarrak)"
+
+#: qml/PrivacyBanner.qml:72
+msgid "Mostrar anuncios en ruta según tu ubicación"
+msgstr "Ibilbideko iragarkiak zure kokapenaren arabera erakusteko"
+
+#: qml/PrivacyBanner.qml:73
+msgid "Compartir tu viaje en tiempo real (función opcional)"
+msgstr "Zure bidaia denbora errealean partekatzeko (aukerako funtzioa)"
+
+#: qml/PrivacyBanner.qml:92
+msgid ""
+"Si no deseas compartir datos, puedes usar Navius con OSM Scout Server u "
+"otros servidores Valhalla públicos no operados por Navius. Sin aceptar no "
+"podrás iniciar sesión ni usar las funciones comunitarias."
+msgstr ""
+"Datuak partekatu nahi ez badituzu, Navius OSM Scout Server-ekin edo "
+"Naviusek operatzen ez dituen beste Valhalla zerbitzari publiko batzuekin "
+"erabil dezakezu. Onartu gabe ezin izango duzu saioa hasi edo "
+"komunitate-funtzioak erabili."
+
+#: qml/PrivacyBanner.qml:116
+msgid ""
+"Acepto la política de privacidad de Navius y el uso de mis datos de posición "
+"para los servicios indicados."
+msgstr ""
+"Naviusen pribatutasun-politika eta nire kokapen-datuen erabilera "
+"adierazitako zerbitzuetarako onartzen dut."
+
+#: qml/PrivacyBanner.qml:125
+msgid "Ver política de privacidad completa"
+msgstr "Pribatutasun-politika osoa ikusi"
+
+#: qml/PrivacyBanner.qml:139
+msgid "Aceptar y continuar"
+msgstr "Onartu eta jarraitu"
+
+#: qml/PrivacyBanner.qml:155
+msgid "Continuar sin aceptar (sin funciones Navius)"
+msgstr "Onartu gabe jarraitu (Navius-en funtziorik gabe)"
+
 #: qml/SatelliteView.qml:144 qml/SatelliteView.qml:350
 msgid "Activo"
 msgstr "Aktibo"

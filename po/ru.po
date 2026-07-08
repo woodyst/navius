@@ -2146,7 +2146,7 @@ msgstr "Навигация"
 
 #: qml/PrivacyBanner.qml:52
 msgid "Privacidad y uso de datos"
-msgstr ""
+msgstr "Конфиденциальность и использование данных"
 
 #: qml/PrivacyBanner.qml:62
 msgid ""
@@ -2154,22 +2154,26 @@ msgid ""
 "servidores públicos de Navius (rutas, mapas, alertas, anuncios), la "
 "aplicación enviará datos de posicionamiento al servidor para:"
 msgstr ""
+"Navius можно использовать без учётной записи и без отправки каких-либо "
+"данных. Если вы используете публичные серверы Navius (маршруты, карты, "
+"оповещения, реклама), приложение будет отправлять данные о местоположении "
+"на сервер для:"
 
 #: qml/PrivacyBanner.qml:70
 msgid "Calcular rutas y tráfico predictivo (Valhalla)"
-msgstr ""
+msgstr "Расчёта маршрутов и прогнозирования трафика (Valhalla)"
 
 #: qml/PrivacyBanner.qml:71
 msgid "Mostrar alertas comunitarias (accidentes, obras, radares)"
-msgstr ""
+msgstr "Отображения общественных предупреждений (аварии, дорожные работы, радары)"
 
 #: qml/PrivacyBanner.qml:72
 msgid "Mostrar anuncios en ruta según tu ubicación"
-msgstr ""
+msgstr "Отображения рекламы на маршруте согласно вашему местоположению"
 
 #: qml/PrivacyBanner.qml:73
 msgid "Compartir tu viaje en tiempo real (función opcional)"
-msgstr ""
+msgstr "Обмена данными о вашей поездке в реальном времени (дополнительная функция)"
 
 #: qml/PrivacyBanner.qml:92
 msgid ""
@@ -2177,16 +2181,22 @@ msgid ""
 "otros servidores Valhalla públicos no operados por Navius. Sin aceptar no "
 "podrás iniciar sesión ni usar las funciones comunitarias."
 msgstr ""
+"Если вы не хотите передавать данные, вы можете использовать Navius с OSM "
+"Scout Server или другими публичными серверами Valhalla, не управляемыми "
+"Navius. Без принятия условий вы не сможете войти в систему или использовать "
+"общественные функции."
 
 #: qml/PrivacyBanner.qml:116
 msgid ""
 "Acepto la política de privacidad de Navius y el uso de mis datos de posición "
 "para los servicios indicados."
 msgstr ""
+"Я принимаю политику конфиденциальности Navius и использование моих данных о "
+"местоположении для указанных сервисов."
 
 #: qml/PrivacyBanner.qml:125
 msgid "Ver política de privacidad completa"
-msgstr ""
+msgstr "Просмотреть полную политику конфиденциальности"
 
 #: qml/PrivacyBanner.qml:139
 #, fuzzy
@@ -2195,7 +2205,7 @@ msgstr "Да, продолжить"
 
 #: qml/PrivacyBanner.qml:155
 msgid "Continuar sin aceptar (sin funciones Navius)"
-msgstr ""
+msgstr "Продолжить без принятия (без функций Navius)"
 
 #: qml/SatelliteView.qml:144 qml/SatelliteView.qml:350
 msgid "Activo"
