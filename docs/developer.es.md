@@ -456,9 +456,19 @@ Overlay de alertas comunitarias sobre el mapa. Muestra los marcadores de alertas
 - `jwtSub(token)` — extrae el campo `sub` (userId) del JWT sin verificar firma (solo para uso interno).
 - Lógica de votación: confirmar / desmentir alerta (`POST /api/v1/alertas/:id/voto`).
 
+### `PrivacyBanner.qml`
+
+Panel bottom-sheet de consentimiento de privacidad. Se muestra al arrancar la app si `!appSettings.privacyShown || !appSettings.privacyAccepted`. El usuario puede aceptar o continuar sin aceptar.
+
+- Señales: `accepted()`, `dismissed()`
+- Método: `show()` — muestra el panel y resetea el checkbox interno
+- Al **aceptar**: `Main.qml` pone `privacyAccepted = true` y `privacyShown = true`; continúa el flujo normal (whatsNew, tour)
+- Al **rechazar** (`dismissed`): `Main.qml` pone `privacyAccepted = false`, `privacyShown = true` y hace **logout inmediato** (limpia token, email, billboards)
+- Mientras el banner está visible, todas las llamadas al servidor están bloqueadas por el guard `privacyAccepted`
+
 ### `LoginPanel.qml`
 
-Panel de login y registro con el servidor Navius. Modos: login (email + contraseña), registro (email + contraseña), recuperación de contraseña. Al hacer login exitoso guarda el JWT en `mainAuthSettings.token` y el email en `mainAuthSettings.email`. Si hay ajustes en el servidor diferentes a los locales, dispara `_pullSettingsFromServer()` con callback de conflicto.
+Panel de login y registro con el servidor Navius. **Requiere que `privacyAccepted` sea `true`** para mostrar el formulario; si no, muestra un aviso con botón que abre el `PrivacyBanner`. Modos: login (email + contraseña), registro (email + contraseña), recuperación de contraseña. Al hacer login exitoso guarda el JWT en `mainAuthSettings.token` y el email en `mainAuthSettings.email`. Si hay ajustes en el servidor diferentes a los locales, dispara `_pullSettingsFromServer()` con callback de conflicto. Señales: `logoutOk()` (al cerrar sesión desde el panel), `privacyRequired()` (al pulsar el aviso de privacidad).
 
 ### `TripSharePanel.qml`
 
@@ -1432,3 +1442,56 @@ mysql -u navius -p navius -e \
   "SELECT billboard_id, COUNT(*) imp, SUM(click_en IS NOT NULL) clicks
    FROM billboard_impresiones GROUP BY billboard_id ORDER BY imp DESC LIMIT 10;"
 ```
+
+---
+
+## Sistema de consentimiento y privacidad
+
+### Principio de diseño
+
+Ningún dato de posición se envía al servidor sin que el usuario haya aceptado explícitamente la política de privacidad. El sistema usa dos flags persistentes en `Qt.labs.settings` (categoría `"app"`):
+
+| Setting | Tipo | Descripción |
+|---------|------|-------------|
+| `privacyAccepted` | `bool` | El usuario ha aceptado la política |
+| `privacyShown` | `bool` | El banner ya se mostró al menos una vez |
+
+### Flujo de arranque
+
+```
+Component.onCompleted
+  └─ Qt.callLater
+       ├─ !mainAuthSettings.recordar → limpiar token
+       └─ !privacyShown || !privacyAccepted
+            ├─ SÍ → privacyBanner.show()  (sin logout previo)
+            └─ NO → whatsNew / tour
+```
+
+Mientras el banner está visible el usuario puede seguir usando la app (sin servidor). No se hace logout hasta que se pronuncie.
+
+### Guards en llamadas al servidor
+
+Toda llamada que envía datos de posición o usa JWT comprueba `appSettings.privacyAccepted`. Las principales:
+
+| Lugar | Condición de bloqueo |
+|-------|---------------------|
+| `msgPollTimer.running` | `... && appSettings.privacyAccepted` |
+| `telemFlushTimer.running` | `... && appSettings.privacyAccepted` |
+| `_fetchBillboards()` | `if (token === "" \|\| !privacyAccepted) return` |
+| `_fetchCommLimites()` | idem |
+| `_flushTelemetria()` | `if (buf.length === 0 \|\| !privacyAccepted) return` |
+| `_pushSettingsToServer()` | idem |
+| `_pullSettingsFromServer()` | idem |
+| log de ruta en servidor | `if (!simMode && token !== "" && privacyAccepted && ...)` |
+
+### Logout al rechazar o retirar consentimiento
+
+- **`PrivacyBanner.onDismissed`**: limpia `token`, `email`, `_billboards`, `_billboardFetchLat/Lng`
+- **`PreferencesPanel` toggle off → `logoutRequested()`**: misma limpieza en `Main.qml`
+
+El usuario puede reactivar la privacidad en cualquier momento desde **Opciones → Privacidad**, lo que abre de nuevo el `PrivacyBanner`.
+
+### Política de privacidad
+
+Documento: `docs/privacidad.es.md` (español) y `docs/privacy.en.md` (inglés).  
+URL pública: `https://www.egpsistemas.com/site/navius-privacidad`

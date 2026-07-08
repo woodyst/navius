@@ -24,7 +24,7 @@ Al mismo tiempo, el hartazgo con el ecosistema Android cerrado y con vivir sujet
 
 Navius nace de los valores del software libre tal como los defiende la FSF. **Privacidad, control del usuario, transparencia y comunidad no son características opcionales: son los principios de diseño.**
 
-- **Privacidad por diseño:** Las rutas y el historial quedan en el dispositivo. Sin telemetría, sin perfiles de usuario, sin venta de datos a terceros.
+- **Privacidad por diseño:** Las rutas y el historial quedan en el dispositivo. El uso de los servidores Navius (tráfico, alertas, anuncios) es completamente opcional y requiere consentimiento explícito. Los datos de posición se usan exclusivamente para prestar el servicio: nunca se venden, nunca se ceden a terceros, nunca se usan para perfiles comerciales.
 - **Control real:** El usuario puede usar su propio servidor Valhalla o funcionar completamente offline con OSM Scout. Ninguna función esencial depende de un servicio propietario.
 - **Comunidad abierta:** Las alertas de tráfico, radares y peligros son para todos los usuarios, y cualquiera puede contribuir.
 - **Transparencia:** Cómo funciona el modelo económico se explica abiertamente. No hay letra pequeña.
@@ -38,7 +38,8 @@ Navius tiene un componente pragmático que hay que explicar con honestidad: **la
 ### Navius para UbPorts — Software libre, siempre gratuito
 
 - Código abierto bajo licencia GPL
-- Sin publicidad, sin suscripción, sin telemetría
+- Sin publicidad, sin suscripción
+- Uso de servidores Navius 100 % opcional y con consentimiento explícito; funciona completamente offline con OSM Scout Server
 - Financiado por donaciones y por el trabajo que genera la versión Android
 - Es el producto que refleja plenamente los valores del proyecto
 
@@ -62,7 +63,8 @@ El modelo elegido es transparente: UbPorts libre siempre, porque es la plataform
 - Las rutas y el historial quedan en el dispositivo
 - El servidor comunitario y las alertas son para todos los usuarios
 - La publicidad no interrumpe la navegación
-- Nunca se venderán datos de ubicación a anunciantes
+- Nunca se venderán datos de ubicación a anunciantes ni a terceros
+- Los datos de posición transmitidos al servidor se usan única y exclusivamente para la funcionalidad del usuario que los genera
 
 ---
 

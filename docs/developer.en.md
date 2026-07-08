@@ -456,9 +456,19 @@ Community alerts overlay on the map. Shows active alert markers `_commAlertas[]`
 - `jwtSub(token)` — extracts the `sub` field (userId) from the JWT without verifying signature (for internal use only).
 - Voting logic: confirm / dismiss alert (`POST /api/v1/alertas/:id/voto`).
 
+### `PrivacyBanner.qml`
+
+Bottom-sheet consent banner for the privacy policy. Shown on startup when `!appSettings.privacyShown || !appSettings.privacyAccepted`. The user can accept or continue without accepting.
+
+- Signals: `accepted()`, `dismissed()`
+- Method: `show()` — displays the panel and resets the internal checkbox
+- On **accept**: `Main.qml` sets `privacyAccepted = true` and `privacyShown = true`; continues normal flow (whatsNew, tour)
+- On **dismiss**: `Main.qml` sets `privacyAccepted = false`, `privacyShown = true` and performs **immediate logout** (clears token, email, billboards)
+- While the banner is visible, all server calls are blocked by the `privacyAccepted` guard
+
 ### `LoginPanel.qml`
 
-Login and registration panel with the Navius server. Modes: login (email + password), registration (email + password), password recovery. On successful login saves the JWT in `mainAuthSettings.token` and email in `mainAuthSettings.email`. If server settings differ from local, triggers `_pullSettingsFromServer()` with conflict callback.
+Login and registration panel with the Navius server. **Requires `privacyAccepted` to be `true`** to display the form; otherwise shows a notice with a button that opens `PrivacyBanner`. Modes: login (email + password), registration (email + password), password recovery. On successful login saves the JWT in `mainAuthSettings.token` and email in `mainAuthSettings.email`. If server settings differ from local, triggers `_pullSettingsFromServer()` with conflict callback. Signals: `logoutOk()` (on logout from panel), `privacyRequired()` (on pressing the privacy notice).
 
 ### `TripSharePanel.qml`
 
@@ -1371,3 +1381,56 @@ curl -X DELETE http://localhost:8080/api/v1/billboards/5 \
 # View active billboards near Madrid
 curl "http://localhost:8080/api/v1/billboards?lat=40.416&lng=-3.703&radio=50"
 ```
+
+---
+
+## Consent and privacy system
+
+### Design principle
+
+No location data is sent to the server unless the user has explicitly accepted the privacy policy. The system uses two persistent flags in `Qt.labs.settings` (category `"app"`):
+
+| Setting | Type | Description |
+|---------|------|-------------|
+| `privacyAccepted` | `bool` | User has accepted the policy |
+| `privacyShown` | `bool` | Banner has been shown at least once |
+
+### Startup flow
+
+```
+Component.onCompleted
+  └─ Qt.callLater
+       ├─ !mainAuthSettings.recordar → clear token
+       └─ !privacyShown || !privacyAccepted
+            ├─ YES → privacyBanner.show()  (no pre-emptive logout)
+            └─ NO  → whatsNew / tour
+```
+
+While the banner is visible the user can still use the app (without server). Logout only happens when they decide.
+
+### Guards on server calls
+
+Every call that sends location data or uses a JWT checks `appSettings.privacyAccepted`. Key ones:
+
+| Location | Block condition |
+|----------|----------------|
+| `msgPollTimer.running` | `... && appSettings.privacyAccepted` |
+| `telemFlushTimer.running` | `... && appSettings.privacyAccepted` |
+| `_fetchBillboards()` | `if (token === "" \|\| !privacyAccepted) return` |
+| `_fetchCommLimites()` | idem |
+| `_flushTelemetria()` | `if (buf.length === 0 \|\| !privacyAccepted) return` |
+| `_pushSettingsToServer()` | idem |
+| `_pullSettingsFromServer()` | idem |
+| route log to server | `if (!simMode && token !== "" && privacyAccepted && ...)` |
+
+### Logout on rejection or consent withdrawal
+
+- **`PrivacyBanner.onDismissed`**: clears `token`, `email`, `_billboards`, `_billboardFetchLat/Lng`
+- **`PreferencesPanel` toggle off → `logoutRequested()`**: same cleanup in `Main.qml`
+
+The user can re-enable privacy at any time from **Settings → Privacy**, which re-opens `PrivacyBanner`.
+
+### Privacy policy
+
+Documents: `docs/privacidad.es.md` (Spanish) and `docs/privacy.en.md` (English).  
+Public URL: `https://www.egpsistemas.com/site/navius-privacidad`
