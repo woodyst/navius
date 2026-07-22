@@ -10,6 +10,7 @@ import QtQuick 2.7
 import QtQuick.Controls 2.2
 import QtQuick.Window 2.2
 import QtPositioning 5.4
+import QtQuick.LocalStorage 2.0
 import Qt.labs.settings 1.0
 import Lomiri.Components 1.3
 import Lomiri.Content 1.3
@@ -2471,6 +2472,9 @@ ApplicationWindow {
         NavSearch.probeOverpassServers()
         NavSearch.setFileLogCallback(function(msg) { satModel.log_to_file(msg) })
         NavSearch.setLogCallback(function(msg)     { satModel.log_to_file(msg); searchPanel._addLog(msg) })
+        var _radarDb = LocalStorage.openDatabaseSync("NaviusRadares", "1.0", "Radares fijos y de tramo", 4 * 1024 * 1024)
+        NavSearch.setRadarDb(_radarDb)
+        Qt.callLater(function() { NavSearch.maybeRunDailyRadarSweep() })
         NavSearch.setStatusPushCallback(function(text, color) { root._pushStatus(text, color) })
         NavSearch.setDeferFn(function(fn, ms) {
             if (ms && ms > 0) {
