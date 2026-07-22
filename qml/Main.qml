@@ -212,7 +212,7 @@ ApplicationWindow {
         property bool   tracesEnabled:    false // activa trazas (net_debug, tts, piper) y TUI
         property bool   debugCleanOnExit: false // borra todos los ficheros debug al salir
         property bool   showZoomSlider:  false  // muestra barra lateral de zoom
-        property bool   showSimScrubber: true  // muestra el desplegable de posición GPS simulada
+        property bool   showSimScrubber: false  // muestra el desplegable de posición GPS simulada
         property bool   showVSimDebug:        false // muestra el panel debug de velocidades
         property bool   showGpsSmoothDebug:   false // muestra panel de funciones de suavizado GPS
         property bool   showImuDebug:         false // muestra panel de debug IMU (NavImu)
@@ -351,6 +351,7 @@ ApplicationWindow {
     property var    _telemBuf:     []             // buffer de puntos GPS para telemetría batch
     property int    _telemRealCount: 0            // ticks reales acumulados en el buffer
     property string _startupMsg:    ""      // mensaje temporal en barra de estado al arrancar
+    property bool   _radarFetchWarned: false // ya se avisó de fallo de radares; evita repetir en cada bbox
 
     property var    _statusQueue:   []      // cola de mensajes de error {text, color}
     property var    _statusCurrent: null    // mensaje mostrándose ahora
@@ -609,6 +610,22 @@ ApplicationWindow {
     property bool   _ttsPregenBusy:     false  // true mientras se generan locuciones de distancia
     property string _ttsPregenProgress: ""    // "X/Y" durante la pre-generación
     property var  _previewShape: []     // shape activo en RouteSelectPanel preview
+    property var  _routeRadarCounts: [] // nº radares por ruta, paralelo a routeSelectPanel.routes (-1 = cargando)
+
+    // Lanza fetchRadars por cada ruta de la lista y va rellenando _routeRadarCounts.
+    function _fetchRouteRadarCounts(routes) {
+        var counts = []
+        for (var i = 0; i < routes.length; i++) counts.push(-1)
+        root._routeRadarCounts = counts
+        routes.forEach(function(rd, idx) {
+            NavSearch.fetchRadars(rd.shape, function(result) {
+                var c = root._routeRadarCounts.slice()
+                if (idx >= c.length) return
+                c[idx] = result.error ? -1 : (result.fijos.length + result.tramos.length)
+                root._routeRadarCounts = c
+            })
+        })
+    }
 
     // ── Tráfico (re-ruteo periódico) ──────────────────────────────────────────
     property var  _trafficAltRoute:     null
@@ -877,7 +894,22 @@ ApplicationWindow {
             root._radarFijos  = result.fijos
             root._radarTramos = result.tramos
             root._updateRadarLayers()
+            root._handleRadarFetchResult(result)
         })
+    }
+
+    // Avisa una vez si falla la obtención de radares (todos los servidores Overpass agotados);
+    // no repite el aviso hasta que un fetch vuelva a tener éxito.
+    function _handleRadarFetchResult(result) {
+        if (result.error) {
+            if (!root._radarFetchWarned) {
+                root._radarFetchWarned = true
+                root._startupMsg = i18n.tr("⚠ No se pudieron obtener los radares · revisa la conexión")
+                startupMsgTimer.restart()
+            }
+        } else {
+            root._radarFetchWarned = false
+        }
     }
 
     function _clearRadarState() {
@@ -1492,6 +1524,37 @@ ApplicationWindow {
         xhr.send(null)
     }
 
+    // Al restaurar la ruta tras un cierre/crash: si el usuario ya tenía un viaje
+    // compartido activo en el servidor, lo reanuda con el MISMO token/enlace
+    // (no crea uno nuevo) y empuja de inmediato la posición/ruta actuales.
+    function _resumeSharingIfActive() {
+        if (!mainAuthSettings.token || root._shareToken !== "") return
+        _doResumeSharing()
+    }
+
+    function _doResumeSharing() {
+        var xhr = new XMLHttpRequest()
+        xhr.open("GET", NavSettings.serverUrl() + "/api/v1/share")
+        xhr.setRequestHeader("Authorization", "Bearer " + mainAuthSettings.token)
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState !== XMLHttpRequest.DONE) return
+            if (xhr.status === 200) {
+                try {
+                    var d = JSON.parse(xhr.responseText)
+                    var _shareLang = Qt.locale().name.split("_")[0]
+                    root._shareToken        = d.token
+                    tripSharePanel.shareUrl = d.url + "?lang=" + _shareLang
+                    tripSharePanel.active   = true
+                    root._pushShareUpdate()
+                } catch(e) {}
+            } else if (xhr.status === 401) {
+                root._refreshToken(function(ok) { if (ok) _doResumeSharing() })
+            }
+            // 404: no había share activo en el servidor — nada que reanudar
+        }
+        xhr.send(null)
+    }
+
     function _flushTelemetria() {
         if (root._telemBuf.length === 0 || !appSettings.privacyAccepted) return
         var buf = root._telemBuf
@@ -1830,6 +1893,7 @@ ApplicationWindow {
                 root._radarFijos  = result.fijos
                 root._radarTramos = result.tramos
                 root._updateRadarLayers()
+                root._handleRadarFetchResult(result)
             })
         }
         Qt.callLater(root._fetchCommLimites)
@@ -3131,8 +3195,12 @@ ApplicationWindow {
         cacheDatabaseDefaultPath: !_usingOsmScoutMaps
         cacheDatabaseMaximalSize: _usingOsmScoutMaps ? 0 : appSettings.mapCacheMaxMb * 1024 * 1024
 
-        onDayUrlChanged:  if (_layersInit) Qt.callLater(applyLightMode)
-        onNightUrlChanged: if (_layersInit) Qt.callLater(applyLightMode)
+        onDayUrlChanged:      if (_layersInit) Qt.callLater(applyLightMode)
+        onNightUrlChanged:    if (_layersInit) Qt.callLater(applyLightMode)
+        onPositronUrlChanged: if (_layersInit) Qt.callLater(applyLightMode)
+        onBrightUrlChanged:   if (_layersInit) Qt.callLater(applyLightMode)
+        onFiordUrlChanged:    if (_layersInit) Qt.callLater(applyLightMode)
+        onDarkUrlChanged:     if (_layersInit) Qt.callLater(applyLightMode)
 
         onErrorChanged: {
             satModel.log_to_file("MapboxMap.error: " + error)
@@ -6142,6 +6210,7 @@ ApplicationWindow {
                         root._radarFijos  = result.fijos
                         root._radarTramos = result.tramos
                         root._updateRadarLayers()
+                        root._handleRadarFetchResult(result)
                     })
                 }
                 NavSearch.enrichSpeedLimits(routes[0].shape, routes[0].maneuvers, function(enrichedMans) {
@@ -7101,6 +7170,7 @@ ApplicationWindow {
             searchPanel.visible = false
             routeSelectPanel.routes = routes
             routeSelectPanel.selIdx = selIdx
+            root._fetchRouteRadarCounts(routes)
             // Combinar puntos de todas las rutas para que el bbox/zoom/centro
             // abarque todas las alternativas y no se mueva al cambiar de ruta.
             var combined = []
@@ -8732,6 +8802,7 @@ ApplicationWindow {
         onRestoreAccepted: {
             root._restoreVisible = false
             searchPanel.triggerRestore()
+            root._resumeSharingIfActive()
         }
         onRestoreDeclined: {
             root._restoreVisible = false
@@ -8747,6 +8818,7 @@ ApplicationWindow {
         isLandscape:  root._isLandscape
         vehicleMgr:   vehicleManager
         imperial:     appSettings.measureSystem === "imperial"
+        radarCounts:  root._routeRadarCounts
         onClosed: {
             routeSelectPanel.visible = false
             root._previewShape = []
@@ -8783,6 +8855,7 @@ ApplicationWindow {
                 if (err || !routes || routes.length === 0) return
                 routeSelectPanel.routes = routes
                 routeSelectPanel.selIdx = 0
+                root._fetchRouteRadarCounts(routes)
                 var combined = []
                 for (var i = 0; i < routes.length; i++)
                     combined = combined.concat(routes[i].shape)
