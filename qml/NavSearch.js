@@ -1743,7 +1743,8 @@ function fetchRadars(shape, callback) {
     var bbox = minLat.toFixed(5)+","+minLon.toFixed(5)+","+
                maxLat.toFixed(5)+","+maxLon.toFixed(5)
     var local = _queryRadarsDb(minLat, minLon, maxLat, maxLon)
-    if (local.fijos.length || local.tramos.length) callback(local)
+    if (local.fijos.length || local.tramos.length)
+        callback({fijos: local.fijos, tramos: local.tramos, fromCache: true})
     _overpassPost(bbox, function(text, failed) {
         if (!text) {
             if (!local.fijos.length && !local.tramos.length) callback({fijos:[], tramos:[], error: !!failed})
@@ -1763,7 +1764,8 @@ function fetchRadarsBbox(minLat, minLon, maxLat, maxLon, callback) {
     var bbox = minLat.toFixed(5)+","+minLon.toFixed(5)+","+
                maxLat.toFixed(5)+","+maxLon.toFixed(5)
     var local = _queryRadarsDb(minLat, minLon, maxLat, maxLon)
-    if (local.fijos.length || local.tramos.length) callback(local)
+    if (local.fijos.length || local.tramos.length)
+        callback({fijos: local.fijos, tramos: local.tramos, fromCache: true})
     _overpassPost(bbox, function(text, failed) {
         if (!text) {
             if (!local.fijos.length && !local.tramos.length) callback({fijos:[], tramos:[], error: !!failed})
