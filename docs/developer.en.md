@@ -661,7 +661,7 @@ The `postbuild` step automatically bundles:
 
 Navius uses [lomiri-location-service](https://gitlab.com/ubports/development/core/lomiri-location-service) (LLS) as the GPS backend via D-Bus.
 
-A patched package (`3.4.1+navius5`) is distributed that fixes multiple issues with HALIUM_10 and Waydroid.
+A patched package (`3.4.1+navius9`) is distributed that fixes multiple issues with HALIUM_10 and Waydroid.
 
 ### Positioning stack
 
@@ -686,9 +686,14 @@ Main.qml / NavBar.qml
 ```cpp
 // src/location_props.h
 static constexpr bool NAVIUS_DEBUG = true;   // navius traces on stderr
+```
 
-// lomiri-location-service/include/.../lls_trace.h
-static constexpr bool LLS_DEBUG = true;      // LLS internal traces on stderr
+LLS traces need no rebuild since navius8 — enable them at runtime with
+`GLOG_v=1`, and unset it afterwards (they log at 1 Hz):
+
+```bash
+ssh root@<device> "systemctl set-environment GLOG_v=1 && \
+    systemctl restart lomiri-location-service"
 ```
 
 ```bash
@@ -1204,7 +1209,7 @@ pos40.4168,-3.7038" > $D/navius_cmd
 | Variable | Effect |
 |----------|--------|
 | `NAVIUS_DEBUG=true` | Enables GPS/LLS traces on stderr (defined in `location_props.h`) |
-| `LLS_DEBUG=true` | Enables LLS internal traces on stderr (defined in `lls_trace.h`) |
+| `GLOG_v=1` | Enables LLS internal traces in the journal (systemd environment of `lomiri-location-service`; since navius8, no rebuild needed) |
 | `QML_XHR_ALLOW_FILE_READ=1` | Allows `XMLHttpRequest` to `file://` |
 | `QML_XHR_ALLOW_FILE_WRITE=1` | Allows write via XHR to `file://` |
 | `QML_DISABLE_DISK_CACHE=1` | Disables compiled QML cache (useful during development) |
@@ -1217,7 +1222,7 @@ In `SearchPanel.qml`, the log area shows network requests and routing errors. Ac
 
 ## LLS patches
 
-The package `lomiri-location-service 3.4.1+navius5` includes the following patches:
+The package `lomiri-location-service 3.4.1+navius9` includes the following patches:
 
 ### navius1 — Waydroid SIGSEGV + EDEADLK
 
@@ -1237,13 +1242,29 @@ Thread watchdog (5 s tick, 10 s threshold): detects frozen GPS, re-registers cal
 
 ### navius5 — Centralised `lls_trace.h`
 
-`LLS_DEBUG` constant and `LLS_TRACE()` macro moved to a single shared header.
+`LLS_DEBUG` constant and `LLS_TRACE()` macro moved to a single shared header. Superseded by navius8; the header was deleted in navius9.
+
+### navius6 — Location indicator + non-blocking fast path
+
+`Engine::add_provider()` used `=` instead of `|=` when checking whether any provider is active, so with two providers the indicator never lit up. The `start_positioning()` fast path switched to `try_to_lock` so the D-Bus thread never blocks behind a reclaim.
+
+### navius7 — trust-stored crash loop
+
+The MirAgent and WaylandAgent trust-stored units started simultaneously and raced for the same D-Bus name; the loser crash-looped and every permission check failed with "Client lacks permissions". They are now mutually exclusive.
+
+### navius8 — `VLOG(1)` logging + SVS traces
+
+All `LLS_TRACE` calls became `VLOG(1)`, so tracing is enabled at runtime with `GLOG_v=1` instead of requiring a rebuild. Traces added at every hop of the satellite chain (HAL → provider → engine → skeleton).
+
+### navius9 — GPS handle leak + watchdog never armed
+
+The watchdog cleared `gps_handle` before `register_callbacks()`, so the old handle was never deleted and kept feeding callbacks into LLS alongside the new one. Concurrent producers corrupted the engine's aggregation containers → `malloc(): unaligned fastbin chunk detected` / SIGABRT. Also, `start_positioning()` never re-armed `last_gps_ms`, so after Waydroid took the callbacks the watchdog slept forever and only an LLS restart brought GPS back.
 
 ### LLS package build
 
 ```bash
 cd lomiri-location-service
-bash debs/build-deb.sh 2>&1 | tee /tmp/build-lls.log
+bash build-deb.sh 2>&1 | tee /tmp/build-lls.log
 ```
 
 To install (with version change):

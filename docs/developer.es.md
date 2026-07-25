@@ -661,7 +661,7 @@ El paso `postbuild` empaqueta automáticamente:
 
 Navius usa [lomiri-location-service](https://gitlab.com/ubports/development/core/lomiri-location-service) (LLS) como backend GPS vía D-Bus.
 
-Se distribuye un paquete parcheado (`3.4.1+navius5`) que corrige múltiples problemas con HALIUM_10 y Waydroid.
+Se distribuye un paquete parcheado (`3.4.1+navius9`) que corrige múltiples problemas con HALIUM_10 y Waydroid.
 
 ### Stack de posicionamiento
 
@@ -686,9 +686,14 @@ Main.qml / NavBar.qml
 ```cpp
 // src/location_props.h
 static constexpr bool NAVIUS_DEBUG = true;   // trazas navius en stderr
+```
 
-// lomiri-location-service/include/.../lls_trace.h
-static constexpr bool LLS_DEBUG = true;      // trazas LLS en stderr
+Las trazas de LLS no necesitan recompilar desde navius8 — se activan en
+caliente con `GLOG_v=1`, y conviene quitarlo después (loguean a 1 Hz):
+
+```bash
+ssh root@<dispositivo> "systemctl set-environment GLOG_v=1 && \
+    systemctl restart lomiri-location-service"
 ```
 
 ```bash
@@ -1204,7 +1209,7 @@ pos40.4168,-3.7038" > $D/navius_cmd
 | Variable | Efecto |
 |----------|--------|
 | `NAVIUS_DEBUG=true` | Activa trazas GPS/LLS en stderr (definido en `location_props.h`) |
-| `LLS_DEBUG=true` | Activa trazas internas de LLS (definido en `lls_trace.h`) |
+| `GLOG_v=1` | Activa trazas internas de LLS en el journal (variable de entorno systemd de `lomiri-location-service`; desde navius8, sin recompilar) |
 | `QML_XHR_ALLOW_FILE_READ=1` | Permite `XMLHttpRequest` a `file://` |
 | `QML_XHR_ALLOW_FILE_WRITE=1` | Permite escritura via XHR a `file://` |
 | `QML_DISABLE_DISK_CACHE=1` | Desactiva caché de QML compilado (útil en desarrollo) |
@@ -1217,7 +1222,7 @@ En `SearchPanel.qml`, el área de log muestra las peticiones de red y errores de
 
 ## Patches LLS
 
-El paquete `lomiri-location-service 3.4.1+navius5` incluye los siguientes parches:
+El paquete `lomiri-location-service 3.4.1+navius9` incluye los siguientes parches:
 
 ### navius1 — Waydroid SIGSEGV + EDEADLK
 
@@ -1237,13 +1242,29 @@ Thread watchdog (tick 5s, umbral 10s): detecta GPS congelado, re-registra callba
 
 ### navius5 — `lls_trace.h` centralizado
 
-Constante `LLS_DEBUG` y macro `LLS_TRACE()` movidas a un único header compartido.
+Constante `LLS_DEBUG` y macro `LLS_TRACE()` movidas a un único header compartido. Sustituido por navius8; el header se borró en navius9.
+
+### navius6 — Indicador de posición + fast path no bloqueante
+
+`Engine::add_provider()` usaba `=` en vez de `|=` al comprobar si algún provider estaba activo, así que con dos providers el indicador nunca se encendía. El fast path de `start_positioning()` pasó a `try_to_lock` para que el hilo D-Bus nunca se bloquee detrás de una reclamación.
+
+### navius7 — Bucle de crashes de trust-stored
+
+Las unidades trust-stored de MirAgent y WaylandAgent arrancaban a la vez y competían por el mismo nombre D-Bus; la perdedora entraba en bucle de reinicio y todas las comprobaciones de permisos fallaban con "Client lacks permissions". Ahora son mutuamente excluyentes.
+
+### navius8 — Logging `VLOG(1)` + trazas SVS
+
+Todos los `LLS_TRACE` pasaron a `VLOG(1)`, así que las trazas se activan en caliente con `GLOG_v=1` sin recompilar. Trazas añadidas en cada salto de la cadena de satélites (HAL → provider → engine → skeleton).
+
+### navius9 — Handle GPS huérfano + watchdog sin armar
+
+El watchdog ponía `gps_handle` a `nullptr` antes de `register_callbacks()`, así que el handle viejo nunca se destruía y seguía alimentando callbacks a LLS junto con el nuevo. Los productores concurrentes corrompían los contenedores de agregación del engine → `malloc(): unaligned fastbin chunk detected` / SIGABRT. Además `start_positioning()` nunca rearmaba `last_gps_ms`, así que tras quedarse Waydroid con los callbacks el watchdog dormía para siempre y solo un reinicio de LLS recuperaba el GPS.
 
 ### Build del paquete LLS
 
 ```bash
 cd lomiri-location-service
-bash debs/build-deb.sh 2>&1 | tee /tmp/build-lls.log
+bash build-deb.sh 2>&1 | tee /tmp/build-lls.log
 ```
 
 Para instalar (con cambio de versión):

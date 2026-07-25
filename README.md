@@ -136,9 +136,9 @@ The `postbuild` hook in `clickable.yaml` automatically bundles:
 
 ## GPS and lomiri-location-service
 
-Navius uses [lomiri-location-service](https://gitlab.com/ubports/development/core/lomiri-location-service) (LLS) as the GPS backend via D-Bus. A patched package (`3.4.1+navius5`) is distributed that fixes multiple stability issues with the GPS HAL on HALIUM_10, especially when Waydroid runs concurrently.
+Navius uses [lomiri-location-service](https://gitlab.com/ubports/development/core/lomiri-location-service) (LLS) as the GPS backend via D-Bus. A patched package (`3.4.1+navius9`) is distributed that fixes multiple stability issues with the GPS HAL on HALIUM_10, especially when Waydroid runs concurrently.
 
-### LLS patches (navius1–navius5)
+### LLS patches (navius1–navius9)
 
 **navius1** — Waydroid SIGSEGV + EDEADLK  
 Waydroid overwrites LLS GPS callbacks while LLS is dispatching them → SIGSEGV. Fixed with `std::shared_mutex` (callbacks under shared lock; `register_callbacks()` under exclusive lock). Split into three phases of `register_callbacks()` to avoid EDEADLK from HAL re-entry during `u_hardware_gps_new()`.
@@ -153,7 +153,19 @@ Fast path in `start_positioning()`: if the GPS handle is valid (normal case), ca
 Thread watchdog (5 s tick, 10 s threshold): detects frozen GPS, re-registers callbacks and restarts GPS automatically. `dispatch_updated_modes_to_driver()` added to fast path before `u_hardware_gps_start()`.
 
 **navius5** — Centralised `lls_trace.h`  
-`LLS_DEBUG` constant and `LLS_TRACE()` macro moved to a single shared header (`include/location_service/com/lomiri/location/lls_trace.h`).
+`LLS_DEBUG` constant and `LLS_TRACE()` macro moved to a single shared header. Superseded by navius8; the header was deleted in navius9.
+
+**navius6** — Location indicator + non-blocking fast path
+`Engine::add_provider()` used `=` instead of `|=` when checking whether any provider is active, so with two providers the indicator never lit up. The `start_positioning()` fast path switched to `try_to_lock` so the D-Bus thread never blocks behind a reclaim.
+
+**navius7** — trust-stored crash loop
+The MirAgent and WaylandAgent trust-stored units started simultaneously and raced for the same D-Bus name; the loser crash-looped and every permission check failed with "Client lacks permissions". They are now mutually exclusive.
+
+**navius8** — `VLOG(1)` logging + SVS traces
+All `LLS_TRACE` calls became `VLOG(1)`, so tracing is enabled at runtime with `GLOG_v=1` instead of requiring a rebuild. Traces added at every hop of the satellite chain (HAL → provider → engine → skeleton).
+
+**navius9** — GPS handle leak + watchdog never armed
+The watchdog cleared `gps_handle` before `register_callbacks()`, so the old handle was never deleted and kept feeding callbacks into LLS alongside the new one. Concurrent producers corrupted the engine's aggregation containers → `malloc(): unaligned fastbin chunk detected` / SIGABRT. Also, `start_positioning()` never re-armed `last_gps_ms`, so after Waydroid took the callbacks the watchdog slept forever and only an LLS restart brought GPS back.
 
 ### Fixes in navius (this repo)
 
@@ -166,9 +178,18 @@ Thread watchdog (5 s tick, 10 s threshold): detects frozen GPS, re-registers cal
 ```cpp
 // src/location_props.h
 static constexpr bool NAVIUS_DEBUG = true;   // navius traces on stderr
+```
 
-// lomiri-location-service/include/.../lls_trace.h
-static constexpr bool LLS_DEBUG = true;      // LLS internal traces on stderr
+LLS traces need no rebuild since navius8 — enable them at runtime:
+
+```bash
+ssh root@<device> "systemctl set-environment GLOG_v=1 && \
+    systemctl restart lomiri-location-service"
+journalctl -f -u lomiri-location-service        # on the device
+
+# turn them off again (they log at 1 Hz — a lot of writes to flash)
+ssh root@<device> "systemctl unset-environment GLOG_v && \
+    systemctl restart lomiri-location-service"
 ```
 
 View traces on device:
@@ -323,7 +344,7 @@ Per-destination TODOs are stored in SQLite via `TodoDB.js` (LocalStorage) with k
 | Variable                                    | Effect                                                                |
 | ------------------------------------------- | --------------------------------------------------------------------- |
 | `NAVIUS_DEBUG=true` (in `location_props.h`) | Enables GPS/LLS traces on stderr                                      |
-| `LLS_DEBUG=true` (in `lls_trace.h`)         | Enables LLS internal traces on stderr                                 |
+| `GLOG_v=1` (systemd env of LLS)             | Enables LLS internal traces in the journal (since navius8, no rebuild) |
 | `QML_XHR_ALLOW_FILE_READ/WRITE=1`           | Allows XMLHttpRequest to `file://` (enabled by default in the binary) |
 | `QML_DISABLE_DISK_CACHE=1`                  | Disables compiled QML cache                                           |
 
