@@ -1222,7 +1222,7 @@ msgstr "Hdg accel"
 
 #: qml/Main.qml:5140
 msgid "Pos sin nav"
-msgstr "Pos sin nav"
+msgstr "Pos ohne Nav"
 
 #: qml/Main.qml:5447
 msgid "Seguir ruta"
@@ -1735,7 +1735,7 @@ msgstr "Geparktes Fahrzeug"
 
 #: qml/ParkingDialog.qml:102
 msgid "Modo de desplazamiento"
-msgstr "Scrollmodus"
+msgstr "Fortbewegungsart"
 
 #: qml/ParkingDialog.qml:124
 msgid "En "

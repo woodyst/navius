@@ -139,7 +139,7 @@ msgstr "Tamp. a catena"
 
 #: qml/AlertasOverlay.qml:99
 msgid "Compañeros"
-msgstr "Compagni"
+msgstr "Altri conducenti"
 
 #: qml/AlertasOverlay.qml:100
 msgid "Cortada"
@@ -537,7 +537,7 @@ msgstr "Ricalcolo percorso"
 
 #: qml/HelpPanel.qml:121
 msgid "Si te desvías, Navius recalcula la ruta automáticamente."
-msgstr "Se ti devia, Navius ricalcola il percorso automaticamente."
+msgstr "Se devii dal percorso, Navius lo ricalcola automaticamente."
 
 #: qml/HelpPanel.qml:122
 msgid "Finalizar navegación"
@@ -1165,7 +1165,7 @@ msgstr "GPS recuperato"
 
 #: qml/Main.qml:4789
 msgid "Rumbo"
-msgstr "Rotta"
+msgstr "Direzione"
 
 #: qml/Main.qml:4807
 msgid "km/h ◄"
@@ -1217,7 +1217,7 @@ msgstr "Hdg accel"
 
 #: qml/Main.qml:5140
 msgid "Pos sin nav"
-msgstr "Pos sin nav"
+msgstr "Pos senza nav"
 
 #: qml/Main.qml:5447
 msgid "Seguir ruta"
@@ -1285,7 +1285,7 @@ msgstr "Condivisione"
 
 #: qml/Main.qml:6820
 msgid "Prev. Ruta"
-msgstr "Ant. percorso"
+msgstr "Anteprima perc."
 
 #: qml/Main.qml:6835
 msgid "Tareas"
@@ -1305,7 +1305,7 @@ msgstr "🗑 Parcheggio eliminato · "
 
 #: qml/Main.qml:6907
 msgid "Ver vehículo"
-msgstr "Vai al veicolo"
+msgstr "Vedi veicolo"
 
 #: qml/Main.qml:6940 qml/ParkingDialog.qml:61
 msgid "Ir al aparcamiento"
@@ -1385,7 +1385,7 @@ msgstr "Aggiungi destinazione"
 
 #: qml/Main.qml:7652
 msgid "🚨  Añadir alerta aquí"
-msgstr "🚨  Aggiungi segnalazione qui"
+msgstr "🚨  Aggiungi avviso qui"
 
 #: qml/Main.qml:7681
 msgid "📍 Establecer posición GPS"
@@ -1401,7 +1401,7 @@ msgstr "👎  Smentisci"
 
 #: qml/Main.qml:7854
 msgid "🗑  Cancelar mi alerta"
-msgstr "🗑  Annulla la mia segnalazione"
+msgstr "🗑  Annulla il mio avviso"
 
 #: qml/Main.qml:7940
 msgid "Satélites"
@@ -1726,7 +1726,7 @@ msgstr "Veicolo parcheggiato"
 
 #: qml/ParkingDialog.qml:102
 msgid "Modo de desplazamiento"
-msgstr "Modalità scorrimento"
+msgstr "Modalità di spostamento"
 
 #: qml/ParkingDialog.qml:124
 msgid "En "
@@ -2213,7 +2213,7 @@ msgstr "Informativa sulla privacy non accettata"
 
 #: qml/PreferencesPanel.qml:2940
 msgid "Retirar consentimiento"
-msgstr "Revoca del consenso"
+msgstr "Revoca consenso"
 
 #: qml/PreferencesPanel.qml:2941
 msgid "Aceptar política de privacidad"
