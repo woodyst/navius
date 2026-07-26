@@ -85,3 +85,7 @@ PROGRESO.md
 *.swp
 *.po~
 po/mo/
+
+# venv de la herramienta i18n (po/i18n_tool.py)
+po/.venv-translate/
+po/*.po~
