@@ -81,7 +81,7 @@ msgstr ""
 
 #: qml/AboutDialog.qml:177 qml/HelpPanel.qml:315
 msgid "Apoya el desarrollo"
-msgstr "Garrapena lagundu"
+msgstr "Garapena lagundu"
 
 #: qml/AboutDialog.qml:185 qml/HelpPanel.qml:324
 msgid ""
@@ -741,7 +741,7 @@ msgstr ""
 
 #: qml/HelpPanel.qml:174
 msgid "Renovación automática de sesión"
-msgstr "Saioaren berritzaile automatikoa"
+msgstr "Saioaren berritze automatikoa"
 
 #: qml/HelpPanel.qml:175
 msgid ""
@@ -967,7 +967,7 @@ msgstr "Burututa"
 
 #: qml/InstructionListPanel.qml:192
 msgid "Tareas en esta parada"
-msgstr "Geltoki honetako eginkizunak"
+msgstr "Geldialdi honetako zereginak"
 
 #: qml/InstructionListPanel.qml:284 qml/SearchPanel.qml:1766
 msgid "Cercanos"
@@ -988,7 +988,7 @@ msgstr "Gasolina"
 
 #: qml/InstructionListPanel.qml:344 qml/Main.qml:6852 qml/SearchPanel.qml:1830
 msgid "Parking"
-msgstr "Aparkamendua"
+msgstr "Aparkalekua"
 
 #: qml/InstructionListPanel.qml:345 qml/SearchPanel.qml:1831
 msgid "Comer"
@@ -1016,7 +1016,7 @@ msgstr "Kutxazaina"
 
 #: qml/InstructionListPanel.qml:396
 msgid "Editar ruta"
-msgstr "Bidea editatu"
+msgstr "Ibilbidea editatu"
 
 #: qml/LoginPanel.qml:110 qml/Main.qml:6990
 msgid "Mi cuenta"
@@ -1186,11 +1186,11 @@ msgstr "Atz."
 
 #: qml/Main.qml:4962
 msgid "Ctrl ON"
-msgstr "Ktr. AK"
+msgstr "Ctrl AK"
 
 #: qml/Main.qml:4962
 msgid "Ctrl"
-msgstr "Ktr."
+msgstr "Ctrl"
 
 #: qml/Main.qml:5011
 msgid "Adelanto"
@@ -1218,7 +1218,7 @@ msgstr "Pos nabeg. gabe"
 
 #: qml/Main.qml:5447
 msgid "Seguir ruta"
-msgstr "Bidea jarraitu"
+msgstr "Ibilbidea jarraitu"
 
 #: qml/Main.qml:5474
 msgid "SIMULACIÓN GPS"
@@ -1294,7 +1294,7 @@ msgstr "🅿 Aparkalekua gordeta · "
 
 #: qml/Main.qml:6879
 msgid "Borrar aparcamiento"
-msgstr "Aparkamendua ezabatu"
+msgstr "Aparkalekua ezabatu"
 
 #: qml/Main.qml:6890
 msgid "🗑 Aparcamiento eliminado · "
@@ -1306,7 +1306,7 @@ msgstr "Ibilgailua ikusi"
 
 #: qml/Main.qml:6940 qml/ParkingDialog.qml:61
 msgid "Ir al aparcamiento"
-msgstr "Aparkamendura joan"
+msgstr "Aparkalekura joan"
 
 #: qml/Main.qml:6958 qml/MediaPanel.qml:222
 msgid "Música"

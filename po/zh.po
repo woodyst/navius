@@ -912,7 +912,7 @@ msgstr "要登录您必须接受 Navius 隐私政策。"
 
 #: qml/LoginPanel.qml:170 qml/PreferencesPanel.qml:2969
 msgid "Ver política de privacidad"
-msgstr "请参阅隐私政策"
+msgstr "查看隐私政策"
 
 #: qml/LoginPanel.qml:191 qml/LoginPanel.qml:385
 msgid "Entrar"
@@ -1159,7 +1159,7 @@ msgstr "任务"
 
 #: qml/Main.qml:6862
 msgid "🅿 Aparcamiento guardado · "
-msgstr "🅿 已保存停车位置 · "
+msgstr "🅿 已保存停车位 · "
 
 #: qml/Main.qml:6879
 msgid "Borrar aparcamiento"
@@ -1167,7 +1167,7 @@ msgstr "清除停车位"
 
 #: qml/Main.qml:6890
 msgid "🗑 Aparcamiento eliminado · "
-msgstr "🗑 已删除停车位置 · "
+msgstr "🗑 已删除停车位 · "
 
 #: qml/Main.qml:6907
 msgid "Ver vehículo"
@@ -1175,7 +1175,7 @@ msgstr "查看车辆"
 
 #: qml/Main.qml:6940 qml/ParkingDialog.qml:61
 msgid "Ir al aparcamiento"
-msgstr "前往停车场"
+msgstr "前往停车位"
 
 #: qml/Main.qml:6958 qml/MediaPanel.qml:222
 msgid "Música"
@@ -1443,7 +1443,7 @@ msgstr "保存"
 
 #: qml/Main.qml:10049
 msgid "🅿 Aparcamiento guardado"
-msgstr "🅿 已保存停车位置"
+msgstr "🅿 已保存停车位"
 
 #: qml/MediaPanel.qml:228
 msgid "Añadir"

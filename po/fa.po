@@ -595,7 +595,7 @@ msgstr ""
 
 #: qml/HelpPanel.qml:144
 msgid "Fix GPS"
-msgstr "Fix GPS"
+msgstr "قفل GPS"
 
 #: qml/HelpPanel.qml:145
 msgid ""
@@ -1030,7 +1030,7 @@ msgstr "برای ورود باید سیاست حفظ حریم خصوصی Navius 
 
 #: qml/LoginPanel.qml:170 qml/PreferencesPanel.qml:2969
 msgid "Ver política de privacidad"
-msgstr "سیاست حفظ حریم خصوصی را ببینید"
+msgstr "مشاهده سیاست حریم خصوصی"
 
 #: qml/LoginPanel.qml:191 qml/LoginPanel.qml:385
 msgid "Entrar"
@@ -1151,7 +1151,7 @@ msgstr "GPS بازیابی شد"
 
 #: qml/Main.qml:4789
 msgid "Rumbo"
-msgstr "سمت"
+msgstr "جهت حرکت"
 
 #: qml/Main.qml:4807
 msgid "km/h ◄"
@@ -1259,7 +1259,7 @@ msgstr "فقط هشدارها"
 
 #: qml/Main.qml:6763
 msgid "Solo pitidos"
-msgstr "فقط بوق"
+msgstr "فقط صدای بیپ"
 
 #: qml/Main.qml:6763
 msgid "Silencio"

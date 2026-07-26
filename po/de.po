@@ -227,7 +227,7 @@ msgstr "Verkehr"
 
 #: qml/AlertasOverlay.qml:272
 msgid "Añadir alerta"
-msgstr "Alarm hinzufügen"
+msgstr "Warnung hinzufügen"
 
 #: qml/AlertasOverlay.qml:382
 msgid "Enviar"
@@ -1194,11 +1194,11 @@ msgstr "Rückw."
 
 #: qml/Main.qml:4962
 msgid "Ctrl ON"
-msgstr "Strg AN"
+msgstr "Ctrl AN"
 
 #: qml/Main.qml:4962
 msgid "Ctrl"
-msgstr "Strg"
+msgstr "Ctrl"
 
 #: qml/Main.qml:5011
 msgid "Adelanto"
@@ -1278,7 +1278,7 @@ msgstr "Nur Warnungen"
 
 #: qml/Main.qml:6763
 msgid "Solo pitidos"
-msgstr "Nur Töne"
+msgstr "Nur Signaltöne"
 
 #: qml/Main.qml:6763
 msgid "Silencio"
@@ -1390,7 +1390,7 @@ msgstr "Ziel hinzufügen"
 
 #: qml/Main.qml:7652
 msgid "🚨  Añadir alerta aquí"
-msgstr "🚨  Meldung hier hinzufügen"
+msgstr "🚨  Warnung hier hinzufügen"
 
 #: qml/Main.qml:7681
 msgid "📍 Establecer posición GPS"
@@ -1406,7 +1406,7 @@ msgstr "👎  Verneinen"
 
 #: qml/Main.qml:7854
 msgid "🗑  Cancelar mi alerta"
-msgstr "🗑  Meine Meldung zurückziehen"
+msgstr "🗑  Meine Warnung zurückziehen"
 
 #: qml/Main.qml:7940
 msgid "Satélites"
@@ -1540,7 +1540,7 @@ msgstr "TTS-Engine wird vorverarbeitet"
 
 #: qml/Main.qml:9151
 msgid "GPS impreciso. Simulando trayecto."
-msgstr "GPS ungenau. Simuliere Route."
+msgstr "GPS ungenau. Route wird simuliert."
 
 #: qml/Main.qml:9154
 msgid "Cargando mapa…"
@@ -1601,7 +1601,7 @@ msgstr ""
 
 #: qml/MediaPanel.qml:356
 msgid "Sin pista"
-msgstr "Keine Strecke"
+msgstr "Kein Titel"
 
 #: qml/MediaPanel.qml:492
 msgid "Bajar volumen al hablar"

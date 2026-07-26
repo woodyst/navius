@@ -1301,7 +1301,7 @@ msgstr "🗑 Парковка удалена · "
 
 #: qml/Main.qml:6907
 msgid "Ver vehículo"
-msgstr "К автомобилю"
+msgstr "Показать автомобиль"
 
 #: qml/Main.qml:6940 qml/ParkingDialog.qml:61
 msgid "Ir al aparcamiento"
@@ -1377,11 +1377,11 @@ msgstr "Начало симуляции"
 
 #: qml/Main.qml:7608 qml/MessagesPanel.qml:351 qml/MsgDetailPopup.qml:175
 msgid "Añadir destino"
-msgstr "Добавить пункт"
+msgstr "Добавить пункт назначения"
 
 #: qml/Main.qml:7652
 msgid "🚨  Añadir alerta aquí"
-msgstr "🚨  Добавить оповещение здесь"
+msgstr "🚨  Добавить предупреждение здесь"
 
 #: qml/Main.qml:7681
 msgid "📍 Establecer posición GPS"
@@ -1397,7 +1397,7 @@ msgstr "👎  Опровергнуть"
 
 #: qml/Main.qml:7854
 msgid "🗑  Cancelar mi alerta"
-msgstr "🗑  Отменить моё оповещение"
+msgstr "🗑  Отменить моё предупреждение"
 
 #: qml/Main.qml:7940
 msgid "Satélites"
