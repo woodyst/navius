@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-29 16:07+0200\n"
+"POT-Creation-Date: 2026-08-07 00:07+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -95,8 +95,8 @@ msgstr ""
 msgid "Licencia GNU GPL v3. Software libre."
 msgstr ""
 
-#: qml/AboutDialog.qml:253 qml/LoginPanel.qml:151 qml/Main.qml:8029
-#: qml/Main.qml:8506 qml/ParkingDialog.qml:162 qml/TourOverlay.qml:314
+#: qml/AboutDialog.qml:253 qml/LoginPanel.qml:151 qml/Main.qml:8036
+#: qml/Main.qml:8513 qml/ParkingDialog.qml:162 qml/TourOverlay.qml:314
 #: qml/TripSharePanel.qml:187
 msgid "Cerrar"
 msgstr ""
@@ -233,7 +233,7 @@ msgstr ""
 msgid "Al otro lado"
 msgstr ""
 
-#: qml/AlertasOverlay.qml:433 qml/LoginPanel.qml:400 qml/Main.qml:8595
+#: qml/AlertasOverlay.qml:433 qml/LoginPanel.qml:400 qml/Main.qml:8602
 #: qml/PreferencesPanel.qml:422 qml/PreferencesPanel.qml:934
 #: qml/PreferencesPanel.qml:2182 qml/SearchPanel.qml:2148
 #: qml/ServerFallbackDialog.qml:143 qml/SharedLocationDialog.qml:163
@@ -596,7 +596,7 @@ msgid ""
 "estándar, compatible con aplicaciones externas."
 msgstr ""
 
-#: qml/HelpPanel.qml:164 qml/Main.qml:6950 qml/TourOverlay.qml:72
+#: qml/HelpPanel.qml:164 qml/Main.qml:6957 qml/TourOverlay.qml:72
 #: qml/TripSharePanel.qml:53
 msgid "Compartir viaje"
 msgstr ""
@@ -714,7 +714,7 @@ msgid ""
 "automáticamente en Ajustes → Servidor Valhalla → Detectar servidor local."
 msgstr ""
 
-#: qml/HelpPanel.qml:196 qml/Main.qml:7128 qml/PreferencesPanel.qml:140
+#: qml/HelpPanel.qml:196 qml/Main.qml:7135 qml/PreferencesPanel.qml:140
 #: qml/TourOverlay.qml:112
 msgid "Ajustes"
 msgstr ""
@@ -847,7 +847,7 @@ msgstr ""
 msgid "Gasolina"
 msgstr ""
 
-#: qml/InstructionListPanel.qml:344 qml/Main.qml:7007 qml/SearchPanel.qml:1830
+#: qml/InstructionListPanel.qml:344 qml/Main.qml:7014 qml/SearchPanel.qml:1830
 msgid "Parking"
 msgstr ""
 
@@ -879,7 +879,7 @@ msgstr ""
 msgid "Editar ruta"
 msgstr ""
 
-#: qml/LoginPanel.qml:110 qml/Main.qml:7145
+#: qml/LoginPanel.qml:110 qml/Main.qml:7152
 msgid "Mi cuenta"
 msgstr ""
 
@@ -1045,435 +1045,435 @@ msgstr ""
 msgid "No se pudo calcular la ruta al aparcamiento"
 msgstr ""
 
-#: qml/Main.qml:2580 qml/Main.qml:8199 qml/Main.qml:8923
+#: qml/Main.qml:2587 qml/Main.qml:8206 qml/Main.qml:8930
 msgid "OSM Scout · rutas y mapas offline"
 msgstr ""
 
-#: qml/Main.qml:2592
+#: qml/Main.qml:2599
 msgid "Servidor: "
 msgstr ""
 
-#: qml/Main.qml:3179
+#: qml/Main.qml:3186
 msgid "Reproducción terminada"
 msgstr ""
 
-#: qml/Main.qml:4361
+#: qml/Main.qml:4368
 msgid "GPS recuperado"
 msgstr ""
 
-#: qml/Main.qml:4925
+#: qml/Main.qml:4932
 msgid "Rumbo"
 msgstr ""
 
-#: qml/Main.qml:4943
+#: qml/Main.qml:4950
 msgid "km/h ◄"
 msgstr ""
 
-#: qml/Main.qml:4943
+#: qml/Main.qml:4950
 msgid "km/h"
 msgstr ""
 
-#: qml/Main.qml:4982
+#: qml/Main.qml:4989
 msgid "Fallo GPS ON"
 msgstr ""
 
-#: qml/Main.qml:4982 qml/Main.qml:7254
+#: qml/Main.qml:4989 qml/Main.qml:7261
 msgid "Fallo GPS"
 msgstr ""
 
-#: qml/Main.qml:5009
+#: qml/Main.qml:5016
 msgid "Rev."
 msgstr ""
 
-#: qml/Main.qml:5098
+#: qml/Main.qml:5105
 msgid "Ctrl ON"
 msgstr ""
 
-#: qml/Main.qml:5098
+#: qml/Main.qml:5105
 msgid "Ctrl"
 msgstr ""
 
-#: qml/Main.qml:5166
+#: qml/Main.qml:5173
 msgid "Adelanto"
 msgstr ""
 
-#: qml/Main.qml:5215
+#: qml/Main.qml:5222
 msgid "Con ruta"
 msgstr ""
 
-#: qml/Main.qml:5254
+#: qml/Main.qml:5261
 msgid "Hdg blend"
 msgstr ""
 
-#: qml/Main.qml:5265
+#: qml/Main.qml:5272
 msgid "Sin ruta"
 msgstr ""
 
-#: qml/Main.qml:5279
+#: qml/Main.qml:5286
 msgid "Hdg accel"
 msgstr ""
 
-#: qml/Main.qml:5295
+#: qml/Main.qml:5302
 msgid "Pos sin nav"
 msgstr ""
 
-#: qml/Main.qml:5602
+#: qml/Main.qml:5609
 msgid "Seguir ruta"
 msgstr ""
 
-#: qml/Main.qml:5629
+#: qml/Main.qml:5636
 msgid "SIMULACIÓN GPS"
 msgstr ""
 
-#: qml/Main.qml:5658
+#: qml/Main.qml:5665
 msgid "OSM Scout Server  ·  límites de velocidad por tramo"
 msgstr ""
 
-#: qml/Main.qml:5933
+#: qml/Main.qml:5940
 msgid "Mapa 3D"
 msgstr ""
 
-#: qml/Main.qml:5934
+#: qml/Main.qml:5941
 msgid "Mapa"
 msgstr ""
 
-#: qml/Main.qml:5935 qml/PreferencesPanel.qml:25
+#: qml/Main.qml:5942 qml/PreferencesPanel.qml:25
 msgid "Satélite"
 msgstr ""
 
-#: qml/Main.qml:5936 qml/PreferencesPanel.qml:29
+#: qml/Main.qml:5943 qml/PreferencesPanel.qml:29
 msgid "Claro"
 msgstr ""
 
-#: qml/Main.qml:5937 qml/PreferencesPanel.qml:29
+#: qml/Main.qml:5944 qml/PreferencesPanel.qml:29
 msgid "Vivo"
 msgstr ""
 
-#: qml/Main.qml:5939 qml/PreferencesPanel.qml:30 qml/PreferencesPanel.qml:332
+#: qml/Main.qml:5946 qml/PreferencesPanel.qml:30 qml/PreferencesPanel.qml:332
 msgid "Noche"
 msgstr ""
 
-#: qml/Main.qml:6175 qml/Main.qml:6197
+#: qml/Main.qml:6182 qml/Main.qml:6204
 msgid "Alerta"
 msgstr ""
 
-#: qml/Main.qml:6225 qml/PreferencesPanel.qml:24 qml/PreferencesPanel.qml:332
+#: qml/Main.qml:6232 qml/PreferencesPanel.qml:24 qml/PreferencesPanel.qml:332
 msgid "Auto"
 msgstr ""
 
-#: qml/Main.qml:6916
+#: qml/Main.qml:6923
 msgid "Voz + alertas"
 msgstr ""
 
-#: qml/Main.qml:6917
+#: qml/Main.qml:6924
 msgid "Solo alertas"
 msgstr ""
 
-#: qml/Main.qml:6918
+#: qml/Main.qml:6925
 msgid "Solo pitidos"
 msgstr ""
 
-#: qml/Main.qml:6918
+#: qml/Main.qml:6925
 msgid "Silencio"
 msgstr ""
 
-#: qml/Main.qml:6950
+#: qml/Main.qml:6957
 msgid "Compartiendo"
 msgstr ""
 
-#: qml/Main.qml:6975
+#: qml/Main.qml:6982
 msgid "Prev. Ruta"
 msgstr ""
 
-#: qml/Main.qml:6990
+#: qml/Main.qml:6997
 msgid "Tareas"
 msgstr ""
 
-#: qml/Main.qml:7017
+#: qml/Main.qml:7024
 msgid "🅿 Aparcamiento guardado · "
 msgstr ""
 
-#: qml/Main.qml:7034
+#: qml/Main.qml:7041
 msgid "Borrar aparcamiento"
 msgstr ""
 
-#: qml/Main.qml:7045
+#: qml/Main.qml:7052
 msgid "🗑 Aparcamiento eliminado · "
 msgstr ""
 
-#: qml/Main.qml:7062
+#: qml/Main.qml:7069
 msgid "Ver vehículo"
 msgstr ""
 
-#: qml/Main.qml:7095 qml/ParkingDialog.qml:61
+#: qml/Main.qml:7102 qml/ParkingDialog.qml:61
 msgid "Ir al aparcamiento"
 msgstr ""
 
-#: qml/Main.qml:7113 qml/MediaPanel.qml:222
+#: qml/Main.qml:7120 qml/MediaPanel.qml:222
 msgid "Música"
 msgstr ""
 
-#: qml/Main.qml:7145
+#: qml/Main.qml:7152
 msgid "Login"
 msgstr ""
 
-#: qml/Main.qml:7161 qml/MessagesPanel.qml:106
+#: qml/Main.qml:7168 qml/MessagesPanel.qml:106
 msgid "Mensajes"
 msgstr ""
 
-#: qml/Main.qml:7191
+#: qml/Main.qml:7198
 msgid "Bloq. Mapa"
 msgstr ""
 
-#: qml/Main.qml:7208 qml/PreferencesPanel.qml:3120
+#: qml/Main.qml:7215 qml/PreferencesPanel.qml:3120
 msgid "Debug"
 msgstr ""
 
-#: qml/Main.qml:7223
+#: qml/Main.qml:7230
 msgid "Sim GPS"
 msgstr ""
 
-#: qml/Main.qml:7254
+#: qml/Main.qml:7261
 msgid "GPS on"
 msgstr ""
 
-#: qml/Main.qml:7269
+#: qml/Main.qml:7276
 msgid "Reanudar"
 msgstr ""
 
-#: qml/Main.qml:7269
+#: qml/Main.qml:7276
 msgid "Pausar sim"
 msgstr ""
 
-#: qml/Main.qml:7285 qml/PreferencesPanel.qml:1779
+#: qml/Main.qml:7292 qml/PreferencesPanel.qml:1779
 msgid "Suavizado GPS"
 msgstr ""
 
-#: qml/Main.qml:7302
+#: qml/Main.qml:7309
 msgid "IMU debug"
 msgstr ""
 
-#: qml/Main.qml:7319
+#: qml/Main.qml:7326
 msgid "Bisector"
 msgstr ""
 
-#: qml/Main.qml:7336
+#: qml/Main.qml:7343
 msgid "POIs debug"
 msgstr ""
 
-#: qml/Main.qml:7366
+#: qml/Main.qml:7373
 msgid "Donar"
 msgstr ""
 
-#: qml/Main.qml:7575
+#: qml/Main.qml:7582
 msgid "INICIO"
 msgstr ""
 
-#: qml/Main.qml:7612
+#: qml/Main.qml:7619
 msgid "FIN"
 msgstr ""
 
-#: qml/Main.qml:7743
+#: qml/Main.qml:7750
 msgid "Inicio sim"
 msgstr ""
 
-#: qml/Main.qml:7763 qml/MessagesPanel.qml:351 qml/MsgDetailPopup.qml:175
+#: qml/Main.qml:7770 qml/MessagesPanel.qml:351 qml/MsgDetailPopup.qml:175
 msgid "Añadir destino"
 msgstr ""
 
-#: qml/Main.qml:7807
+#: qml/Main.qml:7814
 msgid "🚨  Añadir alerta aquí"
 msgstr ""
 
-#: qml/Main.qml:7836
+#: qml/Main.qml:7843
 msgid "📍 Establecer posición GPS"
 msgstr ""
 
-#: qml/Main.qml:7961
+#: qml/Main.qml:7968
 msgid "👍  Confirmar"
 msgstr ""
 
-#: qml/Main.qml:7984
+#: qml/Main.qml:7991
 msgid "👎  Desmentir"
 msgstr ""
 
-#: qml/Main.qml:8009
+#: qml/Main.qml:8016
 msgid "🗑  Cancelar mi alerta"
 msgstr ""
 
-#: qml/Main.qml:8095
+#: qml/Main.qml:8102
 msgid "Satélites"
 msgstr ""
 
-#: qml/Main.qml:8202
+#: qml/Main.qml:8209
 msgid "OSM Scout no disponible · usando "
 msgstr ""
 
-#: qml/Main.qml:8260
+#: qml/Main.qml:8267
 msgid "Caché de mapas eliminada"
 msgstr ""
 
-#: qml/Main.qml:8477
+#: qml/Main.qml:8484
 msgid "Límite comunitario"
 msgstr ""
 
-#: qml/Main.qml:8484
+#: qml/Main.qml:8491
 msgid "Eliminar este límite"
 msgstr ""
 
-#: qml/Main.qml:8551
+#: qml/Main.qml:8558
 msgid "Límite de velocidad aquí"
 msgstr ""
 
-#: qml/Main.qml:8690
+#: qml/Main.qml:8697
 msgid "⚙  Configuración en el servidor"
 msgstr ""
 
-#: qml/Main.qml:8706
+#: qml/Main.qml:8713
 msgid "Tienes cambios locales no sincronizados. ¿Cuál configuración usar?"
 msgstr ""
 
-#: qml/Main.qml:8718
+#: qml/Main.qml:8725
 msgid "Usar del servidor"
 msgstr ""
 
-#: qml/Main.qml:8728
+#: qml/Main.qml:8735
 msgid "✓ Configuración del servidor aplicada"
 msgstr ""
 
-#: qml/Main.qml:8737
+#: qml/Main.qml:8744
 msgid "Mantener la local"
 msgstr ""
 
-#: qml/Main.qml:8840
+#: qml/Main.qml:8847
 msgid "Cacheando mapa… detalle"
 msgstr ""
 
-#: qml/Main.qml:8860
+#: qml/Main.qml:8867
 msgid "Cacheando mapa… "
 msgstr ""
 
-#: qml/Main.qml:8890
+#: qml/Main.qml:8897
 msgid "Mapa online: OSM Scout"
 msgstr ""
 
-#: qml/Main.qml:8892
+#: qml/Main.qml:8899
 msgid "Mapa online: OSM Scout (no disponible · usando Mapbox)"
 msgstr ""
 
-#: qml/Main.qml:8894
+#: qml/Main.qml:8901
 msgid "Mapa online: Mapbox"
 msgstr ""
 
-#: qml/Main.qml:8899
+#: qml/Main.qml:8906
 msgid "Sin internet: fallback a OSM Scout"
 msgstr ""
 
-#: qml/Main.qml:8901
+#: qml/Main.qml:8908
 msgid "Sin internet: fallback OSM Scout (no disponible)"
 msgstr ""
 
-#: qml/Main.qml:8903
+#: qml/Main.qml:8910
 msgid "Sin internet: caché de tiles"
 msgstr ""
 
-#: qml/Main.qml:8960
+#: qml/Main.qml:8967
 msgid "Mapas: servidor no disponible · usando OSM Scout"
 msgstr ""
 
-#: qml/Main.qml:8962
+#: qml/Main.qml:8969
 msgid "Mapas: servidor no disponible · usando servidor público"
 msgstr ""
 
-#: qml/Main.qml:8982
+#: qml/Main.qml:8989
 msgid "Servidor de mapas recuperado · restaurando"
 msgstr ""
 
-#: qml/Main.qml:9000 qml/Main.qml:9008
+#: qml/Main.qml:9007 qml/Main.qml:9015
 msgid "Sin internet · usando OSM Scout Server"
 msgstr ""
 
-#: qml/Main.qml:9024 qml/Main.qml:9029
+#: qml/Main.qml:9031 qml/Main.qml:9036
 msgid "Conexión restaurada · volviendo a mapas online"
 msgstr ""
 
-#: qml/Main.qml:9090
+#: qml/Main.qml:9097
 msgid "Cacheando mapa… 0%"
 msgstr ""
 
-#: qml/Main.qml:9194
+#: qml/Main.qml:9201
 msgid "Tienes un mensaje nuevo"
 msgstr ""
 
-#: qml/Main.qml:9195
+#: qml/Main.qml:9202
 msgid "Tienes %1 mensajes nuevos"
 msgstr ""
 
-#: qml/Main.qml:9229 qml/RouteSelectPanel.qml:171 qml/SearchPanel.qml:2044
+#: qml/Main.qml:9236 qml/RouteSelectPanel.qml:171 qml/SearchPanel.qml:2044
 msgid "Ruta más rápida"
 msgstr ""
 
-#: qml/Main.qml:9233
+#: qml/Main.qml:9240
 msgid "Ahorra"
 msgstr ""
 
-#: qml/Main.qml:9243
+#: qml/Main.qml:9250
 msgid "Revisar"
 msgstr ""
 
-#: qml/Main.qml:9252
+#: qml/Main.qml:9259
 msgid "Ignorar"
 msgstr ""
 
-#: qml/Main.qml:9308
+#: qml/Main.qml:9315
 msgid "Pre-procesando motor TTS"
 msgstr ""
 
-#: qml/Main.qml:9309
+#: qml/Main.qml:9316
 msgid "GPS impreciso. Simulando trayecto."
 msgstr ""
 
-#: qml/Main.qml:9312
+#: qml/Main.qml:9319
 msgid "Cargando mapa…"
 msgstr ""
 
-#: qml/Main.qml:9868 qml/SharedLocationDialog.qml:61
+#: qml/Main.qml:9875 qml/SharedLocationDialog.qml:61
 msgid "Ubicación compartida"
 msgstr ""
 
-#: qml/Main.qml:10113
+#: qml/Main.qml:10120
 msgid "¿Has llegado a"
 msgstr ""
 
-#: qml/Main.qml:10114
+#: qml/Main.qml:10121
 msgid "el destino"
 msgstr ""
 
-#: qml/Main.qml:10123
+#: qml/Main.qml:10130
 msgid "Sí, he llegado"
 msgstr ""
 
-#: qml/Main.qml:10134
+#: qml/Main.qml:10141
 msgid "Todavía no"
 msgstr ""
 
-#: qml/Main.qml:10166
+#: qml/Main.qml:10173
 msgid "Tareas pendientes"
 msgstr ""
 
-#: qml/Main.qml:10175
+#: qml/Main.qml:10182
 msgid "Abrir"
 msgstr ""
 
-#: qml/Main.qml:10216
+#: qml/Main.qml:10223
 msgid "🅿 ¿Guardar aparcamiento aquí?"
 msgstr ""
 
-#: qml/Main.qml:10225 qml/PreferencesPanel.qml:944 qml/SearchPanel.qml:2159
+#: qml/Main.qml:10232 qml/PreferencesPanel.qml:944 qml/SearchPanel.qml:2159
 msgid "Guardar"
 msgstr ""
 
-#: qml/Main.qml:10234
+#: qml/Main.qml:10241
 msgid "🅿 Aparcamiento guardado"
 msgstr ""
 
