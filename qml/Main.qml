@@ -2581,6 +2581,10 @@ ApplicationWindow {
             satModel.log_to_file("OSM Scout: iniciando detección…")
             NavSearch.detectOsmScout(function(found) {
                 root._osmScoutActive = found
+                // El buscador conmuta con el mismo interruptor que las rutas y
+                // el mapa: con el servidor local activo, buscar destinos deja de
+                // depender de la cobertura.
+                NavSearch.setOsmScoutSearch(found)
                 satModel.log_to_file("OSM Scout detect result: " + (found ? "ACTIVO" : "no disponible"))
                 if (found) {
                     NavSearch.setRouteBlocked(false)
@@ -8207,6 +8211,10 @@ ApplicationWindow {
         onOsmScoutDetectRequested: {
             NavSearch.detectOsmScout(function(found) {
                 root._osmScoutActive = found
+                // El buscador conmuta con el mismo interruptor que las rutas y
+                // el mapa: con el servidor local activo, buscar destinos deja de
+                // depender de la cobertura.
+                NavSearch.setOsmScoutSearch(found)
                 if (found) {
                     _setEffectiveUrl("http://127.0.0.1:8553/v2")
                     root._startupMsg = i18n.tr("OSM Scout · rutas y mapas offline")
@@ -9952,6 +9960,7 @@ ApplicationWindow {
                         _detecting = false
                         if (found) {
                             root._osmScoutActive = true
+                            NavSearch.setOsmScoutSearch(true)
                             _setEffectiveUrl("http://127.0.0.1:8553/v2")
                             serverFallbackDialog.visible = false
                             serverFallbackDialog.retryRequested()
