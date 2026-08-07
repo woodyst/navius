@@ -2,6 +2,8 @@
 
 Navegador GPS para Ubuntu Touch. Rust + QML, empaquetado como Click.
 
+También disponible para **postmarketOS/Phosh**: [woodyst/navius-postmarketos](https://github.com/woodyst/navius-postmarketos) — la misma aplicación, portada a Alpine/musl y empaquetada como apk.
+
 [Web](https://www.egpsistemas.com/site/navius) · [GitHub](https://github.com/woodyst/navius) · [Donaciones](https://liberapay.com/Navius-GPS/)
 
 **Comunidad** · [Telegram — GUI & Design](https://t.me/navius_gui_and_design) · [Telegram — Bugs & Issues](https://t.me/navius_bugs_and_issues)
