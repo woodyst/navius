@@ -26,6 +26,8 @@ Navius works fully offline without an account. Creating an account is optional a
 
 You can use any public Valhalla server or run your own with [OSM Scout Server](https://rinigus.github.io/osmscout-server/).
 
+**Local maps**: install [OSM Scout Server](https://open-store.io/app/osmscout-server.rinigus) from the OpenStore to compute routes and search places entirely offline — maps are downloaded to the device from its own interface. Navius detects it automatically at startup. See the [user manual](docs/user.en.md#offline-maps-with-osm-scout-server).
+
 ---
 
 ## Features
