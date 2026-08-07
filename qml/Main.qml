@@ -2457,6 +2457,13 @@ ApplicationWindow {
 
     Component.onCompleted: {
         console.log("TRACE [" + Date.now() + "]: root.onCompleted START")
+        // Identificarse ante el servidor con versión y plataforma. Los tres módulos son
+        // .pragma library y no ven el contexto QML, así que hay que pasárselas. Sin esto
+        // el servidor no puede dirigir un aviso solo a las versiones que lo necesitan.
+        var _plat = (typeof appPlatform !== "undefined") ? appPlatform : ""
+        NavMessages.setAppInfo(root._version, _plat)
+        NavSettings.setAppInfo(root._version, _plat)
+        NavAlerts.setAppInfo(root._version, _plat)
         // Restaurar cooldown de anuncios, descartando entradas > 1 h
         try {
             var _adSt = JSON.parse(appSettings.adShownJson)

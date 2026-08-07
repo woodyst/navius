@@ -5,6 +5,19 @@ var _serverUrl = "https://navius-api.egpsistemas.com"
 function setServerUrl(u) { _serverUrl = u }
 function serverUrl()     { return _serverUrl }
 
+// Versión y plataforma del build (ver NavMessages.js). Fichero .pragma library: no ve
+// el contexto QML, se inyectan desde Main.qml.
+var _appVersion  = ""
+var _appPlatform = ""
+function setAppInfo(version, plataforma) {
+    _appVersion  = version    || ""
+    _appPlatform = plataforma || ""
+}
+function _addAppHeaders(xhr) {
+    if (_appVersion)  xhr.setRequestHeader("X-App-Version", _appVersion)
+    if (_appPlatform) xhr.setRequestHeader("X-App-Platform", _appPlatform)
+}
+
 // ── Claves que se sincronizan con el servidor ─────────────────────────────────
 // Nombres lógicos independientes de la categoría Qt Settings.
 // Al mover un setting de categoría en la app, la clave aquí no cambia → no se pierde.
@@ -68,6 +81,7 @@ function _xhr(method, url, token, body, callback) {
     var savedStatus = 0, savedBody = ""
     xhr.open(method, url)
     xhr.setRequestHeader("Content-Type", "application/json")
+    _addAppHeaders(xhr)
     if (token) xhr.setRequestHeader("Authorization", "Bearer " + token)
     xhr.onreadystatechange = function() {
         if (xhr.readyState >= 2 && xhr.status !== 0)       savedStatus = xhr.status

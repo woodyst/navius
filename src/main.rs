@@ -103,6 +103,14 @@ fn main() {
 
     let mut engine = QmlEngine::new();
     engine.set_property("appVersion".into(), QString::from(env!("CARGO_PKG_VERSION")).into());
+    // Plataforma del build, para que el servidor pueda dirigir un mensaje solo a las que
+    // toque (ver migración 0021 de navius_server). Se fija en compilación porque cada
+    // port es un binario distinto: "ut" aquí, "android" y "pmos" en los suyos, que
+    // pueden sobreescribirlo con NAVIUS_PLATFORM sin tocar este fichero.
+    engine.set_property(
+        "appPlatform".into(),
+        QString::from(option_env!("NAVIUS_PLATFORM").unwrap_or("ut")).into(),
+    );
     // Add bundled QML plugin directory so `import MapboxMap 1.0` resolves.
     engine.add_import_path(format!("file://{}", lib_dir).into());
     // Explicitly add QRC QML directory so component types (CompassWidget etc.) are discoverable.
