@@ -6980,6 +6980,43 @@ ApplicationWindow {
             }
         }
 
+        // Grabar ruta
+        //
+        // Estaba solo en Ajustes → Grabación de rutas, así que en la práctica no
+        // se encontraba. Aquí se enciende y se apaga la grabación de un toque, y
+        // se ve en rojo mientras graba; la lista de rutas grabadas, con simular y
+        // exportar a GPX, sigue en Ajustes.
+        Rectangle {
+            width: root._menuItemW; height: root._menuItemH
+            radius: units.gu(1)
+            color: root._uiBtnBg
+            border.color: navTracker.recording ? "#FF5252" : root._uiBorder
+            border.width: units.gu(0.15)
+            Row {
+                anchors.centerIn: parent; spacing: units.gu(1.2)
+                Label { text: navTracker.recording ? "⏺" : "⏵"
+                        color: navTracker.recording ? "#FF5252" : root._uiFg
+                        font.pixelSize: root._menuItemH * 0.50
+                        anchors.verticalCenter: parent.verticalCenter }
+                // Sin contador a propósito: get_point_count() es un método, y en
+                // un binding no se reevalúa solo — mostraría una cifra congelada.
+                // El número en vivo ya está en la insignia REC del mapa.
+                Label { text: navTracker.recording ? i18n.tr("Grabando") : i18n.tr("Grabar ruta")
+                        color: navTracker.recording ? "#FF5252" : root._uiFg
+                        font.pixelSize: root._menuItemH * 0.375
+                        anchors.verticalCenter: parent.verticalCenter }
+            }
+            MouseArea {
+                anchors.fill: parent
+                onClicked: {
+                    // Se conmuta el ajuste, no el grabador: onGpsTrackingChanged
+                    // es quien arranca y para, y así el estado queda guardado.
+                    appSettings.gpsTracking = !appSettings.gpsTracking
+                    root._menuOpen = false
+                }
+            }
+        }
+
         // Previsualización de ruta
         Rectangle {
             visible: root._navActive && !routeViewPanel.visible
