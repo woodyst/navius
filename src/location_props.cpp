@@ -67,6 +67,24 @@ static int lls_type_to_qt_system(quint32 t) {
     }
 }
 
+// LLS marca TODOS los satélites como gps: en su capa HAL
+// (android_hardware_abstraction_layer.cpp, on_sv_status_update) hay un
+// sv.key.type = SpaceVehicle::Type::gps fijo, así que la constelación real no
+// llega nunca por D-Bus. Verificado en eut2: 24 satélites, todos con type=4,
+// con PRNs de cuatro constelaciones distintas (5-30, 65-88, 205-256, 302-333).
+//
+// El PRN sí la lleva, porque el HAL usa la numeración NMEA extendida, que
+// reserva un rango a cada constelación. Los que no caen en ningún rango
+// (SBAS 33-64 y 120-158, y el hueco 159-192) se dejan en 0 = desconocido.
+static int prn_to_qt_system(quint32 prn) {
+    if (prn >= 1   && prn <= 32)  return 1;   // GPS
+    if (prn >= 65  && prn <= 96)  return 2;   // GLONASS  (64 + slot)
+    if (prn >= 193 && prn <= 200) return 5;   // QZSS
+    if (prn >= 201 && prn <= 264) return 4;   // BeiDou   (200 + svid)
+    if (prn >= 301 && prn <= 336) return 3;   // Galileo  (300 + svid)
+    return 0;
+}
+
 void LocationPropsWatcher::parse_svs_arg(const QDBusArgument &arg) {
     int prev_count = m_vehicles.size();
     m_vehicles.clear();
@@ -95,7 +113,12 @@ void LocationPropsWatcher::parse_svs_arg(const QDBusArgument &arg) {
         sv.used      = used_in_fix;
         sv.azimuth   = (float)azimuth;
         sv.elevation = (float)elevation;
-        sv.system    = lls_type_to_qt_system(sys_type);
+        // Si LLS diera un tipo real distinto de gps, mandaría él (una versión
+        // futura podría arreglarlo en origen); mientras siga hardcodeado a gps,
+        // decide el PRN.
+        int by_type = lls_type_to_qt_system(sys_type);
+        int by_prn  = prn_to_qt_system(prn);
+        sv.system    = (by_type != 0 && by_type != 1) ? by_type : by_prn;
         m_vehicles.append(sv);
         ++count;
     }
