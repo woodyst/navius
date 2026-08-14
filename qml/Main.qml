@@ -8412,9 +8412,14 @@ ApplicationWindow {
             if (appSettings.simRouteIdx >= 5) appSettings.simRouteIdx = 0
         }
         onDebugOff: {
-            gpsSource.simStop()
+            // Si hay una simulación en curso se respeta: apagar la depuración
+            // esconde las herramientas, no corta la simulación ni borra la
+            // posición pintada. Se para desde su propio interruptor.
+            if (!appSettings.simMode) {
+                gpsSource.simStop()
+                mapView._hasPos = false
+            }
             root._dbgVisible = false
-            mapView._hasPos = false
         }
         onDebugOn: {
             satModel.ensure_debug_dir()

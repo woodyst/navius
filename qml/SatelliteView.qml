@@ -17,9 +17,24 @@ Item {
     property var  satModel:    null
     property bool isLandscape: false
 
+    // Los valores de sys son los de Qt, que es a lo que traduce
+    // lls_type_to_qt_system() en location_props.cpp.
+    function systemColor(sys) {
+        switch (sys) {
+        case 2:  return "#29B6F6"   // GLONASS
+        case 3:  return "#FFA726"   // Galileo
+        case 4:  return "#AB47BC"   // BeiDou
+        case 5:  return "#EC407A"   // QZSS
+        default: return "#66BB6A"   // GPS (y desconocido)
+        }
+    }
+
+    // El color dice SIEMPRE de qué constelación es; en uso o no lo dice el
+    // brillo. Antes los no fijados iban todos al mismo gris, así que un GLONASS
+    // sin fijar era indistinguible de un GPS sin fijar y parecía que el módem
+    // solo daba GPS.
     function signalColor(inUse, sys) {
-        if (inUse) return sys === 2 ? "#29B6F6" : "#66BB6A"
-        return "#546E7A"
+        return inUse ? systemColor(sys) : Qt.darker(systemColor(sys), 2.6)
     }
 
     // Dibuja la esfera celeste en el contexto dado. Llamado desde ambos modos.
@@ -259,9 +274,11 @@ Item {
                 anchors.centerIn: parent; spacing: units.gu(2)
                 Repeater {
                     model: [
-                        { color: "#66BB6A", label: "GPS en uso"     },
-                        { color: "#29B6F6", label: "GLONASS en uso" },
-                        { color: "#90A4AE", label: "No en uso"      },
+                        { color: "#66BB6A", label: "GPS"      },
+                        { color: "#29B6F6", label: "GLONASS"  },
+                        { color: "#FFA726", label: "Galileo"  },
+                        { color: "#AB47BC", label: "BeiDou"   },
+                        { color: Qt.darker("#66BB6A", 2.6), label: "No en uso" },
                     ]
                     delegate: Row {
                         spacing: units.gu(0.5)
@@ -367,7 +384,9 @@ Item {
                         model: [
                             { color: "#66BB6A", label: "GPS"     },
                             { color: "#29B6F6", label: "GLONASS" },
-                            { color: "#90A4AE", label: "No uso"  },
+                            { color: "#FFA726", label: "GAL"     },
+                            { color: "#AB47BC", label: "BDS"     },
+                            { color: Qt.darker("#66BB6A", 2.6), label: "No uso" },
                         ]
                         delegate: Row {
                             spacing: units.gu(0.4)
