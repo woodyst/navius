@@ -3592,10 +3592,6 @@ msgstr "Понятно"
 #~ msgid "Longitud  (ej. -3.515801)"
 #~ msgstr "Долгота  (напр. -3.515801)"
 
-#, fuzzy
-#~ msgid "Servidor de mapas con problemas"
-#~ msgstr "Сервер POI и радаров"
-
 #~ msgid "Giro"
 #~ msgstr "Поворот"
 
