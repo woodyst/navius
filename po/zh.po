@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: navius.woodyst\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-07 00:07+0000\n"
+"POT-Creation-Date: 2026-08-14 13:50+0000\n"
 "PO-Revision-Date: 2026-05-24 00:00+0000\n"
 "Last-Translator: Claude\n"
 "Language-Team: 中文（简体）\n"
@@ -95,8 +95,8 @@ msgstr "通过 Liberapay 捐赠"
 msgid "Licencia GNU GPL v3. Software libre."
 msgstr "GNU GPL v3许可证。自由软件。"
 
-#: qml/AboutDialog.qml:253 qml/LoginPanel.qml:151 qml/Main.qml:8036
-#: qml/Main.qml:8513 qml/ParkingDialog.qml:162 qml/TourOverlay.qml:314
+#: qml/AboutDialog.qml:253 qml/LoginPanel.qml:151 qml/Main.qml:8100
+#: qml/Main.qml:8591 qml/ParkingDialog.qml:162 qml/TourOverlay.qml:314
 #: qml/TripSharePanel.qml:187
 msgid "Cerrar"
 msgstr "关闭"
@@ -233,9 +233,9 @@ msgstr "发送"
 msgid "Al otro lado"
 msgstr "对向车道"
 
-#: qml/AlertasOverlay.qml:433 qml/LoginPanel.qml:400 qml/Main.qml:8602
-#: qml/PreferencesPanel.qml:422 qml/PreferencesPanel.qml:934
-#: qml/PreferencesPanel.qml:2182 qml/SearchPanel.qml:2148
+#: qml/AlertasOverlay.qml:433 qml/LoginPanel.qml:400 qml/Main.qml:8680
+#: qml/PreferencesPanel.qml:431 qml/PreferencesPanel.qml:943
+#: qml/PreferencesPanel.qml:2191 qml/SearchPanel.qml:2155
 #: qml/ServerFallbackDialog.qml:143 qml/SharedLocationDialog.qml:163
 #: qml/VehicleSetupDialog.qml:160
 msgid "Cancelar"
@@ -253,7 +253,7 @@ msgstr "检测坐标中…"
 msgid "Usar este destino"
 msgstr "使用此目的地"
 
-#: qml/HelpPanel.qml:24 qml/PreferencesPanel.qml:3019
+#: qml/HelpPanel.qml:24 qml/PreferencesPanel.qml:3029
 msgid "Manual de usuario"
 msgstr "用户手册"
 
@@ -479,7 +479,7 @@ msgstr "删除计划"
 msgid "Toca el icono de papelera junto al plan para borrarlo definitivamente."
 msgstr "点击计划旁的垃圾桶图标可将其永久删除。"
 
-#: qml/HelpPanel.qml:114 qml/PreferencesPanel.qml:1324 qml/SearchPanel.qml:714
+#: qml/HelpPanel.qml:114 qml/PreferencesPanel.qml:1333 qml/SearchPanel.qml:721
 msgid "Navegación"
 msgstr "导航"
 
@@ -599,7 +599,7 @@ msgstr ""
 "Navius 在实际 GPS 读数之间以 10-30 Hz 插值位置，使位置图标平滑移动。在设置 → "
 "常规中配置。"
 
-#: qml/HelpPanel.qml:148 qml/PreferencesPanel.qml:1911
+#: qml/HelpPanel.qml:148 qml/PreferencesPanel.qml:1920
 msgid "Velocidad GPS Doppler"
 msgstr "GPS多普勒速度"
 
@@ -643,7 +643,7 @@ msgstr ""
 "在轨迹面板中，您可以将任意已录制的轨迹导出为标准 GPX 格式，与外部应用程序兼"
 "容。"
 
-#: qml/HelpPanel.qml:164 qml/Main.qml:6957 qml/TourOverlay.qml:72
+#: qml/HelpPanel.qml:164 qml/Main.qml:6968 qml/TourOverlay.qml:72
 #: qml/TripSharePanel.qml:53
 msgid "Compartir viaje"
 msgstr "分享行程"
@@ -781,7 +781,7 @@ msgstr ""
 "从 Ubuntu Touch 的 OpenStore 安装 OSM Scout Server，可完全离线计算路线和搜索"
 "地点。Navius 在设置 → Valhalla 服务器 → 检测本地服务器中自动检测它。"
 
-#: qml/HelpPanel.qml:196 qml/Main.qml:7135 qml/PreferencesPanel.qml:140
+#: qml/HelpPanel.qml:196 qml/Main.qml:7183 qml/PreferencesPanel.qml:149
 #: qml/TourOverlay.qml:112
 msgid "Ajustes"
 msgstr "设置"
@@ -825,7 +825,7 @@ msgstr ""
 "每个自定义值的选项旁边显示带 ↺ 符号的默认值（例如：↺ 8 m、↺ 15 s、↺ 启用）。"
 "如果值已是默认值，指示符不会显示。"
 
-#: qml/HelpPanel.qml:204 qml/PreferencesPanel.qml:203
+#: qml/HelpPanel.qml:204 qml/PreferencesPanel.qml:212
 msgid "Restaurar valores por defecto"
 msgstr "恢复默认值"
 
@@ -913,48 +913,48 @@ msgstr "已完成"
 msgid "Tareas en esta parada"
 msgstr "此站任务"
 
-#: qml/InstructionListPanel.qml:284 qml/SearchPanel.qml:1766
+#: qml/InstructionListPanel.qml:284 qml/SearchPanel.qml:1773
 msgid "Cercanos"
 msgstr "附近"
 
-#: qml/InstructionListPanel.qml:285 qml/SearchPanel.qml:1767
-#: qml/SearchPanel.qml:1816
+#: qml/InstructionListPanel.qml:285 qml/SearchPanel.qml:1774
+#: qml/SearchPanel.qml:1823
 msgid "En ruta"
 msgstr "沿途"
 
-#: qml/InstructionListPanel.qml:286 qml/SearchPanel.qml:1768
+#: qml/InstructionListPanel.qml:286 qml/SearchPanel.qml:1775
 msgid "Cerca destino"
 msgstr "目的地附近"
 
-#: qml/InstructionListPanel.qml:343 qml/SearchPanel.qml:1829
+#: qml/InstructionListPanel.qml:343 qml/SearchPanel.qml:1836
 msgid "Gasolina"
 msgstr "加油站"
 
-#: qml/InstructionListPanel.qml:344 qml/Main.qml:7014 qml/SearchPanel.qml:1830
+#: qml/InstructionListPanel.qml:344 qml/Main.qml:7062 qml/SearchPanel.qml:1837
 msgid "Parking"
 msgstr "停车场"
 
-#: qml/InstructionListPanel.qml:345 qml/SearchPanel.qml:1831
+#: qml/InstructionListPanel.qml:345 qml/SearchPanel.qml:1838
 msgid "Comer"
 msgstr "餐饮"
 
-#: qml/InstructionListPanel.qml:346 qml/SearchPanel.qml:1832
+#: qml/InstructionListPanel.qml:346 qml/SearchPanel.qml:1839
 msgid "Hotel"
 msgstr "酒店"
 
-#: qml/InstructionListPanel.qml:347 qml/SearchPanel.qml:1833
+#: qml/InstructionListPanel.qml:347 qml/SearchPanel.qml:1840
 msgid "Café"
 msgstr "咖啡"
 
-#: qml/InstructionListPanel.qml:348 qml/SearchPanel.qml:1834
+#: qml/InstructionListPanel.qml:348 qml/SearchPanel.qml:1841
 msgid "Súper"
 msgstr "超市"
 
-#: qml/InstructionListPanel.qml:349 qml/SearchPanel.qml:1835
+#: qml/InstructionListPanel.qml:349 qml/SearchPanel.qml:1842
 msgid "Hospital"
 msgstr "医院"
 
-#: qml/InstructionListPanel.qml:350 qml/SearchPanel.qml:1836
+#: qml/InstructionListPanel.qml:350 qml/SearchPanel.qml:1843
 msgid "Cajero"
 msgstr "ATM"
 
@@ -962,7 +962,7 @@ msgstr "ATM"
 msgid "Editar ruta"
 msgstr "编辑路线"
 
-#: qml/LoginPanel.qml:110 qml/Main.qml:7152
+#: qml/LoginPanel.qml:110 qml/Main.qml:7200
 msgid "Mi cuenta"
 msgstr "我的账户"
 
@@ -974,7 +974,7 @@ msgstr "创建账户"
 msgid "Iniciar sesión"
 msgstr "登录"
 
-#: qml/LoginPanel.qml:140 qml/PreferencesPanel.qml:2862
+#: qml/LoginPanel.qml:140 qml/PreferencesPanel.qml:2872
 msgid "Cerrar sesión"
 msgstr "退出登录"
 
@@ -982,7 +982,7 @@ msgstr "退出登录"
 msgid "Para iniciar sesión debes aceptar la política de privacidad de Navius."
 msgstr "要登录您必须接受 Navius 隐私政策。"
 
-#: qml/LoginPanel.qml:170 qml/PreferencesPanel.qml:2969
+#: qml/LoginPanel.qml:170 qml/PreferencesPanel.qml:2979
 msgid "Ver política de privacidad"
 msgstr "查看隐私政策"
 
@@ -1020,543 +1020,551 @@ msgid ""
 "comunitarias y estadísticas de uso mientras tengo sesión iniciada."
 msgstr "我同意在我登录时使用我的位置来显示附近的广告、社区提醒和使用统计信息。"
 
-#: qml/Main.qml:934
+#: qml/Main.qml:938
 msgid "⚠ No se pudieron obtener los radares · revisa la conexión"
 msgstr "⚠ 无法获取测速摄像头 · 请检查连接"
 
-#: qml/Main.qml:1140
+#: qml/Main.qml:1144
 msgid "Radar de tramo  ·  %1 m restantes"
 msgstr "区间测速  ·  剩余 %1 m"
 
-#: qml/Main.qml:1141
+#: qml/Main.qml:1145
 msgid "Radar de tramo, %1 metros"
 msgstr "区间测速，%1 米"
 
-#: qml/Main.qml:1143 qml/Main.qml:1153 qml/Main.qml:1182
+#: qml/Main.qml:1147 qml/Main.qml:1157 qml/Main.qml:1186
 msgid "  ·  %1 km/h"
 msgstr "  ·  %1 km/h"
 
-#: qml/Main.qml:1144 qml/Main.qml:1154 qml/Main.qml:1183
+#: qml/Main.qml:1148 qml/Main.qml:1158 qml/Main.qml:1187
 msgid ", límite %1 kilómetros por hora"
 msgstr "，限速 %1 公里/小时"
 
-#: qml/Main.qml:1150
+#: qml/Main.qml:1154
 msgid "Radar de tramo  ·  a %1 m"
 msgstr "区间测速  ·  %1 m 后"
 
-#: qml/Main.qml:1151
+#: qml/Main.qml:1155
 msgid "Radar de tramo en %1 metros"
 msgstr "%1 米后区间测速"
 
-#: qml/Main.qml:1167
+#: qml/Main.qml:1171
 msgid "Radar próximo  ·  %1 m"
 msgstr "附近测速摄像头  ·  %1 m"
 
-#: qml/Main.qml:1168
+#: qml/Main.qml:1172
 msgid "Radar sentido contrario  ·  %1 m"
 msgstr "对向测速摄像头  ·  %1 m"
 
-#: qml/Main.qml:1169
+#: qml/Main.qml:1173
 msgid "Radar próximo en %1 metros"
 msgstr "附近测速摄像头，%1 米"
 
-#: qml/Main.qml:1170
+#: qml/Main.qml:1174
 msgid "Radar sentido contrario en %1 metros"
 msgstr "对向测速摄像头，%1 米"
 
-#: qml/Main.qml:1179
-msgid "Radar  ·  %1 m"
-msgstr "测速摄像头  ·  %1 m"
+#: qml/Main.qml:1182
+msgid "Radar de velocidad  ·  %1 m"
+msgstr "测速摄像头  ·  %1 米"
 
-#: qml/Main.qml:1180
-msgid "Radar en %1 metros"
-msgstr "%1 米后测速摄像头"
+#: qml/Main.qml:1183
+msgid "Radar de velocidad en %1 metros"
+msgstr "%1 米后有测速摄像头"
 
-#: qml/Main.qml:1424
+#: qml/Main.qml:1429
 msgid "✓ Configuración guardada en el servidor"
 msgstr "✓ 配置已保存到服务器"
 
-#: qml/Main.qml:1443
+#: qml/Main.qml:1448
 msgid "Sin conexión: no se pudo cargar la configuración del servidor"
 msgstr "无网络连接：无法加载服务器配置"
 
-#: qml/Main.qml:1445
+#: qml/Main.qml:1450
 msgid "Error al cargar configuración del servidor: "
 msgstr "加载服务器配置出错："
 
-#: qml/Main.qml:1586
+#: qml/Main.qml:1591
 msgid "Error al procesar la respuesta del servidor"
 msgstr "处理服务器响应时出错"
 
-#: qml/Main.qml:1595
+#: qml/Main.qml:1600
 msgid "Sesión no válida — vuelve a iniciar sesión"
 msgstr "会话无效，请重新登录"
 
-#: qml/Main.qml:1600
+#: qml/Main.qml:1605
 msgid "Sin conexión con el servidor"
 msgstr "无法连接服务器"
 
-#: qml/Main.qml:1603
+#: qml/Main.qml:1608
 msgid "Error del servidor (%1)"
 msgstr "服务器错误 (%1)"
 
-#: qml/Main.qml:2370 qml/Main.qml:2405 qml/ParkingDialog.qml:111
+#: qml/Main.qml:2375 qml/Main.qml:2410 qml/ParkingDialog.qml:111
 msgid "A pie"
 msgstr "步行"
 
-#: qml/Main.qml:2400 qml/PreferencesPanel.qml:394 qml/VehicleSetupDialog.qml:51
+#: qml/Main.qml:2405 qml/PreferencesPanel.qml:403 qml/VehicleSetupDialog.qml:51
 msgid "Coche"
 msgstr "汽车"
 
-#: qml/Main.qml:2401 qml/PreferencesPanel.qml:395 qml/VehicleSetupDialog.qml:52
+#: qml/Main.qml:2406 qml/PreferencesPanel.qml:404 qml/VehicleSetupDialog.qml:52
 msgid "Moto"
 msgstr "摩托车"
 
-#: qml/Main.qml:2402 qml/PreferencesPanel.qml:396 qml/VehicleSetupDialog.qml:53
+#: qml/Main.qml:2407 qml/PreferencesPanel.qml:405 qml/VehicleSetupDialog.qml:53
 msgid "Scooter"
 msgstr "踏板摩托车"
 
-#: qml/Main.qml:2403 qml/PreferencesPanel.qml:397 qml/VehicleSetupDialog.qml:54
+#: qml/Main.qml:2408 qml/PreferencesPanel.qml:406 qml/VehicleSetupDialog.qml:54
 msgid "Camión"
 msgstr "卡车"
 
-#: qml/Main.qml:2404 qml/PreferencesPanel.qml:398 qml/VehicleSetupDialog.qml:55
+#: qml/Main.qml:2409 qml/PreferencesPanel.qml:407 qml/VehicleSetupDialog.qml:55
 msgid "Bicicleta"
 msgstr "自行车"
 
-#: qml/Main.qml:2432
+#: qml/Main.qml:2437
 msgid "No se pudo calcular la ruta al aparcamiento"
 msgstr "无法计算前往停车位置的路线"
 
-#: qml/Main.qml:2587 qml/Main.qml:8206 qml/Main.qml:8930
+#: qml/Main.qml:2598 qml/Main.qml:8279 qml/Main.qml:9008
 msgid "OSM Scout · rutas y mapas offline"
 msgstr "OSM Scout · 离线路线与地图"
 
-#: qml/Main.qml:2599
+#: qml/Main.qml:2610
 msgid "Servidor: "
 msgstr "服务器："
 
-#: qml/Main.qml:3186
+#: qml/Main.qml:3197
 msgid "Reproducción terminada"
 msgstr "播放结束"
 
-#: qml/Main.qml:4368
+#: qml/Main.qml:4379
 msgid "GPS recuperado"
 msgstr "GPS已恢复"
 
-#: qml/Main.qml:4932
+#: qml/Main.qml:4943
 msgid "Rumbo"
 msgstr "方位"
 
-#: qml/Main.qml:4950
+#: qml/Main.qml:4961
 msgid "km/h ◄"
 msgstr "km/h ◄"
 
-#: qml/Main.qml:4950
+#: qml/Main.qml:4961
 msgid "km/h"
 msgstr "km/h"
 
-#: qml/Main.qml:4989
+#: qml/Main.qml:5000
 msgid "Fallo GPS ON"
 msgstr "GPS故障 ON"
 
-#: qml/Main.qml:4989 qml/Main.qml:7261
+#: qml/Main.qml:5000 qml/Main.qml:7309
 msgid "Fallo GPS"
 msgstr "GPS故障"
 
-#: qml/Main.qml:5016
+#: qml/Main.qml:5027
 msgid "Rev."
 msgstr "倒车"
 
-#: qml/Main.qml:5105
+#: qml/Main.qml:5116
 msgid "Ctrl ON"
 msgstr "控制 ON"
 
-#: qml/Main.qml:5105
+#: qml/Main.qml:5116
 msgid "Ctrl"
 msgstr "控制"
 
-#: qml/Main.qml:5173
+#: qml/Main.qml:5184
 msgid "Adelanto"
 msgstr "提前量"
 
-#: qml/Main.qml:5222
+#: qml/Main.qml:5233
 msgid "Con ruta"
 msgstr "有路线"
 
-#: qml/Main.qml:5261
+#: qml/Main.qml:5272
 msgid "Hdg blend"
 msgstr "Hdg blend"
 
-#: qml/Main.qml:5272
+#: qml/Main.qml:5283
 msgid "Sin ruta"
 msgstr "无路线"
 
-#: qml/Main.qml:5286
+#: qml/Main.qml:5297
 msgid "Hdg accel"
 msgstr "Hdg accel"
 
-#: qml/Main.qml:5302
+#: qml/Main.qml:5313
 msgid "Pos sin nav"
 msgstr "无导航定位"
 
-#: qml/Main.qml:5609
+#: qml/Main.qml:5620
 msgid "Seguir ruta"
 msgstr "跟随路线"
 
-#: qml/Main.qml:5636
+#: qml/Main.qml:5647
 msgid "SIMULACIÓN GPS"
 msgstr "GPS模拟"
 
-#: qml/Main.qml:5665
+#: qml/Main.qml:5676
 msgid "OSM Scout Server  ·  límites de velocidad por tramo"
 msgstr "OSM Scout Server · 分段限速"
 
-#: qml/Main.qml:5940
+#: qml/Main.qml:5951
 msgid "Mapa 3D"
 msgstr "3D 地图"
 
-#: qml/Main.qml:5941
+#: qml/Main.qml:5952
 msgid "Mapa"
 msgstr "地图"
 
-#: qml/Main.qml:5942 qml/PreferencesPanel.qml:25
+#: qml/Main.qml:5953 qml/PreferencesPanel.qml:25
 msgid "Satélite"
 msgstr "卫星"
 
-#: qml/Main.qml:5943 qml/PreferencesPanel.qml:29
+#: qml/Main.qml:5954 qml/PreferencesPanel.qml:29
 msgid "Claro"
 msgstr "明亮"
 
-#: qml/Main.qml:5944 qml/PreferencesPanel.qml:29
+#: qml/Main.qml:5955 qml/PreferencesPanel.qml:29
 msgid "Vivo"
 msgstr "鲜艳"
 
-#: qml/Main.qml:5946 qml/PreferencesPanel.qml:30 qml/PreferencesPanel.qml:332
+#: qml/Main.qml:5957 qml/PreferencesPanel.qml:30 qml/PreferencesPanel.qml:341
 msgid "Noche"
 msgstr "夜间"
 
-#: qml/Main.qml:6182 qml/Main.qml:6204
+#: qml/Main.qml:6193 qml/Main.qml:6215
 msgid "Alerta"
 msgstr "警报"
 
-#: qml/Main.qml:6232 qml/PreferencesPanel.qml:24 qml/PreferencesPanel.qml:332
+#: qml/Main.qml:6243 qml/PreferencesPanel.qml:24 qml/PreferencesPanel.qml:341
 msgid "Auto"
 msgstr "自动"
 
-#: qml/Main.qml:6923
+#: qml/Main.qml:6934
 msgid "Voz + alertas"
 msgstr "语音 + 警报"
 
-#: qml/Main.qml:6924
+#: qml/Main.qml:6935
 msgid "Solo alertas"
 msgstr "仅警报"
 
-#: qml/Main.qml:6925
+#: qml/Main.qml:6936
 msgid "Solo pitidos"
 msgstr "仅蜂鸣"
 
-#: qml/Main.qml:6925
+#: qml/Main.qml:6936
 msgid "Silencio"
 msgstr "静音"
 
-#: qml/Main.qml:6957
+#: qml/Main.qml:6968
 msgid "Compartiendo"
 msgstr "正在共享"
 
-#: qml/Main.qml:6982
+#: qml/Main.qml:7004 qml/PreferencesPanel.qml:2038
+msgid "Grabando"
+msgstr "录制中"
+
+#: qml/Main.qml:7004
+msgid "Grabar ruta"
+msgstr "记录轨迹"
+
+#: qml/Main.qml:7030
 msgid "Prev. Ruta"
 msgstr "预览路线"
 
-#: qml/Main.qml:6997
+#: qml/Main.qml:7045
 msgid "Tareas"
 msgstr "任务"
 
-#: qml/Main.qml:7024
+#: qml/Main.qml:7072
 msgid "🅿 Aparcamiento guardado · "
 msgstr "🅿 已保存停车位 · "
 
-#: qml/Main.qml:7041
+#: qml/Main.qml:7089
 msgid "Borrar aparcamiento"
 msgstr "清除停车位"
 
-#: qml/Main.qml:7052
+#: qml/Main.qml:7100
 msgid "🗑 Aparcamiento eliminado · "
 msgstr "🗑 已删除停车位 · "
 
-#: qml/Main.qml:7069
+#: qml/Main.qml:7117
 msgid "Ver vehículo"
 msgstr "查看车辆"
 
-#: qml/Main.qml:7102 qml/ParkingDialog.qml:61
+#: qml/Main.qml:7150 qml/ParkingDialog.qml:61
 msgid "Ir al aparcamiento"
 msgstr "前往停车位"
 
-#: qml/Main.qml:7120 qml/MediaPanel.qml:222
+#: qml/Main.qml:7168 qml/MediaPanel.qml:222
 msgid "Música"
 msgstr "音乐"
 
-#: qml/Main.qml:7152
+#: qml/Main.qml:7200
 msgid "Login"
 msgstr "登录"
 
-#: qml/Main.qml:7168 qml/MessagesPanel.qml:106
+#: qml/Main.qml:7216 qml/MessagesPanel.qml:106
 msgid "Mensajes"
 msgstr "消息"
 
-#: qml/Main.qml:7198
+#: qml/Main.qml:7246
 msgid "Bloq. Mapa"
 msgstr "锁定地图"
 
-#: qml/Main.qml:7215 qml/PreferencesPanel.qml:3120
+#: qml/Main.qml:7263 qml/PreferencesPanel.qml:3130
 msgid "Debug"
 msgstr "Debug"
 
-#: qml/Main.qml:7230
+#: qml/Main.qml:7278
 msgid "Sim GPS"
 msgstr "Sim GPS"
 
-#: qml/Main.qml:7261
+#: qml/Main.qml:7309
 msgid "GPS on"
 msgstr "GPS开启"
 
-#: qml/Main.qml:7276
+#: qml/Main.qml:7324
 msgid "Reanudar"
 msgstr "继续"
 
-#: qml/Main.qml:7276
+#: qml/Main.qml:7324
 msgid "Pausar sim"
 msgstr "暂停模拟"
 
-#: qml/Main.qml:7292 qml/PreferencesPanel.qml:1779
+#: qml/Main.qml:7340 qml/PreferencesPanel.qml:1788
 msgid "Suavizado GPS"
 msgstr "GPS平滑"
 
-#: qml/Main.qml:7309
+#: qml/Main.qml:7357
 msgid "IMU debug"
 msgstr "IMU 调试"
 
-#: qml/Main.qml:7326
+#: qml/Main.qml:7374
 msgid "Bisector"
 msgstr "Bisector"
 
-#: qml/Main.qml:7343
+#: qml/Main.qml:7391
 msgid "POIs debug"
 msgstr "POIs debug"
 
-#: qml/Main.qml:7373
+#: qml/Main.qml:7421
 msgid "Donar"
 msgstr "捐赠"
 
-#: qml/Main.qml:7582
+#: qml/Main.qml:7646
 msgid "INICIO"
 msgstr "起点"
 
-#: qml/Main.qml:7619
+#: qml/Main.qml:7683
 msgid "FIN"
 msgstr "终点"
 
-#: qml/Main.qml:7750
+#: qml/Main.qml:7814
 msgid "Inicio sim"
 msgstr "模拟开始"
 
-#: qml/Main.qml:7770 qml/MessagesPanel.qml:351 qml/MsgDetailPopup.qml:175
+#: qml/Main.qml:7834 qml/MessagesPanel.qml:351 qml/MsgDetailPopup.qml:175
 msgid "Añadir destino"
 msgstr "添加目的地"
 
-#: qml/Main.qml:7814
+#: qml/Main.qml:7878
 msgid "🚨  Añadir alerta aquí"
 msgstr "🚨  在此添加警报"
 
-#: qml/Main.qml:7843
+#: qml/Main.qml:7907
 msgid "📍 Establecer posición GPS"
 msgstr "📍 设置 GPS 位置"
 
-#: qml/Main.qml:7968
+#: qml/Main.qml:8032
 msgid "👍  Confirmar"
 msgstr "👍  确认"
 
-#: qml/Main.qml:7991
+#: qml/Main.qml:8055
 msgid "👎  Desmentir"
 msgstr "👎  否认"
 
-#: qml/Main.qml:8016
+#: qml/Main.qml:8080
 msgid "🗑  Cancelar mi alerta"
 msgstr "🗑  取消我的警报"
 
-#: qml/Main.qml:8102
+#: qml/Main.qml:8166
 msgid "Satélites"
 msgstr "卫星"
 
-#: qml/Main.qml:8209
+#: qml/Main.qml:8282
 msgid "OSM Scout no disponible · usando "
 msgstr "OSM Scout 不可用 · 正在使用 "
 
-#: qml/Main.qml:8267
+#: qml/Main.qml:8340
 msgid "Caché de mapas eliminada"
 msgstr "地图缓存已清除"
 
-#: qml/Main.qml:8484
+#: qml/Main.qml:8562
 msgid "Límite comunitario"
 msgstr "社区限速"
 
-#: qml/Main.qml:8491
+#: qml/Main.qml:8569
 msgid "Eliminar este límite"
 msgstr "删除此限速"
 
-#: qml/Main.qml:8558
+#: qml/Main.qml:8636
 msgid "Límite de velocidad aquí"
 msgstr "此处限速"
 
-#: qml/Main.qml:8697
+#: qml/Main.qml:8775
 msgid "⚙  Configuración en el servidor"
 msgstr "⚙  服务器上的配置"
 
-#: qml/Main.qml:8713
+#: qml/Main.qml:8791
 msgid "Tienes cambios locales no sincronizados. ¿Cuál configuración usar?"
 msgstr "你有未同步的本地更改，请选择使用哪个配置。"
 
-#: qml/Main.qml:8725
+#: qml/Main.qml:8803
 msgid "Usar del servidor"
 msgstr "使用服务器配置"
 
-#: qml/Main.qml:8735
+#: qml/Main.qml:8813
 msgid "✓ Configuración del servidor aplicada"
 msgstr "✓ 已应用服务器配置"
 
-#: qml/Main.qml:8744
+#: qml/Main.qml:8822
 msgid "Mantener la local"
 msgstr "保留本地配置"
 
-#: qml/Main.qml:8847
+#: qml/Main.qml:8925
 msgid "Cacheando mapa… detalle"
 msgstr "正在缓存地图… 细节"
 
-#: qml/Main.qml:8867
+#: qml/Main.qml:8945
 msgid "Cacheando mapa… "
 msgstr "正在缓存地图… "
 
-#: qml/Main.qml:8897
+#: qml/Main.qml:8975
 msgid "Mapa online: OSM Scout"
 msgstr "在线地图：OSM Scout"
 
-#: qml/Main.qml:8899
+#: qml/Main.qml:8977
 msgid "Mapa online: OSM Scout (no disponible · usando Mapbox)"
 msgstr "在线地图：OSM Scout（不可用 · 正在使用 Mapbox）"
 
-#: qml/Main.qml:8901
+#: qml/Main.qml:8979
 msgid "Mapa online: Mapbox"
 msgstr "在线地图：Mapbox"
 
-#: qml/Main.qml:8906
+#: qml/Main.qml:8984
 msgid "Sin internet: fallback a OSM Scout"
 msgstr "无网络：回退到 OSM Scout"
 
-#: qml/Main.qml:8908
+#: qml/Main.qml:8986
 msgid "Sin internet: fallback OSM Scout (no disponible)"
 msgstr "无网络：回退到 OSM Scout（不可用）"
 
-#: qml/Main.qml:8910
+#: qml/Main.qml:8988
 msgid "Sin internet: caché de tiles"
 msgstr "无网络：使用瓦片缓存"
 
-#: qml/Main.qml:8967
+#: qml/Main.qml:9045
 msgid "Mapas: servidor no disponible · usando OSM Scout"
 msgstr "地图：服务器不可用 · 使用 OSM Scout"
 
-#: qml/Main.qml:8969
+#: qml/Main.qml:9047
 msgid "Mapas: servidor no disponible · usando servidor público"
 msgstr "地图：服务器不可用 · 使用公共服务器"
 
-#: qml/Main.qml:8989
+#: qml/Main.qml:9067
 msgid "Servidor de mapas recuperado · restaurando"
 msgstr "地图服务器已恢复 · 正在还原"
 
-#: qml/Main.qml:9007 qml/Main.qml:9015
+#: qml/Main.qml:9089 qml/Main.qml:9102
 msgid "Sin internet · usando OSM Scout Server"
 msgstr "无网络 · 使用 OSM Scout Server"
 
-#: qml/Main.qml:9031 qml/Main.qml:9036
+#: qml/Main.qml:9118 qml/Main.qml:9123
 msgid "Conexión restaurada · volviendo a mapas online"
 msgstr "连接已恢复 · 返回在线地图"
 
-#: qml/Main.qml:9097
+#: qml/Main.qml:9184
 msgid "Cacheando mapa… 0%"
 msgstr "正在缓存地图… 0%"
 
-#: qml/Main.qml:9201
+#: qml/Main.qml:9289
 msgid "Tienes un mensaje nuevo"
 msgstr "您有一条新消息"
 
-#: qml/Main.qml:9202
+#: qml/Main.qml:9290
 msgid "Tienes %1 mensajes nuevos"
 msgstr "您有 %1 条新消息"
 
-#: qml/Main.qml:9236 qml/RouteSelectPanel.qml:171 qml/SearchPanel.qml:2044
+#: qml/Main.qml:9325 qml/RouteSelectPanel.qml:171 qml/SearchPanel.qml:2051
 msgid "Ruta más rápida"
 msgstr "最快路线"
 
-#: qml/Main.qml:9240
+#: qml/Main.qml:9329
 msgid "Ahorra"
 msgstr "节省"
 
-#: qml/Main.qml:9250
+#: qml/Main.qml:9339
 msgid "Revisar"
 msgstr "查看"
 
-#: qml/Main.qml:9259
+#: qml/Main.qml:9348
 msgid "Ignorar"
 msgstr "忽略"
 
-#: qml/Main.qml:9315
+#: qml/Main.qml:9404
 msgid "Pre-procesando motor TTS"
 msgstr "正在预处理 TTS 引擎"
 
-#: qml/Main.qml:9316
+#: qml/Main.qml:9405
 msgid "GPS impreciso. Simulando trayecto."
 msgstr "GPS不准确。正在模拟路线。"
 
-#: qml/Main.qml:9319
+#: qml/Main.qml:9408
 msgid "Cargando mapa…"
 msgstr "加载地图中…"
 
-#: qml/Main.qml:9875 qml/SharedLocationDialog.qml:61
+#: qml/Main.qml:9964 qml/SharedLocationDialog.qml:61
 msgid "Ubicación compartida"
 msgstr "共享位置"
 
-#: qml/Main.qml:10120
+#: qml/Main.qml:10211
 msgid "¿Has llegado a"
 msgstr "你已到达"
 
-#: qml/Main.qml:10121
+#: qml/Main.qml:10212
 msgid "el destino"
 msgstr "目的地"
 
-#: qml/Main.qml:10130
+#: qml/Main.qml:10221
 msgid "Sí, he llegado"
 msgstr "是的，已到达"
 
-#: qml/Main.qml:10141
+#: qml/Main.qml:10232
 msgid "Todavía no"
 msgstr "还没有"
 
-#: qml/Main.qml:10173
+#: qml/Main.qml:10264
 msgid "Tareas pendientes"
 msgstr "待办任务"
 
-#: qml/Main.qml:10182
+#: qml/Main.qml:10273
 msgid "Abrir"
 msgstr "打开"
 
-#: qml/Main.qml:10223
+#: qml/Main.qml:10314
 msgid "🅿 ¿Guardar aparcamiento aquí?"
 msgstr "🅿 要在此保存停车位置吗？"
 
-#: qml/Main.qml:10232 qml/PreferencesPanel.qml:944 qml/SearchPanel.qml:2159
+#: qml/Main.qml:10323 qml/PreferencesPanel.qml:953 qml/SearchPanel.qml:2166
 msgid "Guardar"
 msgstr "保存"
 
-#: qml/Main.qml:10241
+#: qml/Main.qml:10332
 msgid "🅿 Aparcamiento guardado"
 msgstr "🅿 已保存停车位"
 
@@ -1624,7 +1632,7 @@ msgid "Ir a"
 msgstr "前往"
 
 #: qml/MessagesPanel.qml:361 qml/MsgDetailPopup.qml:188
-#: qml/SearchPanel.qml:1572
+#: qml/SearchPanel.qml:1579
 msgid "Destino"
 msgstr "目的地"
 
@@ -1724,331 +1732,331 @@ msgstr "导航"
 msgid "Fiord"
 msgstr "峡湾"
 
-#: qml/PreferencesPanel.qml:201
+#: qml/PreferencesPanel.qml:210
 msgid "Restaurado"
 msgstr "已恢复"
 
-#: qml/PreferencesPanel.qml:202 qml/PreferencesPanel.qml:1267
-#: qml/PreferencesPanel.qml:1295 qml/PreferencesPanel.qml:2051
-#: qml/PreferencesPanel.qml:2727
+#: qml/PreferencesPanel.qml:211 qml/PreferencesPanel.qml:1276
+#: qml/PreferencesPanel.qml:1304 qml/PreferencesPanel.qml:2060
+#: qml/PreferencesPanel.qml:2737
 msgid "Toca de nuevo para confirmar"
 msgstr "再次点击确认"
 
-#: qml/PreferencesPanel.qml:277
+#: qml/PreferencesPanel.qml:286
 msgid "Nivel de opciones"
 msgstr "选项级别"
 
-#: qml/PreferencesPanel.qml:280
+#: qml/PreferencesPanel.qml:289
 msgid "Mínimo"
 msgstr "最小"
 
-#: qml/PreferencesPanel.qml:280
+#: qml/PreferencesPanel.qml:289
 msgid "Medio"
 msgstr "中等"
 
-#: qml/PreferencesPanel.qml:280
+#: qml/PreferencesPanel.qml:289
 msgid "Avanzado"
 msgstr "高级"
 
-#: qml/PreferencesPanel.qml:297
+#: qml/PreferencesPanel.qml:306
 msgid "Ajustes rápidos"
 msgstr "快速设置"
 
-#: qml/PreferencesPanel.qml:327
+#: qml/PreferencesPanel.qml:336
 msgid "Modo de luz"
 msgstr "亮度模式"
 
-#: qml/PreferencesPanel.qml:332
+#: qml/PreferencesPanel.qml:341
 msgid "Día"
 msgstr "白天"
 
-#: qml/PreferencesPanel.qml:359
+#: qml/PreferencesPanel.qml:368
 msgid "Estilo de mapa"
 msgstr "地图样式"
 
-#: qml/PreferencesPanel.qml:409
+#: qml/PreferencesPanel.qml:418
 msgid "Vehículos"
 msgstr "车辆"
 
-#: qml/PreferencesPanel.qml:422
+#: qml/PreferencesPanel.qml:431
 msgid "+ Añadir"
 msgstr "+ 添加"
 
-#: qml/PreferencesPanel.qml:488 qml/PreferencesPanel.qml:3751
+#: qml/PreferencesPanel.qml:497 qml/PreferencesPanel.qml:3767
 msgid "Borrar"
 msgstr "删除"
 
-#: qml/PreferencesPanel.qml:504
+#: qml/PreferencesPanel.qml:513
 msgid "Sí"
 msgstr "是"
 
-#: qml/PreferencesPanel.qml:520 qml/PreferencesPanel.qml:1356
-#: qml/PreferencesPanel.qml:1386
+#: qml/PreferencesPanel.qml:529 qml/PreferencesPanel.qml:1365
+#: qml/PreferencesPanel.qml:1395
 msgid "No"
 msgstr "关闭"
 
-#: qml/PreferencesPanel.qml:543 qml/VehicleSetupDialog.qml:93
+#: qml/PreferencesPanel.qml:552 qml/VehicleSetupDialog.qml:93
 msgid "Nombre"
 msgstr "名称"
 
-#: qml/PreferencesPanel.qml:560 qml/VehicleSetupDialog.qml:110
+#: qml/PreferencesPanel.qml:569 qml/VehicleSetupDialog.qml:110
 msgid "Tipo"
 msgstr "类型"
 
-#: qml/PreferencesPanel.qml:586
+#: qml/PreferencesPanel.qml:595
 msgid "Crear vehículo"
 msgstr "创建车辆"
 
-#: qml/PreferencesPanel.qml:617
+#: qml/PreferencesPanel.qml:626
 msgid "General"
 msgstr "常规"
 
-#: qml/PreferencesPanel.qml:648
+#: qml/PreferencesPanel.qml:657
 msgid "Tamaño de texto"
 msgstr "文字大小"
 
-#: qml/PreferencesPanel.qml:676
+#: qml/PreferencesPanel.qml:685
 msgid "Sistema de medidas"
 msgstr "度量单位"
 
-#: qml/PreferencesPanel.qml:679
+#: qml/PreferencesPanel.qml:688
 msgid "Métrico"
 msgstr "公制"
 
-#: qml/PreferencesPanel.qml:679
+#: qml/PreferencesPanel.qml:688
 msgid "Imperial"
 msgstr "英制"
 
-#: qml/PreferencesPanel.qml:698
+#: qml/PreferencesPanel.qml:707
 msgid "Mostrar novedades al inicio"
 msgstr "启动时显示更新内容"
 
-#: qml/PreferencesPanel.qml:701
+#: qml/PreferencesPanel.qml:710
 msgid "Pantalla de cambios en cada deploy"
 msgstr "每次更新部署时显示变更页面"
 
-#: qml/PreferencesPanel.qml:724 qml/PreferencesPanel.qml:767
+#: qml/PreferencesPanel.qml:733 qml/PreferencesPanel.qml:776
 msgid "Servidor de rutas"
 msgstr "路线服务器"
 
-#: qml/PreferencesPanel.qml:781
+#: qml/PreferencesPanel.qml:790
 msgid "Preferir OSM Scout Server si disponible"
 msgstr "优先使用OSM Scout Server（如可用）"
 
-#: qml/PreferencesPanel.qml:782
+#: qml/PreferencesPanel.qml:791
 msgid "Enrutamiento offline · se detecta al arrancar"
 msgstr "离线导航 · 启动时自动检测"
 
-#: qml/PreferencesPanel.qml:806
+#: qml/PreferencesPanel.qml:815
 msgid "Detectar"
 msgstr "检测"
 
-#: qml/PreferencesPanel.qml:824
+#: qml/PreferencesPanel.qml:833
 msgid "Servidor Navius"
 msgstr "Navius 服务器"
 
-#: qml/PreferencesPanel.qml:889
+#: qml/PreferencesPanel.qml:898
 msgid "Añadir servidor"
 msgstr "添加服务器"
 
-#: qml/PreferencesPanel.qml:902
+#: qml/PreferencesPanel.qml:911
 msgid "Nombre (ej. Mi servidor)"
 msgstr "名称（如：我的服务器）"
 
-#: qml/PreferencesPanel.qml:979
+#: qml/PreferencesPanel.qml:988
 msgid "Mapa online"
 msgstr "在线地图"
 
-#: qml/PreferencesPanel.qml:1025
+#: qml/PreferencesPanel.qml:1034
 msgid "Servidor de tiles"
 msgstr "瓦片服务器"
 
-#: qml/PreferencesPanel.qml:1071 qml/PreferencesPanel.qml:1161
+#: qml/PreferencesPanel.qml:1080 qml/PreferencesPanel.qml:1170
 msgid "Externo"
 msgstr "外部"
 
-#: qml/PreferencesPanel.qml:1090
+#: qml/PreferencesPanel.qml:1099
 msgid "Tema de día"
 msgstr "白天主题"
 
-#: qml/PreferencesPanel.qml:1115
+#: qml/PreferencesPanel.qml:1124
 msgid "Servidor de POIs y radares"
 msgstr "POI和测速摄像头服务器"
 
-#: qml/PreferencesPanel.qml:1180
+#: qml/PreferencesPanel.qml:1189
 msgid "Sin internet"
 msgstr "无网络"
 
-#: qml/PreferencesPanel.qml:1199
+#: qml/PreferencesPanel.qml:1208
 msgid "Caché"
 msgstr "缓存"
 
-#: qml/PreferencesPanel.qml:1236
+#: qml/PreferencesPanel.qml:1245
 msgid "Espacio máximo en disco"
 msgstr "最大磁盘占用"
 
-#: qml/PreferencesPanel.qml:1266 qml/PreferencesPanel.qml:1294
-#: qml/PreferencesPanel.qml:2726
+#: qml/PreferencesPanel.qml:1275 qml/PreferencesPanel.qml:1303
+#: qml/PreferencesPanel.qml:2736
 msgid "Caché eliminada"
 msgstr "缓存已清除"
 
-#: qml/PreferencesPanel.qml:1268
+#: qml/PreferencesPanel.qml:1277
 msgid "Limpiar caché de mapas"
 msgstr "清除地图缓存"
 
-#: qml/PreferencesPanel.qml:1296
+#: qml/PreferencesPanel.qml:1305
 msgid "Limpiar caché Google Maps"
 msgstr "清除Google Maps缓存"
 
-#: qml/PreferencesPanel.qml:1352
+#: qml/PreferencesPanel.qml:1361
 msgid "Sonido de alertas"
 msgstr "提醒音效"
 
-#: qml/PreferencesPanel.qml:1356 qml/PreferencesPanel.qml:1386
-#: qml/PreferencesPanel.qml:2292
+#: qml/PreferencesPanel.qml:1365 qml/PreferencesPanel.qml:1395
+#: qml/PreferencesPanel.qml:2301
 msgid "Voz"
 msgstr "语音"
 
-#: qml/PreferencesPanel.qml:1356 qml/PreferencesPanel.qml:1386
+#: qml/PreferencesPanel.qml:1365 qml/PreferencesPanel.qml:1395
 msgid "Pitido"
 msgstr "蜂鸣"
 
-#: qml/PreferencesPanel.qml:1382
+#: qml/PreferencesPanel.qml:1391
 msgid "Sonido de indicaciones"
 msgstr "指示音效"
 
-#: qml/PreferencesPanel.qml:1412
+#: qml/PreferencesPanel.qml:1421
 msgid "Radares fijos"
 msgstr "固定测速摄像头"
 
-#: qml/PreferencesPanel.qml:1415
+#: qml/PreferencesPanel.qml:1424
 msgid "Iconos y alertas de radares de velocidad fijos"
 msgstr "固定测速摄像头图标和提醒"
 
-#: qml/PreferencesPanel.qml:1437
+#: qml/PreferencesPanel.qml:1446
 msgid "Radares de tramo"
 msgstr "区间测速"
 
-#: qml/PreferencesPanel.qml:1440
+#: qml/PreferencesPanel.qml:1449
 msgid "Zonas de control de velocidad media + barra de progreso"
 msgstr "平均速度控制区域+进度条"
 
-#: qml/PreferencesPanel.qml:1463
+#: qml/PreferencesPanel.qml:1472
 msgid "Aviso de exceso de velocidad"
 msgstr "超速提醒"
 
-#: qml/PreferencesPanel.qml:1466
+#: qml/PreferencesPanel.qml:1475
 msgid "Parpadeo al superar el límite"
 msgstr "超速时闪烁提示"
 
-#: qml/PreferencesPanel.qml:1489
+#: qml/PreferencesPanel.qml:1498
 msgid "Margen exceso de velocidad"
 msgstr "超速容差"
 
-#: qml/PreferencesPanel.qml:1493
+#: qml/PreferencesPanel.qml:1502
 msgid "Sin margen"
 msgstr "无边距"
 
-#: qml/PreferencesPanel.qml:1516
+#: qml/PreferencesPanel.qml:1525
 msgid "Zoom automático"
 msgstr "自动缩放"
 
-#: qml/PreferencesPanel.qml:1519
+#: qml/PreferencesPanel.qml:1528
 msgid "Ajusta el zoom según la velocidad"
 msgstr "根据速度自动调整缩放"
 
-#: qml/PreferencesPanel.qml:1545
+#: qml/PreferencesPanel.qml:1554
 msgid "Anticipación zoom automático"
 msgstr "自动缩放预判"
 
-#: qml/PreferencesPanel.qml:1554
+#: qml/PreferencesPanel.qml:1563
 msgid ""
 "Ajuste de zoom automático para que se vea al menos la distancia a recorrer "
 "en este tiempo"
 msgstr "自动缩放设置，确保至少可见该时间内的行驶距离"
 
-#: qml/PreferencesPanel.qml:1579
+#: qml/PreferencesPanel.qml:1588
 msgid "Ajustar movimiento a ruta"
 msgstr "贴合路线移动"
 
-#: qml/PreferencesPanel.qml:1582
+#: qml/PreferencesPanel.qml:1591
 msgid "Zoom según velocidades Valhalla de los tramos por delante"
 msgstr "根据前方路段Valhalla速度调整缩放"
 
-#: qml/PreferencesPanel.qml:1608
+#: qml/PreferencesPanel.qml:1617
 msgid "Anticipación giro de ruta"
 msgstr "转向预判"
 
-#: qml/PreferencesPanel.qml:1617
+#: qml/PreferencesPanel.qml:1626
 msgid "Segundos de ruta por delante para anticipar el giro del mapa"
 msgstr "前方路线秒数，用于预判地图旋转"
 
-#: qml/PreferencesPanel.qml:1645
+#: qml/PreferencesPanel.qml:1654
 msgid "Ángulo máximo de giro predictivo"
 msgstr "预测转弯最大角度"
 
-#: qml/PreferencesPanel.qml:1654
+#: qml/PreferencesPanel.qml:1663
 msgid "Máximo desvío angular del mapa respecto al heading real en modo giro"
 msgstr "转弯模式下地图相对真实航向的最大角度偏差"
 
-#: qml/PreferencesPanel.qml:1679
+#: qml/PreferencesPanel.qml:1688
 msgid "Ajuste de posición a la ruta"
 msgstr "路线位置吸附"
 
-#: qml/PreferencesPanel.qml:1682
+#: qml/PreferencesPanel.qml:1691
 msgid "Centrar el vehículo sobre el shape de la ruta"
 msgstr "将车辆居中对齐路线轨迹"
 
-#: qml/PreferencesPanel.qml:1708
+#: qml/PreferencesPanel.qml:1717
 msgid "Distancia máxima de ajuste"
 msgstr "最大吸附距离"
 
-#: qml/PreferencesPanel.qml:1717
+#: qml/PreferencesPanel.qml:1726
 msgid ""
 "Ajustar posición visual si el GPS está a menos de esta distancia de la ruta"
 msgstr "当 GPS 距离路线小于此距离时调整视觉位置"
 
-#: qml/PreferencesPanel.qml:1745
+#: qml/PreferencesPanel.qml:1754
 msgid "Desvío para recalcular ruta"
 msgstr "重新计算路线的偏离距离"
 
-#: qml/PreferencesPanel.qml:1754
+#: qml/PreferencesPanel.qml:1763
 msgid "Distancia fuera de la ruta antes de recalcular"
 msgstr "偏离路线距离（触发重算）"
 
-#: qml/PreferencesPanel.qml:1782
+#: qml/PreferencesPanel.qml:1791
 msgid "Suavizar el movimiento del vehículo y el mapa entre ticks GPS"
 msgstr "在GPS更新间隔之间平滑车辆和地图移动"
 
-#: qml/PreferencesPanel.qml:1805
+#: qml/PreferencesPanel.qml:1814
 msgid "Frecuencia de suavizado"
 msgstr "平滑频率"
 
-#: qml/PreferencesPanel.qml:1833
+#: qml/PreferencesPanel.qml:1842
 msgid "Slider de zoom"
 msgstr "缩放滑块"
 
-#: qml/PreferencesPanel.qml:1836
+#: qml/PreferencesPanel.qml:1845
 msgid "Barra lateral para ajustar el zoom"
 msgstr "侧边栏调整缩放"
 
-#: qml/PreferencesPanel.qml:1859
+#: qml/PreferencesPanel.qml:1868
 msgid "Inhibir suspensión de pantalla"
 msgstr "禁止屏幕休眠"
 
-#: qml/PreferencesPanel.qml:1862
+#: qml/PreferencesPanel.qml:1871
 msgid "Mantiene la pantalla encendida mientras la app está abierta"
 msgstr "应用开启时保持屏幕常亮"
 
-#: qml/PreferencesPanel.qml:1885
+#: qml/PreferencesPanel.qml:1894
 msgid "Mostrar velocidad máxima de la vía"
 msgstr "显示道路限速"
 
-#: qml/PreferencesPanel.qml:1888
+#: qml/PreferencesPanel.qml:1897
 msgid "Fuente no fiable (OSM/Valhalla). Solo activa si hay radar comunitario"
 msgstr "数据源不可靠(OSM/Valhalla)，仅在有社区测速时启用"
 
-#: qml/PreferencesPanel.qml:1914
+#: qml/PreferencesPanel.qml:1923
 msgid ""
 "Usa la velocidad Doppler del chip GPS en vez de calcularla por diferencia de "
 "posiciones. Más precisa a baja velocidad y en aceleraciones. Desactiva si "
@@ -2057,308 +2065,304 @@ msgstr ""
 "使用GPS芯片多普勒速度，而非通过位置差计算。低速和加速时更精准。如出现速度异常"
 "请关闭。"
 
-#: qml/PreferencesPanel.qml:1938
+#: qml/PreferencesPanel.qml:1947
 msgid "Grabación de rutas"
 msgstr "路线录制"
 
-#: qml/PreferencesPanel.qml:2025
+#: qml/PreferencesPanel.qml:2034
 msgid "Grabación GPS"
 msgstr "GPS录制"
 
-#: qml/PreferencesPanel.qml:2029
-msgid "Grabando"
-msgstr "录制中"
-
-#: qml/PreferencesPanel.qml:2030
+#: qml/PreferencesPanel.qml:2039
 msgid "Grabando…"
 msgstr "录制中…"
 
-#: qml/PreferencesPanel.qml:2031
+#: qml/PreferencesPanel.qml:2040
 msgid "Graba posición y velocidad"
 msgstr "记录位置和速度"
 
-#: qml/PreferencesPanel.qml:2050
+#: qml/PreferencesPanel.qml:2059
 msgid "Rutas eliminadas"
 msgstr "路线已删除"
 
-#: qml/PreferencesPanel.qml:2052
+#: qml/PreferencesPanel.qml:2061
 msgid "Borrar todas las rutas grabadas"
 msgstr "删除所有录制路线"
 
-#: qml/PreferencesPanel.qml:2072
+#: qml/PreferencesPanel.qml:2081
 msgid "Rutas grabadas"
 msgstr "已录制路线"
 
-#: qml/PreferencesPanel.qml:2083
+#: qml/PreferencesPanel.qml:2092
 msgid "Ninguna ruta grabada aún"
 msgstr "暂无录制路线"
 
-#: qml/PreferencesPanel.qml:2123
+#: qml/PreferencesPanel.qml:2132
 msgid "Simular"
 msgstr "模拟"
 
-#: qml/PreferencesPanel.qml:2131
+#: qml/PreferencesPanel.qml:2140
 msgid "GPS crudo"
 msgstr "原始 GPS"
 
-#: qml/PreferencesPanel.qml:2187
+#: qml/PreferencesPanel.qml:2196
 msgid "Eliminar"
 msgstr "删除"
 
-#: qml/PreferencesPanel.qml:2221
+#: qml/PreferencesPanel.qml:2230
 msgid "OK"
 msgstr "确定"
 
-#: qml/PreferencesPanel.qml:2378
+#: qml/PreferencesPanel.qml:2388
 msgid "Idioma de voz"
 msgstr "语音语言"
 
-#: qml/PreferencesPanel.qml:2383
+#: qml/PreferencesPanel.qml:2393
 msgid "Sistema"
 msgstr "系统"
 
-#: qml/PreferencesPanel.qml:2410
+#: qml/PreferencesPanel.qml:2420
 msgid "Voz Piper"
 msgstr "Piper语音"
 
-#: qml/PreferencesPanel.qml:2421 qml/PreferencesPanel.qml:2489
-#: qml/PreferencesPanel.qml:2558
+#: qml/PreferencesPanel.qml:2431 qml/PreferencesPanel.qml:2499
+#: qml/PreferencesPanel.qml:2568
 msgid "Automático"
 msgstr "自动"
 
-#: qml/PreferencesPanel.qml:2478
+#: qml/PreferencesPanel.qml:2488
 msgid "Voz PicoTTS"
 msgstr "PicoTTS语音"
 
-#: qml/PreferencesPanel.qml:2547
+#: qml/PreferencesPanel.qml:2557
 msgid "Voz espeak-ng"
 msgstr "espeak-ng语音"
 
-#: qml/PreferencesPanel.qml:2621
+#: qml/PreferencesPanel.qml:2631
 msgid "Procesando voz…"
 msgstr "处理语音中…"
 
-#: qml/PreferencesPanel.qml:2631
+#: qml/PreferencesPanel.qml:2641
 msgid "Motor TTS"
 msgstr "TTS引擎"
 
-#: qml/PreferencesPanel.qml:2710
+#: qml/PreferencesPanel.qml:2720
 msgid "Gestionar voces TTS"
 msgstr "管理TTS语音"
 
-#: qml/PreferencesPanel.qml:2728
+#: qml/PreferencesPanel.qml:2738
 msgid "Limpiar caché audio en ruta"
 msgstr "清除路线音频缓存"
 
-#: qml/PreferencesPanel.qml:2755
+#: qml/PreferencesPanel.qml:2765
 msgid "Media"
 msgstr "中"
 
-#: qml/PreferencesPanel.qml:2787
+#: qml/PreferencesPanel.qml:2797
 msgid "Volumen al hablar"
 msgstr "语音音量"
 
-#: qml/PreferencesPanel.qml:2816
+#: qml/PreferencesPanel.qml:2826
 msgid "Cuenta Navius"
 msgstr "Navius账户"
 
-#: qml/PreferencesPanel.qml:2845
+#: qml/PreferencesPanel.qml:2855
 msgid "No identificado"
 msgstr "未登录"
 
-#: qml/PreferencesPanel.qml:2862
+#: qml/PreferencesPanel.qml:2872
 msgid "Iniciar sesión / Registro"
 msgstr "登录 / 注册"
 
-#: qml/PreferencesPanel.qml:2891
+#: qml/PreferencesPanel.qml:2901
 msgid "Privacidad"
 msgstr "隐私"
 
-#: qml/PreferencesPanel.qml:2921
+#: qml/PreferencesPanel.qml:2931
 msgid "Política de privacidad aceptada"
 msgstr "接受的隐私政策"
 
-#: qml/PreferencesPanel.qml:2922
+#: qml/PreferencesPanel.qml:2932
 msgid "Política de privacidad no aceptada"
 msgstr "隐私政策不被接受"
 
-#: qml/PreferencesPanel.qml:2940
+#: qml/PreferencesPanel.qml:2950
 msgid "Retirar consentimiento"
 msgstr "撤回同意"
 
-#: qml/PreferencesPanel.qml:2941
+#: qml/PreferencesPanel.qml:2951
 msgid "Aceptar política de privacidad"
 msgstr "接受隐私政策"
 
-#: qml/PreferencesPanel.qml:2989
+#: qml/PreferencesPanel.qml:2999
 msgid "Ayuda"
 msgstr "帮助"
 
-#: qml/PreferencesPanel.qml:3042
+#: qml/PreferencesPanel.qml:3052
 msgid "Abrir asistente"
 msgstr "打开向导"
 
-#: qml/PreferencesPanel.qml:3064
+#: qml/PreferencesPanel.qml:3074
 msgid "Mostrar asistente al inicio"
 msgstr "启动时显示向导"
 
-#: qml/PreferencesPanel.qml:3097
+#: qml/PreferencesPanel.qml:3107
 msgid "Acerca de…"
 msgstr "关于…"
 
-#: qml/PreferencesPanel.qml:3148
+#: qml/PreferencesPanel.qml:3158
 msgid "Modo Debug"
 msgstr "调试模式"
 
-#: qml/PreferencesPanel.qml:3151
+#: qml/PreferencesPanel.qml:3161
 msgid "Sim GPS, POI"
 msgstr "Sim GPS, POI"
 
-#: qml/PreferencesPanel.qml:3184
+#: qml/PreferencesPanel.qml:3197
 msgid "Activar trazas y TUI"
 msgstr "启用日志和TUI"
 
-#: qml/PreferencesPanel.qml:3187
+#: qml/PreferencesPanel.qml:3200
 msgid "net_debug.log · tts_debug.log · piper_limit.log · control remoto"
 msgstr "net_debug.log · tts_debug.log · piper_limit.log · control remoto"
 
-#: qml/PreferencesPanel.qml:3210
+#: qml/PreferencesPanel.qml:3226
 msgid "Simulación GPS"
 msgstr "GPS模拟"
 
-#: qml/PreferencesPanel.qml:3213
+#: qml/PreferencesPanel.qml:3229
 msgid "Muntaner → Gran Via (Barcelona)"
 msgstr "Muntaner → Gran Via (Barcelona)"
 
-#: qml/PreferencesPanel.qml:3213
+#: qml/PreferencesPanel.qml:3229
 msgid "Sustituye al GPS real para pruebas en interior"
 msgstr "替代真实GPS用于室内测试"
 
-#: qml/PreferencesPanel.qml:3241
+#: qml/PreferencesPanel.qml:3257
 msgid "Ruta de simulación"
 msgstr "模拟路线"
 
-#: qml/PreferencesPanel.qml:3260
+#: qml/PreferencesPanel.qml:3276
 msgid "Aplicar ruta"
 msgstr "应用路线"
 
-#: qml/PreferencesPanel.qml:3267
+#: qml/PreferencesPanel.qml:3283
 msgid "Grabaciones en sim"
 msgstr "模拟录制"
 
-#: qml/PreferencesPanel.qml:3319
+#: qml/PreferencesPanel.qml:3335
 msgid "Señal perdida (simulado)"
 msgstr "信号丢失（模拟）"
 
-#: qml/PreferencesPanel.qml:3319
+#: qml/PreferencesPanel.qml:3335
 msgid "Perder señal GPS"
 msgstr "丢失GPS信号"
 
-#: qml/PreferencesPanel.qml:3322
+#: qml/PreferencesPanel.qml:3338
 msgid "El vehículo sigue avanzando internamente"
 msgstr "车辆继续内部推算前进"
 
-#: qml/PreferencesPanel.qml:3323
+#: qml/PreferencesPanel.qml:3339
 msgid "Simula túnel o zona sin cobertura"
 msgstr "模拟隧道或无信号区域"
 
-#: qml/PreferencesPanel.qml:3346
+#: qml/PreferencesPanel.qml:3362
 msgid "Deslizable posición en ruta sim"
 msgstr "模拟路线位置滑块"
 
-#: qml/PreferencesPanel.qml:3349
+#: qml/PreferencesPanel.qml:3365
 msgid "Desplegable lateral para mover la posición GPS simulada"
 msgstr "侧边抽屉，用于移动模拟GPS位置"
 
-#: qml/PreferencesPanel.qml:3372
+#: qml/PreferencesPanel.qml:3388
 msgid "Velocidad mínima sim (km/h)"
 msgstr "最低模拟速度(km/h)"
 
-#: qml/PreferencesPanel.qml:3376
+#: qml/PreferencesPanel.qml:3392
 msgid "Off"
 msgstr "关"
 
-#: qml/PreferencesPanel.qml:3400
+#: qml/PreferencesPanel.qml:3416
 msgid "Posición manual"
 msgstr "手动定位"
 
-#: qml/PreferencesPanel.qml:3426
+#: qml/PreferencesPanel.qml:3442
 msgid "Fijar"
 msgstr "固定"
 
-#: qml/PreferencesPanel.qml:3442
+#: qml/PreferencesPanel.qml:3458
 msgid "Liberar GPS"
 msgstr "释放GPS"
 
-#: qml/PreferencesPanel.qml:3459
+#: qml/PreferencesPanel.qml:3475
 msgid "Panel debug velocidades (v_sim)"
 msgstr "速度调试面板(v_sim)"
 
-#: qml/PreferencesPanel.qml:3462
+#: qml/PreferencesPanel.qml:3478
 msgid "Muestra vValhalla, límite y velocidad genérica"
 msgstr "显示vValhalla、限速和通用速度"
 
-#: qml/PreferencesPanel.qml:3485
+#: qml/PreferencesPanel.qml:3501
 msgid "Overlay límites de velocidad"
 msgstr "限速叠加层"
 
-#: qml/PreferencesPanel.qml:3488
+#: qml/PreferencesPanel.qml:3504
 msgid "Muestra límite, velocidad Valhalla y fuente por tramo"
 msgstr "按路段显示限速、Valhalla速度和来源"
 
-#: qml/PreferencesPanel.qml:3511
+#: qml/PreferencesPanel.qml:3527
 msgid "Mostrar ticks GPS (isReal)"
 msgstr "显示GPS更新点(isReal)"
 
-#: qml/PreferencesPanel.qml:3514
+#: qml/PreferencesPanel.qml:3530
 msgid "Puntos cian en el mapa por cada fix real"
 msgstr "每次真实定位在地图上显示青色点"
 
-#: qml/PreferencesPanel.qml:3547
+#: qml/PreferencesPanel.qml:3563
 msgid "Simulación fallos GPS"
 msgstr "GPS故障模拟"
 
-#: qml/PreferencesPanel.qml:3553
+#: qml/PreferencesPanel.qml:3569
 msgid "Probabilidad de fallo (%)"
 msgstr "故障概率(%)"
 
-#: qml/PreferencesPanel.qml:3568
+#: qml/PreferencesPanel.qml:3584
 msgid "Distancia de desvío (m)"
 msgstr "偏移距离(m)"
 
-#: qml/PreferencesPanel.qml:3583
+#: qml/PreferencesPanel.qml:3599
 msgid "Ticks sin señal (isReal=true)"
 msgstr "无信号帧数(isReal=true)"
 
-#: qml/PreferencesPanel.qml:3628
+#: qml/PreferencesPanel.qml:3644
 msgid "Texto para reproducir…"
 msgstr "要播放的文字…"
 
-#: qml/PreferencesPanel.qml:3637
+#: qml/PreferencesPanel.qml:3653
 msgid "Decir"
 msgstr "播放"
 
-#: qml/PreferencesPanel.qml:3655
+#: qml/PreferencesPanel.qml:3671
 msgid "Ficheros debug"
 msgstr "调试文件"
 
-#: qml/PreferencesPanel.qml:3669
+#: qml/PreferencesPanel.qml:3685
 msgid "Borrar todos los ficheros debug al salir"
 msgstr "退出时删除所有调试文件"
 
-#: qml/PreferencesPanel.qml:3694
+#: qml/PreferencesPanel.qml:3710
 msgid "Todos los ficheros debug"
 msgstr "所有调试文件"
 
-#: qml/PreferencesPanel.qml:3704
+#: qml/PreferencesPanel.qml:3720
 msgid "Borrados"
 msgstr "已删除"
 
-#: qml/PreferencesPanel.qml:3704
+#: qml/PreferencesPanel.qml:3720
 msgid "Borrar todo"
 msgstr "全部删除"
 
-#: qml/PreferencesPanel.qml:3751
+#: qml/PreferencesPanel.qml:3767
 msgid "Borrado"
 msgstr "已删除"
 
@@ -2434,32 +2438,32 @@ msgstr "是，继续"
 msgid "No, cancelar"
 msgstr "否，取消"
 
-#: qml/RouteSelectPanel.qml:146 qml/SearchPanel.qml:2029
+#: qml/RouteSelectPanel.qml:146 qml/SearchPanel.qml:2036
 msgid "Rutas disponibles"
 msgstr "可用路线"
 
-#: qml/RouteSelectPanel.qml:172 qml/SearchPanel.qml:2044
+#: qml/RouteSelectPanel.qml:172 qml/SearchPanel.qml:2051
 msgid "Alternativa "
 msgstr "备选 "
 
-#: qml/RouteSelectPanel.qml:211 qml/SearchPanel.qml:1041
+#: qml/RouteSelectPanel.qml:211 qml/SearchPanel.qml:1048
 msgid "INICIAR NAVEGACIÓN"
 msgstr "开始导航"
 
-#: qml/SatelliteView.qml:144 qml/SatelliteView.qml:350
+#: qml/SatelliteView.qml:159 qml/SatelliteView.qml:367
 msgid "Activo"
 msgstr "已激活"
 
-#: qml/SatelliteView.qml:144 qml/SatelliteView.qml:350 qml/SearchPanel.qml:1089
+#: qml/SatelliteView.qml:159 qml/SatelliteView.qml:367 qml/SearchPanel.qml:1096
 msgid "Buscando…"
 msgstr "搜索中…"
 
-#: qml/SatelliteView.qml:204 qml/SatelliteView.qml:207
-#: qml/SatelliteView.qml:415 qml/SatelliteView.qml:418
+#: qml/SatelliteView.qml:219 qml/SatelliteView.qml:222
+#: qml/SatelliteView.qml:434 qml/SatelliteView.qml:437
 msgid "Esperando satélites…"
 msgstr "等待卫星…"
 
-#: qml/SatelliteView.qml:206
+#: qml/SatelliteView.qml:221
 msgid ""
 "Sin satélites visibles\n"
 "(se necesita visibilidad del cielo)"
@@ -2467,259 +2471,259 @@ msgstr ""
 "无可见卫星\n"
 "(需要开阔天空)"
 
-#: qml/SatelliteView.qml:208 qml/SatelliteView.qml:419
+#: qml/SatelliteView.qml:223 qml/SatelliteView.qml:438
 msgid "Pulsa Iniciar para activar el GPS"
 msgstr "按开始激活GPS"
 
-#: qml/SatelliteView.qml:417
+#: qml/SatelliteView.qml:436
 msgid "Sin satélites visibles"
 msgstr "无可见卫星"
 
-#: qml/SearchPanel.qml:113 qml/SearchPanel.qml:123
+#: qml/SearchPanel.qml:120 qml/SearchPanel.qml:130
 msgid "Sin destino"
 msgstr "无目的地"
 
-#: qml/SearchPanel.qml:120
+#: qml/SearchPanel.qml:127
 msgid "Sin GPS"
 msgstr "无 GPS"
 
-#: qml/SearchPanel.qml:338
+#: qml/SearchPanel.qml:345
 msgid "Buscando «%1»"
 msgstr "正在搜索「%1」"
 
-#: qml/SearchPanel.qml:346
+#: qml/SearchPanel.qml:353
 msgid "El servidor de búsqueda no ha respondido."
 msgstr "搜索服务器未响应。"
 
-#: qml/SearchPanel.qml:349
+#: qml/SearchPanel.qml:356
 msgid "Error de red: "
 msgstr "网络错误："
 
-#: qml/SearchPanel.qml:353
+#: qml/SearchPanel.qml:360
 msgid "Sin resultados para «"
 msgstr "无结果："
 
-#: qml/SearchPanel.qml:383
+#: qml/SearchPanel.qml:390
 msgid "El servidor de puntos de interés no ha respondido."
 msgstr "兴趣点服务器未响应。"
 
-#: qml/SearchPanel.qml:386
+#: qml/SearchPanel.qml:393
 msgid "Error: "
 msgstr "错误："
 
-#: qml/SearchPanel.qml:388
+#: qml/SearchPanel.qml:395
 msgid "Sin resultados cerca"
 msgstr "附近无结果"
 
-#: qml/SearchPanel.qml:452
+#: qml/SearchPanel.qml:459
 msgid "hoy"
 msgstr "今天"
 
-#: qml/SearchPanel.qml:453
+#: qml/SearchPanel.qml:460
 msgid "mañana"
 msgstr "明天"
 
-#: qml/SearchPanel.qml:455
+#: qml/SearchPanel.qml:462
 msgid "dom"
 msgstr "日"
 
-#: qml/SearchPanel.qml:455
+#: qml/SearchPanel.qml:462
 msgid "lun"
 msgstr "一"
 
-#: qml/SearchPanel.qml:455 qml/SearchPanel.qml:457
+#: qml/SearchPanel.qml:462 qml/SearchPanel.qml:464
 msgid "mar"
 msgstr "三"
 
-#: qml/SearchPanel.qml:455
+#: qml/SearchPanel.qml:462
 msgid "mié"
 msgstr "三"
 
-#: qml/SearchPanel.qml:456
+#: qml/SearchPanel.qml:463
 msgid "jue"
 msgstr "四"
 
-#: qml/SearchPanel.qml:456
+#: qml/SearchPanel.qml:463
 msgid "vie"
 msgstr "五"
 
-#: qml/SearchPanel.qml:456
+#: qml/SearchPanel.qml:463
 msgid "sáb"
 msgstr "六"
 
-#: qml/SearchPanel.qml:457
+#: qml/SearchPanel.qml:464
 msgid "ene"
 msgstr "1月"
 
-#: qml/SearchPanel.qml:457
+#: qml/SearchPanel.qml:464
 msgid "feb"
 msgstr "2月"
 
-#: qml/SearchPanel.qml:457
+#: qml/SearchPanel.qml:464
 msgid "abr"
 msgstr "4月"
 
-#: qml/SearchPanel.qml:458
+#: qml/SearchPanel.qml:465
 msgid "may"
 msgstr "5月"
 
-#: qml/SearchPanel.qml:458
+#: qml/SearchPanel.qml:465
 msgid "jun"
 msgstr "6月"
 
-#: qml/SearchPanel.qml:458
+#: qml/SearchPanel.qml:465
 msgid "jul"
 msgstr "7月"
 
-#: qml/SearchPanel.qml:458
+#: qml/SearchPanel.qml:465
 msgid "ago"
 msgstr "8月"
 
-#: qml/SearchPanel.qml:459
+#: qml/SearchPanel.qml:466
 msgid "sep"
 msgstr "9月"
 
-#: qml/SearchPanel.qml:459
+#: qml/SearchPanel.qml:466
 msgid "oct"
 msgstr "10月"
 
-#: qml/SearchPanel.qml:459
+#: qml/SearchPanel.qml:466
 msgid "nov"
 msgstr "11月"
 
-#: qml/SearchPanel.qml:459
+#: qml/SearchPanel.qml:466
 msgid "dic"
 msgstr "12月"
 
-#: qml/SearchPanel.qml:471
+#: qml/SearchPanel.qml:478
 msgid "Salida: ahora"
 msgstr "立即出发"
 
-#: qml/SearchPanel.qml:476
+#: qml/SearchPanel.qml:483
 msgid "Salida: "
 msgstr "出发："
 
-#: qml/SearchPanel.qml:649
+#: qml/SearchPanel.qml:656
 msgid "Esperando posición GPS…"
 msgstr "等待GPS定位…"
 
-#: qml/SearchPanel.qml:653
+#: qml/SearchPanel.qml:660
 msgid "Se necesita al menos un destino"
 msgstr "至少需要一个目的地"
 
-#: qml/SearchPanel.qml:658 qml/SearchPanel.qml:2186
+#: qml/SearchPanel.qml:665 qml/SearchPanel.qml:2193
 msgid "Calculando ruta…"
 msgstr "计算路线中…"
 
-#: qml/SearchPanel.qml:669
+#: qml/SearchPanel.qml:676
 msgid "El servidor de rutas no ha respondido."
 msgstr "路线服务器未响应。"
 
-#: qml/SearchPanel.qml:672
+#: qml/SearchPanel.qml:679
 msgid "No se encontró ruta"
 msgstr "未找到路线"
 
-#: qml/SearchPanel.qml:748
+#: qml/SearchPanel.qml:755
 msgid "Buscar punto de inicio…"
 msgstr "搜索起点…"
 
-#: qml/SearchPanel.qml:748
+#: qml/SearchPanel.qml:755
 msgid "Buscar destino…"
 msgstr "搜索目的地…"
 
-#: qml/SearchPanel.qml:853
+#: qml/SearchPanel.qml:860
 msgid "Sin peaje"
 msgstr "免收费"
 
-#: qml/SearchPanel.qml:854
+#: qml/SearchPanel.qml:861
 msgid "Sin ferry"
 msgstr "免渡轮"
 
-#: qml/SearchPanel.qml:855
+#: qml/SearchPanel.qml:862
 msgid "Sin tierra"
 msgstr "免土路"
 
-#: qml/SearchPanel.qml:856
+#: qml/SearchPanel.qml:863
 msgid "Sin autopista"
 msgstr "免高速"
 
-#: qml/SearchPanel.qml:888
+#: qml/SearchPanel.qml:895
 msgid "Buscar en Google Maps"
 msgstr "在Google Maps搜索"
 
-#: qml/SearchPanel.qml:908
+#: qml/SearchPanel.qml:915
 msgid "Salir ahora"
 msgstr "立即出发"
 
-#: qml/SearchPanel.qml:916
+#: qml/SearchPanel.qml:923
 msgid "Hora de salida"
 msgstr "出发时间"
 
-#: qml/SearchPanel.qml:1004
+#: qml/SearchPanel.qml:1011
 msgid "CALCULAR RUTA"
 msgstr "计算路线"
 
-#: qml/SearchPanel.qml:1028
+#: qml/SearchPanel.qml:1035
 msgid "Previsualizar en mapa"
 msgstr "地图预览"
 
-#: qml/SearchPanel.qml:1056
+#: qml/SearchPanel.qml:1063
 msgid "Borrar ruta"
 msgstr "清除路线"
 
-#: qml/SearchPanel.qml:1106
+#: qml/SearchPanel.qml:1113
 msgid "Precios: "
 msgstr "价格："
 
-#: qml/SearchPanel.qml:1207
+#: qml/SearchPanel.qml:1214
 msgid "Planes guardados"
 msgstr "已保存方案"
 
-#: qml/SearchPanel.qml:1264
+#: qml/SearchPanel.qml:1271
 msgid "Mi posición (GPS)"
 msgstr "我的位置(GPS)"
 
-#: qml/SearchPanel.qml:1310
+#: qml/SearchPanel.qml:1317
 msgid "Mi posición actual"
 msgstr "我的当前位置"
 
-#: qml/SearchPanel.qml:1558
+#: qml/SearchPanel.qml:1565
 msgid "Mover a:"
 msgstr "移至："
 
-#: qml/SearchPanel.qml:1623
+#: qml/SearchPanel.qml:1630
 msgid "Anteriores"
 msgstr "历史"
 
-#: qml/SearchPanel.qml:1702
+#: qml/SearchPanel.qml:1709
 msgid "TODO tarea"
 msgstr "待办任务"
 
-#: qml/SearchPanel.qml:1742
+#: qml/SearchPanel.qml:1749
 msgid "Puntos de interés"
 msgstr "兴趣点"
 
-#: qml/SearchPanel.qml:1817
+#: qml/SearchPanel.qml:1824
 msgid "Cerca del destino"
 msgstr "目的地附近"
 
-#: qml/SearchPanel.qml:1818
+#: qml/SearchPanel.qml:1825
 msgid "Cerca de mí"
 msgstr "我附近"
 
-#: qml/SearchPanel.qml:1877
+#: qml/SearchPanel.qml:1884
 msgid "Favoritos"
 msgstr "收藏"
 
-#: qml/SearchPanel.qml:1951
+#: qml/SearchPanel.qml:1958
 msgid "Destinos recientes"
 msgstr "最近目的地"
 
-#: qml/SearchPanel.qml:2104
+#: qml/SearchPanel.qml:2111
 msgid "Guardar favorito"
 msgstr "保存收藏"
 
-#: qml/SearchPanel.qml:2125
+#: qml/SearchPanel.qml:2132
 msgid "Nombre del favorito"
 msgstr "收藏名称"
 
@@ -3426,6 +3430,12 @@ msgstr "新功能"
 msgid "Entendido"
 msgstr "知道了"
 
+#~ msgid "Radar  ·  %1 m"
+#~ msgstr "测速摄像头  ·  %1 m"
+
+#~ msgid "Radar en %1 metros"
+#~ msgstr "%1 米后测速摄像头"
+
 #~ msgid "Silenciado"
 #~ msgstr "静音"
 
@@ -3476,15 +3486,3 @@ msgstr "知道了"
 
 #~ msgid "Rev ON"
 #~ msgstr "倒车 ON"
-
-#: qml/Main.qml
-msgid "Radar de velocidad  ·  %1 m"
-msgstr "测速摄像头  ·  %1 米"
-
-#: qml/Main.qml
-msgid "Radar de velocidad en %1 metros"
-msgstr "%1 米后有测速摄像头"
-
-#: qml/Main.qml
-msgid "Grabar ruta"
-msgstr "记录轨迹"
