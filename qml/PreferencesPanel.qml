@@ -1768,7 +1768,7 @@ Rectangle {
                         theme.name: pal.isDark ? "Ubuntu.Components.Themes.SuruDark"
                                                : "Ubuntu.Components.Themes.Ambiance"
                         width: parent.width
-                        minimumValue: 5; maximumValue: 15; stepSize: 1; live: true
+                        minimumValue: 8; maximumValue: 15; stepSize: 1; live: true
                         value: panel.cfg ? panel.cfg.offRouteDistM : 11
                         onValueChanged: if (panel.cfg) panel.cfg.offRouteDistM = Math.round(value)
                     }
