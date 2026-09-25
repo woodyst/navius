@@ -226,6 +226,9 @@ Rectangle {
         _saveWaypoints()
     }
 
+    // Lo lee Main.qml para decidir si precarga los tiles de la ruta.
+    readonly property bool preCacheTiles: navSt.preCache
+
     Settings {
         id: navSt
         category: "nav"
@@ -234,6 +237,10 @@ Rectangle {
         property bool   noFerry:   false
         property bool   noDirt:    false
         property bool   noHighway: false
+        // Apagado por defecto: precargar es medio minuto de espera y unos
+        // megas, y la mayoria de los viajes salen con cobertura. Es para casos
+        // muy concretos —irse a una zona sin datos—, no para el dia a dia.
+        property bool   preCache:  false
     }
     Settings { id: histSt;  category: "dest_history"; property string json: "" }
     Settings { id: favSt;   category: "favorites";    property string json: "" }
