@@ -886,6 +886,27 @@ Rectangle {
                         }}
                     }
                 }
+
+                // Precargar mapa. Apagado por defecto, y antes no habia forma de
+                // encenderlo: la precarga se hacia siempre. Es para irse a una
+                // zona sin cobertura; el resto del tiempo cuesta medio minuto de
+                // espera y unos megas para nada, porque los tiles se bajan solos
+                // segun se avanza.
+                Rectangle {
+                    height: units.gu(4.5); width: preLbl.width + units.gu(2.5); radius: height/2
+                    color: navSt.preCache ? "#1E3A5F" : "#2A2A3E"
+                    border.color: navSt.preCache ? "#29B6F6" : "transparent"
+                    border.width: units.gu(0.15)
+                    Label {
+                        id: preLbl
+                        anchors.centerIn: parent
+                        text: (navSt.preCache ? "⬇ " : "") + i18n.tr("Precargar mapa")
+                        color: navSt.preCache ? "#29B6F6" : "#78909C"
+                        font.pixelSize: ts(1.8)
+                    }
+                    MouseArea { anchors.fill: parent
+                        onClicked: navSt.preCache = !navSt.preCache }
+                }
             }
 
             Rectangle {
