@@ -109,6 +109,13 @@ Rectangle {
     // recalculada vuelve a pasar por la carretera de al lado, uno sigue fuera, y
     // la app se pasa el viaje entero pidiendo rutas, una cada cinco segundos,
     // ninguna util. Cada recalculo seguido dobla la espera hasta un minuto.
+    // Fuera de ruta, pero sin via debajo: se circula por algo que no esta en el
+    // mapa. No se recalcula —seria inutil— pero la ruta sigue siendo valida, asi
+    // que las indicaciones se mantienen y el aviso va aparte.
+    property bool _offSinVia:        false
+    // Ya se recalculo al menos una vez sin haber vuelto a la ruta. Main.qml lo
+    // usa para exigir, antes del siguiente recalculo, que haya una via debajo.
+    property bool _yaRecalculado:    false
     property int  _reroutesEnCadena: 0
     property int  _ticksEnRuta:      0   // seguidos dentro de la ruta; 5 rompen la cadena
     readonly property int _esperaReroute:
@@ -355,7 +362,7 @@ Rectangle {
         if (!nearDest && _seDesvia && bar.hasFix && _realFix && !bar.trackReplayMode) {
             _offCount++
             _ticksEnRuta = 0
-            if (_offCount === 1) _status = "offroute"
+            if (_offCount === 1 && !_offSinVia) _status = "offroute"
             if (_offCount >= 3) {
                 var _rcdOff = Date.now() - _lastRerouteMs < _esperaReroute
                 if (!_rcdOff && _lastRerouteLat !== 0) {
@@ -368,6 +375,7 @@ Rectangle {
                 } else {
                     _offCount = 0
                     _reroutesEnCadena++
+                    _yaRecalculado = true
                     _status   = "rerouting"; _rerouting = true
                     _lastRerouteLat = _realLat; _lastRerouteLon = _realLon
                     bar.offRoute()
@@ -378,7 +386,9 @@ Rectangle {
             // De vuelta dentro de la ruta: unos cuantos ticks seguidos bastan
             // para dar la cadena por rota y volver a la espera corta.
             if (distM < offThreshold) {
-                if (++_ticksEnRuta >= 5) _reroutesEnCadena = 0
+                if (++_ticksEnRuta >= 5) {
+                    _reroutesEnCadena = 0; _yaRecalculado = false; _offSinVia = false
+                }
             } else {
                 _ticksEnRuta = 0
             }
@@ -953,10 +963,11 @@ Rectangle {
                     anchors.verticalCenter: parent.verticalCenter
                     width: ts(5); height: ts(5)
 
-                    // Icono normal de maniobra
+                    // Icono normal de maniobra. Se mantiene fuera de ruta: es lo
+                    // que dice por donde hay que ir, justo cuando hace falta.
                     Label {
                         anchors.centerIn: parent
-                        visible: bar._status === "nav"
+                        visible: bar._status !== "rerouting"
                         text: {
                             var man = bar.routeData ? bar.routeData.maneuvers : null
                             if (!man || man.length === 0) return "↑"
@@ -964,12 +975,6 @@ Rectangle {
                             return NavSearch.maneuverIcon(man[idx].type)
                         }
                         color: "#29B6F6"; font.pixelSize: ts(5.0); font.bold: true
-                    }
-                    // Advertencia fuera de ruta
-                    Label {
-                        anchors.centerIn: parent
-                        visible: bar._status === "offroute"
-                        text: "⚠"; color: "#FFA726"; font.pixelSize: ts(4.4)
                     }
                     // Spinner recalculando
                     Label {
@@ -997,19 +1002,38 @@ Rectangle {
                         color: "#29B6F6"; font.pixelSize: ts(2.75); font.bold: true
                     }
 
+                    // Aviso de estado. Va en su PROPIA linea, encima de la
+                    // instruccion, no en lugar de ella: estar fuera de ruta no
+                    // quita que haya una ruta a la que volver, y sustituir el
+                    // texto dejaba al conductor sin saber que hacer justo cuando
+                    // mas falta le hace.
+                    Label {
+                        width: parent.width
+                        visible: text !== ""
+                        // El triangulo va aqui, en la linea de estado, y no en el
+                        // cuadro del icono: alli se superponia a la flecha de
+                        // maniobra —giro, glorieta— y tapaba justo lo que hay
+                        // que ver para volver a la ruta.
+                        text: bar._status === "rerouting" ? i18n.tr("Recalculando ruta…")
+                            : bar._status === "offroute"  ? "⚠  " + i18n.tr("Fuera de ruta")
+                            : bar._offSinVia              ? "⚠  " + i18n.tr("Fuera de ruta")
+                            : ""
+                        color: bar._status === "rerouting" ? "#B0BEC5" : "#FFA726"
+                        font.pixelSize: ts(1.63); font.bold: true
+                        wrapMode: Text.WordWrap
+                    }
+
                     // Instrucción principal
                     Label {
                         width: parent.width
+                        visible: text !== ""
                         text: {
-                            if (bar._status === "rerouting") return i18n.tr("Recalculando ruta…")
-                            if (bar._status === "offroute")  return i18n.tr("Fuera de ruta")
                             var man = bar.routeData ? bar.routeData.maneuvers : null
                             if (!man || man.length === 0) return ""
                             var mv = man[Math.min(bar._step + 1, man.length - 1)]
                             return mv.verbal_pre_transition_instruction || mv.instruction || ""
                         }
-                        color: bar._status === "offroute"  ? "#FFA726" :
-                               bar._status === "rerouting" ? "#B0BEC5" : "white"
+                        color: "white"
                         font.pixelSize: ts(2.4); font.bold: true
                         wrapMode: Text.WordWrap
                     }
@@ -1017,7 +1041,7 @@ Rectangle {
                     // Siguiente instrucción
                     Label {
                         width: parent.width
-                        visible: bar._status === "nav"
+                        visible: bar._status !== "rerouting"
                         text: {
                             var man = bar.routeData ? bar.routeData.maneuvers : null
                             if (!man || man.length === 0 || bar._step + 2 >= man.length) return ""
