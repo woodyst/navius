@@ -11,7 +11,7 @@
             "urls":        "navius.url-dispatcher"
         }
     },
-    "version": "1.0.14",
+    "version": "1.0.16",
     "maintainer": "Eduardo García-Mádico Portabella <woodyst@gmail.com>",
     "framework" : "$ENV{CLICK_FRAMEWORK}"
 }
