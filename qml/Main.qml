@@ -7722,8 +7722,9 @@ ApplicationWindow {
             routeViewPanel.open()
             root.drawRoutesPreview(routes, selIdx)
         }
-        onGoogleMapsRequested: {
+        onGoogleMapsRequested: function(consulta) {
             Qt.inputMethod.hide()
+            googleMapsLoader._query = consulta || ""
             googleMapsLoader.active = true
         }
         onServerFallbackNeeded: function(service, message, retryFn) {
@@ -10350,9 +10351,12 @@ ApplicationWindow {
         // Si se pide limpiar la caché sin el panel abierto, se carga, se limpia
         // y se vuelve a descargar, para no dejar Chromium residente.
         property bool _clearOnLoad: false
+        // Lo que se escribio en el buscador, para que Maps abra ya buscandolo.
+        property string _query: ""
 
         sourceComponent: GoogleMapsPanel {
             textScale: appSettings.textScale
+            query: googleMapsLoader._query
             onDismissed: googleMapsLoader.active = false
             onLocationSelected: function(lat, lon, name) {
                 googleMapsLoader.active = false

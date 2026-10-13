@@ -5,6 +5,10 @@ import Lomiri.Components 1.3
 Item {
     id: gmp
     property real textScale: 1.0
+    // Si viene con texto, Maps abre directamente en la pantalla de busqueda. Es
+    // la salida de «¿no sale tu destino?» del buscador, y llegar ahi con la
+    // consulta ya puesta es justo lo que la hace util.
+    property string query: ""
     function ts(v) { return units.gu(v * textScale) }
     anchors.fill: parent
     visible: false
@@ -195,7 +199,9 @@ Item {
             }
         ]
 
-        Component.onCompleted: url = "https://www.google.com/maps"
+        Component.onCompleted: url = gmp.query.length > 0
+            ? "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(gmp.query)
+            : "https://www.google.com/maps"
 
         onNavigationRequested: function(request) {
             var u = request.url.toString()

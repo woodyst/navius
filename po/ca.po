@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: navius.woodyst\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-14 13:50+0000\n"
+"POT-Creation-Date: 2026-09-25 13:15+0000\n"
 "PO-Revision-Date: 2026-05-24 00:00+0000\n"
 "Last-Translator: Claude\n"
 "Language-Team: Català\n"
@@ -98,8 +98,8 @@ msgstr "Donar amb Liberapay"
 msgid "Licencia GNU GPL v3. Software libre."
 msgstr "Llicència GNU GPL v3. Programari lliure."
 
-#: qml/AboutDialog.qml:253 qml/LoginPanel.qml:151 qml/Main.qml:8100
-#: qml/Main.qml:8591 qml/ParkingDialog.qml:162 qml/TourOverlay.qml:314
+#: qml/AboutDialog.qml:253 qml/LoginPanel.qml:246 qml/Main.qml:8298
+#: qml/Main.qml:8789 qml/ParkingDialog.qml:162 qml/TourOverlay.qml:314
 #: qml/TripSharePanel.qml:187
 msgid "Cerrar"
 msgstr "Tancar"
@@ -236,9 +236,9 @@ msgstr "Enviar"
 msgid "Al otro lado"
 msgstr "Sentit contrari"
 
-#: qml/AlertasOverlay.qml:433 qml/LoginPanel.qml:400 qml/Main.qml:8680
-#: qml/PreferencesPanel.qml:431 qml/PreferencesPanel.qml:943
-#: qml/PreferencesPanel.qml:2191 qml/SearchPanel.qml:2155
+#: qml/AlertasOverlay.qml:433 qml/LoginPanel.qml:234 qml/LoginPanel.qml:495
+#: qml/Main.qml:8878 qml/PreferencesPanel.qml:431 qml/PreferencesPanel.qml:943
+#: qml/PreferencesPanel.qml:2191 qml/SearchPanel.qml:2162
 #: qml/ServerFallbackDialog.qml:143 qml/SharedLocationDialog.qml:163
 #: qml/VehicleSetupDialog.qml:160
 msgid "Cancelar"
@@ -492,7 +492,7 @@ msgid "Toca el icono de papelera junto al plan para borrarlo definitivamente."
 msgstr ""
 "Toca la icona de paperera al costat del pla per esborrar-lo definitivament."
 
-#: qml/HelpPanel.qml:114 qml/PreferencesPanel.qml:1333 qml/SearchPanel.qml:721
+#: qml/HelpPanel.qml:114 qml/PreferencesPanel.qml:1333 qml/SearchPanel.qml:728
 msgid "Navegación"
 msgstr "Navegació"
 
@@ -666,7 +666,7 @@ msgstr ""
 "Al panell de tracks pots exportar qualsevol track gravat al format GPX "
 "estàndard, compatible amb aplicacions externes."
 
-#: qml/HelpPanel.qml:164 qml/Main.qml:6968 qml/TourOverlay.qml:72
+#: qml/HelpPanel.qml:164 qml/Main.qml:7166 qml/TourOverlay.qml:72
 #: qml/TripSharePanel.qml:53
 msgid "Compartir viaje"
 msgstr "Compartir viatge"
@@ -814,7 +814,7 @@ msgstr ""
 "rutes i cercar llocs completament sense connexió. Navius el detecta "
 "automàticament a Ajustos → Servidor Valhalla → Detectar servidor local."
 
-#: qml/HelpPanel.qml:196 qml/Main.qml:7183 qml/PreferencesPanel.qml:149
+#: qml/HelpPanel.qml:196 qml/Main.qml:7381 qml/PreferencesPanel.qml:149
 #: qml/TourOverlay.qml:112
 msgid "Ajustes"
 msgstr "Ajustos"
@@ -956,48 +956,48 @@ msgstr "Completat"
 msgid "Tareas en esta parada"
 msgstr "Tasques en aquesta parada"
 
-#: qml/InstructionListPanel.qml:284 qml/SearchPanel.qml:1773
+#: qml/InstructionListPanel.qml:284 qml/SearchPanel.qml:1780
 msgid "Cercanos"
 msgstr "Propers"
 
-#: qml/InstructionListPanel.qml:285 qml/SearchPanel.qml:1774
-#: qml/SearchPanel.qml:1823
+#: qml/InstructionListPanel.qml:285 qml/SearchPanel.qml:1781
+#: qml/SearchPanel.qml:1830
 msgid "En ruta"
 msgstr "En ruta"
 
-#: qml/InstructionListPanel.qml:286 qml/SearchPanel.qml:1775
+#: qml/InstructionListPanel.qml:286 qml/SearchPanel.qml:1782
 msgid "Cerca destino"
 msgstr "Prop del destí"
 
-#: qml/InstructionListPanel.qml:343 qml/SearchPanel.qml:1836
+#: qml/InstructionListPanel.qml:343 qml/SearchPanel.qml:1843
 msgid "Gasolina"
 msgstr "Gasolina"
 
-#: qml/InstructionListPanel.qml:344 qml/Main.qml:7062 qml/SearchPanel.qml:1837
+#: qml/InstructionListPanel.qml:344 qml/Main.qml:7260 qml/SearchPanel.qml:1844
 msgid "Parking"
 msgstr "Aparcament"
 
-#: qml/InstructionListPanel.qml:345 qml/SearchPanel.qml:1838
+#: qml/InstructionListPanel.qml:345 qml/SearchPanel.qml:1845
 msgid "Comer"
 msgstr "Menjar"
 
-#: qml/InstructionListPanel.qml:346 qml/SearchPanel.qml:1839
+#: qml/InstructionListPanel.qml:346 qml/SearchPanel.qml:1846
 msgid "Hotel"
 msgstr "Hotel"
 
-#: qml/InstructionListPanel.qml:347 qml/SearchPanel.qml:1840
+#: qml/InstructionListPanel.qml:347 qml/SearchPanel.qml:1847
 msgid "Café"
 msgstr "Cafè"
 
-#: qml/InstructionListPanel.qml:348 qml/SearchPanel.qml:1841
+#: qml/InstructionListPanel.qml:348 qml/SearchPanel.qml:1848
 msgid "Súper"
 msgstr "Super"
 
-#: qml/InstructionListPanel.qml:349 qml/SearchPanel.qml:1842
+#: qml/InstructionListPanel.qml:349 qml/SearchPanel.qml:1849
 msgid "Hospital"
 msgstr "Hospital"
 
-#: qml/InstructionListPanel.qml:350 qml/SearchPanel.qml:1843
+#: qml/InstructionListPanel.qml:350 qml/SearchPanel.qml:1850
 msgid "Cajero"
 msgstr "Caixer"
 
@@ -1005,59 +1005,83 @@ msgstr "Caixer"
 msgid "Editar ruta"
 msgstr "Editar ruta"
 
-#: qml/LoginPanel.qml:110 qml/Main.qml:7200
+#: qml/LoginPanel.qml:113 qml/Main.qml:7398
 msgid "Mi cuenta"
 msgstr "El meu compte"
 
-#: qml/LoginPanel.qml:110 qml/LoginPanel.qml:385
+#: qml/LoginPanel.qml:113 qml/LoginPanel.qml:480
 msgid "Crear cuenta"
 msgstr "Crear compte"
 
-#: qml/LoginPanel.qml:110
+#: qml/LoginPanel.qml:113
 msgid "Iniciar sesión"
 msgstr "Iniciar sessió"
 
-#: qml/LoginPanel.qml:140 qml/PreferencesPanel.qml:2872
+#: qml/LoginPanel.qml:143 qml/PreferencesPanel.qml:2872
 msgid "Cerrar sesión"
 msgstr "Tancar sessió"
 
-#: qml/LoginPanel.qml:164
-msgid "Para iniciar sesión debes aceptar la política de privacidad de Navius."
-msgstr "Per iniciar sessió has d'acceptar la política de privadesa de Navius."
+#: qml/LoginPanel.qml:163
+#, fuzzy
+msgid "Borrar mi cuenta"
+msgstr "Esborrar ruta"
 
-#: qml/LoginPanel.qml:170 qml/PreferencesPanel.qml:2979
-msgid "Ver política de privacidad"
-msgstr "Veure política de privadesa"
+#: qml/LoginPanel.qml:185
+msgid ""
+"Se borrarán tu correo, tus ajustes, tus vehículos y todo tu historial de "
+"posiciones y rutas en el servidor. Las alertas y límites que aportaste "
+"seguirán ayudando a otros conductores, pero dejarán de estar asociados a "
+"ti.\n"
+"\n"
+"Esto no se puede deshacer. Escribe tu contraseña para confirmar."
+msgstr ""
 
-#: qml/LoginPanel.qml:191 qml/LoginPanel.qml:385
-msgid "Entrar"
-msgstr "Entrar"
-
-#: qml/LoginPanel.qml:202
-msgid "Registro"
-msgstr "Registre"
-
-#: qml/LoginPanel.qml:211
-msgid "Email"
-msgstr "Correu electrònic"
-
-#: qml/LoginPanel.qml:234
+#: qml/LoginPanel.qml:202 qml/LoginPanel.qml:329
 msgid "Contraseña"
 msgstr "Contrasenya"
 
+#: qml/LoginPanel.qml:221
+#, fuzzy
+msgid "Borrando…"
+msgstr "Esborrat"
+
+#: qml/LoginPanel.qml:221
+msgid "Borrar definitivamente"
+msgstr ""
+
 #: qml/LoginPanel.qml:259
+msgid "Para iniciar sesión debes aceptar la política de privacidad de Navius."
+msgstr "Per iniciar sessió has d'acceptar la política de privadesa de Navius."
+
+#: qml/LoginPanel.qml:265 qml/PreferencesPanel.qml:2979
+msgid "Ver política de privacidad"
+msgstr "Veure política de privadesa"
+
+#: qml/LoginPanel.qml:286 qml/LoginPanel.qml:480
+msgid "Entrar"
+msgstr "Entrar"
+
+#: qml/LoginPanel.qml:297
+msgid "Registro"
+msgstr "Registre"
+
+#: qml/LoginPanel.qml:306
+msgid "Email"
+msgstr "Correu electrònic"
+
+#: qml/LoginPanel.qml:354
 msgid "Confirmar contraseña"
 msgstr "Confirmar contrasenya"
 
-#: qml/LoginPanel.qml:300
+#: qml/LoginPanel.qml:395
 msgid "Recordar sesión"
 msgstr "Recordar la sessió"
 
-#: qml/LoginPanel.qml:328
+#: qml/LoginPanel.qml:423
 msgid "Reenviar email de verificación"
 msgstr "Reenviar correu de verificació"
 
-#: qml/LoginPanel.qml:368
+#: qml/LoginPanel.qml:463
 msgid ""
 "Acepto que mi ubicación se use para mostrar anuncios cercanos, alertas "
 "comunitarias y estadísticas de uso mientras tengo sesión iniciada."
@@ -1065,551 +1089,556 @@ msgstr ""
 "Accepto que la meva ubicació es faci servir per mostrar anuncis propers, "
 "alertes comunitàries i estadístiques d'ús mentre tinc sessió iniciada."
 
+#: qml/LoginPanel.qml:508
+#, fuzzy
+msgid "Escribe tu contraseña"
+msgstr "Contrasenya"
+
 #: qml/Main.qml:938
 msgid "⚠ No se pudieron obtener los radares · revisa la conexión"
 msgstr "⚠ No s'han pogut obtenir els radars · revisa la connexió"
 
-#: qml/Main.qml:1144
+#: qml/Main.qml:1265
 msgid "Radar de tramo  ·  %1 m restantes"
 msgstr "Radar de tram  ·  %1 m restants"
 
-#: qml/Main.qml:1145
+#: qml/Main.qml:1266
 msgid "Radar de tramo, %1 metros"
 msgstr "Radar de tram, %1 metres"
 
-#: qml/Main.qml:1147 qml/Main.qml:1157 qml/Main.qml:1186
+#: qml/Main.qml:1268 qml/Main.qml:1278 qml/Main.qml:1307
 msgid "  ·  %1 km/h"
 msgstr "  ·  %1 km/h"
 
-#: qml/Main.qml:1148 qml/Main.qml:1158 qml/Main.qml:1187
+#: qml/Main.qml:1269 qml/Main.qml:1279 qml/Main.qml:1308
 msgid ", límite %1 kilómetros por hora"
 msgstr ", límit %1 quilòmetres per hora"
 
-#: qml/Main.qml:1154
+#: qml/Main.qml:1275
 msgid "Radar de tramo  ·  a %1 m"
 msgstr "Radar de tram  ·  a %1 m"
 
-#: qml/Main.qml:1155
+#: qml/Main.qml:1276
 msgid "Radar de tramo en %1 metros"
 msgstr "Radar de tram a %1 metres"
 
-#: qml/Main.qml:1171
+#: qml/Main.qml:1292
 msgid "Radar próximo  ·  %1 m"
 msgstr "Radar proper  ·  %1 m"
 
-#: qml/Main.qml:1172
+#: qml/Main.qml:1293
 msgid "Radar sentido contrario  ·  %1 m"
 msgstr "Radar sentit contrari  ·  %1 m"
 
-#: qml/Main.qml:1173
+#: qml/Main.qml:1294
 msgid "Radar próximo en %1 metros"
 msgstr "Radar proper a %1 metres"
 
-#: qml/Main.qml:1174
+#: qml/Main.qml:1295
 msgid "Radar sentido contrario en %1 metros"
 msgstr "Radar sentit contrari a %1 metres"
 
-#: qml/Main.qml:1182
+#: qml/Main.qml:1303
 msgid "Radar de velocidad  ·  %1 m"
 msgstr "Radar de velocitat  ·  %1 m"
 
-#: qml/Main.qml:1183
+#: qml/Main.qml:1304
 msgid "Radar de velocidad en %1 metros"
 msgstr "Radar de velocitat en %1 metres"
 
-#: qml/Main.qml:1429
+#: qml/Main.qml:1550
 msgid "✓ Configuración guardada en el servidor"
 msgstr "✓ Configuració desada al servidor"
 
-#: qml/Main.qml:1448
+#: qml/Main.qml:1569
 msgid "Sin conexión: no se pudo cargar la configuración del servidor"
 msgstr "Sense connexió: no s'ha pogut carregar la configuració del servidor"
 
-#: qml/Main.qml:1450
+#: qml/Main.qml:1571
 msgid "Error al cargar configuración del servidor: "
 msgstr "Error en carregar la configuració del servidor: "
 
-#: qml/Main.qml:1591
+#: qml/Main.qml:1712
 msgid "Error al procesar la respuesta del servidor"
 msgstr "Error en processar la resposta del servidor"
 
-#: qml/Main.qml:1600
+#: qml/Main.qml:1721
 msgid "Sesión no válida — vuelve a iniciar sesión"
 msgstr "Sessió no vàlida — torna a iniciar sessió"
 
-#: qml/Main.qml:1605
+#: qml/Main.qml:1726
 msgid "Sin conexión con el servidor"
 msgstr "Sense connexió amb el servidor"
 
-#: qml/Main.qml:1608
+#: qml/Main.qml:1729
 msgid "Error del servidor (%1)"
 msgstr "Error del servidor (%1)"
 
-#: qml/Main.qml:2375 qml/Main.qml:2410 qml/ParkingDialog.qml:111
+#: qml/Main.qml:2496 qml/Main.qml:2531 qml/ParkingDialog.qml:111
 msgid "A pie"
 msgstr "A peu"
 
-#: qml/Main.qml:2405 qml/PreferencesPanel.qml:403 qml/VehicleSetupDialog.qml:51
+#: qml/Main.qml:2526 qml/PreferencesPanel.qml:403 qml/VehicleSetupDialog.qml:51
 msgid "Coche"
 msgstr "Cotxe"
 
-#: qml/Main.qml:2406 qml/PreferencesPanel.qml:404 qml/VehicleSetupDialog.qml:52
+#: qml/Main.qml:2527 qml/PreferencesPanel.qml:404 qml/VehicleSetupDialog.qml:52
 msgid "Moto"
 msgstr "Moto"
 
-#: qml/Main.qml:2407 qml/PreferencesPanel.qml:405 qml/VehicleSetupDialog.qml:53
+#: qml/Main.qml:2528 qml/PreferencesPanel.qml:405 qml/VehicleSetupDialog.qml:53
 msgid "Scooter"
 msgstr "Escúter"
 
-#: qml/Main.qml:2408 qml/PreferencesPanel.qml:406 qml/VehicleSetupDialog.qml:54
+#: qml/Main.qml:2529 qml/PreferencesPanel.qml:406 qml/VehicleSetupDialog.qml:54
 msgid "Camión"
 msgstr "Camió"
 
-#: qml/Main.qml:2409 qml/PreferencesPanel.qml:407 qml/VehicleSetupDialog.qml:55
+#: qml/Main.qml:2530 qml/PreferencesPanel.qml:407 qml/VehicleSetupDialog.qml:55
 msgid "Bicicleta"
 msgstr "Bicicleta"
 
-#: qml/Main.qml:2437
+#: qml/Main.qml:2558
 msgid "No se pudo calcular la ruta al aparcamiento"
 msgstr "No s'ha pogut calcular la ruta a l'aparcament"
 
-#: qml/Main.qml:2598 qml/Main.qml:8279 qml/Main.qml:9008
+#: qml/Main.qml:2719 qml/Main.qml:8477 qml/Main.qml:9206
 msgid "OSM Scout · rutas y mapas offline"
 msgstr "OSM Scout · rutes i mapes fora de línia"
 
-#: qml/Main.qml:2610
+#: qml/Main.qml:2731
 msgid "Servidor: "
 msgstr "Servidor: "
 
-#: qml/Main.qml:3197
+#: qml/Main.qml:3318
 msgid "Reproducción terminada"
 msgstr "Reproducció acabada"
 
-#: qml/Main.qml:4379
+#: qml/Main.qml:4501
 msgid "GPS recuperado"
 msgstr "GPS recuperat"
 
-#: qml/Main.qml:4943
+#: qml/Main.qml:5065
 msgid "Rumbo"
 msgstr "Rumb"
 
-#: qml/Main.qml:4961
+#: qml/Main.qml:5083
 msgid "km/h ◄"
 msgstr "km/h ◄"
 
-#: qml/Main.qml:4961
+#: qml/Main.qml:5083
 msgid "km/h"
 msgstr "km/h"
 
-#: qml/Main.qml:5000
+#: qml/Main.qml:5122
 msgid "Fallo GPS ON"
 msgstr "Fallada GPS ON"
 
-#: qml/Main.qml:5000 qml/Main.qml:7309
+#: qml/Main.qml:5122 qml/Main.qml:7507
 msgid "Fallo GPS"
 msgstr "Fallada GPS"
 
-#: qml/Main.qml:5027
+#: qml/Main.qml:5149
 msgid "Rev."
 msgstr "Rev."
 
-#: qml/Main.qml:5116
+#: qml/Main.qml:5238
 msgid "Ctrl ON"
 msgstr "Ctrl ON"
 
-#: qml/Main.qml:5116
+#: qml/Main.qml:5238
 msgid "Ctrl"
 msgstr "Ctrl"
 
-#: qml/Main.qml:5184
+#: qml/Main.qml:5306
 msgid "Adelanto"
 msgstr "Anticipació"
 
-#: qml/Main.qml:5233
+#: qml/Main.qml:5355
 msgid "Con ruta"
 msgstr "Amb ruta"
 
-#: qml/Main.qml:5272
+#: qml/Main.qml:5394
 msgid "Hdg blend"
 msgstr "Hdg blend"
 
-#: qml/Main.qml:5283
+#: qml/Main.qml:5405
 msgid "Sin ruta"
 msgstr "Sense ruta"
 
-#: qml/Main.qml:5297
+#: qml/Main.qml:5419
 msgid "Hdg accel"
 msgstr "Hdg accel"
 
-#: qml/Main.qml:5313
+#: qml/Main.qml:5435
 msgid "Pos sin nav"
 msgstr "Pos sin nav"
 
-#: qml/Main.qml:5620
+#: qml/Main.qml:5742
 msgid "Seguir ruta"
 msgstr "Seguir ruta"
 
-#: qml/Main.qml:5647
+#: qml/Main.qml:5769
 msgid "SIMULACIÓN GPS"
 msgstr "SIMULACIÓ GPS"
 
-#: qml/Main.qml:5676
+#: qml/Main.qml:5798
 msgid "OSM Scout Server  ·  límites de velocidad por tramo"
 msgstr "OSM Scout Server  ·  límits de velocitat per tram"
 
-#: qml/Main.qml:5951
+#: qml/Main.qml:6073
 msgid "Mapa 3D"
 msgstr "Mapa 3D"
 
-#: qml/Main.qml:5952
+#: qml/Main.qml:6074
 msgid "Mapa"
 msgstr "Mapa"
 
-#: qml/Main.qml:5953 qml/PreferencesPanel.qml:25
+#: qml/Main.qml:6075 qml/PreferencesPanel.qml:25
 msgid "Satélite"
 msgstr "Satèl·lit"
 
-#: qml/Main.qml:5954 qml/PreferencesPanel.qml:29
+#: qml/Main.qml:6076 qml/PreferencesPanel.qml:29
 msgid "Claro"
 msgstr "Clar"
 
-#: qml/Main.qml:5955 qml/PreferencesPanel.qml:29
+#: qml/Main.qml:6077 qml/PreferencesPanel.qml:29
 msgid "Vivo"
 msgstr "Viu"
 
-#: qml/Main.qml:5957 qml/PreferencesPanel.qml:30 qml/PreferencesPanel.qml:341
+#: qml/Main.qml:6079 qml/PreferencesPanel.qml:30 qml/PreferencesPanel.qml:341
 msgid "Noche"
 msgstr "Nit"
 
-#: qml/Main.qml:6193 qml/Main.qml:6215
+#: qml/Main.qml:6315 qml/Main.qml:6337
 msgid "Alerta"
 msgstr "Alerta"
 
-#: qml/Main.qml:6243 qml/PreferencesPanel.qml:24 qml/PreferencesPanel.qml:341
+#: qml/Main.qml:6365 qml/PreferencesPanel.qml:24 qml/PreferencesPanel.qml:341
 msgid "Auto"
 msgstr "Auto"
 
-#: qml/Main.qml:6934
+#: qml/Main.qml:7132
 msgid "Voz + alertas"
 msgstr "Veu + alertes"
 
-#: qml/Main.qml:6935
+#: qml/Main.qml:7133
 msgid "Solo alertas"
 msgstr "Només alertes"
 
-#: qml/Main.qml:6936
+#: qml/Main.qml:7134
 msgid "Solo pitidos"
 msgstr "Només pitits"
 
-#: qml/Main.qml:6936
+#: qml/Main.qml:7134
 msgid "Silencio"
 msgstr "Silenci"
 
-#: qml/Main.qml:6968
+#: qml/Main.qml:7166
 msgid "Compartiendo"
 msgstr "Compartint"
 
-#: qml/Main.qml:7004 qml/PreferencesPanel.qml:2038
+#: qml/Main.qml:7202 qml/PreferencesPanel.qml:2038
 msgid "Grabando"
 msgstr "Gravant"
 
-#: qml/Main.qml:7004
+#: qml/Main.qml:7202
 msgid "Grabar ruta"
 msgstr "Gravar ruta"
 
-#: qml/Main.qml:7030
+#: qml/Main.qml:7228
 msgid "Prev. Ruta"
 msgstr "Prev. Ruta"
 
-#: qml/Main.qml:7045
+#: qml/Main.qml:7243
 msgid "Tareas"
 msgstr "Tasques"
 
-#: qml/Main.qml:7072
+#: qml/Main.qml:7270
 msgid "🅿 Aparcamiento guardado · "
 msgstr "🅿 Aparcament desat · "
 
-#: qml/Main.qml:7089
+#: qml/Main.qml:7287
 msgid "Borrar aparcamiento"
 msgstr "Esborrar aparcament"
 
-#: qml/Main.qml:7100
+#: qml/Main.qml:7298
 msgid "🗑 Aparcamiento eliminado · "
 msgstr "🗑 Aparcament eliminat · "
 
-#: qml/Main.qml:7117
+#: qml/Main.qml:7315
 msgid "Ver vehículo"
 msgstr "Veure vehicle"
 
-#: qml/Main.qml:7150 qml/ParkingDialog.qml:61
+#: qml/Main.qml:7348 qml/ParkingDialog.qml:61
 msgid "Ir al aparcamiento"
 msgstr "Anar a l'aparcament"
 
-#: qml/Main.qml:7168 qml/MediaPanel.qml:222
+#: qml/Main.qml:7366 qml/MediaPanel.qml:222
 msgid "Música"
 msgstr "Música"
 
-#: qml/Main.qml:7200
+#: qml/Main.qml:7398
 msgid "Login"
 msgstr "Entrar"
 
-#: qml/Main.qml:7216 qml/MessagesPanel.qml:106
+#: qml/Main.qml:7414 qml/MessagesPanel.qml:106
 msgid "Mensajes"
 msgstr "Missatges"
 
-#: qml/Main.qml:7246
+#: qml/Main.qml:7444
 msgid "Bloq. Mapa"
 msgstr "Bloq. Mapa"
 
-#: qml/Main.qml:7263 qml/PreferencesPanel.qml:3130
+#: qml/Main.qml:7461 qml/PreferencesPanel.qml:3130
 msgid "Debug"
 msgstr "Debug"
 
-#: qml/Main.qml:7278
+#: qml/Main.qml:7476
 msgid "Sim GPS"
 msgstr "Sim GPS"
 
-#: qml/Main.qml:7309
+#: qml/Main.qml:7507
 msgid "GPS on"
 msgstr "GPS on"
 
-#: qml/Main.qml:7324
+#: qml/Main.qml:7522
 msgid "Reanudar"
 msgstr "Reprendre"
 
-#: qml/Main.qml:7324
+#: qml/Main.qml:7522
 msgid "Pausar sim"
 msgstr "Pausar sim"
 
-#: qml/Main.qml:7340 qml/PreferencesPanel.qml:1788
+#: qml/Main.qml:7538 qml/PreferencesPanel.qml:1788
 msgid "Suavizado GPS"
 msgstr "Suavitzat GPS"
 
-#: qml/Main.qml:7357
+#: qml/Main.qml:7555
 msgid "IMU debug"
 msgstr "Depuració IMU"
 
-#: qml/Main.qml:7374
+#: qml/Main.qml:7572
 msgid "Bisector"
 msgstr "Bisector"
 
-#: qml/Main.qml:7391
+#: qml/Main.qml:7589
 msgid "POIs debug"
 msgstr "POIs debug"
 
-#: qml/Main.qml:7421
+#: qml/Main.qml:7619
 msgid "Donar"
 msgstr "Donar"
 
-#: qml/Main.qml:7646
+#: qml/Main.qml:7844
 msgid "INICIO"
 msgstr "INICI"
 
-#: qml/Main.qml:7683
+#: qml/Main.qml:7881
 msgid "FIN"
 msgstr "FI"
 
-#: qml/Main.qml:7814
+#: qml/Main.qml:8012
 msgid "Inicio sim"
 msgstr "Inici sim"
 
-#: qml/Main.qml:7834 qml/MessagesPanel.qml:351 qml/MsgDetailPopup.qml:175
+#: qml/Main.qml:8032 qml/MessagesPanel.qml:351 qml/MsgDetailPopup.qml:175
 msgid "Añadir destino"
 msgstr "Afegir destí"
 
-#: qml/Main.qml:7878
+#: qml/Main.qml:8076
 msgid "🚨  Añadir alerta aquí"
 msgstr "🚨  Afegir alerta aquí"
 
-#: qml/Main.qml:7907
+#: qml/Main.qml:8105
 msgid "📍 Establecer posición GPS"
 msgstr "📍 Establir posició GPS"
 
-#: qml/Main.qml:8032
+#: qml/Main.qml:8230
 msgid "👍  Confirmar"
 msgstr "👍  Confirmar"
 
-#: qml/Main.qml:8055
+#: qml/Main.qml:8253
 msgid "👎  Desmentir"
 msgstr "👎  Desmentir"
 
-#: qml/Main.qml:8080
+#: qml/Main.qml:8278
 msgid "🗑  Cancelar mi alerta"
 msgstr "🗑  Cancel·lar la meva alerta"
 
-#: qml/Main.qml:8166
+#: qml/Main.qml:8364
 msgid "Satélites"
 msgstr "Satèl·lits"
 
-#: qml/Main.qml:8282
+#: qml/Main.qml:8480
 msgid "OSM Scout no disponible · usando "
 msgstr "OSM Scout no disponible · usant "
 
-#: qml/Main.qml:8340
+#: qml/Main.qml:8538
 msgid "Caché de mapas eliminada"
 msgstr "Memòria cau de mapes eliminada"
 
-#: qml/Main.qml:8562
+#: qml/Main.qml:8760
 msgid "Límite comunitario"
 msgstr "Límit comunitari"
 
-#: qml/Main.qml:8569
+#: qml/Main.qml:8767
 msgid "Eliminar este límite"
 msgstr "Eliminar aquest límit"
 
-#: qml/Main.qml:8636
+#: qml/Main.qml:8834
 msgid "Límite de velocidad aquí"
 msgstr "Límit de velocitat aquí"
 
-#: qml/Main.qml:8775
+#: qml/Main.qml:8973
 msgid "⚙  Configuración en el servidor"
 msgstr "⚙  Configuració al servidor"
 
-#: qml/Main.qml:8791
+#: qml/Main.qml:8989
 msgid "Tienes cambios locales no sincronizados. ¿Cuál configuración usar?"
 msgstr "Tens canvis locals no sincronitzats. Quina configuració vols usar?"
 
-#: qml/Main.qml:8803
+#: qml/Main.qml:9001
 msgid "Usar del servidor"
 msgstr "Usar la del servidor"
 
-#: qml/Main.qml:8813
+#: qml/Main.qml:9011
 msgid "✓ Configuración del servidor aplicada"
 msgstr "✓ Configuració del servidor aplicada"
 
-#: qml/Main.qml:8822
+#: qml/Main.qml:9020
 msgid "Mantener la local"
 msgstr "Mantenir la local"
 
-#: qml/Main.qml:8925
+#: qml/Main.qml:9123
 msgid "Cacheando mapa… detalle"
 msgstr "Desant mapa a la memòria cau… detall"
 
-#: qml/Main.qml:8945
+#: qml/Main.qml:9143
 msgid "Cacheando mapa… "
 msgstr "Desant mapa a la memòria cau… "
 
-#: qml/Main.qml:8975
+#: qml/Main.qml:9173
 msgid "Mapa online: OSM Scout"
 msgstr "Mapa en línia: OSM Scout"
 
-#: qml/Main.qml:8977
+#: qml/Main.qml:9175
 msgid "Mapa online: OSM Scout (no disponible · usando Mapbox)"
 msgstr "Mapa en línia: OSM Scout (no disponible · usant Mapbox)"
 
-#: qml/Main.qml:8979
+#: qml/Main.qml:9177
 msgid "Mapa online: Mapbox"
 msgstr "Mapa en línia: Mapbox"
 
-#: qml/Main.qml:8984
+#: qml/Main.qml:9182
 msgid "Sin internet: fallback a OSM Scout"
 msgstr "Sense internet: alternativa a OSM Scout"
 
-#: qml/Main.qml:8986
+#: qml/Main.qml:9184
 msgid "Sin internet: fallback OSM Scout (no disponible)"
 msgstr "Sense internet: alternativa OSM Scout (no disponible)"
 
-#: qml/Main.qml:8988
+#: qml/Main.qml:9186
 msgid "Sin internet: caché de tiles"
 msgstr "Sense internet: memòria cau de tessel·les"
 
-#: qml/Main.qml:9045
+#: qml/Main.qml:9243
 msgid "Mapas: servidor no disponible · usando OSM Scout"
 msgstr "Mapes: servidor no disponible · usant OSM Scout"
 
-#: qml/Main.qml:9047
+#: qml/Main.qml:9245
 msgid "Mapas: servidor no disponible · usando servidor público"
 msgstr "Mapes: servidor no disponible · usant servidor públic"
 
-#: qml/Main.qml:9067
+#: qml/Main.qml:9265
 msgid "Servidor de mapas recuperado · restaurando"
 msgstr "Servidor de mapes recuperat · restaurant"
 
-#: qml/Main.qml:9089 qml/Main.qml:9102
+#: qml/Main.qml:9287 qml/Main.qml:9300
 msgid "Sin internet · usando OSM Scout Server"
 msgstr "Sense internet · usant OSM Scout Server"
 
-#: qml/Main.qml:9118 qml/Main.qml:9123
+#: qml/Main.qml:9316 qml/Main.qml:9321
 msgid "Conexión restaurada · volviendo a mapas online"
 msgstr "Connexió restaurada · tornant a mapes en línia"
 
-#: qml/Main.qml:9184
+#: qml/Main.qml:9387
 msgid "Cacheando mapa… 0%"
 msgstr "Desant mapa a la memòria cau… 0%"
 
-#: qml/Main.qml:9289
+#: qml/Main.qml:9492
 msgid "Tienes un mensaje nuevo"
 msgstr "Tens un missatge nou"
 
-#: qml/Main.qml:9290
+#: qml/Main.qml:9493
 msgid "Tienes %1 mensajes nuevos"
 msgstr "Tens %1 missatges nous"
 
-#: qml/Main.qml:9325 qml/RouteSelectPanel.qml:171 qml/SearchPanel.qml:2051
+#: qml/Main.qml:9528 qml/RouteSelectPanel.qml:171 qml/SearchPanel.qml:2058
 msgid "Ruta más rápida"
 msgstr "Ruta més ràpida"
 
-#: qml/Main.qml:9329
+#: qml/Main.qml:9532
 msgid "Ahorra"
 msgstr "Estalvia"
 
-#: qml/Main.qml:9339
+#: qml/Main.qml:9542
 msgid "Revisar"
 msgstr "Revisar"
 
-#: qml/Main.qml:9348
+#: qml/Main.qml:9551
 msgid "Ignorar"
 msgstr "Ignorar"
 
-#: qml/Main.qml:9404
+#: qml/Main.qml:9607
 msgid "Pre-procesando motor TTS"
 msgstr "Pre-processant motor TTS"
 
-#: qml/Main.qml:9405
+#: qml/Main.qml:9608
 msgid "GPS impreciso. Simulando trayecto."
 msgstr "GPS imprecís. Simulant el trajecte."
 
-#: qml/Main.qml:9408
+#: qml/Main.qml:9611
 msgid "Cargando mapa…"
 msgstr "Carregant mapa…"
 
-#: qml/Main.qml:9964 qml/SharedLocationDialog.qml:61
+#: qml/Main.qml:10167 qml/SharedLocationDialog.qml:61
 msgid "Ubicación compartida"
 msgstr "Ubicació compartida"
 
-#: qml/Main.qml:10211
+#: qml/Main.qml:10414
 msgid "¿Has llegado a"
 msgstr "Has arribat a"
 
-#: qml/Main.qml:10212
+#: qml/Main.qml:10415
 msgid "el destino"
 msgstr "el destí"
 
-#: qml/Main.qml:10221
+#: qml/Main.qml:10424
 msgid "Sí, he llegado"
 msgstr "Sí, he arribat"
 
-#: qml/Main.qml:10232
+#: qml/Main.qml:10435
 msgid "Todavía no"
 msgstr "Encara no"
 
-#: qml/Main.qml:10264
+#: qml/Main.qml:10467
 msgid "Tareas pendientes"
 msgstr "Tasques pendents"
 
-#: qml/Main.qml:10273
+#: qml/Main.qml:10476
 msgid "Abrir"
 msgstr "Obrir"
 
-#: qml/Main.qml:10314
+#: qml/Main.qml:10517
 msgid "🅿 ¿Guardar aparcamiento aquí?"
 msgstr "🅿 Desar l'aparcament aquí?"
 
-#: qml/Main.qml:10323 qml/PreferencesPanel.qml:953 qml/SearchPanel.qml:2166
+#: qml/Main.qml:10526 qml/PreferencesPanel.qml:953 qml/SearchPanel.qml:2173
 msgid "Guardar"
 msgstr "Desar"
 
-#: qml/Main.qml:10332
+#: qml/Main.qml:10535
 msgid "🅿 Aparcamiento guardado"
 msgstr "🅿 Aparcament desat"
 
@@ -1678,7 +1707,7 @@ msgid "Ir a"
 msgstr "Anar a"
 
 #: qml/MessagesPanel.qml:361 qml/MsgDetailPopup.qml:188
-#: qml/SearchPanel.qml:1579
+#: qml/SearchPanel.qml:1586
 msgid "Destino"
 msgstr "Destí"
 
@@ -1694,35 +1723,35 @@ msgstr "Llegit"
 msgid "Siguiente"
 msgstr "Següent"
 
-#: qml/NavBar.qml:762
+#: qml/NavBar.qml:816
 msgid "SENTIDO CONTRARIO"
 msgstr "SENTIT CONTRARI"
 
-#: qml/NavBar.qml:859
+#: qml/NavBar.qml:913
 msgid "Reiniciar navegación"
 msgstr "Reiniciar navegació"
 
-#: qml/NavBar.qml:885
+#: qml/NavBar.qml:939
 msgid "Iniciar navegación"
 msgstr "Iniciar navegació"
 
-#: qml/NavBar.qml:890 qml/SpeedView.qml:61
+#: qml/NavBar.qml:944 qml/SpeedView.qml:61
 msgid "Buscando GPS…"
 msgstr "Cercant GPS…"
 
-#: qml/NavBar.qml:960
+#: qml/NavBar.qml:1017
 msgid "Recalculando ruta…"
 msgstr "Recalculant ruta…"
 
-#: qml/NavBar.qml:961
+#: qml/NavBar.qml:1018 qml/NavBar.qml:1019
 msgid "Fuera de ruta"
 msgstr "Fora de ruta"
 
-#: qml/NavBar.qml:990
+#: qml/NavBar.qml:1058
 msgid "Ruta pausada"
 msgstr "Ruta pausada"
 
-#: qml/NavBar.qml:1093
+#: qml/NavBar.qml:1161
 msgid "Parar"
 msgstr "Aturar"
 
@@ -2492,15 +2521,15 @@ msgstr "Sí, continuar"
 msgid "No, cancelar"
 msgstr "No, cancel·lar"
 
-#: qml/RouteSelectPanel.qml:146 qml/SearchPanel.qml:2036
+#: qml/RouteSelectPanel.qml:146 qml/SearchPanel.qml:2043
 msgid "Rutas disponibles"
 msgstr "Rutes disponibles"
 
-#: qml/RouteSelectPanel.qml:172 qml/SearchPanel.qml:2051
+#: qml/RouteSelectPanel.qml:172 qml/SearchPanel.qml:2058
 msgid "Alternativa "
 msgstr "Alternativa "
 
-#: qml/RouteSelectPanel.qml:211 qml/SearchPanel.qml:1048
+#: qml/RouteSelectPanel.qml:211 qml/SearchPanel.qml:1055
 msgid "INICIAR NAVEGACIÓN"
 msgstr "INICIAR NAVEGACIÓ"
 
@@ -2508,7 +2537,7 @@ msgstr "INICIAR NAVEGACIÓ"
 msgid "Activo"
 msgstr "Actiu"
 
-#: qml/SatelliteView.qml:159 qml/SatelliteView.qml:367 qml/SearchPanel.qml:1096
+#: qml/SatelliteView.qml:159 qml/SatelliteView.qml:367 qml/SearchPanel.qml:1103
 msgid "Buscando…"
 msgstr "Cercant…"
 
@@ -2541,243 +2570,243 @@ msgstr "Sense destí"
 msgid "Sin GPS"
 msgstr "Sense GPS"
 
-#: qml/SearchPanel.qml:345
+#: qml/SearchPanel.qml:352
 msgid "Buscando «%1»"
 msgstr "Cercant «%1»"
 
-#: qml/SearchPanel.qml:353
+#: qml/SearchPanel.qml:360
 msgid "El servidor de búsqueda no ha respondido."
 msgstr "El servidor de cerca no ha respost."
 
-#: qml/SearchPanel.qml:356
+#: qml/SearchPanel.qml:363
 msgid "Error de red: "
 msgstr "Error de xarxa: "
 
-#: qml/SearchPanel.qml:360
+#: qml/SearchPanel.qml:367
 msgid "Sin resultados para «"
 msgstr "Sense resultats per a «"
 
-#: qml/SearchPanel.qml:390
+#: qml/SearchPanel.qml:397
 msgid "El servidor de puntos de interés no ha respondido."
 msgstr "El servidor de punts d'interès no ha respost."
 
-#: qml/SearchPanel.qml:393
+#: qml/SearchPanel.qml:400
 msgid "Error: "
 msgstr "Error: "
 
-#: qml/SearchPanel.qml:395
+#: qml/SearchPanel.qml:402
 msgid "Sin resultados cerca"
 msgstr "Sense resultats a prop"
 
-#: qml/SearchPanel.qml:459
+#: qml/SearchPanel.qml:466
 msgid "hoy"
 msgstr "avui"
 
-#: qml/SearchPanel.qml:460
+#: qml/SearchPanel.qml:467
 msgid "mañana"
 msgstr "demà"
 
-#: qml/SearchPanel.qml:462
+#: qml/SearchPanel.qml:469
 msgid "dom"
 msgstr "dg"
 
-#: qml/SearchPanel.qml:462
+#: qml/SearchPanel.qml:469
 msgid "lun"
 msgstr "dl"
 
-#: qml/SearchPanel.qml:462 qml/SearchPanel.qml:464
+#: qml/SearchPanel.qml:469 qml/SearchPanel.qml:471
 msgid "mar"
 msgstr "dm"
 
-#: qml/SearchPanel.qml:462
+#: qml/SearchPanel.qml:469
 msgid "mié"
 msgstr "dc"
 
-#: qml/SearchPanel.qml:463
+#: qml/SearchPanel.qml:470
 msgid "jue"
 msgstr "dj"
 
-#: qml/SearchPanel.qml:463
+#: qml/SearchPanel.qml:470
 msgid "vie"
 msgstr "dv"
 
-#: qml/SearchPanel.qml:463
+#: qml/SearchPanel.qml:470
 msgid "sáb"
 msgstr "ds"
 
-#: qml/SearchPanel.qml:464
+#: qml/SearchPanel.qml:471
 msgid "ene"
 msgstr "gen"
 
-#: qml/SearchPanel.qml:464
+#: qml/SearchPanel.qml:471
 msgid "feb"
 msgstr "feb"
 
-#: qml/SearchPanel.qml:464
+#: qml/SearchPanel.qml:471
 msgid "abr"
 msgstr "abr"
 
-#: qml/SearchPanel.qml:465
+#: qml/SearchPanel.qml:472
 msgid "may"
 msgstr "maig"
 
-#: qml/SearchPanel.qml:465
+#: qml/SearchPanel.qml:472
 msgid "jun"
 msgstr "jun"
 
-#: qml/SearchPanel.qml:465
+#: qml/SearchPanel.qml:472
 msgid "jul"
 msgstr "jul"
 
-#: qml/SearchPanel.qml:465
+#: qml/SearchPanel.qml:472
 msgid "ago"
 msgstr "ago"
 
-#: qml/SearchPanel.qml:466
+#: qml/SearchPanel.qml:473
 msgid "sep"
 msgstr "set"
 
-#: qml/SearchPanel.qml:466
+#: qml/SearchPanel.qml:473
 msgid "oct"
 msgstr "oct"
 
-#: qml/SearchPanel.qml:466
+#: qml/SearchPanel.qml:473
 msgid "nov"
 msgstr "nov"
 
-#: qml/SearchPanel.qml:466
+#: qml/SearchPanel.qml:473
 msgid "dic"
 msgstr "des"
 
-#: qml/SearchPanel.qml:478
+#: qml/SearchPanel.qml:485
 msgid "Salida: ahora"
 msgstr "Sortida: ara"
 
-#: qml/SearchPanel.qml:483
+#: qml/SearchPanel.qml:490
 msgid "Salida: "
 msgstr "Sortida: "
 
-#: qml/SearchPanel.qml:656
+#: qml/SearchPanel.qml:663
 msgid "Esperando posición GPS…"
 msgstr "Esperant posició GPS…"
 
-#: qml/SearchPanel.qml:660
+#: qml/SearchPanel.qml:667
 msgid "Se necesita al menos un destino"
 msgstr "Cal almenys un destí"
 
-#: qml/SearchPanel.qml:665 qml/SearchPanel.qml:2193
+#: qml/SearchPanel.qml:672 qml/SearchPanel.qml:2200
 msgid "Calculando ruta…"
 msgstr "Calculant ruta…"
 
-#: qml/SearchPanel.qml:676
+#: qml/SearchPanel.qml:683
 msgid "El servidor de rutas no ha respondido."
 msgstr "El servidor de rutes no ha respost."
 
-#: qml/SearchPanel.qml:679
+#: qml/SearchPanel.qml:686
 msgid "No se encontró ruta"
 msgstr "No s'ha trobat cap ruta"
 
-#: qml/SearchPanel.qml:755
+#: qml/SearchPanel.qml:762
 msgid "Buscar punto de inicio…"
 msgstr "Cerca punt d'inici…"
 
-#: qml/SearchPanel.qml:755
+#: qml/SearchPanel.qml:762
 msgid "Buscar destino…"
 msgstr "Cerca destí…"
 
-#: qml/SearchPanel.qml:860
+#: qml/SearchPanel.qml:867
 msgid "Sin peaje"
 msgstr "Sense peatge"
 
-#: qml/SearchPanel.qml:861
+#: qml/SearchPanel.qml:868
 msgid "Sin ferry"
 msgstr "Sense ferry"
 
-#: qml/SearchPanel.qml:862
+#: qml/SearchPanel.qml:869
 msgid "Sin tierra"
 msgstr "Sense terra"
 
-#: qml/SearchPanel.qml:863
+#: qml/SearchPanel.qml:870
 msgid "Sin autopista"
 msgstr "Sense autopista"
 
-#: qml/SearchPanel.qml:895
+#: qml/SearchPanel.qml:902
 msgid "Buscar en Google Maps"
 msgstr "Cerca a Google Maps"
 
-#: qml/SearchPanel.qml:915
+#: qml/SearchPanel.qml:922
 msgid "Salir ahora"
 msgstr "Sortir ara"
 
-#: qml/SearchPanel.qml:923
+#: qml/SearchPanel.qml:930
 msgid "Hora de salida"
 msgstr "Hora de sortida"
 
-#: qml/SearchPanel.qml:1011
+#: qml/SearchPanel.qml:1018
 msgid "CALCULAR RUTA"
 msgstr "CALCULAR RUTA"
 
-#: qml/SearchPanel.qml:1035
+#: qml/SearchPanel.qml:1042
 msgid "Previsualizar en mapa"
 msgstr "Previsualitzar al mapa"
 
-#: qml/SearchPanel.qml:1063
+#: qml/SearchPanel.qml:1070
 msgid "Borrar ruta"
 msgstr "Esborrar ruta"
 
-#: qml/SearchPanel.qml:1113
+#: qml/SearchPanel.qml:1120
 msgid "Precios: "
 msgstr "Preus: "
 
-#: qml/SearchPanel.qml:1214
+#: qml/SearchPanel.qml:1221
 msgid "Planes guardados"
 msgstr "Plans desats"
 
-#: qml/SearchPanel.qml:1271
+#: qml/SearchPanel.qml:1278
 msgid "Mi posición (GPS)"
 msgstr "La meva posició (GPS)"
 
-#: qml/SearchPanel.qml:1317
+#: qml/SearchPanel.qml:1324
 msgid "Mi posición actual"
 msgstr "La meva posició actual"
 
-#: qml/SearchPanel.qml:1565
+#: qml/SearchPanel.qml:1572
 msgid "Mover a:"
 msgstr "Moure a:"
 
-#: qml/SearchPanel.qml:1630
+#: qml/SearchPanel.qml:1637
 msgid "Anteriores"
 msgstr "Anteriors"
 
-#: qml/SearchPanel.qml:1709
+#: qml/SearchPanel.qml:1716
 msgid "TODO tarea"
 msgstr "TODO tasca"
 
-#: qml/SearchPanel.qml:1749
+#: qml/SearchPanel.qml:1756
 msgid "Puntos de interés"
 msgstr "Punts d'interès"
 
-#: qml/SearchPanel.qml:1824
+#: qml/SearchPanel.qml:1831
 msgid "Cerca del destino"
 msgstr "Prop del destí"
 
-#: qml/SearchPanel.qml:1825
+#: qml/SearchPanel.qml:1832
 msgid "Cerca de mí"
 msgstr "Prop de mi"
 
-#: qml/SearchPanel.qml:1884
+#: qml/SearchPanel.qml:1891
 msgid "Favoritos"
 msgstr "Favorits"
 
-#: qml/SearchPanel.qml:1958
+#: qml/SearchPanel.qml:1965
 msgid "Destinos recientes"
 msgstr "Destins recents"
 
-#: qml/SearchPanel.qml:2111
+#: qml/SearchPanel.qml:2118
 msgid "Guardar favorito"
 msgstr "Desar favorit"
 
-#: qml/SearchPanel.qml:2132
+#: qml/SearchPanel.qml:2139
 msgid "Nombre del favorito"
 msgstr "Nom del favorit"
 
@@ -3511,6 +3540,9 @@ msgstr "Novetats"
 #: qml/WhatsNewDialog.qml:150
 msgid "Entendido"
 msgstr "Entès"
+
+msgid "¿No sale tu destino? Búscalo en Google Maps"
+msgstr "No surt el teu destí? Cerca'l a Google Maps"
 
 #~ msgid "Radar  ·  %1 m"
 #~ msgstr "Radar  ·  %1 m"
