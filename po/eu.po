@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: navius.woodyst\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-25 13:15+0000\n"
+"POT-Creation-Date: 2026-10-13 15:56+0200\n"
 "PO-Revision-Date: 2026-05-24 00:00+0000\n"
 "Last-Translator: Claude\n"
 "Language-Team: Euskera\n"
@@ -99,25 +99,27 @@ msgstr "Liberapay bidez eman"
 msgid "Licencia GNU GPL v3. Software libre."
 msgstr "GNU GPL v3 lizentzia. Software librea."
 
-#: qml/AboutDialog.qml:253 qml/LoginPanel.qml:246 qml/Main.qml:8298
-#: qml/Main.qml:8789 qml/ParkingDialog.qml:162 qml/TourOverlay.qml:314
+#: qml/AboutDialog.qml:253 qml/LoginPanel.qml:246 qml/Main.qml:8371
+#: qml/Main.qml:8862 qml/ParkingDialog.qml:162 qml/TourOverlay.qml:314
 #: qml/TripSharePanel.qml:187
 msgid "Cerrar"
 msgstr "Itxi"
 
-#: qml/AlertasOverlay.qml:97
+#: qml/AlertasOverlay.qml:97 qml/Main.qml:1442 qml/Main.qml:4405
+#: qml/Main.qml:8219
 msgid "Accidente"
 msgstr "Istripua"
 
-#: qml/AlertasOverlay.qml:97
+#: qml/AlertasOverlay.qml:97 qml/Main.qml:1445 qml/Main.qml:8225
 msgid "Asistencia"
 msgstr "Laguntza"
 
-#: qml/AlertasOverlay.qml:97
+#: qml/AlertasOverlay.qml:97 qml/Main.qml:1450 qml/Main.qml:4398
+#: qml/Main.qml:8236
 msgid "Bache"
 msgstr "Zuloa"
 
-#: qml/AlertasOverlay.qml:98
+#: qml/AlertasOverlay.qml:98 qml/Main.qml:4407
 msgid "Carril"
 msgstr "Erreia"
 
@@ -129,23 +131,24 @@ msgstr "Erreia blok."
 msgid "Central"
 msgstr "Erdikoa"
 
-#: qml/AlertasOverlay.qml:99
+#: qml/AlertasOverlay.qml:99 qml/Main.qml:1449 qml/Main.qml:8235
 msgid "Coche en arcén"
 msgstr "Autoa bazterbidean"
 
-#: qml/AlertasOverlay.qml:99
+#: qml/AlertasOverlay.qml:99 qml/Main.qml:4397
 msgid "Col. múltiple"
 msgstr "Talka anizk."
 
-#: qml/AlertasOverlay.qml:99
+#: qml/AlertasOverlay.qml:99 qml/Main.qml:4402 qml/Main.qml:8240
 msgid "Compañeros"
 msgstr "Beste gidariak"
 
-#: qml/AlertasOverlay.qml:100
+#: qml/AlertasOverlay.qml:100 qml/Main.qml:1443 qml/Main.qml:4406
 msgid "Cortada"
 msgstr "Itxita"
 
-#: qml/AlertasOverlay.qml:100
+#: qml/AlertasOverlay.qml:100 qml/Main.qml:1447 qml/Main.qml:4396
+#: qml/Main.qml:8233
 msgid "Cámara móvil"
 msgstr "Kamera mugikorra"
 
@@ -157,23 +160,28 @@ msgstr "Trinkoa"
 msgid "Derecho"
 msgstr "Eskuinekoa"
 
-#: qml/AlertasOverlay.qml:101
+#: qml/AlertasOverlay.qml:101 qml/Main.qml:1446 qml/Main.qml:4395
+#: qml/Main.qml:8232
 msgid "Detenido"
 msgstr "Geldituta"
 
-#: qml/AlertasOverlay.qml:101
+#: qml/AlertasOverlay.qml:101 qml/Main.qml:1453 qml/Main.qml:4402
+#: qml/Main.qml:8240
 msgid "Emergencia"
 msgstr "Larrialdia"
 
-#: qml/AlertasOverlay.qml:102
+#: qml/AlertasOverlay.qml:102 qml/Main.qml:1444 qml/Main.qml:4407
+#: qml/Main.qml:8223
 msgid "Error mapa"
 msgstr "Mapa-errorea"
 
-#: qml/AlertasOverlay.qml:102
+#: qml/AlertasOverlay.qml:102 qml/Main.qml:1452 qml/Main.qml:4401
+#: qml/Main.qml:8239
 msgid "Hielo"
 msgstr "Izotza"
 
-#: qml/AlertasOverlay.qml:102
+#: qml/AlertasOverlay.qml:102 qml/Main.qml:1452 qml/Main.qml:4400
+#: qml/Main.qml:8238
 msgid "Inundación"
 msgstr "Uholdea"
 
@@ -181,39 +189,44 @@ msgstr "Uholdea"
 msgid "Izquierdo"
 msgstr "Ezkerrekoa"
 
-#: qml/AlertasOverlay.qml:103
+#: qml/AlertasOverlay.qml:103 qml/Main.qml:1445 qml/Main.qml:8226
 msgid "Lugar"
 msgstr "Lekua"
 
-#: qml/AlertasOverlay.qml:103
+#: qml/AlertasOverlay.qml:103 qml/Main.qml:1445 qml/Main.qml:8224
 msgid "Mal tiempo"
 msgstr "Eguraldi txarra"
 
-#: qml/AlertasOverlay.qml:104
+#: qml/AlertasOverlay.qml:104 qml/Main.qml:1452 qml/Main.qml:4401
+#: qml/Main.qml:8239
 msgid "Niebla"
 msgstr "Behe-lainoa"
 
-#: qml/AlertasOverlay.qml:104
+#: qml/AlertasOverlay.qml:104 qml/Main.qml:1452 qml/Main.qml:4401
+#: qml/Main.qml:8239
 msgid "Nieve"
 msgstr "Elurra"
 
-#: qml/AlertasOverlay.qml:104
+#: qml/AlertasOverlay.qml:104 qml/Main.qml:1448 qml/Main.qml:4398
+#: qml/Main.qml:8235
 msgid "Obras"
 msgstr "Obrak"
 
-#: qml/AlertasOverlay.qml:105
+#: qml/AlertasOverlay.qml:105 qml/Main.qml:4396
 msgid "Oculto"
 msgstr "Ezkutukoa"
 
-#: qml/AlertasOverlay.qml:105
+#: qml/AlertasOverlay.qml:105 qml/Main.qml:1443 qml/Main.qml:4406
+#: qml/Main.qml:8220
 msgid "Peligro"
 msgstr "Arriskua"
 
-#: qml/AlertasOverlay.qml:105
+#: qml/AlertasOverlay.qml:105 qml/Main.qml:1442 qml/Main.qml:4405
+#: qml/Main.qml:8218
 msgid "Policía"
 msgstr "Polizia"
 
-#: qml/AlertasOverlay.qml:106
+#: qml/AlertasOverlay.qml:106 qml/Main.qml:4400
 msgid "Resbaladiza"
 msgstr "Labainkorra"
 
@@ -221,7 +234,8 @@ msgstr "Labainkorra"
 msgid "Semáforo roto"
 msgstr "Semaforoa hondatuta"
 
-#: qml/AlertasOverlay.qml:106
+#: qml/AlertasOverlay.qml:106 qml/Main.qml:1442 qml/Main.qml:4405
+#: qml/Main.qml:8217
 msgid "Tráfico"
 msgstr "Trafikoa"
 
@@ -238,26 +252,26 @@ msgid "Al otro lado"
 msgstr "Kontrako norabidea"
 
 #: qml/AlertasOverlay.qml:433 qml/LoginPanel.qml:234 qml/LoginPanel.qml:495
-#: qml/Main.qml:8878 qml/PreferencesPanel.qml:431 qml/PreferencesPanel.qml:943
-#: qml/PreferencesPanel.qml:2191 qml/SearchPanel.qml:2162
+#: qml/Main.qml:8951 qml/PreferencesPanel.qml:431 qml/PreferencesPanel.qml:944
+#: qml/PreferencesPanel.qml:2193 qml/SearchPanel.qml:2354
 #: qml/ServerFallbackDialog.qml:143 qml/SharedLocationDialog.qml:163
 #: qml/VehicleSetupDialog.qml:160
 msgid "Cancelar"
 msgstr "Utzi"
 
-#: qml/GoogleMapsPanel.qml:263
+#: qml/GoogleMapsPanel.qml:363
 msgid "Busca un lugar en el mapa"
 msgstr "Bilatu leku bat mapan"
 
-#: qml/GoogleMapsPanel.qml:277
+#: qml/GoogleMapsPanel.qml:377
 msgid "Detectando coordenadas…"
 msgstr "Koordinatuak detektatzen…"
 
-#: qml/GoogleMapsPanel.qml:293
+#: qml/GoogleMapsPanel.qml:396
 msgid "Usar este destino"
 msgstr "Helmuga hau erabili"
 
-#: qml/HelpPanel.qml:24 qml/PreferencesPanel.qml:3029
+#: qml/HelpPanel.qml:24 qml/PreferencesPanel.qml:3031
 msgid "Manual de usuario"
 msgstr "Erabiltzaile-eskuliburua"
 
@@ -495,7 +509,7 @@ msgstr "Plan bat ezabatu"
 msgid "Toca el icono de papelera junto al plan para borrarlo definitivamente."
 msgstr "Sakatu planaren ondoko zakarrontziaren ikonoa betirako ezabatzeko."
 
-#: qml/HelpPanel.qml:114 qml/PreferencesPanel.qml:1333 qml/SearchPanel.qml:728
+#: qml/HelpPanel.qml:114 qml/PreferencesPanel.qml:1334 qml/SearchPanel.qml:788
 msgid "Navegación"
 msgstr "Nabigazioa"
 
@@ -623,7 +637,7 @@ msgstr ""
 "artean posizio ikonoa leunki mugi dadin. Konfiguratu Ezarpenak → Orokorra "
 "atalean."
 
-#: qml/HelpPanel.qml:148 qml/PreferencesPanel.qml:1920
+#: qml/HelpPanel.qml:148 qml/PreferencesPanel.qml:1921
 msgid "Velocidad GPS Doppler"
 msgstr "GPS Doppler abiadura"
 
@@ -672,7 +686,7 @@ msgstr ""
 "Track panelean grabatutako edozein track GPX formatu estandarrera esportatu "
 "dezakezu, kanpoko aplikazioekin bateragarria."
 
-#: qml/HelpPanel.qml:164 qml/Main.qml:7166 qml/TourOverlay.qml:72
+#: qml/HelpPanel.qml:164 qml/Main.qml:7237 qml/TourOverlay.qml:72
 #: qml/TripSharePanel.qml:53
 msgid "Compartir viaje"
 msgstr "Bidaia partekatu"
@@ -822,7 +836,7 @@ msgstr ""
 "detektatzen du Ezarpenak → Valhalla zerbitzaria → Tokiko zerbitzaria "
 "detektatu atalean."
 
-#: qml/HelpPanel.qml:196 qml/Main.qml:7381 qml/PreferencesPanel.qml:149
+#: qml/HelpPanel.qml:196 qml/Main.qml:7452 qml/PreferencesPanel.qml:149
 #: qml/TourOverlay.qml:112
 msgid "Ajustes"
 msgstr "Ezarpenak"
@@ -966,48 +980,51 @@ msgstr "Burututa"
 msgid "Tareas en esta parada"
 msgstr "Geldialdi honetako zereginak"
 
-#: qml/InstructionListPanel.qml:284 qml/SearchPanel.qml:1780
+#: qml/InstructionListPanel.qml:284 qml/SearchPanel.qml:1972
 msgid "Cercanos"
 msgstr "Ingurukoak"
 
-#: qml/InstructionListPanel.qml:285 qml/SearchPanel.qml:1781
-#: qml/SearchPanel.qml:1830
+#: qml/InstructionListPanel.qml:285 qml/SearchPanel.qml:1973
+#: qml/SearchPanel.qml:2022
 msgid "En ruta"
 msgstr "Bidean"
 
-#: qml/InstructionListPanel.qml:286 qml/SearchPanel.qml:1782
+#: qml/InstructionListPanel.qml:286 qml/SearchPanel.qml:1974
 msgid "Cerca destino"
 msgstr "Helmugatik hurbil"
 
-#: qml/InstructionListPanel.qml:343 qml/SearchPanel.qml:1843
+#: qml/InstructionListPanel.qml:343 qml/SearchPanel.qml:2035
 msgid "Gasolina"
 msgstr "Gasolina"
 
-#: qml/InstructionListPanel.qml:344 qml/Main.qml:7260 qml/SearchPanel.qml:1844
+#: qml/InstructionListPanel.qml:344 qml/Main.qml:7331 qml/SearchPanel.qml:2036
 msgid "Parking"
 msgstr "Aparkalekua"
 
-#: qml/InstructionListPanel.qml:345 qml/SearchPanel.qml:1845
+#: qml/InstructionListPanel.qml:345 qml/SearchPanel.qml:2037
 msgid "Comer"
 msgstr "Jatekoa"
 
-#: qml/InstructionListPanel.qml:346 qml/SearchPanel.qml:1846
+#: qml/InstructionListPanel.qml:346 qml/NavSearch.js:724
+#: qml/SearchPanel.qml:2038
 msgid "Hotel"
 msgstr "Hotela"
 
-#: qml/InstructionListPanel.qml:347 qml/SearchPanel.qml:1847
+#: qml/InstructionListPanel.qml:347 qml/SearchPanel.qml:2039
 msgid "Café"
 msgstr "Kafea"
 
-#: qml/InstructionListPanel.qml:348 qml/SearchPanel.qml:1848
+#: qml/InstructionListPanel.qml:348 qml/SearchPanel.qml:2040
 msgid "Súper"
 msgstr "Supermerkatua"
 
-#: qml/InstructionListPanel.qml:349 qml/SearchPanel.qml:1849
+#: qml/InstructionListPanel.qml:349 qml/NavSearch.js:726
+#: qml/SearchPanel.qml:2041
 msgid "Hospital"
 msgstr "Ospitalea"
 
-#: qml/InstructionListPanel.qml:350 qml/SearchPanel.qml:1850
+#: qml/InstructionListPanel.qml:350 qml/NavSearch.js:729
+#: qml/SearchPanel.qml:2042
 msgid "Cajero"
 msgstr "Kutxazaina"
 
@@ -1015,7 +1032,7 @@ msgstr "Kutxazaina"
 msgid "Editar ruta"
 msgstr "Ibilbidea editatu"
 
-#: qml/LoginPanel.qml:113 qml/Main.qml:7398
+#: qml/LoginPanel.qml:113 qml/Main.qml:7469
 msgid "Mi cuenta"
 msgstr "Nire kontua"
 
@@ -1027,43 +1044,46 @@ msgstr "Kontua sortu"
 msgid "Iniciar sesión"
 msgstr "Saioa hasi"
 
-#: qml/LoginPanel.qml:143 qml/PreferencesPanel.qml:2872
+#: qml/LoginPanel.qml:143 qml/PreferencesPanel.qml:2874
 msgid "Cerrar sesión"
 msgstr "Saioa itxi"
 
 #: qml/LoginPanel.qml:163
-#, fuzzy
 msgid "Borrar mi cuenta"
-msgstr "Bidea ezabatu"
+msgstr "Nire kontua ezabatu"
 
 #: qml/LoginPanel.qml:185
 msgid ""
-"Se borrarán tu correo, tus ajustes, tus vehículos y todo tu historial de "
-"posiciones y rutas en el servidor. Las alertas y límites que aportaste "
-"seguirán ayudando a otros conductores, pero dejarán de estar asociados a "
-"ti.\n"
+"Se borrarán tu correo, tus ajustes, tus vehículos, tus rutas y el registro "
+"de anuncios. Tu historial de posiciones, las alertas y los límites que "
+"aportaste no se borran, pero dejan de estar asociados a ti.\n"
 "\n"
 "Esto no se puede deshacer. Escribe tu contraseña para confirmar."
 msgstr ""
+"Zure helbide elektronikoa, zure ezarpenak, zure ibilgailuak, zure ibilbideak "
+"eta iragarkien erregistroa ezabatuko dira. Zure posizioen historia, eta "
+"ekarri zenituen alertak eta mugak ez dira ezabatzen, baina zurekin lotuta "
+"egoteari uzten diote.\n"
+"\n"
+"Hau ezin da desegin. Idatzi zure pasahitza berresteko."
 
 #: qml/LoginPanel.qml:202 qml/LoginPanel.qml:329
 msgid "Contraseña"
 msgstr "Pasahitza"
 
 #: qml/LoginPanel.qml:221
-#, fuzzy
 msgid "Borrando…"
-msgstr "Ezabatuta"
+msgstr "Ezabatzen…"
 
 #: qml/LoginPanel.qml:221
 msgid "Borrar definitivamente"
-msgstr ""
+msgstr "Behin betiko ezabatu"
 
 #: qml/LoginPanel.qml:259
 msgid "Para iniciar sesión debes aceptar la política de privacidad de Navius."
 msgstr "Saioa hasteko Navius pribatutasun politika onartu behar duzu."
 
-#: qml/LoginPanel.qml:265 qml/PreferencesPanel.qml:2979
+#: qml/LoginPanel.qml:265 qml/PreferencesPanel.qml:2981
 msgid "Ver política de privacidad"
 msgstr "Ikus pribatutasun politika"
 
@@ -1079,6 +1099,10 @@ msgstr "Erregistratu"
 msgid "Email"
 msgstr "Posta elektronikoa"
 
+#: qml/LoginPanel.qml:321
+msgid "correo@ejemplo.com"
+msgstr "zu@adibidea.com"
+
 #: qml/LoginPanel.qml:354
 msgid "Confirmar contraseña"
 msgstr "Pasahitza berretsi"
@@ -1091,6 +1115,14 @@ msgstr "Gogoan hartu"
 msgid "Reenviar email de verificación"
 msgstr "Egiaztapen e-maila berriro bidali"
 
+#: qml/LoginPanel.qml:434
+msgid "Email enviado. Revisa tu bandeja de entrada."
+msgstr "Mezua bidali da. Begiratu sarrera-ontzia."
+
+#: qml/LoginPanel.qml:435
+msgid "No se pudo enviar. Inténtalo más tarde."
+msgstr "Ezin izan da bidali. Saiatu geroago."
+
 #: qml/LoginPanel.qml:463
 msgid ""
 "Acepto que mi ubicación se use para mostrar anuncios cercanos, alertas "
@@ -1101,556 +1133,671 @@ msgstr ""
 "onartzen dut."
 
 #: qml/LoginPanel.qml:508
-#, fuzzy
 msgid "Escribe tu contraseña"
-msgstr "Pasahitza"
+msgstr "Idatzi zure pasahitza"
 
-#: qml/Main.qml:938
+#: qml/LoginPanel.qml:538
+msgid "Rellena todos los campos"
+msgstr "Bete eremu guztiak"
+
+#: qml/LoginPanel.qml:545
+msgid "Las contraseñas no coinciden"
+msgstr "Pasahitzak ez dira berdinak"
+
+#: qml/LoginPanel.qml:559
+msgid "Cuenta creada. Revisa tu email para verificarla."
+msgstr "Kontua sortu da. Begiratu zure posta egiaztatzeko."
+
+#: qml/Main.qml:74
+msgid "Track sin puntos suficientes"
+msgstr "Trackak ez ditu nahiko puntu"
+
+#: qml/Main.qml:958
 msgid "⚠ No se pudieron obtener los radares · revisa la conexión"
 msgstr "⚠ Ezin izan dira radarrak lortu · egiaztatu konexioa"
 
-#: qml/Main.qml:1265
+#: qml/Main.qml:1308
 msgid "Radar de tramo  ·  %1 m restantes"
 msgstr "Tarteko radarra  ·  %1 m falta"
 
-#: qml/Main.qml:1266
+#: qml/Main.qml:1309
 msgid "Radar de tramo, %1 metros"
 msgstr "Tarteko radarra, %1 metro"
 
-#: qml/Main.qml:1268 qml/Main.qml:1278 qml/Main.qml:1307
+#: qml/Main.qml:1311 qml/Main.qml:1321 qml/Main.qml:1350
 msgid "  ·  %1 km/h"
 msgstr "  ·  %1 km/h"
 
-#: qml/Main.qml:1269 qml/Main.qml:1279 qml/Main.qml:1308
+#: qml/Main.qml:1312 qml/Main.qml:1322 qml/Main.qml:1351 qml/Main.qml:1469
 msgid ", límite %1 kilómetros por hora"
 msgstr ", muga %1 kilometro orduko"
 
-#: qml/Main.qml:1275
+#: qml/Main.qml:1318
 msgid "Radar de tramo  ·  a %1 m"
 msgstr "Tarteko radarra  ·  %1 m-ra"
 
-#: qml/Main.qml:1276
+#: qml/Main.qml:1319
 msgid "Radar de tramo en %1 metros"
 msgstr "Tarteko radarra %1 metrora"
 
-#: qml/Main.qml:1292
+#: qml/Main.qml:1335
 msgid "Radar próximo  ·  %1 m"
 msgstr "Radarra gertu  ·  %1 m"
 
-#: qml/Main.qml:1293
+#: qml/Main.qml:1336
 msgid "Radar sentido contrario  ·  %1 m"
 msgstr "Kontrako noranzkoko radarra  ·  %1 m"
 
-#: qml/Main.qml:1294
+#: qml/Main.qml:1337
 msgid "Radar próximo en %1 metros"
 msgstr "Radarra gertu, %1 metro"
 
-#: qml/Main.qml:1295
+#: qml/Main.qml:1338
 msgid "Radar sentido contrario en %1 metros"
 msgstr "Kontrako noranzkoko radarra %1 metrora"
 
-#: qml/Main.qml:1303
+#: qml/Main.qml:1346
 msgid "Radar de velocidad  ·  %1 m"
 msgstr "Abiadura-radarra  ·  %1 m"
 
-#: qml/Main.qml:1304
+#: qml/Main.qml:1347
 msgid "Radar de velocidad en %1 metros"
 msgstr "Abiadura-radarra %1 metrora"
 
-#: qml/Main.qml:1550
+#: qml/Main.qml:1403
+msgid "Velocidad media excedida en el radar de tramo"
+msgstr "Tarteko radarrean batez besteko abiadura gaindituta"
+
+#: qml/Main.qml:1444 qml/Main.qml:8222
+msgid "Carril bloqueado"
+msgstr "Errei blokeatua"
+
+#: qml/Main.qml:1446 qml/Main.qml:4395 qml/Main.qml:8232
+msgid "Tráfico denso"
+msgstr "Trafiko handia"
+
+#: qml/Main.qml:1447
+msgid "Radar oculto"
+msgstr "Radar ezkutua"
+
+#: qml/Main.qml:1448
+msgid "Colisión múltiple"
+msgstr "Talka anitza"
+
+#: qml/Main.qml:1449 qml/Main.qml:8236
+msgid "Semáforo averiado"
+msgstr "Semaforoa matxuratuta"
+
+#: qml/Main.qml:1450 qml/Main.qml:4399
+msgid "Carril izq."
+msgstr "Ezker erreia"
+
+#: qml/Main.qml:1450 qml/Main.qml:4399
+msgid "Carril der."
+msgstr "Eskuin erreia"
+
+#: qml/Main.qml:1451 qml/Main.qml:4399 qml/Main.qml:8237
+msgid "Carril central"
+msgstr "Erdiko erreia"
+
+#: qml/Main.qml:1451 qml/Main.qml:8238
+msgid "Calzada resbaladiza"
+msgstr "Errepide labaina"
+
+#: qml/Main.qml:1453
+msgid "Ayuda compañeros"
+msgstr "Gidarien laguntza"
+
+#: qml/Main.qml:1470
+msgid "%1 en %2 metros"
+msgstr "%1 %2 metrora"
+
+#: qml/Main.qml:1593
 msgid "✓ Configuración guardada en el servidor"
 msgstr "✓ Konfigurazioa zerbitzarian gorde da"
 
-#: qml/Main.qml:1569
+#: qml/Main.qml:1595
+msgid "Sin conexión: configuración no guardada"
+msgstr "Konexiorik gabe: ezarpenak ez dira gorde"
+
+#: qml/Main.qml:1596
+msgid "Sesión caducada: configuración no guardada"
+msgstr "Saioa iraungi da: ezarpenak ez dira gorde"
+
+#: qml/Main.qml:1597
+msgid "Error %1: configuración no guardada"
+msgstr "%1 errorea: ezarpenak ez dira gorde"
+
+#: qml/Main.qml:1612
 msgid "Sin conexión: no se pudo cargar la configuración del servidor"
 msgstr "Konexiorik gabe: ezin izan da zerbitzariaren konfigurazioa kargatu"
 
-#: qml/Main.qml:1571
+#: qml/Main.qml:1614
 msgid "Error al cargar configuración del servidor: "
 msgstr "Errorea zerbitzariaren konfigurazioa kargatzean: "
 
-#: qml/Main.qml:1712
+#: qml/Main.qml:1755
 msgid "Error al procesar la respuesta del servidor"
 msgstr "Errorea zerbitzariaren erantzuna prozesatzean"
 
-#: qml/Main.qml:1721
+#: qml/Main.qml:1764
 msgid "Sesión no válida — vuelve a iniciar sesión"
 msgstr "Saioa ez da baliozkoa — hasi berriz saioa"
 
-#: qml/Main.qml:1726
+#: qml/Main.qml:1769
 msgid "Sin conexión con el servidor"
 msgstr "Zerbitzariarekiko konexiorik ez"
 
-#: qml/Main.qml:1729
+#: qml/Main.qml:1772
 msgid "Error del servidor (%1)"
 msgstr "Zerbitzariaren errorea (%1)"
 
-#: qml/Main.qml:2496 qml/Main.qml:2531 qml/ParkingDialog.qml:111
+#: qml/Main.qml:2539 qml/Main.qml:2574 qml/ParkingDialog.qml:111
 msgid "A pie"
 msgstr "Oinez"
 
-#: qml/Main.qml:2526 qml/PreferencesPanel.qml:403 qml/VehicleSetupDialog.qml:51
+#: qml/Main.qml:2569 qml/PreferencesPanel.qml:403 qml/VehicleSetupDialog.qml:51
 msgid "Coche"
 msgstr "Autoa"
 
-#: qml/Main.qml:2527 qml/PreferencesPanel.qml:404 qml/VehicleSetupDialog.qml:52
+#: qml/Main.qml:2570 qml/PreferencesPanel.qml:404 qml/VehicleSetupDialog.qml:52
 msgid "Moto"
 msgstr "Motoa"
 
-#: qml/Main.qml:2528 qml/PreferencesPanel.qml:405 qml/VehicleSetupDialog.qml:53
+#: qml/Main.qml:2571 qml/PreferencesPanel.qml:405 qml/VehicleSetupDialog.qml:53
 msgid "Scooter"
 msgstr "Eskuterra"
 
-#: qml/Main.qml:2529 qml/PreferencesPanel.qml:406 qml/VehicleSetupDialog.qml:54
+#: qml/Main.qml:2572 qml/PreferencesPanel.qml:406 qml/VehicleSetupDialog.qml:54
 msgid "Camión"
 msgstr "Kamioia"
 
-#: qml/Main.qml:2530 qml/PreferencesPanel.qml:407 qml/VehicleSetupDialog.qml:55
+#: qml/Main.qml:2573 qml/PreferencesPanel.qml:407 qml/VehicleSetupDialog.qml:55
 msgid "Bicicleta"
 msgstr "Bizikleta"
 
-#: qml/Main.qml:2558
+#: qml/Main.qml:2601
 msgid "No se pudo calcular la ruta al aparcamiento"
 msgstr "Ezin izan da aparkalekurako ibilbidea kalkulatu"
 
-#: qml/Main.qml:2719 qml/Main.qml:8477 qml/Main.qml:9206
+#: qml/Main.qml:2770 qml/Main.qml:8550 qml/Main.qml:9279
 msgid "OSM Scout · rutas y mapas offline"
 msgstr "OSM Scout · lineaz kanpoko ibilbideak eta mapak"
 
-#: qml/Main.qml:2731
+#: qml/Main.qml:2782
 msgid "Servidor: "
 msgstr "Zerbitzaria: "
 
-#: qml/Main.qml:3318
+#: qml/Main.qml:3372
 msgid "Reproducción terminada"
 msgstr "Erreprodukzioa amaituta"
 
-#: qml/Main.qml:4501
+#: qml/Main.qml:4398
+msgid "Arcén"
+msgstr "Bazterbidea"
+
+#: qml/Main.qml:4398
+msgid "Semáforo"
+msgstr "Semaforoa"
+
+#: qml/Main.qml:4555
 msgid "GPS recuperado"
 msgstr "GPS berreskuratua"
 
-#: qml/Main.qml:5065
+#: qml/Main.qml:5119
 msgid "Rumbo"
 msgstr "Norabidea"
 
-#: qml/Main.qml:5083
+#: qml/Main.qml:5137
 msgid "km/h ◄"
 msgstr "km/h ◄"
 
-#: qml/Main.qml:5083
+#: qml/Main.qml:5137
 msgid "km/h"
 msgstr "km/h"
 
-#: qml/Main.qml:5122
+#: qml/Main.qml:5176
 msgid "Fallo GPS ON"
 msgstr "GPS hutsa AK"
 
-#: qml/Main.qml:5122 qml/Main.qml:7507
+#: qml/Main.qml:5176 qml/Main.qml:7578
 msgid "Fallo GPS"
 msgstr "GPS hutsa"
 
-#: qml/Main.qml:5149
+#: qml/Main.qml:5203
 msgid "Rev."
 msgstr "Atz."
 
-#: qml/Main.qml:5238
+#: qml/Main.qml:5292
 msgid "Ctrl ON"
 msgstr "Ctrl AK"
 
-#: qml/Main.qml:5238
+#: qml/Main.qml:5292
 msgid "Ctrl"
 msgstr "Ctrl"
 
-#: qml/Main.qml:5306
+#: qml/Main.qml:5360
 msgid "Adelanto"
 msgstr "Aurrerapen-denbora"
 
-#: qml/Main.qml:5355
+#: qml/Main.qml:5409
 msgid "Con ruta"
 msgstr "Ibilbidearekin"
 
-#: qml/Main.qml:5394
+#: qml/Main.qml:5448
 msgid "Hdg blend"
 msgstr "Hdg blend"
 
-#: qml/Main.qml:5405
+#: qml/Main.qml:5459
 msgid "Sin ruta"
 msgstr "Ibilbiderik gabe"
 
-#: qml/Main.qml:5419
+#: qml/Main.qml:5473
 msgid "Hdg accel"
 msgstr "Hdg accel"
 
-#: qml/Main.qml:5435
+#: qml/Main.qml:5489
 msgid "Pos sin nav"
 msgstr "Pos nabeg. gabe"
 
-#: qml/Main.qml:5742
+#: qml/Main.qml:5796
 msgid "Seguir ruta"
 msgstr "Ibilbidea jarraitu"
 
-#: qml/Main.qml:5769
+#: qml/Main.qml:5823
 msgid "SIMULACIÓN GPS"
 msgstr "GPS SIMULAZIOA"
 
-#: qml/Main.qml:5798
+#: qml/Main.qml:5852
 msgid "OSM Scout Server  ·  límites de velocidad por tramo"
 msgstr "OSM Scout Server  ·  tarteko abiadura mugak"
 
-#: qml/Main.qml:6073
+#: qml/Main.qml:5853
+msgid "límites por tramo"
+msgstr "tarteko mugak"
+
+#: qml/Main.qml:6127
 msgid "Mapa 3D"
 msgstr "3D mapa"
 
-#: qml/Main.qml:6074
+#: qml/Main.qml:6128
 msgid "Mapa"
 msgstr "Mapa"
 
-#: qml/Main.qml:6075 qml/PreferencesPanel.qml:25
+#: qml/Main.qml:6129 qml/PreferencesPanel.qml:25
 msgid "Satélite"
 msgstr "Satelitea"
 
-#: qml/Main.qml:6076 qml/PreferencesPanel.qml:29
+#: qml/Main.qml:6130 qml/PreferencesPanel.qml:29
 msgid "Claro"
 msgstr "Argia"
 
-#: qml/Main.qml:6077 qml/PreferencesPanel.qml:29
+#: qml/Main.qml:6131 qml/PreferencesPanel.qml:29
 msgid "Vivo"
 msgstr "Bizia"
 
-#: qml/Main.qml:6079 qml/PreferencesPanel.qml:30 qml/PreferencesPanel.qml:341
+#: qml/Main.qml:6133 qml/PreferencesPanel.qml:30 qml/PreferencesPanel.qml:341
 msgid "Noche"
 msgstr "Gaua"
 
-#: qml/Main.qml:6315 qml/Main.qml:6337
+#: qml/Main.qml:6369 qml/Main.qml:6391 qml/Main.qml:8228
 msgid "Alerta"
 msgstr "Alerta"
 
-#: qml/Main.qml:6365 qml/PreferencesPanel.qml:24 qml/PreferencesPanel.qml:341
+#: qml/Main.qml:6419 qml/PreferencesPanel.qml:24 qml/PreferencesPanel.qml:341
 msgid "Auto"
 msgstr "Auto"
 
-#: qml/Main.qml:7132
+#: qml/Main.qml:7203
 msgid "Voz + alertas"
 msgstr "Ahotsa + alertak"
 
-#: qml/Main.qml:7133
+#: qml/Main.qml:7204
 msgid "Solo alertas"
 msgstr "Alertak soilik"
 
-#: qml/Main.qml:7134
+#: qml/Main.qml:7205
 msgid "Solo pitidos"
 msgstr "Pitidoak soilik"
 
-#: qml/Main.qml:7134
+#: qml/Main.qml:7205
 msgid "Silencio"
 msgstr "Isiltasuna"
 
-#: qml/Main.qml:7166
+#: qml/Main.qml:7237
 msgid "Compartiendo"
 msgstr "Partekatzen"
 
-#: qml/Main.qml:7202 qml/PreferencesPanel.qml:2038
+#: qml/Main.qml:7273 qml/PreferencesPanel.qml:2040
 msgid "Grabando"
 msgstr "Grabatzen"
 
-#: qml/Main.qml:7202
+#: qml/Main.qml:7273
 msgid "Grabar ruta"
 msgstr "Ibilbidea grabatu"
 
-#: qml/Main.qml:7228
+#: qml/Main.qml:7299
 msgid "Prev. Ruta"
 msgstr "Bid. aurreik."
 
-#: qml/Main.qml:7243
+#: qml/Main.qml:7314
 msgid "Tareas"
 msgstr "Eginkizunak"
 
-#: qml/Main.qml:7270
+#: qml/Main.qml:7341
 msgid "🅿 Aparcamiento guardado · "
 msgstr "🅿 Aparkalekua gordeta · "
 
-#: qml/Main.qml:7287
+#: qml/Main.qml:7358
 msgid "Borrar aparcamiento"
 msgstr "Aparkalekua ezabatu"
 
-#: qml/Main.qml:7298
+#: qml/Main.qml:7369
 msgid "🗑 Aparcamiento eliminado · "
 msgstr "🗑 Aparkalekua ezabatuta · "
 
-#: qml/Main.qml:7315
+#: qml/Main.qml:7386
 msgid "Ver vehículo"
 msgstr "Ibilgailua ikusi"
 
-#: qml/Main.qml:7348 qml/ParkingDialog.qml:61
+#: qml/Main.qml:7419 qml/ParkingDialog.qml:61
 msgid "Ir al aparcamiento"
 msgstr "Aparkalekura joan"
 
-#: qml/Main.qml:7366 qml/MediaPanel.qml:222
+#: qml/Main.qml:7437 qml/MediaPanel.qml:222
 msgid "Música"
 msgstr "Musika"
 
-#: qml/Main.qml:7398
+#: qml/Main.qml:7469
 msgid "Login"
 msgstr "Sartu"
 
-#: qml/Main.qml:7414 qml/MessagesPanel.qml:106
+#: qml/Main.qml:7485 qml/MessagesPanel.qml:106
 msgid "Mensajes"
 msgstr "Mezuak"
 
-#: qml/Main.qml:7444
+#: qml/Main.qml:7515
 msgid "Bloq. Mapa"
 msgstr "Mapa blok."
 
-#: qml/Main.qml:7461 qml/PreferencesPanel.qml:3130
+#: qml/Main.qml:7532 qml/PreferencesPanel.qml:3132
 msgid "Debug"
 msgstr "Debug"
 
-#: qml/Main.qml:7476
+#: qml/Main.qml:7547
 msgid "Sim GPS"
 msgstr "Sim GPS"
 
-#: qml/Main.qml:7507
+#: qml/Main.qml:7578
 msgid "GPS on"
 msgstr "GPS piztu"
 
-#: qml/Main.qml:7522
+#: qml/Main.qml:7593
 msgid "Reanudar"
 msgstr "Jarraitu"
 
-#: qml/Main.qml:7522
+#: qml/Main.qml:7593
 msgid "Pausar sim"
 msgstr "Sim gelditu"
 
-#: qml/Main.qml:7538 qml/PreferencesPanel.qml:1788
+#: qml/Main.qml:7609 qml/PreferencesPanel.qml:1789
 msgid "Suavizado GPS"
 msgstr "GPS leunketa"
 
-#: qml/Main.qml:7555
+#: qml/Main.qml:7626
 msgid "IMU debug"
 msgstr "IMU arazketa"
 
-#: qml/Main.qml:7572
+#: qml/Main.qml:7643
 msgid "Bisector"
 msgstr "Bisector"
 
-#: qml/Main.qml:7589
+#: qml/Main.qml:7660
 msgid "POIs debug"
 msgstr "POIs debug"
 
-#: qml/Main.qml:7619
+#: qml/Main.qml:7690
 msgid "Donar"
 msgstr "Eman"
 
-#: qml/Main.qml:7844
+#: qml/Main.qml:7917
 msgid "INICIO"
 msgstr "HASIERA"
 
-#: qml/Main.qml:7881
+#: qml/Main.qml:7954
 msgid "FIN"
 msgstr "AMAIERA"
 
-#: qml/Main.qml:8012
+#: qml/Main.qml:8085
 msgid "Inicio sim"
 msgstr "Sim hasiera"
 
-#: qml/Main.qml:8032 qml/MessagesPanel.qml:351 qml/MsgDetailPopup.qml:175
+#: qml/Main.qml:8105 qml/MessagesPanel.qml:351 qml/MsgDetailPopup.qml:175
 msgid "Añadir destino"
 msgstr "Helmuga gehitu"
 
-#: qml/Main.qml:8076
+#: qml/Main.qml:8135
+msgid "Posición actual"
+msgstr "Uneko kokapena"
+
+#: qml/Main.qml:8149
 msgid "🚨  Añadir alerta aquí"
 msgstr "🚨  Alerta hemen gehitu"
 
-#: qml/Main.qml:8105
+#: qml/Main.qml:8178
 msgid "📍 Establecer posición GPS"
 msgstr "📍 GPS posizioa ezarri"
 
-#: qml/Main.qml:8230
+#: qml/Main.qml:8221
+msgid "Carretera cortada"
+msgstr "Errepidea itxita"
+
+#: qml/Main.qml:8233
+msgid "Policía oculto"
+msgstr "Polizia ezkutua"
+
+#: qml/Main.qml:8237
+msgid "Carril izquierdo"
+msgstr "Ezkerreko erreia"
+
+#: qml/Main.qml:8237
+msgid "Carril derecho"
+msgstr "Eskuineko erreia"
+
+#: qml/Main.qml:8303
 msgid "👍  Confirmar"
 msgstr "👍  Berretsi"
 
-#: qml/Main.qml:8253
+#: qml/Main.qml:8326
 msgid "👎  Desmentir"
 msgstr "👎  Gezurtatu"
 
-#: qml/Main.qml:8278
+#: qml/Main.qml:8351
 msgid "🗑  Cancelar mi alerta"
 msgstr "🗑  Nire alerta ezeztatu"
 
-#: qml/Main.qml:8364
+#: qml/Main.qml:8437
 msgid "Satélites"
 msgstr "Sateliteak"
 
-#: qml/Main.qml:8480
+#: qml/Main.qml:8553
 msgid "OSM Scout no disponible · usando "
 msgstr "OSM Scout ez dago erabilgarri · erabiltzen: "
 
-#: qml/Main.qml:8538
+#: qml/Main.qml:8611
 msgid "Caché de mapas eliminada"
 msgstr "Mapen katxea ezabatu da"
 
-#: qml/Main.qml:8760
+#: qml/Main.qml:8833
 msgid "Límite comunitario"
 msgstr "Komunitate-muga"
 
-#: qml/Main.qml:8767
+#: qml/Main.qml:8840
 msgid "Eliminar este límite"
 msgstr "Muga hau ezabatu"
 
-#: qml/Main.qml:8834
+#: qml/Main.qml:8907
 msgid "Límite de velocidad aquí"
 msgstr "Abiadura muga hemen"
 
-#: qml/Main.qml:8973
+#: qml/Main.qml:9046
 msgid "⚙  Configuración en el servidor"
 msgstr "⚙  Konfigurazioa zerbitzarian"
 
-#: qml/Main.qml:8989
+#: qml/Main.qml:9054
+msgid "Guardada el %1"
+msgstr "%1(e)an gordeta"
+
+#: qml/Main.qml:9055
+msgid "Hay configuración guardada en el servidor."
+msgstr "Zerbitzarian ezarpenak gordeta daude."
+
+#: qml/Main.qml:9062
 msgid "Tienes cambios locales no sincronizados. ¿Cuál configuración usar?"
 msgstr ""
 "Sinkronizatu gabeko aldaketa lokalak dituzu. Zein konfigurazio erabili?"
 
-#: qml/Main.qml:9001
+#: qml/Main.qml:9074
 msgid "Usar del servidor"
 msgstr "Zerbitzarikoa erabili"
 
-#: qml/Main.qml:9011
+#: qml/Main.qml:9084
 msgid "✓ Configuración del servidor aplicada"
 msgstr "✓ Zerbitzariaren konfigurazioa aplikatu da"
 
-#: qml/Main.qml:9020
+#: qml/Main.qml:9093
 msgid "Mantener la local"
 msgstr "Lokala mantendu"
 
-#: qml/Main.qml:9123
+#: qml/Main.qml:9196
 msgid "Cacheando mapa… detalle"
 msgstr "Mapa katxean gordetzen… xehetasuna"
 
-#: qml/Main.qml:9143
+#: qml/Main.qml:9216
 msgid "Cacheando mapa… "
 msgstr "Mapa katxean gordetzen… "
 
-#: qml/Main.qml:9173
+#: qml/Main.qml:9246
 msgid "Mapa online: OSM Scout"
 msgstr "Lineako mapa: OSM Scout"
 
-#: qml/Main.qml:9175
+#: qml/Main.qml:9248
 msgid "Mapa online: OSM Scout (no disponible · usando Mapbox)"
 msgstr "Lineako mapa: OSM Scout (ez dago erabilgarri · Mapbox erabiltzen)"
 
-#: qml/Main.qml:9177
+#: qml/Main.qml:9250
 msgid "Mapa online: Mapbox"
 msgstr "Lineako mapa: Mapbox"
 
-#: qml/Main.qml:9182
+#: qml/Main.qml:9255
 msgid "Sin internet: fallback a OSM Scout"
 msgstr "Internetik gabe: OSM Scout ordezko gisa"
 
-#: qml/Main.qml:9184
+#: qml/Main.qml:9257
 msgid "Sin internet: fallback OSM Scout (no disponible)"
 msgstr "Internetik gabe: OSM Scout ordezkoa (ez dago erabilgarri)"
 
-#: qml/Main.qml:9186
+#: qml/Main.qml:9259
 msgid "Sin internet: caché de tiles"
 msgstr "Internetik gabe: tileen katxea"
 
-#: qml/Main.qml:9243
+#: qml/Main.qml:9316
 msgid "Mapas: servidor no disponible · usando OSM Scout"
 msgstr "Mapak: zerbitzaria ez dago erabilgarri · OSM Scout erabiliz"
 
-#: qml/Main.qml:9245
+#: qml/Main.qml:9318
 msgid "Mapas: servidor no disponible · usando servidor público"
 msgstr "Mapak: zerbitzaria ez dago erabilgarri · zerbitzari publikoa erabiliz"
 
-#: qml/Main.qml:9265
+#: qml/Main.qml:9338
 msgid "Servidor de mapas recuperado · restaurando"
 msgstr "Mapa zerbitzaria berreskuratuta · zaharberritzen"
 
-#: qml/Main.qml:9287 qml/Main.qml:9300
+#: qml/Main.qml:9360 qml/Main.qml:9373
 msgid "Sin internet · usando OSM Scout Server"
 msgstr "Interneta gabe · OSM Scout Server erabiliz"
 
-#: qml/Main.qml:9316 qml/Main.qml:9321
+#: qml/Main.qml:9389 qml/Main.qml:9394
 msgid "Conexión restaurada · volviendo a mapas online"
 msgstr "Konexioa berreskuratuta · mapa onlineetara itzultzen"
 
-#: qml/Main.qml:9387
+#: qml/Main.qml:9460
 msgid "Cacheando mapa… 0%"
 msgstr "Mapa katxean gordetzen… %0"
 
-#: qml/Main.qml:9492
+#: qml/Main.qml:9565
 msgid "Tienes un mensaje nuevo"
 msgstr "Mezu berri bat duzu"
 
-#: qml/Main.qml:9493
+#: qml/Main.qml:9566
 msgid "Tienes %1 mensajes nuevos"
 msgstr "%1 mezu berri dituzu"
 
-#: qml/Main.qml:9528 qml/RouteSelectPanel.qml:171 qml/SearchPanel.qml:2058
+#: qml/Main.qml:9601 qml/RouteSelectPanel.qml:171 qml/SearchPanel.qml:2250
 msgid "Ruta más rápida"
 msgstr "Bide azkarrena"
 
-#: qml/Main.qml:9532
+#: qml/Main.qml:9605
 msgid "Ahorra"
 msgstr "Aurreztu"
 
-#: qml/Main.qml:9542
+#: qml/Main.qml:9615
 msgid "Revisar"
 msgstr "Berrikusi"
 
-#: qml/Main.qml:9551
+#: qml/Main.qml:9624
 msgid "Ignorar"
 msgstr "Baztertu"
 
-#: qml/Main.qml:9607
+#: qml/Main.qml:9680
 msgid "Pre-procesando motor TTS"
 msgstr "TTS motorra aurre-prozesatzen"
 
-#: qml/Main.qml:9608
+#: qml/Main.qml:9681
 msgid "GPS impreciso. Simulando trayecto."
 msgstr "GPS zehaztugabea. Ibilbidea simulatzen."
 
-#: qml/Main.qml:9611
+#: qml/Main.qml:9684
 msgid "Cargando mapa…"
 msgstr "Mapa kargatzen…"
 
-#: qml/Main.qml:10167 qml/SharedLocationDialog.qml:61
+#: qml/Main.qml:10246 qml/SharedLocationDialog.qml:61
 msgid "Ubicación compartida"
 msgstr "Partekatutako kokapena"
 
-#: qml/Main.qml:10414
+#: qml/Main.qml:10496
 msgid "¿Has llegado a"
 msgstr "Iritsi al zara"
 
-#: qml/Main.qml:10415
+#: qml/Main.qml:10497
 msgid "el destino"
 msgstr "helmuga"
 
-#: qml/Main.qml:10424
+#: qml/Main.qml:10506
 msgid "Sí, he llegado"
 msgstr "Bai, iritsi naiz"
 
-#: qml/Main.qml:10435
+#: qml/Main.qml:10517
 msgid "Todavía no"
 msgstr "Oraindik ez"
 
-#: qml/Main.qml:10467
+#: qml/Main.qml:10549
 msgid "Tareas pendientes"
 msgstr "Eginkizun zain daudenak"
 
-#: qml/Main.qml:10476
+#: qml/Main.qml:10558
 msgid "Abrir"
 msgstr "Ireki"
 
-#: qml/Main.qml:10517
+#: qml/Main.qml:10599
 msgid "🅿 ¿Guardar aparcamiento aquí?"
 msgstr "🅿 Aparkalekua hemen gorde?"
 
-#: qml/Main.qml:10526 qml/PreferencesPanel.qml:953 qml/SearchPanel.qml:2173
+#: qml/Main.qml:10608 qml/PreferencesPanel.qml:954 qml/SearchPanel.qml:2365
 msgid "Guardar"
 msgstr "Gorde"
 
-#: qml/Main.qml:10535
+#: qml/Main.qml:10617
 msgid "🅿 Aparcamiento guardado"
 msgstr "🅿 Aparkalekua gordeta"
 
@@ -1719,7 +1866,7 @@ msgid "Ir a"
 msgstr "Joan"
 
 #: qml/MessagesPanel.qml:361 qml/MsgDetailPopup.qml:188
-#: qml/SearchPanel.qml:1586
+#: qml/SearchPanel.qml:1778
 msgid "Destino"
 msgstr "Helmuga"
 
@@ -1735,41 +1882,177 @@ msgstr "Irakurrita"
 msgid "Siguiente"
 msgstr "Hurrengoa"
 
-#: qml/NavBar.qml:816
+#: qml/NavAlerts.js:87
+msgid "Respuesta inválida"
+msgstr "Erantzun baliogabea"
+
+#: qml/NavAlerts.js:89
+msgid "Email o contraseña incorrectos"
+msgstr "Posta edo pasahitza ez dira zuzenak"
+
+#: qml/NavAlerts.js:91
+msgid "Confirma tu email antes de iniciar sesión"
+msgstr "Berretsi zure posta saioa hasi aurretik"
+
+#: qml/NavAlerts.js:117
+msgid "Este email está registrado pero no verificado."
+msgstr "Posta hau erregistratuta dago, baina egiaztatu gabe."
+
+#: qml/NavAlerts.js:119 qml/NavAlerts.js:120
+msgid "Ese email ya está registrado."
+msgstr "Posta hori dagoeneko erregistratuta dago."
+
+#: qml/NavAlerts.js:286
+msgid "Contraseña incorrecta"
+msgstr "Pasahitz okerra"
+
+#: qml/NavAlerts.js:287
+msgid "La cuenta ya no existe"
+msgstr "Kontua ez da existitzen"
+
+#: qml/NavAlerts.js:288
+msgid "Sin conexión"
+msgstr "Konexiorik gabe"
+
+#: qml/NavBar.qml:656
+msgid ", y a continuación %1"
+msgstr ", eta gero %1"
+
+#: qml/NavBar.qml:808
 msgid "SENTIDO CONTRARIO"
 msgstr "ALDERANTZIZKO NORANZKOA"
 
-#: qml/NavBar.qml:913
+#: qml/NavBar.qml:905
 msgid "Reiniciar navegación"
 msgstr "Nabigazioa berrabiarazi"
 
-#: qml/NavBar.qml:939
+#: qml/NavBar.qml:931
 msgid "Iniciar navegación"
 msgstr "Nabigazioa hasi"
 
-#: qml/NavBar.qml:944 qml/SpeedView.qml:61
+#: qml/NavBar.qml:936 qml/SpeedView.qml:61
 msgid "Buscando GPS…"
 msgstr "GPS bilatzen…"
 
-#: qml/NavBar.qml:1017
+#: qml/NavBar.qml:1009
 msgid "Recalculando ruta…"
 msgstr "Bidea birkalkulatzen…"
 
-#: qml/NavBar.qml:1018 qml/NavBar.qml:1019
+#: qml/NavBar.qml:1010 qml/NavBar.qml:1011
 msgid "Fuera de ruta"
 msgstr "Bidetik kanpo"
 
-#: qml/NavBar.qml:1058
+#: qml/NavBar.qml:1050
 msgid "Ruta pausada"
 msgstr "Bidea geldituta"
 
-#: qml/NavBar.qml:1161
+#: qml/NavBar.qml:1153
 msgid "Parar"
 msgstr "Gelditu"
 
 #: qml/NaviusLogo.qml:49
 msgid "Navegación comunitaria"
 msgstr "Nabigazio komunitarioa"
+
+#: qml/NavSearch.js:246
+msgid "hoy a las %1"
+msgstr "gaur %1(e)tan"
+
+#: qml/NavSearch.js:247
+msgid "ayer a las %1"
+msgstr "atzo %1(e)tan"
+
+#: qml/NavSearch.js:248
+msgid "hace %1 días a las %2"
+msgstr "%1 egun lehenago %2(e)tan"
+
+#: qml/NavSearch.js:270 qml/NavSearch.js:315
+msgid "Diésel"
+msgstr "Diesela"
+
+#: qml/NavSearch.js:316
+msgid "Diésel B"
+msgstr "Diesel B"
+
+#: qml/NavSearch.js:318
+msgid "Eléctrico"
+msgstr "Elektrikoa"
+
+#: qml/NavSearch.js:326
+msgid "%1 hab."
+msgstr "%1 gela"
+
+#: qml/NavSearch.js:338
+msgid "Gratis"
+msgstr "Doan"
+
+#: qml/NavSearch.js:339
+msgid "De pago"
+msgstr "Ordainpekoa"
+
+#: qml/NavSearch.js:340
+msgid "%1 plazas"
+msgstr "%1 plaza"
+
+#: qml/NavSearch.js:341
+msgid "Máx. %1"
+msgstr "Geh. %1"
+
+#: qml/NavSearch.js:345
+msgid "Urgencias 24h"
+msgstr "Larrialdiak 24h"
+
+#: qml/NavSearch.js:346
+msgid "Sin urgencias"
+msgstr "Larrialdirik gabe"
+
+#: qml/NavSearch.js:722
+msgid "Gasolinera"
+msgstr "Gasolindegia"
+
+#: qml/NavSearch.js:723
+msgid "Aparcamiento"
+msgstr "Aparkalekua"
+
+#: qml/NavSearch.js:725
+msgid "Restaurante"
+msgstr "Jatetxea"
+
+#: qml/NavSearch.js:727
+msgid "Cafetería"
+msgstr "Kafetegia"
+
+#: qml/NavSearch.js:728
+msgid "Supermercado"
+msgstr "Supermerkatua"
+
+#: qml/NavSearch.js:755
+msgid "Sin tipo de POI para el geocoder local"
+msgstr "Ez dago POI motarik geocoder lokalerako"
+
+#: qml/NavSearch.js:777
+msgid "El geocoder del dispositivo no respondió"
+msgstr "Gailuaren geocoderrak ez du erantzun"
+
+#: qml/NavSearch.js:838
+msgid "Sin red · búsqueda POI"
+msgstr "Sarerik gabe · POI bilaketa"
+
+#: qml/NavSearch.js:839
+msgid "Sin servidores Overpass disponibles"
+msgstr "Ez dago Overpass zerbitzaririk erabilgarri"
+
+#: qml/NavSearch.js:1124 qml/NavSearch.js:1210
+msgid "Servidor: %1"
+msgstr "Zerbitzaria: %1"
+
+#: qml/NavSearch.js:1124 qml/NavSearch.js:1210
+msgid "sin respuesta"
+msgstr "erantzunik ez"
+
+#: qml/NavSearch.js:1174
+msgid "Sin red · ruta no calculada"
+msgstr "Sarerik gabe · ibilbidea ez da kalkulatu"
 
 #: qml/OfflineBanner.qml:47
 msgid "Sin conexión — Mapas disponibles vía OSM Scout"
@@ -1823,9 +2106,9 @@ msgstr "Fiord"
 msgid "Restaurado"
 msgstr "Leheneratua"
 
-#: qml/PreferencesPanel.qml:211 qml/PreferencesPanel.qml:1276
-#: qml/PreferencesPanel.qml:1304 qml/PreferencesPanel.qml:2060
-#: qml/PreferencesPanel.qml:2737
+#: qml/PreferencesPanel.qml:211 qml/PreferencesPanel.qml:1277
+#: qml/PreferencesPanel.qml:1305 qml/PreferencesPanel.qml:2062
+#: qml/PreferencesPanel.qml:2739
 msgid "Toca de nuevo para confirmar"
 msgstr "Berriro sakatu baieztatzeko"
 
@@ -1869,7 +2152,7 @@ msgstr "Ibilgailuak"
 msgid "+ Añadir"
 msgstr "+ Gehitu"
 
-#: qml/PreferencesPanel.qml:497 qml/PreferencesPanel.qml:3767
+#: qml/PreferencesPanel.qml:497 qml/PreferencesPanel.qml:3769
 msgid "Borrar"
 msgstr "Ezabatu"
 
@@ -1877,14 +2160,19 @@ msgstr "Ezabatu"
 msgid "Sí"
 msgstr "Bai"
 
-#: qml/PreferencesPanel.qml:529 qml/PreferencesPanel.qml:1365
-#: qml/PreferencesPanel.qml:1395
+#: qml/PreferencesPanel.qml:529 qml/PreferencesPanel.qml:1366
+#: qml/PreferencesPanel.qml:1396
 msgid "No"
 msgstr "Ez"
 
 #: qml/PreferencesPanel.qml:552 qml/VehicleSetupDialog.qml:93
 msgid "Nombre"
 msgstr "Izena"
+
+#: qml/PreferencesPanel.qml:564 qml/PreferencesPanel.qml:608
+#: qml/VehicleSetupDialog.qml:149
+msgid "Mi vehículo"
+msgstr "Nire ibilgailua"
 
 #: qml/PreferencesPanel.qml:569 qml/VehicleSetupDialog.qml:110
 msgid "Tipo"
@@ -1934,129 +2222,137 @@ msgstr "OSM Scout Server lehenetsi erabilgarri bada"
 msgid "Enrutamiento offline · se detecta al arrancar"
 msgstr "Offline bideraketa · abiaraztean detektatzen da"
 
-#: qml/PreferencesPanel.qml:815
+#: qml/PreferencesPanel.qml:807
+msgid "✓ activo · puerto 8553 · offline"
+msgstr "✓ aktibo · 8553 ataka · lineaz kanpo"
+
+#: qml/PreferencesPanel.qml:808
+msgid "✗ no detectado · puerto 8553"
+msgstr "✗ ez da detektatu · 8553 ataka"
+
+#: qml/PreferencesPanel.qml:816
 msgid "Detectar"
 msgstr "Detektatu"
 
-#: qml/PreferencesPanel.qml:833
+#: qml/PreferencesPanel.qml:834
 msgid "Servidor Navius"
 msgstr "Navius zerbitzaria"
 
-#: qml/PreferencesPanel.qml:898
+#: qml/PreferencesPanel.qml:899
 msgid "Añadir servidor"
 msgstr "Zerbitzaria gehitu"
 
-#: qml/PreferencesPanel.qml:911
+#: qml/PreferencesPanel.qml:912
 msgid "Nombre (ej. Mi servidor)"
 msgstr "Izena (ad. Nire zerbitzaria)"
 
-#: qml/PreferencesPanel.qml:988
+#: qml/PreferencesPanel.qml:989
 msgid "Mapa online"
 msgstr "Mapa online"
 
-#: qml/PreferencesPanel.qml:1034
+#: qml/PreferencesPanel.qml:1035
 msgid "Servidor de tiles"
 msgstr "Tiles zerbitzaria"
 
-#: qml/PreferencesPanel.qml:1080 qml/PreferencesPanel.qml:1170
+#: qml/PreferencesPanel.qml:1081 qml/PreferencesPanel.qml:1171
 msgid "Externo"
 msgstr "Kanpokoa"
 
-#: qml/PreferencesPanel.qml:1099
+#: qml/PreferencesPanel.qml:1100
 msgid "Tema de día"
 msgstr "Eguneko gaia"
 
-#: qml/PreferencesPanel.qml:1124
+#: qml/PreferencesPanel.qml:1125
 msgid "Servidor de POIs y radares"
 msgstr "POI eta radaren zerbitzaria"
 
-#: qml/PreferencesPanel.qml:1189
+#: qml/PreferencesPanel.qml:1190
 msgid "Sin internet"
 msgstr "Internetik gabe"
 
-#: qml/PreferencesPanel.qml:1208
+#: qml/PreferencesPanel.qml:1209
 msgid "Caché"
 msgstr "Cachea"
 
-#: qml/PreferencesPanel.qml:1245
+#: qml/PreferencesPanel.qml:1246
 msgid "Espacio máximo en disco"
 msgstr "Diskoko gehienezko tokia"
 
-#: qml/PreferencesPanel.qml:1275 qml/PreferencesPanel.qml:1303
-#: qml/PreferencesPanel.qml:2736
+#: qml/PreferencesPanel.qml:1276 qml/PreferencesPanel.qml:1304
+#: qml/PreferencesPanel.qml:2738
 msgid "Caché eliminada"
 msgstr "Cachea ezabatuta"
 
-#: qml/PreferencesPanel.qml:1277
+#: qml/PreferencesPanel.qml:1278
 msgid "Limpiar caché de mapas"
 msgstr "Mapen cachea garbitu"
 
-#: qml/PreferencesPanel.qml:1305
+#: qml/PreferencesPanel.qml:1306
 msgid "Limpiar caché Google Maps"
 msgstr "Google Maps cachea garbitu"
 
-#: qml/PreferencesPanel.qml:1361
+#: qml/PreferencesPanel.qml:1362
 msgid "Sonido de alertas"
 msgstr "Alerten soinua"
 
-#: qml/PreferencesPanel.qml:1365 qml/PreferencesPanel.qml:1395
-#: qml/PreferencesPanel.qml:2301
+#: qml/PreferencesPanel.qml:1366 qml/PreferencesPanel.qml:1396
+#: qml/PreferencesPanel.qml:2303
 msgid "Voz"
 msgstr "Ahotsa"
 
-#: qml/PreferencesPanel.qml:1365 qml/PreferencesPanel.qml:1395
+#: qml/PreferencesPanel.qml:1366 qml/PreferencesPanel.qml:1396
 msgid "Pitido"
 msgstr "Pitidoa"
 
-#: qml/PreferencesPanel.qml:1391
+#: qml/PreferencesPanel.qml:1392
 msgid "Sonido de indicaciones"
 msgstr "Argibideen soinua"
 
-#: qml/PreferencesPanel.qml:1421
+#: qml/PreferencesPanel.qml:1422
 msgid "Radares fijos"
 msgstr "Radar finkoak"
 
-#: qml/PreferencesPanel.qml:1424
+#: qml/PreferencesPanel.qml:1425
 msgid "Iconos y alertas de radares de velocidad fijos"
 msgstr "Abiadura-radar finkoen ikonoak eta alertak"
 
-#: qml/PreferencesPanel.qml:1446
+#: qml/PreferencesPanel.qml:1447
 msgid "Radares de tramo"
 msgstr "Tarteko radarrak"
 
-#: qml/PreferencesPanel.qml:1449
+#: qml/PreferencesPanel.qml:1450
 msgid "Zonas de control de velocidad media + barra de progreso"
 msgstr "Batez besteko abiadura-kontrol guneak + aurrerapen-barra"
 
-#: qml/PreferencesPanel.qml:1472
+#: qml/PreferencesPanel.qml:1473
 msgid "Aviso de exceso de velocidad"
 msgstr "Gehiegizko abiaduraren ohartarazpena"
 
-#: qml/PreferencesPanel.qml:1475
+#: qml/PreferencesPanel.qml:1476
 msgid "Parpadeo al superar el límite"
 msgstr "Muga gainditzean distira"
 
-#: qml/PreferencesPanel.qml:1498
+#: qml/PreferencesPanel.qml:1499
 msgid "Margen exceso de velocidad"
 msgstr "Gehiegizko abiaduraren marjina"
 
-#: qml/PreferencesPanel.qml:1502
+#: qml/PreferencesPanel.qml:1503
 msgid "Sin margen"
 msgstr "Marjinarik gabe"
 
-#: qml/PreferencesPanel.qml:1525
+#: qml/PreferencesPanel.qml:1526
 msgid "Zoom automático"
 msgstr "Zoom automatikoa"
 
-#: qml/PreferencesPanel.qml:1528
+#: qml/PreferencesPanel.qml:1529
 msgid "Ajusta el zoom según la velocidad"
 msgstr "Zooma abiaduraren arabera doitzen du"
 
-#: qml/PreferencesPanel.qml:1554
+#: qml/PreferencesPanel.qml:1555
 msgid "Anticipación zoom automático"
 msgstr "Zoom automatikoaren aurreikuspena"
 
-#: qml/PreferencesPanel.qml:1563
+#: qml/PreferencesPanel.qml:1564
 msgid ""
 "Ajuste de zoom automático para que se vea al menos la distancia a recorrer "
 "en este tiempo"
@@ -2064,90 +2360,90 @@ msgstr ""
 "Zoom automatikoa denbora honetan egiteko\n"
 "distantzia gutxienez ikus dadin"
 
-#: qml/PreferencesPanel.qml:1588
+#: qml/PreferencesPanel.qml:1589
 msgid "Ajustar movimiento a ruta"
 msgstr "Mugimendua bidearekiko doitu"
 
-#: qml/PreferencesPanel.qml:1591
+#: qml/PreferencesPanel.qml:1592
 msgid "Zoom según velocidades Valhalla de los tramos por delante"
 msgstr "Zooma aurreiko tarteetako Valhalla abiadura arabera"
 
-#: qml/PreferencesPanel.qml:1617
+#: qml/PreferencesPanel.qml:1618
 msgid "Anticipación giro de ruta"
 msgstr "Bidearen biraren aurreikuspena"
 
-#: qml/PreferencesPanel.qml:1626
+#: qml/PreferencesPanel.qml:1627
 msgid "Segundos de ruta por delante para anticipar el giro del mapa"
 msgstr "Maparen bira aurreikusteko aurreiko bideko segundoak"
 
-#: qml/PreferencesPanel.qml:1654
+#: qml/PreferencesPanel.qml:1655
 msgid "Ángulo máximo de giro predictivo"
 msgstr "Biraketa prediktiboaren gehieneko angelua"
 
-#: qml/PreferencesPanel.qml:1663
+#: qml/PreferencesPanel.qml:1664
 msgid "Máximo desvío angular del mapa respecto al heading real en modo giro"
 msgstr ""
 "Maparen desbideratze angularraren gehienekoa heading errealekiko biraketa "
 "moduan"
 
-#: qml/PreferencesPanel.qml:1688
+#: qml/PreferencesPanel.qml:1689
 msgid "Ajuste de posición a la ruta"
 msgstr "Posizioa ibilbidean doitzea"
 
-#: qml/PreferencesPanel.qml:1691
+#: qml/PreferencesPanel.qml:1692
 msgid "Centrar el vehículo sobre el shape de la ruta"
 msgstr "Ibilgailua ibilbidearen gainean zentratu"
 
-#: qml/PreferencesPanel.qml:1717
+#: qml/PreferencesPanel.qml:1718
 msgid "Distancia máxima de ajuste"
 msgstr "Gehienezko doitze-distantzia"
 
-#: qml/PreferencesPanel.qml:1726
+#: qml/PreferencesPanel.qml:1727
 msgid ""
 "Ajustar posición visual si el GPS está a menos de esta distancia de la ruta"
 msgstr "Posizio bisuala doitu GPS ibilbide honetatik hurbilago badago"
 
-#: qml/PreferencesPanel.qml:1754
+#: qml/PreferencesPanel.qml:1755
 msgid "Desvío para recalcular ruta"
 msgstr "Ibilbidea birkalkulatzeko desbideratzea"
 
-#: qml/PreferencesPanel.qml:1763
+#: qml/PreferencesPanel.qml:1764
 msgid "Distancia fuera de la ruta antes de recalcular"
 msgstr "Ibilbidetik kanpoko distantzia, birkalkulatu aurretik"
 
-#: qml/PreferencesPanel.qml:1791
+#: qml/PreferencesPanel.qml:1792
 msgid "Suavizar el movimiento del vehículo y el mapa entre ticks GPS"
 msgstr "GPS ticken artean ibilgailuaren eta maparen mugimendua leundu"
 
-#: qml/PreferencesPanel.qml:1814
+#: qml/PreferencesPanel.qml:1815
 msgid "Frecuencia de suavizado"
 msgstr "Leunketaren maiztasuna"
 
-#: qml/PreferencesPanel.qml:1842
+#: qml/PreferencesPanel.qml:1843
 msgid "Slider de zoom"
 msgstr "Zoom slider-a"
 
-#: qml/PreferencesPanel.qml:1845
+#: qml/PreferencesPanel.qml:1846
 msgid "Barra lateral para ajustar el zoom"
 msgstr "Zooma doitzeko alboko barra"
 
-#: qml/PreferencesPanel.qml:1868
+#: qml/PreferencesPanel.qml:1869
 msgid "Inhibir suspensión de pantalla"
 msgstr "Pantailaren esekipena inhibitu"
 
-#: qml/PreferencesPanel.qml:1871
+#: qml/PreferencesPanel.qml:1872
 msgid "Mantiene la pantalla encendida mientras la app está abierta"
 msgstr "Pantaila piztuta mantentzen du aplikazioa irekita dagoen bitartean"
 
-#: qml/PreferencesPanel.qml:1894
+#: qml/PreferencesPanel.qml:1895
 msgid "Mostrar velocidad máxima de la vía"
 msgstr "Bidearen gehienezko abiadura erakutsi"
 
-#: qml/PreferencesPanel.qml:1897
+#: qml/PreferencesPanel.qml:1898
 msgid "Fuente no fiable (OSM/Valhalla). Solo activa si hay radar comunitario"
 msgstr "Iturri ez fidagarria (OSM/Valhalla). Aktibatu komunitate-radarra bada"
 
-#: qml/PreferencesPanel.qml:1923
+#: qml/PreferencesPanel.qml:1924
 msgid ""
 "Usa la velocidad Doppler del chip GPS en vez de calcularla por diferencia de "
 "posiciones. Más precisa a baja velocidad y en aceleraciones. Desactiva si "
@@ -2157,304 +2453,336 @@ msgstr ""
 "beharrean. Zehaztasun handiagoa abiadura txikian eta azeleratzean.\n"
 "Desaktibatu abiadura erratikoak nabaritzen badira."
 
-#: qml/PreferencesPanel.qml:1947
+#: qml/PreferencesPanel.qml:1948
 msgid "Grabación de rutas"
 msgstr "Ibilbideen grabaketa"
 
-#: qml/PreferencesPanel.qml:2034
+#: qml/PreferencesPanel.qml:2008
+msgid "✓ GPX: %1"
+msgstr "✓ GPX: %1"
+
+#: qml/PreferencesPanel.qml:2009
+msgid "✗ Error al exportar"
+msgstr "✗ Errorea esportatzean"
+
+#: qml/PreferencesPanel.qml:2036
 msgid "Grabación GPS"
 msgstr "GPS grabaketa"
 
-#: qml/PreferencesPanel.qml:2039
+#: qml/PreferencesPanel.qml:2041
 msgid "Grabando…"
 msgstr "Grabatzen…"
 
-#: qml/PreferencesPanel.qml:2040
+#: qml/PreferencesPanel.qml:2042
 msgid "Graba posición y velocidad"
 msgstr "Posizioa eta abiadura grabatzen ditu"
 
-#: qml/PreferencesPanel.qml:2059
+#: qml/PreferencesPanel.qml:2061
 msgid "Rutas eliminadas"
 msgstr "Bideak ezabatuta"
 
-#: qml/PreferencesPanel.qml:2061
+#: qml/PreferencesPanel.qml:2063
 msgid "Borrar todas las rutas grabadas"
 msgstr "Grabatutatako bide guztiak ezabatu"
 
-#: qml/PreferencesPanel.qml:2081
+#: qml/PreferencesPanel.qml:2083
 msgid "Rutas grabadas"
 msgstr "Grabatutako bideak"
 
-#: qml/PreferencesPanel.qml:2092
+#: qml/PreferencesPanel.qml:2094
 msgid "Ninguna ruta grabada aún"
 msgstr "Oraindik bide grabaturik ez"
 
-#: qml/PreferencesPanel.qml:2132
+#: qml/PreferencesPanel.qml:2123
+msgid "con ruta"
+msgstr "ibilbidearekin"
+
+#: qml/PreferencesPanel.qml:2134
 msgid "Simular"
 msgstr "Simulatu"
 
-#: qml/PreferencesPanel.qml:2140
+#: qml/PreferencesPanel.qml:2142
 msgid "GPS crudo"
 msgstr "GPS gordina"
 
-#: qml/PreferencesPanel.qml:2196
+#: qml/PreferencesPanel.qml:2198
 msgid "Eliminar"
 msgstr "Ezabatu"
 
-#: qml/PreferencesPanel.qml:2230
+#: qml/PreferencesPanel.qml:2232
 msgid "OK"
 msgstr "Ados"
 
-#: qml/PreferencesPanel.qml:2388
+#: qml/PreferencesPanel.qml:2390
 msgid "Idioma de voz"
 msgstr "Ahots hizkuntza"
 
-#: qml/PreferencesPanel.qml:2393
+#: qml/PreferencesPanel.qml:2395
 msgid "Sistema"
 msgstr "Sistema"
 
-#: qml/PreferencesPanel.qml:2420
+#: qml/PreferencesPanel.qml:2422
 msgid "Voz Piper"
 msgstr "Piper ahotsa"
 
-#: qml/PreferencesPanel.qml:2431 qml/PreferencesPanel.qml:2499
-#: qml/PreferencesPanel.qml:2568
+#: qml/PreferencesPanel.qml:2433 qml/PreferencesPanel.qml:2501
+#: qml/PreferencesPanel.qml:2570
 msgid "Automático"
 msgstr "Automatikoa"
 
-#: qml/PreferencesPanel.qml:2488
+#: qml/PreferencesPanel.qml:2490
 msgid "Voz PicoTTS"
 msgstr "PicoTTS ahotsa"
 
-#: qml/PreferencesPanel.qml:2557
+#: qml/PreferencesPanel.qml:2559
 msgid "Voz espeak-ng"
 msgstr "espeak-ng ahotsa"
 
-#: qml/PreferencesPanel.qml:2631
+#: qml/PreferencesPanel.qml:2633
 msgid "Procesando voz…"
 msgstr "Ahotsa prozesatzen…"
 
-#: qml/PreferencesPanel.qml:2641
+#: qml/PreferencesPanel.qml:2643
 msgid "Motor TTS"
 msgstr "TTS motorra"
 
-#: qml/PreferencesPanel.qml:2720
+#: qml/PreferencesPanel.qml:2722
 msgid "Gestionar voces TTS"
 msgstr "TTS ahotsak kudeatu"
 
-#: qml/PreferencesPanel.qml:2738
+#: qml/PreferencesPanel.qml:2740
 msgid "Limpiar caché audio en ruta"
 msgstr "Bideko audio cachea garbitu"
 
-#: qml/PreferencesPanel.qml:2765
+#: qml/PreferencesPanel.qml:2767
 msgid "Media"
 msgstr "Ertaina"
 
-#: qml/PreferencesPanel.qml:2797
+#: qml/PreferencesPanel.qml:2799
 msgid "Volumen al hablar"
 msgstr "Bolumena hitz egitean"
 
-#: qml/PreferencesPanel.qml:2826
+#: qml/PreferencesPanel.qml:2828
 msgid "Cuenta Navius"
 msgstr "Navius kontua"
 
-#: qml/PreferencesPanel.qml:2855
+#: qml/PreferencesPanel.qml:2857
 msgid "No identificado"
 msgstr "Identifikatu gabe"
 
-#: qml/PreferencesPanel.qml:2872
+#: qml/PreferencesPanel.qml:2874
 msgid "Iniciar sesión / Registro"
 msgstr "Saioa hasi / Erregistratu"
 
-#: qml/PreferencesPanel.qml:2901
+#: qml/PreferencesPanel.qml:2903
 msgid "Privacidad"
 msgstr "Pribatutasuna"
 
-#: qml/PreferencesPanel.qml:2931
+#: qml/PreferencesPanel.qml:2933
 msgid "Política de privacidad aceptada"
 msgstr "Pribatutasun politika onartua"
 
-#: qml/PreferencesPanel.qml:2932
+#: qml/PreferencesPanel.qml:2934
 msgid "Política de privacidad no aceptada"
 msgstr "Pribatutasun politika ez da onartzen"
 
-#: qml/PreferencesPanel.qml:2950
+#: qml/PreferencesPanel.qml:2952
 msgid "Retirar consentimiento"
 msgstr "Adostasuna kendu"
 
-#: qml/PreferencesPanel.qml:2951
+#: qml/PreferencesPanel.qml:2953
 msgid "Aceptar política de privacidad"
 msgstr "Onartu pribatutasun politika"
 
-#: qml/PreferencesPanel.qml:2999
+#: qml/PreferencesPanel.qml:3001
 msgid "Ayuda"
 msgstr "Laguntza"
 
-#: qml/PreferencesPanel.qml:3052
+#: qml/PreferencesPanel.qml:3054
 msgid "Abrir asistente"
 msgstr "Laguntza ireki"
 
-#: qml/PreferencesPanel.qml:3074
+#: qml/PreferencesPanel.qml:3076
 msgid "Mostrar asistente al inicio"
 msgstr "Hasieran laguntza erakutsi"
 
-#: qml/PreferencesPanel.qml:3107
+#: qml/PreferencesPanel.qml:3109
 msgid "Acerca de…"
 msgstr "Honi buruz…"
 
-#: qml/PreferencesPanel.qml:3158
+#: qml/PreferencesPanel.qml:3160
 msgid "Modo Debug"
 msgstr "Debug modua"
 
-#: qml/PreferencesPanel.qml:3161
+#: qml/PreferencesPanel.qml:3163
 msgid "Sim GPS, POI"
 msgstr "Sim GPS, POI"
 
-#: qml/PreferencesPanel.qml:3197
+#: qml/PreferencesPanel.qml:3199
 msgid "Activar trazas y TUI"
 msgstr "Trazak eta TUI aktibatu"
 
-#: qml/PreferencesPanel.qml:3200
+#: qml/PreferencesPanel.qml:3202
 msgid "net_debug.log · tts_debug.log · piper_limit.log · control remoto"
 msgstr "net_debug.log · tts_debug.log · piper_limit.log · control remoto"
 
-#: qml/PreferencesPanel.qml:3226
+#: qml/PreferencesPanel.qml:3228
 msgid "Simulación GPS"
 msgstr "GPS simulazioa"
 
-#: qml/PreferencesPanel.qml:3229
+#: qml/PreferencesPanel.qml:3231
 msgid "Muntaner → Gran Via (Barcelona)"
 msgstr "Muntaner → Gran Via (Bartzelona)"
 
-#: qml/PreferencesPanel.qml:3229
+#: qml/PreferencesPanel.qml:3231
 msgid "Sustituye al GPS real para pruebas en interior"
 msgstr "GPS erreala ordezkatzen du barruko probetarako"
 
-#: qml/PreferencesPanel.qml:3257
+#: qml/PreferencesPanel.qml:3259
 msgid "Ruta de simulación"
 msgstr "Simulazio bidea"
 
-#: qml/PreferencesPanel.qml:3276
+#: qml/PreferencesPanel.qml:3278
 msgid "Aplicar ruta"
 msgstr "Bidea aplikatu"
 
-#: qml/PreferencesPanel.qml:3283
+#: qml/PreferencesPanel.qml:3285
 msgid "Grabaciones en sim"
 msgstr "Simeko grabazioak"
 
-#: qml/PreferencesPanel.qml:3335
+#: qml/PreferencesPanel.qml:3337
 msgid "Señal perdida (simulado)"
 msgstr "Seinalea galduta (simulatua)"
 
-#: qml/PreferencesPanel.qml:3335
+#: qml/PreferencesPanel.qml:3337
 msgid "Perder señal GPS"
 msgstr "GPS seinalea galdu"
 
-#: qml/PreferencesPanel.qml:3338
+#: qml/PreferencesPanel.qml:3340
 msgid "El vehículo sigue avanzando internamente"
 msgstr "Ibilgailua barnean aurrera jarraitzen du"
 
-#: qml/PreferencesPanel.qml:3339
+#: qml/PreferencesPanel.qml:3341
 msgid "Simula túnel o zona sin cobertura"
 msgstr "Tunela edo estaldurarik gabeko gunea simulatzen du"
 
-#: qml/PreferencesPanel.qml:3362
+#: qml/PreferencesPanel.qml:3364
 msgid "Deslizable posición en ruta sim"
 msgstr "Sim bideko posizioa mugikorra"
 
-#: qml/PreferencesPanel.qml:3365
+#: qml/PreferencesPanel.qml:3367
 msgid "Desplegable lateral para mover la posición GPS simulada"
 msgstr "GPS posizio simulatua mugitzeko alboko panela"
 
-#: qml/PreferencesPanel.qml:3388
+#: qml/PreferencesPanel.qml:3390
 msgid "Velocidad mínima sim (km/h)"
 msgstr "Sim gutxieneko abiadura (km/h)"
 
-#: qml/PreferencesPanel.qml:3392
+#: qml/PreferencesPanel.qml:3394
 msgid "Off"
 msgstr "Itzali"
 
-#: qml/PreferencesPanel.qml:3416
+#: qml/PreferencesPanel.qml:3418
 msgid "Posición manual"
 msgstr "Eskuzko posizioa"
 
-#: qml/PreferencesPanel.qml:3442
+#: qml/PreferencesPanel.qml:3428
+msgid "Latitud  (ej. 40.322130)"
+msgstr "Latitudea  (adib. 40.322130)"
+
+#: qml/PreferencesPanel.qml:3435
+msgid "Longitud  (ej. -3.515801)"
+msgstr "Longitudea  (adib. -3.515801)"
+
+#: qml/PreferencesPanel.qml:3444
 msgid "Fijar"
 msgstr "Finkatu"
 
-#: qml/PreferencesPanel.qml:3458
+#: qml/PreferencesPanel.qml:3460
 msgid "Liberar GPS"
 msgstr "GPS askatu"
 
-#: qml/PreferencesPanel.qml:3475
+#: qml/PreferencesPanel.qml:3477
 msgid "Panel debug velocidades (v_sim)"
 msgstr "Abiadura debug panela (v_sim)"
 
-#: qml/PreferencesPanel.qml:3478
+#: qml/PreferencesPanel.qml:3480
 msgid "Muestra vValhalla, límite y velocidad genérica"
 msgstr "vValhalla, muga eta abiadura generikoa erakusten du"
 
-#: qml/PreferencesPanel.qml:3501
+#: qml/PreferencesPanel.qml:3503
 msgid "Overlay límites de velocidad"
 msgstr "Abiadura-muga overlay-a"
 
-#: qml/PreferencesPanel.qml:3504
+#: qml/PreferencesPanel.qml:3506
 msgid "Muestra límite, velocidad Valhalla y fuente por tramo"
 msgstr "Tarteko muga, Valhalla abiadura eta iturria erakusten du"
 
-#: qml/PreferencesPanel.qml:3527
+#: qml/PreferencesPanel.qml:3529
 msgid "Mostrar ticks GPS (isReal)"
 msgstr "GPS tickak erakutsi (isReal)"
 
-#: qml/PreferencesPanel.qml:3530
+#: qml/PreferencesPanel.qml:3532
 msgid "Puntos cian en el mapa por cada fix real"
 msgstr "Fix erreal bakoitzeko puntu zianak mapan"
 
-#: qml/PreferencesPanel.qml:3563
+#: qml/PreferencesPanel.qml:3565
 msgid "Simulación fallos GPS"
 msgstr "GPS hutsen simulazioa"
 
-#: qml/PreferencesPanel.qml:3569
+#: qml/PreferencesPanel.qml:3571
 msgid "Probabilidad de fallo (%)"
 msgstr "Hutsaren probabilitatea (%)"
 
-#: qml/PreferencesPanel.qml:3584
+#: qml/PreferencesPanel.qml:3575
+msgid "ej. 5.00"
+msgstr "adib. 5.00"
+
+#: qml/PreferencesPanel.qml:3586
 msgid "Distancia de desvío (m)"
 msgstr "Desbideratze distantzia (m)"
 
-#: qml/PreferencesPanel.qml:3599
+#: qml/PreferencesPanel.qml:3590
+msgid "ej. 50"
+msgstr "adib. 50"
+
+#: qml/PreferencesPanel.qml:3601
 msgid "Ticks sin señal (isReal=true)"
 msgstr "Tickak seinalea gabe (isReal=true)"
 
-#: qml/PreferencesPanel.qml:3644
+#: qml/PreferencesPanel.qml:3605
+msgid "ej. 3"
+msgstr "adib. 3"
+
+#: qml/PreferencesPanel.qml:3646
 msgid "Texto para reproducir…"
 msgstr "Erreproduzitzeko testua…"
 
-#: qml/PreferencesPanel.qml:3653
+#: qml/PreferencesPanel.qml:3655
 msgid "Decir"
 msgstr "Esan"
 
-#: qml/PreferencesPanel.qml:3671
+#: qml/PreferencesPanel.qml:3673
 msgid "Ficheros debug"
 msgstr "Arazketa-fitxategiak"
 
-#: qml/PreferencesPanel.qml:3685
+#: qml/PreferencesPanel.qml:3687
 msgid "Borrar todos los ficheros debug al salir"
 msgstr "Debug fitxategi guztiak ezabatu irtetean"
 
-#: qml/PreferencesPanel.qml:3710
+#: qml/PreferencesPanel.qml:3712
 msgid "Todos los ficheros debug"
 msgstr "Debug fitxategi guztiak"
 
-#: qml/PreferencesPanel.qml:3720
+#: qml/PreferencesPanel.qml:3722
 msgid "Borrados"
 msgstr "Ezabatuta"
 
-#: qml/PreferencesPanel.qml:3720
+#: qml/PreferencesPanel.qml:3722
 msgid "Borrar todo"
 msgstr "Dena ezabatu"
 
-#: qml/PreferencesPanel.qml:3767
+#: qml/PreferencesPanel.qml:3769
 msgid "Borrado"
 msgstr "Ezabatuta"
 
@@ -2536,15 +2864,15 @@ msgstr "Bai, jarraitu"
 msgid "No, cancelar"
 msgstr "Ez, utzi"
 
-#: qml/RouteSelectPanel.qml:146 qml/SearchPanel.qml:2043
+#: qml/RouteSelectPanel.qml:146 qml/SearchPanel.qml:2235
 msgid "Rutas disponibles"
 msgstr "Bide erabilgarriak"
 
-#: qml/RouteSelectPanel.qml:172 qml/SearchPanel.qml:2058
+#: qml/RouteSelectPanel.qml:172 qml/SearchPanel.qml:2250
 msgid "Alternativa "
 msgstr "Alternatiboa "
 
-#: qml/RouteSelectPanel.qml:211 qml/SearchPanel.qml:1055
+#: qml/RouteSelectPanel.qml:211 qml/SearchPanel.qml:1136
 msgid "INICIAR NAVEGACIÓN"
 msgstr "NABIGAZIOA HASI"
 
@@ -2552,7 +2880,7 @@ msgstr "NABIGAZIOA HASI"
 msgid "Activo"
 msgstr "Aktibo"
 
-#: qml/SatelliteView.qml:159 qml/SatelliteView.qml:367 qml/SearchPanel.qml:1103
+#: qml/SatelliteView.qml:159 qml/SatelliteView.qml:367 qml/SearchPanel.qml:1184
 msgid "Buscando…"
 msgstr "Bilatzen…"
 
@@ -2577,251 +2905,267 @@ msgstr "Sakatu Hasi GPS aktibatzeko"
 msgid "Sin satélites visibles"
 msgstr "Satelite ikusgarririk ez"
 
-#: qml/SearchPanel.qml:120 qml/SearchPanel.qml:130
+#: qml/SearchPanel.qml:134 qml/SearchPanel.qml:144
 msgid "Sin destino"
 msgstr "Helmugaik gabe"
 
-#: qml/SearchPanel.qml:127
+#: qml/SearchPanel.qml:141
 msgid "Sin GPS"
 msgstr "GPS gabe"
 
-#: qml/SearchPanel.qml:352
+#: qml/SearchPanel.qml:406
 msgid "Buscando «%1»"
 msgstr "«%1» bilatzen"
 
-#: qml/SearchPanel.qml:360
+#: qml/SearchPanel.qml:417
 msgid "El servidor de búsqueda no ha respondido."
 msgstr "Bilaketa zerbitzariak ez du erantzun."
 
-#: qml/SearchPanel.qml:363
+#: qml/SearchPanel.qml:420
 msgid "Error de red: "
 msgstr "Sare errorea: "
 
-#: qml/SearchPanel.qml:367
+#: qml/SearchPanel.qml:424
 msgid "Sin resultados para «"
 msgstr "Emaitzarik ez «"
 
-#: qml/SearchPanel.qml:397
+#: qml/SearchPanel.qml:456
 msgid "El servidor de puntos de interés no ha respondido."
 msgstr "Intereseko puntuen zerbitzariak ez du erantzun."
 
-#: qml/SearchPanel.qml:400
+#: qml/SearchPanel.qml:459
 msgid "Error: "
 msgstr "Errorea: "
 
-#: qml/SearchPanel.qml:402
+#: qml/SearchPanel.qml:461
 msgid "Sin resultados cerca"
 msgstr "Inguruan emaitzarik ez"
 
-#: qml/SearchPanel.qml:466
+#: qml/SearchPanel.qml:525
 msgid "hoy"
 msgstr "gaur"
 
-#: qml/SearchPanel.qml:467
+#: qml/SearchPanel.qml:526
 msgid "mañana"
 msgstr "bihar"
 
-#: qml/SearchPanel.qml:469
+#: qml/SearchPanel.qml:528
 msgid "dom"
 msgstr "ig"
 
-#: qml/SearchPanel.qml:469
+#: qml/SearchPanel.qml:528
 msgid "lun"
 msgstr "al"
 
-#: qml/SearchPanel.qml:469 qml/SearchPanel.qml:471
+#: qml/SearchPanel.qml:528 qml/SearchPanel.qml:530
 msgid "mar"
 msgstr "ar"
 
-#: qml/SearchPanel.qml:469
+#: qml/SearchPanel.qml:528
 msgid "mié"
 msgstr "az"
 
-#: qml/SearchPanel.qml:470
+#: qml/SearchPanel.qml:529
 msgid "jue"
 msgstr "og"
 
-#: qml/SearchPanel.qml:470
+#: qml/SearchPanel.qml:529
 msgid "vie"
 msgstr "or"
 
-#: qml/SearchPanel.qml:470
+#: qml/SearchPanel.qml:529
 msgid "sáb"
 msgstr "la"
 
-#: qml/SearchPanel.qml:471
+#: qml/SearchPanel.qml:530
 msgid "ene"
 msgstr "urt"
 
-#: qml/SearchPanel.qml:471
+#: qml/SearchPanel.qml:530
 msgid "feb"
 msgstr "ots"
 
-#: qml/SearchPanel.qml:471
+#: qml/SearchPanel.qml:530
 msgid "abr"
 msgstr "api"
 
-#: qml/SearchPanel.qml:472
+#: qml/SearchPanel.qml:531
 msgid "may"
 msgstr "mai"
 
-#: qml/SearchPanel.qml:472
+#: qml/SearchPanel.qml:531
 msgid "jun"
 msgstr "eka"
 
-#: qml/SearchPanel.qml:472
+#: qml/SearchPanel.qml:531
 msgid "jul"
 msgstr "uzt"
 
-#: qml/SearchPanel.qml:472
+#: qml/SearchPanel.qml:531
 msgid "ago"
 msgstr "abu"
 
-#: qml/SearchPanel.qml:473
+#: qml/SearchPanel.qml:532
 msgid "sep"
 msgstr "ira"
 
-#: qml/SearchPanel.qml:473
+#: qml/SearchPanel.qml:532
 msgid "oct"
 msgstr "urr"
 
-#: qml/SearchPanel.qml:473
+#: qml/SearchPanel.qml:532
 msgid "nov"
 msgstr "aza"
 
-#: qml/SearchPanel.qml:473
+#: qml/SearchPanel.qml:532
 msgid "dic"
 msgstr "abe"
 
-#: qml/SearchPanel.qml:485
+#: qml/SearchPanel.qml:544
 msgid "Salida: ahora"
 msgstr "Irteera: orain"
 
-#: qml/SearchPanel.qml:490
+#: qml/SearchPanel.qml:549
 msgid "Salida: "
 msgstr "Irteera: "
 
-#: qml/SearchPanel.qml:663
+#: qml/SearchPanel.qml:723
 msgid "Esperando posición GPS…"
 msgstr "GPS posizioa zain…"
 
-#: qml/SearchPanel.qml:667
+#: qml/SearchPanel.qml:727
 msgid "Se necesita al menos un destino"
 msgstr "Gutxienez helmuga bat behar da"
 
-#: qml/SearchPanel.qml:672 qml/SearchPanel.qml:2200
+#: qml/SearchPanel.qml:732 qml/SearchPanel.qml:2392
 msgid "Calculando ruta…"
 msgstr "Bidea kalkulatzen…"
 
-#: qml/SearchPanel.qml:683
+#: qml/SearchPanel.qml:743
 msgid "El servidor de rutas no ha respondido."
 msgstr "Ibilbideen zerbitzariak ez du erantzun."
 
-#: qml/SearchPanel.qml:686
+#: qml/SearchPanel.qml:746
 msgid "No se encontró ruta"
 msgstr "Ez da ibilbiderik aurkitu"
 
-#: qml/SearchPanel.qml:762
+#: qml/SearchPanel.qml:822
 msgid "Buscar punto de inicio…"
 msgstr "Hasiera bilatu…"
 
-#: qml/SearchPanel.qml:762
+#: qml/SearchPanel.qml:822
 msgid "Buscar destino…"
 msgstr "Helmuga bilatu…"
 
-#: qml/SearchPanel.qml:867
+#: qml/SearchPanel.qml:927
 msgid "Sin peaje"
 msgstr "Bidesaririk gabe"
 
-#: qml/SearchPanel.qml:868
+#: qml/SearchPanel.qml:928
 msgid "Sin ferry"
 msgstr "Ferryrik gabe"
 
-#: qml/SearchPanel.qml:869
+#: qml/SearchPanel.qml:929
 msgid "Sin tierra"
 msgstr "Lur biderik gabe"
 
-#: qml/SearchPanel.qml:870
+#: qml/SearchPanel.qml:930
 msgid "Sin autopista"
 msgstr "Autobiderik gabe"
 
-#: qml/SearchPanel.qml:902
+#: qml/SearchPanel.qml:963
+msgid "Precargar mapa"
+msgstr "Mapa aurrez kargatu"
+
+#: qml/SearchPanel.qml:983
 msgid "Buscar en Google Maps"
 msgstr "Google Maps-en bilatu"
 
-#: qml/SearchPanel.qml:922
+#: qml/SearchPanel.qml:1003
 msgid "Salir ahora"
 msgstr "Orain irten"
 
-#: qml/SearchPanel.qml:930
+#: qml/SearchPanel.qml:1011
 msgid "Hora de salida"
 msgstr "Irteera ordua"
 
-#: qml/SearchPanel.qml:1018
+#: qml/SearchPanel.qml:1099
 msgid "CALCULAR RUTA"
 msgstr "BIDEA KALKULATU"
 
-#: qml/SearchPanel.qml:1042
+#: qml/SearchPanel.qml:1123
 msgid "Previsualizar en mapa"
 msgstr "Mapan aurreikusi"
 
-#: qml/SearchPanel.qml:1070
+#: qml/SearchPanel.qml:1151
 msgid "Borrar ruta"
 msgstr "Bidea ezabatu"
 
-#: qml/SearchPanel.qml:1120
+#: qml/SearchPanel.qml:1201
 msgid "Precios: "
 msgstr "Prezioak: "
 
-#: qml/SearchPanel.qml:1221
+#: qml/SearchPanel.qml:1229
+msgid "¿No sale tu destino? Búscalo en Google Maps"
+msgstr "Ez da zure helmuga agertzen? Bilatu Google Maps-en"
+
+#: qml/SearchPanel.qml:1288
+msgid "En otro país (%1)"
+msgstr "Beste herrialde batean (%1)"
+
+#: qml/SearchPanel.qml:1401
+msgid "Posición GPS aún no disponible"
+msgstr "GPS kokapena ez dago eskuragarri oraindik"
+
+#: qml/SearchPanel.qml:1413
 msgid "Planes guardados"
 msgstr "Gordetako planak"
 
-#: qml/SearchPanel.qml:1278
+#: qml/SearchPanel.qml:1470
 msgid "Mi posición (GPS)"
 msgstr "Nire posizioa (GPS)"
 
-#: qml/SearchPanel.qml:1324
+#: qml/SearchPanel.qml:1516
 msgid "Mi posición actual"
 msgstr "Nire uneko posizioa"
 
-#: qml/SearchPanel.qml:1572
+#: qml/SearchPanel.qml:1764
 msgid "Mover a:"
 msgstr "Mugitu hona:"
 
-#: qml/SearchPanel.qml:1637
+#: qml/SearchPanel.qml:1829
 msgid "Anteriores"
 msgstr "Aurrekoak"
 
-#: qml/SearchPanel.qml:1716
+#: qml/SearchPanel.qml:1908
 msgid "TODO tarea"
 msgstr "TODO zeregina"
 
-#: qml/SearchPanel.qml:1756
+#: qml/SearchPanel.qml:1948
 msgid "Puntos de interés"
 msgstr "Interesguneak"
 
-#: qml/SearchPanel.qml:1831
+#: qml/SearchPanel.qml:2023
 msgid "Cerca del destino"
 msgstr "Helmugatik hurbil"
 
-#: qml/SearchPanel.qml:1832
+#: qml/SearchPanel.qml:2024
 msgid "Cerca de mí"
 msgstr "Nire inguruan"
 
-#: qml/SearchPanel.qml:1891
+#: qml/SearchPanel.qml:2083
 msgid "Favoritos"
 msgstr "Gogokoak"
 
-#: qml/SearchPanel.qml:1965
+#: qml/SearchPanel.qml:2157
 msgid "Destinos recientes"
 msgstr "Azken helmugatik"
 
-#: qml/SearchPanel.qml:2118
+#: qml/SearchPanel.qml:2310
 msgid "Guardar favorito"
 msgstr "Gogokoa gorde"
 
-#: qml/SearchPanel.qml:2139
+#: qml/SearchPanel.qml:2331
 msgid "Nombre del favorito"
 msgstr "Gogokoaren izena"
 
@@ -3514,6 +3858,10 @@ msgstr "Konpilazio zain (clickable build)"
 msgid "Alta calidad (neuronal)"
 msgstr "Kalitate altua (neuronala)"
 
+#: qml/VehicleSetupDialog.qml:23 qml/VehicleSetupDialog.qml:102
+msgid "Mi coche"
+msgstr "Nire autoa"
+
 #: qml/VehicleSetupDialog.qml:82
 msgid "Nuevo vehículo"
 msgstr "Ibilgailu berria"
@@ -3522,15 +3870,11 @@ msgstr "Ibilgailu berria"
 msgid "Crea tu primer vehículo para empezar a navegar."
 msgstr "Sortu zure lehen ibilgailua nabigatzen hasteko."
 
-#: qml/VehicleSetupDialog.qml:102
-msgid "Mi coche"
-msgstr "Nire autoa"
-
 #: qml/VehicleSetupDialog.qml:141
 msgid "Crear"
 msgstr "Sortu"
 
-#: qml/WhatsNewDialog.qml:22
+#: qml/WhatsNewDialog.qml:25
 msgid ""
 "Búsqueda de puntos de interés cerca de ti: gasolineras, parking, "
 "restaurantes, hoteles y más"
@@ -3538,90 +3882,24 @@ msgstr ""
 "Inguruko interesguneak bilatu: gasolindegia, aparkalekua, jatetxea, hotela "
 "eta gehiago"
 
-#: qml/WhatsNewDialog.qml:23
+#: qml/WhatsNewDialog.qml:26
 msgid ""
 "Detección automática de rutas más rápidas por tráfico durante la navegación"
 msgstr "Trafikoagatik ibilbide azkarragoak detektatzea nabigazioan"
 
-#: qml/WhatsNewDialog.qml:24
+#: qml/WhatsNewDialog.qml:27
 msgid "Opción para limpiar caché de Google Maps en el menú de Ajustes"
 msgstr "Google Maps cachea garbitzeko aukera Ezarpenak menuan"
 
-#: qml/WhatsNewDialog.qml:25
+#: qml/WhatsNewDialog.qml:28
 msgid ""
 "Pantalla de novedades al iniciar con opción para desactivarla en Ajustes"
 msgstr "Hasierako berrien pantaila, Ezarpenetan desgaitzeko aukerarekin"
 
-#: qml/WhatsNewDialog.qml:89
+#: qml/WhatsNewDialog.qml:92
 msgid "Novedades"
 msgstr "Berriak"
 
-#: qml/WhatsNewDialog.qml:150
+#: qml/WhatsNewDialog.qml:153
 msgid "Entendido"
 msgstr "Ulertuta"
-
-msgid "¿No sale tu destino? Búscalo en Google Maps"
-msgstr "Ez da zure helmuga agertzen? Bilatu Google Maps-en"
-
-msgid "En otro país (%1)"
-msgstr "Beste herrialde batean (%1)"
-
-msgid "Posición GPS aún no disponible"
-msgstr "GPS kokapena ez dago eskuragarri oraindik"
-
-#~ msgid "Radar  ·  %1 m"
-#~ msgstr "Radarra  ·  %1 m"
-
-#~ msgid "Radar en %1 metros"
-#~ msgstr "Radarra %1 metrora"
-
-#~ msgid "Silenciado"
-#~ msgstr "Isilarazia"
-
-#~ msgid "Indicaciones y alertas por voz"
-#~ msgstr "Argibideak eta alertak ahotsez"
-
-#~ msgid "Indicaciones voz, alertas pitido"
-#~ msgstr "Argibideak ahotsez, alertak pitidoz"
-
-#~ msgid "Solo indicaciones por voz"
-#~ msgstr "Argibideak soilik ahotsez"
-
-#~ msgid "Indicaciones pitido, alertas voz"
-#~ msgstr "Argibideak pitidoz, alertak ahotsez"
-
-#~ msgid "Solo indicaciones (pitido)"
-#~ msgstr "Argibideak soilik (pitidoa)"
-
-#~ msgid "Solo alertas por voz"
-#~ msgstr "Alertak soilik ahotsez"
-
-#~ msgid "Solo alertas (pitido)"
-#~ msgstr "Alertak soilik (pitidoa)"
-
-#~ msgid "GPS en uso"
-#~ msgstr "GPS erabiltzen"
-
-#~ msgid "GLONASS en uso"
-#~ msgstr "GLONASS erabiltzen"
-
-#~ msgid "No en uso"
-#~ msgstr "Erabili gabe"
-
-#~ msgid "No uso"
-#~ msgstr "Ez erabilia"
-
-#~ msgid "Mi vehículo"
-#~ msgstr "Nire ibilgailua"
-
-#~ msgid "Latitud  (ej. 40.322130)"
-#~ msgstr "Latitudea  (adib. 40.322130)"
-
-#~ msgid "Longitud  (ej. -3.515801)"
-#~ msgstr "Longitudea  (adib. -3.515801)"
-
-#~ msgid "Giro"
-#~ msgstr "Bira"
-
-#~ msgid "Rev ON"
-#~ msgstr "Atz. AK"

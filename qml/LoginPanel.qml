@@ -318,7 +318,7 @@ Item {
                     KeyNavigation.tab: passField
                     Label {
                         anchors { left: parent.left; verticalCenter: parent.verticalCenter }
-                        text: "correo@ejemplo.com"
+                        text: i18n.tr("correo@ejemplo.com")
                         color: "#37474F"; font.pixelSize: ts(2.3)
                         visible: parent.text === "" && !parent.activeFocus
                     }
@@ -431,8 +431,8 @@ Item {
                             _ocupado = false
                             _puedeReenviar = false
                             statusLbl.color = "#66BB6A"
-                            statusLbl.text  = ok ? "Email enviado. Revisa tu bandeja de entrada."
-                                                  : "No se pudo enviar. Inténtalo más tarde."
+                            statusLbl.text  = ok ? i18n.tr("Email enviado. Revisa tu bandeja de entrada.")
+                                                  : i18n.tr("No se pudo enviar. Inténtalo más tarde.")
                         })
                     }
                 }
@@ -535,14 +535,14 @@ Item {
 
         if (email === "" || pass === "") {
             statusLbl.color = "#EF5350"
-            statusLbl.text  = "Rellena todos los campos"
+            statusLbl.text  = i18n.tr("Rellena todos los campos")
             return
         }
 
         if (_modoRegistro) {
             if (pass !== pass2Field.text) {
                 statusLbl.color = "#EF5350"
-                statusLbl.text  = "Las contraseñas no coinciden"
+                statusLbl.text  = i18n.tr("Las contraseñas no coinciden")
                 return
             }
             _ocupado = true
@@ -556,7 +556,7 @@ Item {
                     pass2Field.text = ""
                     _modoRegistro   = false
                     statusLbl.color = "#66BB6A"
-                    statusLbl.text  = "Cuenta creada. Revisa tu email para verificarla."
+                    statusLbl.text  = i18n.tr("Cuenta creada. Revisa tu email para verificarla.")
                 }
             })
         } else {
