@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: navius.woodyst\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-13 15:56+0200\n"
+"POT-Creation-Date: 2026-10-13 14:10+0000\n"
 "PO-Revision-Date: 2026-05-24 00:00+0000\n"
 "Last-Translator: Claude\n"
 "Language-Team: Português\n"
@@ -1940,10 +1940,6 @@ msgstr "Rota pausada"
 msgid "Parar"
 msgstr "Parar"
 
-#: qml/NaviusLogo.qml:49
-msgid "Navegación comunitaria"
-msgstr "Navegação comunitária"
-
 #: qml/NavSearch.js:246
 msgid "hoy a las %1"
 msgstr "hoje às %1"
@@ -2043,6 +2039,10 @@ msgstr "sem resposta"
 #: qml/NavSearch.js:1174
 msgid "Sin red · ruta no calculada"
 msgstr "Sem rede · rota não calculada"
+
+#: qml/NaviusLogo.qml:49
+msgid "Navegación comunitaria"
+msgstr "Navegação comunitária"
 
 #: qml/OfflineBanner.qml:47
 msgid "Sin conexión — Mapas disponibles vía OSM Scout"

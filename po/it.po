@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: navius.woodyst\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-13 15:56+0200\n"
+"POT-Creation-Date: 2026-10-13 14:10+0000\n"
 "PO-Revision-Date: 2026-05-24 00:00+0000\n"
 "Last-Translator: Claude\n"
 "Language-Team: Italiano\n"
@@ -1953,10 +1953,6 @@ msgstr "Percorso in pausa"
 msgid "Parar"
 msgstr "Ferma"
 
-#: qml/NaviusLogo.qml:49
-msgid "Navegación comunitaria"
-msgstr "Navigazione comunitaria"
-
 #: qml/NavSearch.js:246
 msgid "hoy a las %1"
 msgstr "oggi alle %1"
@@ -2056,6 +2052,10 @@ msgstr "nessuna risposta"
 #: qml/NavSearch.js:1174
 msgid "Sin red · ruta no calculada"
 msgstr "Senza rete · percorso non calcolato"
+
+#: qml/NaviusLogo.qml:49
+msgid "Navegación comunitaria"
+msgstr "Navigazione comunitaria"
 
 #: qml/OfflineBanner.qml:47
 msgid "Sin conexión — Mapas disponibles vía OSM Scout"
@@ -3708,8 +3708,7 @@ msgstr ""
 "④ Segnala avvisi ad altri conducenti\n"
 "⑤ All'arrivo, contrassegna i TODO completati\n"
 "\n"
-"Altre funzioni: musica 🎵 · condivisione viaggio 📡 · messaggi ✉️ · tracce "
-"📍\n"
+"Altre funzioni: musica 🎵 · condivisione viaggio 📡 · messaggi ✉️ · tracce 📍\n"
 "\n"
 "Puoi tornare a questo tour in qualsiasi momento da\n"
 "Impostazioni → Aiuto → Apri assistente."
