@@ -3591,6 +3591,12 @@ msgstr "Verstanden"
 msgid "¿No sale tu destino? Búscalo en Google Maps"
 msgstr "Dein Ziel fehlt? Suche es auf Google Maps"
 
+msgid "En otro país (%1)"
+msgstr "In einem anderen Land (%1)"
+
+msgid "Posición GPS aún no disponible"
+msgstr "GPS-Position noch nicht verfügbar"
+
 #~ msgid "Radar  ·  %1 m"
 #~ msgstr "Blitzer  ·  %1 m"
 

@@ -3573,6 +3573,12 @@ msgstr "Понятно"
 msgid "¿No sale tu destino? Búscalo en Google Maps"
 msgstr "Не нашли пункт назначения? Поищите в Google Maps"
 
+msgid "En otro país (%1)"
+msgstr "В другой стране (%1)"
+
+msgid "Posición GPS aún no disponible"
+msgstr "GPS-позиция пока недоступна"
+
 #~ msgid "Radar  ·  %1 m"
 #~ msgstr "Камера  ·  %1 м"
 

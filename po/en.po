@@ -3528,6 +3528,12 @@ msgstr "Got it"
 msgid "¿No sale tu destino? Búscalo en Google Maps"
 msgstr "Can't find your destination? Search it on Google Maps"
 
+msgid "En otro país (%1)"
+msgstr "In another country (%1)"
+
+msgid "Posición GPS aún no disponible"
+msgstr "GPS position not available yet"
+
 #~ msgid "Radar  ·  %1 m"
 #~ msgstr "Speed camera  ·  %1 m"
 

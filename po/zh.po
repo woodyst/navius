@@ -3462,6 +3462,12 @@ msgstr "知道了"
 msgid "¿No sale tu destino? Búscalo en Google Maps"
 msgstr "找不到目的地？在 Google 地图中搜索"
 
+msgid "En otro país (%1)"
+msgstr "在其他国家（%1）"
+
+msgid "Posición GPS aún no disponible"
+msgstr "GPS 定位尚不可用"
+
 #~ msgid "Radar  ·  %1 m"
 #~ msgstr "测速摄像头  ·  %1 m"
 

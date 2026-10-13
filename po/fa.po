@@ -3524,6 +3524,12 @@ msgstr "متوجه شدم"
 msgid "¿No sale tu destino? Búscalo en Google Maps"
 msgstr "مقصدتان پیدا نشد؟ در نقشه‌های گوگل جست‌وجو کنید"
 
+msgid "En otro país (%1)"
+msgstr "در کشوری دیگر (%1)"
+
+msgid "Posición GPS aún no disponible"
+msgstr "موقعیت GPS هنوز در دسترس نیست"
+
 #~ msgid "Radar  ·  %1 m"
 #~ msgstr "دوربین  ·  %1 متر"
 
