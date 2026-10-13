@@ -209,6 +209,14 @@ Rectangle {
         var d = _dests.slice()
         d.push({ lat: lat, lon: lon, name: name, todos: _latestTodos(lat, lon) })
         _dests = d
+        // Y se vuelve a la lista de destinos. Quien llega por aqui viene de
+        // FUERA —del visor de Google Maps o de una ubicacion compartida— y si el
+        // panel se queda en la pantalla de busqueda, con su texto y sus
+        // resultados, el destino que acaba de anadir no se ve por ningun lado.
+        _routes          = []
+        _results         = []
+        _st              = "idle"
+        searchField.text = ""
         _saveWaypoints()
     }
 
